@@ -20,7 +20,7 @@ class CreatePersonaTable extends Migration
             $table->string('materno')->nullable();
             $table->string('nombres')->nullable();
             $table->string('datosp')->nullable();
-            $table->integer('nit')->nullable();
+            $table->bigInteger('nit')->nullable();
             $table->string('grado',10)->nullable();
             $table->text('direccion')->nullable();
             $table->date('fechaNacimiento')->nullable();

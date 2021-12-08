@@ -20,7 +20,8 @@ class UserSeeder extends Seeder
             [
                 'email'=>'fqm@gmail.com',
                 'name'=>'admin',
-                'password'=>Hash::make('123'),
+                'tipo'=>'admin',
+                'password'=>Hash::make('123456'),
             ]
          ]);
     }
