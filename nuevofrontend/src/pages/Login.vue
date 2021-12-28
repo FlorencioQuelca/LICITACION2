@@ -62,21 +62,11 @@ export default {
   },
   methods:{
     login(){
-      this.$q.loading.show()
-        this.$store.dispatch('login/login', { email:this.email, password:this.password })
-          .then(() =>{
-          // this.$q.loading.hide()
-            this.$router.push('/')
-          })
-          .catch(err => {
-         //   this.$q.loading.hide();
-            // console.log(err)
-            this.$q.notify({
-              message:err,
-              color:'red',
-              icon:'error'
-            })
-          })
+       let email = this.email
+        let password = this.password
+        this.$store.dispatch('login/login', { email, password })
+       .then(() => this.$router.push('/'))
+       .catch(err => console.log(err))
     },
     onReset(){
       this.email=''

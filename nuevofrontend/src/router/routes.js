@@ -13,12 +13,12 @@ const routes = [
     children: [
       { path: '', component: Index },
       { path: 'Login', component: Login },
-      { path: 'Empresa', component: Empresa },
-      { path: 'Consultor', component: Consultor },
-      { path: 'Sociedad', component: Sociedad },
-      { path: 'Proyecto', component: Proyecto},
-      { path: 'Registrar', component: Registrar },
-      { path: 'Detalle', component: Detalle },
+      { path: 'Empresa', component: Empresa, meta: { requiresAuth: true}},
+      { path: 'Consultor', component: Consultor,meta: { requiresAuth: true}},
+      { path: 'Sociedad', component: Sociedad,meta: { requiresAuth: true}},
+      { path: 'Proyecto', component: Proyecto,meta: { requiresAuth: true} },
+      { path: 'Registrar', component: Registrar,meta: { requiresAuth: true} },
+      { path: 'Detalle', component: Detalle,meta: { requiresAuth: true} },
       
       
     ]

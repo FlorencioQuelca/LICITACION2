@@ -33,13 +33,11 @@ class UserController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json(['token' => $token, 'user' => $user], 200);
     }
-
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
         return response()->json(['res' => 'salido exitosamente'], 200);
     }
-
 
     //CRUD
     public function index(){

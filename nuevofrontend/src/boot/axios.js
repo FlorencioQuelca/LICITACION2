@@ -18,7 +18,7 @@ export default boot(({ app }) => {
 
   const token = localStorage.getItem('token')
   if (token) {
-    app.config.globalProperties.$axios.defaults.headers.common['Authorization'] = 'Bearer '+token
+    api.defaults.headers.common['Authorization'] = 'Bearer '+token
   }
 
 

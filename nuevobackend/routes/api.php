@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 
 //login
-Route::post('login',[\App\Http\Controllers\UserController::class,'login'])->name('login');
+Route::post('/login',[\App\Http\Controllers\UserController::class,'login'])->name('login');
 Route::group(['middleware'=>"auth:sanctum"],function (){
    Route::apiResource('personas',\App\Http\Controllers\PersonaController::class); //CRUD de Personas;
    Route::apiResource('empresas',\App\Http\Controllers\EmpresaController::class); //CRUD de Empresa;
