@@ -11,8 +11,8 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: Index },
-      { path: 'Login', component: Login },
+      { path: '', component: Index, meta: { requiresAuth: false}},
+      { path: 'Login', component: Login, meta: { requiresAuth: false} },
       { path: 'Empresa', component: Empresa, meta: { requiresAuth: true}},
       { path: 'Consultor', component: Consultor,meta: { requiresAuth: true}},
       { path: 'Sociedad', component: Sociedad,meta: { requiresAuth: true}},
