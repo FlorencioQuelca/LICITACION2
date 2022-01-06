@@ -28,7 +28,7 @@ class CreatePersonaTable extends Migration
             $table->integer('fono2')->nullable();
             $table->string('email')->nullable();
             $table->string('genero',10)->nullable();
-            $table->text('observacion',100)->nullable();
+            $table->text('observacion',100)->default('NINGUNA');
             $table->timestamps();
         });
     }

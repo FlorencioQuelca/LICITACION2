@@ -2468,6 +2468,31 @@
   "resolved" "https://registry.npmjs.org/csstype/-/csstype-2.6.19.tgz"
   "version" "2.6.19"
 
+"csv-generate@^4.0.4":
+  "integrity" "sha512-6/0FOBbF4O+EBSAYsfOXBjIFhyPpfeeeuWEM4XJQhc/6TvDDL9AGFQNPh2SKlFx7VYERBDmZAWnITgaa+z4BJA=="
+  "resolved" "https://registry.npmjs.org/csv-generate/-/csv-generate-4.0.4.tgz"
+  "version" "4.0.4"
+
+"csv-parse@^5.0.4":
+  "integrity" "sha512-5AIdl8l6n3iYQYxan5djB5eKDa+vBnhfWZtRpJTcrETWfVLYN0WSj3L9RwvgYt+psoO77juUr8TG8qpfGZifVQ=="
+  "resolved" "https://registry.npmjs.org/csv-parse/-/csv-parse-5.0.4.tgz"
+  "version" "5.0.4"
+
+"csv-stringify@^6.0.5":
+  "integrity" "sha512-7xpV3uweJCFF/Ssn56l3xsR/k2r3UqszwjEhej9qEn2cCPzyK1WyHCgoUVzBA792x8HbwonNX7CU9XM2K5s5yw=="
+  "resolved" "https://registry.npmjs.org/csv-stringify/-/csv-stringify-6.0.5.tgz"
+  "version" "6.0.5"
+
+"csv@^6.0.5":
+  "integrity" "sha512-VyII851P4BvzMsXenhtR7g3mARmZ3HvBX16PD85E8IOoxyvNT9e74egbfdkYBj5SGHh1LphCWXeQvskijH+kfg=="
+  "resolved" "https://registry.npmjs.org/csv/-/csv-6.0.5.tgz"
+  "version" "6.0.5"
+  dependencies:
+    "csv-generate" "^4.0.4"
+    "csv-parse" "^5.0.4"
+    "csv-stringify" "^6.0.5"
+    "stream-transform" "^3.0.4"
+
 "debug@^3.1.1":
   "integrity" "sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-3.2.7.tgz"
@@ -5556,6 +5581,11 @@
   "integrity" "sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow="
   "resolved" "https://registry.npmjs.org/statuses/-/statuses-1.5.0.tgz"
   "version" "1.5.0"
+
+"stream-transform@^3.0.4":
+  "integrity" "sha512-g2jbk1hs3GiF3oHZLbR7Fph/PXh/3xHoz/D8aR2oHySE4xVUvNeTGqihhb1vxFjYyu4inqiTfT42g2MHBjjx0g=="
+  "resolved" "https://registry.npmjs.org/stream-transform/-/stream-transform-3.0.4.tgz"
+  "version" "3.0.4"
 
 "string_decoder@^1.1.1":
   "integrity" "sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA=="

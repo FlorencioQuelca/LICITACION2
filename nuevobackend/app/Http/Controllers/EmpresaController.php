@@ -28,7 +28,11 @@ class EmpresaController extends Controller
            }
            
     }
-
+    
+    public function empresanit($id){
+        return Empresa::where('nit',$id)->get();
+        
+    }
     /**
      * Store a newly created resource in storage.
      *

@@ -23,16 +23,17 @@ class UpdatePersonaRequest extends FormRequest
      */
     public function rules()
     {
+       // $id = Persona::find($this.persona)
+       // $persona->update($request->all());
         return [
             //
+            //'ci'=> "required|unique:personas,ci,".$this->persona,
+           
             'ci'=> "required|unique:personas,ci,".$this->persona,
             'paterno'=> "required|min:3|max:100",
             'nombres'=> "required|min:3|max:100",
-            'fechaNacimiento'=> "required|date|after:1921-10-27|before:today",
-            'fono1'=> "required",
+            'fono1'=> "required|min:3",
             'email'=> "required",
-            'genero'=> "required",
-            'nit'=> "required",
             
         ];
     }

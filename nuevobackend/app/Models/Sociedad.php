@@ -10,7 +10,7 @@ class Sociedad extends Model
     use HasFactory;
     protected $table ='sociedads';
     protected $fillable = [
-        "nombre",
+        "nombreEmpresa",
         "nombreLegal",
         "direccion",
         "fono1",
@@ -18,7 +18,7 @@ class Sociedad extends Model
         "email",
         "observacion",
         "departamento",
-        "codigo",
+       
         
     ];
     

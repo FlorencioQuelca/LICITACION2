@@ -24,9 +24,7 @@ class AsociadoController extends Controller
     }
    public function  detalle(){
 
-    $asociado=DB::select('(select * from asociados
-      )
-    ');
+    $asociado=DB::select('(select * from asociados)');
    
 
      return \response()->json($asociado, 200);
@@ -48,8 +46,10 @@ class AsociadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        Asociado::create($request->all());
+    { 
+        
+        $asociado=Asociado::create($request->all());
+        return $asociado;
     }
 
     /**
@@ -95,5 +95,9 @@ class AsociadoController extends Controller
     public function destroy(Asociado $asociado)
     {
         $asociado->delete();
+    }
+    public function asociadolist($id){
+        return Asociado::where('Sociedad_id',$id)->with('empresa')->get();
+        
     }
 }

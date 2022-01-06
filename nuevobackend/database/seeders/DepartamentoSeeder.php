@@ -25,6 +25,8 @@ class DepartamentoSeeder extends Seeder
             ["id"=>8,"nombre"=>"CHUQUISACA"],
             ["id"=>9,"nombre"=>"TARIJA"],
             ["id"=>10,"nombre"=>"CENTRAL"],
+            ["id"=>11,"nombre"=>"EXTRANGERO"],
+            
             ]);
     }
 }

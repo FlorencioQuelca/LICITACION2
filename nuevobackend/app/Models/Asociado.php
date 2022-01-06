@@ -14,8 +14,9 @@ class Asociado extends Model
     protected $fillable = [
         "num",
         "empresa_id",
-        "sociedadAccidental_id",
+        "sociedad_id",
         "participacion",
+
     ];
 
     protected $hidden =['created_at','updated_at'];

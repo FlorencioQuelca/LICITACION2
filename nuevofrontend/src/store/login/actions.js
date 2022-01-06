@@ -3,7 +3,7 @@ import { api } from "src/boot/axios"
 export function login({commit}, user){
     return new Promise((resolve, reject) => {
       commit('auth_request')
-      api({url: 'http://localhost:8000/api/login', data: user, method: 'POST' })
+      api({url: process.env.API+'/login', data: user, method: 'POST' })
       .then(resp => {
         const token = resp.data.token
         const user = resp.data.user

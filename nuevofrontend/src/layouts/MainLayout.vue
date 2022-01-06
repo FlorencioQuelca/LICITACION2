@@ -13,7 +13,7 @@
 
         <q-toolbar-title> Admin </q-toolbar-title>
 
-        <div>FONDO NACIONAL DE INVERSION PUBLICA Y SOCIAL</div>
+        <div>FONDO NACIONAL DE INVERSION PRODUCTIVA Y SOCIAL</div>
       </q-toolbar>
     </q-header>
 

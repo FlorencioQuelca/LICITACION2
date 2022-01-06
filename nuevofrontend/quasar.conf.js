@@ -71,6 +71,11 @@ module.exports = configure(function (ctx) {
         chain.plugin('eslint-webpack-plugin')
           .use(ESLintPlugin, [{ extensions: [ 'js', 'vue' ] }])
       },
+      env: {
+        API: ctx.dev
+          ? 'http://127.0.0.1:8000/api'
+          : 'http://192.168.102.99:8000/api'
+      }
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer

@@ -23,7 +23,7 @@ class CreateEmpresaTable extends Migration
             $table->integer('fono2')->nullable();
             $table->string('email')->nullabe();
             $table->string('departamento',20)->nullable();
-            $table->text('observacion',100)->nullable();
+            $table->text('observacion',100)->default("NINGUNA");
             $table->timestamps();
 
            

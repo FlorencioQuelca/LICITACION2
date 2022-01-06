@@ -30,7 +30,7 @@ class EmpresaFactory extends Factory
             "fono2" =>rand(75402473,99999999),
             "email"=> $this->faker->unique()->safeEmail(),
             "departamento"=>$this->faker->city,
-            "observacion"=>$this->faker->text
+            "observacion"=>"NINGUNA",
         ];
     }
 

@@ -89,12 +89,12 @@ class PersonaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePersonaRequest $request, $id)
+    public function update(Request $request,  $id)
     {
         // update Persona set nombre = $request ... where id =$id
-        $imput = $request->all();
+       // $imput = $request->all();
         $persona = Persona::find($id);
-        $persona ->update($imput);
+        $persona->update($request->all());
         return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
     }
 

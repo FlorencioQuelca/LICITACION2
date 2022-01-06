@@ -26,11 +26,15 @@ use Illuminate\Support\Facades\Route;
 //login
 Route::post('/login',[\App\Http\Controllers\UserController::class,'login'])->name('login');
 Route::group(['middleware'=>"auth:sanctum"],function (){
-   Route::apiResource('personas',\App\Http\Controllers\PersonaController::class); //CRUD de Personas;
-   Route::apiResource('empresas',\App\Http\Controllers\EmpresaController::class); //CRUD de Empresa;
-  //sociedad
-   Route::apiResource('sociedades',\App\Http\Controllers\SociedadController::class); //CRUD de SociedadAccidental;
-  //proyecto
+   Route::apiResource('/consultor',\App\Http\Controllers\PersonaController::class); //CRUD de Personas;
+   Route::apiResource('/empresa',\App\Http\Controllers\EmpresaController::class); //CRUD de Empresa;
+   Route::get('/empresanit/{id}',[\App\Http\Controllers\EmpresaController::class,'empresanit']); //CRUD de Empresa;
+   Route::apiResource('/sociedad',\App\Http\Controllers\SociedadController::class); //CRUD de SociedadAccidental;
+   
+   Route::apiResource('/asociado',\App\Http\Controllers\AsociadoController::class); //CRUD de SociedadAccidental;
+   Route::get('/asociadolist/{id}',[\App\Http\Controllers\AsociadoController::class,'asociadolist']); //CRUD de SociedadAccidental;
+
+   //proyecto
   Route::apiResource('proyectos',\App\Http\Controllers\ProyectoController::class); //CRUD de SociedadAccidental;
   Route::apiResource('detalle',\App\Http\Controllers\detalleController::class);
   Route::post('logout',[\App\Http\Controllers\UserController::class,'logout'])->name('logout');
