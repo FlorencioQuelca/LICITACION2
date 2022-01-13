@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\programa;
+use App\Models\Programa;
 use Illuminate\Http\Request;
 
 class ProgramaController extends Controller
@@ -14,7 +14,7 @@ class ProgramaController extends Controller
      */
     public function index()
     {
-        //
+        return Programa::all();
     }
 
     /**

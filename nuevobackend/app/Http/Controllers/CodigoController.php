@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Detalle;
+use App\Models\Codigo;
 use Illuminate\Http\Request;
 
-class DetalleController extends Controller
+class CodigoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,7 @@ class DetalleController extends Controller
      */
     public function index()
     {
-        $detalle = Detalle::with(['proyecto'])->get();
-        return \response()->json($detalle, 200);
-    
+        return Codigo::all();
     }
 
     /**
@@ -26,7 +24,7 @@ class DetalleController extends Controller
      */
     public function create()
     {
-       //
+        //
     }
 
     /**
@@ -37,51 +35,54 @@ class DetalleController extends Controller
      */
     public function store(Request $request)
     {
-        return Detalle::create($request->all());
+        return Codigo::create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Detalle  $detalle
+     * @param  \App\Models\Codigo  $codigo
      * @return \Illuminate\Http\Response
      */
-    public function show(Detalle $detalle)
+    public function show(Codigo $codigo)
     {
-        //
+        return $codigo;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Detalle  $detalle
+     * @param  \App\Models\Codigo  $codigo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Detalle $detalle)
+    public function edit(Codigo $codigo)
     {
-        //
+        
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Detalle  $detalle
+     * @param  \App\Models\Codigo  $codigo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Detalle $detalle)
+    public function update(Request $request, Codigo $codigo)
     {
-        //
+        $codigo->update($request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Detalle  $detalle
+     * @param  \App\Models\Codigo  $codigo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Detalle $detalle)
+    public function destroy(Codigo $codigo)
     {
-        //
+        $codigo->deete();
+    }
+    public function codigofound($id){
+        return Codigo::where('nombre',$id)->get();
     }
 }

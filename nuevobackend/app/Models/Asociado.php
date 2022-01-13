@@ -14,7 +14,7 @@ class Asociado extends Model
     protected $fillable = [
         "num",
         "empresa_id",
-        "sociedad_id",
+        "sociedad _id",
         "participacion",
 
     ];

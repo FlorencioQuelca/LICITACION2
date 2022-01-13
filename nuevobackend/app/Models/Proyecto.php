@@ -11,8 +11,8 @@ class Proyecto extends Model
     protected $table ='proyectos';
 
     protected $fillable = [
-            "codigo",
             "nombre",
+            "cuce",
             "fecha",
             "hora",
             "link",
@@ -34,8 +34,21 @@ class Proyecto extends Model
     public function programa(){
         return $this->belongsTo(Programa::class);
     }
-    //relacion uno a muchos
-    public function detalles(){
-        return $this->hasMany(Detalle::class);
+    
+     //relacion muchos a muchos
+     public function codigos(){
+        return $this->belongsToMany(Codigo::class);   
+    }
+    //relacion muchos a muchospolimorfica
+    public function empresas(){
+        return $this->morphedByMany('App\Models\Empresa','detalle');
+     }
+     //relacion muchos a muchos polimorfica
+    public function personas(){
+        return $this->morphedByMany('App\Models\Persona','detalle');
+     }
+     //relacion uno a muchos
+    public function sociedads(){
+        return $this->morphedByMany('App\Models\Sociedad','detalle');
      }
 }

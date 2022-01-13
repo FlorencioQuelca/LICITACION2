@@ -18,7 +18,7 @@ const routes = [
       { path: 'Sociedad', component: Sociedad,meta: { requiresAuth: true}},
       { path: 'Proyecto', component: Proyecto,meta: { requiresAuth: true} },
       { path: 'Registrar', component: Registrar,meta: { requiresAuth: true} },
-      { path: 'Detalle', component: Detalle,meta: { requiresAuth: true} },
+      { name:'detalle1' ,path: 'Detalle', component: Detalle, props:true,meta: { requiresAuth: true} },
       
       
     ]

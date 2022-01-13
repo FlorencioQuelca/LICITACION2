@@ -35,7 +35,15 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
    Route::get('/asociadolist/{id}',[\App\Http\Controllers\AsociadoController::class,'asociadolist']); //CRUD de SociedadAccidental;
 
    //proyecto
-  Route::apiResource('proyectos',\App\Http\Controllers\ProyectoController::class); //CRUD de SociedadAccidental;
+  Route::apiResource('proyectos',\App\Http\Controllers\ProyectoController::class); //CRUD de proyectos;
+  Route::apiResource('programas',\App\Http\Controllers\ProgramaController::class); //CRUD de SociedadAccidental;
+  Route::apiResource('departamentos',\App\Http\Controllers\DepartamentoController::class); //CRUD de SociedadAccidental;
+  Route::apiResource('tipos',\App\Http\Controllers\TipoController::class); //CRUD de SociedadAccidental;
+  Route::apiResource('codigos',\App\Http\Controllers\CodigoController::class); //CRUD de SociedadAccidental;
+  Route::get('/codigofound/{id}',[\App\Http\Controllers\CodigoController::class,'codigofound']); //CRUD de SociedadAccidental;
+  Route::put('codigoproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'codigoproyectos']); //CRUD de SociedadAccidental;
+  Route::put('codigoproyectos1/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'codigoproyectos1']); //CRUD de SociedadAccidental;
+  
   Route::apiResource('detalle',\App\Http\Controllers\detalleController::class);
   Route::post('logout',[\App\Http\Controllers\UserController::class,'logout'])->name('logout');
    

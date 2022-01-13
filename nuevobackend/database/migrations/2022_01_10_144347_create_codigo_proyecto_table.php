@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDetallesTable extends Migration
+class CreateCodigoProyectoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,12 @@ class CreateDetallesTable extends Migration
      */
     public function up()
     {
-        Schema::create('detalles', function (Blueprint $table) {
+        Schema::create('codigo_proyecto', function (Blueprint $table) {
             $table->id();
-            $table->double('tiempo')->nullable();
-            $table->integer('num')->nullable();
-            $table->decimal('monto',10,2)->default(0);
-
-            $table->unsignedBigInteger('detalle_id');
-            $table->string('detalle_type');
-
             $table->unsignedBigInteger('proyecto_id')->nullable();
+            $table->unsignedBigInteger('codigo_id')->nullable();
             $table->foreign('proyecto_id')->references('id')->on('proyectos')->onDelete('set null')->onUpdate('cascade');
-            
+            $table->foreign('codigo_id')->references('id')->on('codigos')->onDelete('set null')->onUpdate('cascade');
             
             $table->timestamps();
         });
@@ -37,6 +31,6 @@ class CreateDetallesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detalles');
+        Schema::dropIfExists('codigo_proyecto');
     }
 }

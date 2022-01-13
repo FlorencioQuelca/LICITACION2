@@ -25,13 +25,16 @@ class Empresa extends Model
     protected $hidden =['created_at','updated_at'];
 
     //relacion uno a muchos
+    //public function asociados(){
+     //   return $this->hasMany(Asociado::class)->with('sociedad');
+    //}
     public function empresas(){
         return $this->hasMany(Empresa::class);
     }
-   //relacion uno a muchos polimorfica
-   public function detalles(){
-       return $this->morphMany('App\Models\Detalle','detalletable');
-   }
+   //relacion muchos a muchos polimorfica
+   public function proyectos(){
+    return $this->morphToMany('App\Models\Proyecto','detalle');
+    }
    
 
 }

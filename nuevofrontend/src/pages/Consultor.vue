@@ -135,7 +135,7 @@
 
     <q-table
       :filter="filter"
-      title="CONSULTORES"
+      title="CONSULTORES REGISTRADOS"
       :rows="data"
       :columns="columns"
       row-key="ci"

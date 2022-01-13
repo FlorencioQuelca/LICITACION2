@@ -11,7 +11,7 @@
       label="Empresa"
       color="negative"
       icon="add_circle"
-      @click= "this.$router.push('Empresa') "
+      @click= "this.$router.push('Empresa')"
       class="q-mb-xs"
     />
       <!--          ADICIONAR REGISTRO -->
@@ -107,7 +107,7 @@
   
     <q-table
       :filter="filter"
-      title="EMPRESAS REGISTRADAS"
+      title="ASOCIACIONES O SOCIEDADES ACCIDENTALES REGISTRADAS"
       :rows="data"
       :columns="columns"
       row-key="nit"
@@ -136,33 +136,16 @@
           <q-td key="nombreEmpresa" :props="props">
             {{props.row.nombreEmpresa}}
           </q-td>
-          <q-td key="nombreLegal" :props="props">
-            {{props.row.nombreLegal}}
-          </q-td> 
-            <q-td key="fono1" :props="props">
-            {{props.row.fono1}}
-          </q-td>
-           <q-td key="fono2" :props="props">
-            {{props.row.fono2}}
-          </q-td>
-          <q-td key="email" :props="props">
-            {{props.row.email}}
-          </q-td>
-          <q-td key="direccion" :props="props">
-            {{props.row.direccion}}
-          </q-td>
-            <q-td key="asociados" :props="props">
+           <q-td key="asociados" :props="props">
               <ul>
               <span v-for="(asociados,index) in props.row.asociados" :key="index">
                   <li>
                     {{asociados.empresa.nit}}  ({{asociados.participacion}}) % - {{asociados.empresa.nombreEmpresa}}         
                 </li>
               </span>
-
             </ul>
-
           </q-td>
-          
+            
           <q-td key="opcion" :props="props">
                    <q-btn
                         dense
@@ -180,6 +163,26 @@
                         @click="verRow(props)"
                         icon="list"
                       ></q-btn>
+          </q-td>
+          <q-td key="nombreLegal" :props="props">
+            {{props.row.nombreLegal}}
+          </q-td> 
+            <q-td key="fono1" :props="props">
+            {{props.row.fono1}}
+          </q-td>
+           <q-td key="fono2" :props="props">
+            {{props.row.fono2}}
+          </q-td>
+          <q-td key="email" :props="props">
+            {{props.row.email}}
+          </q-td>
+          <q-td key="direccion" :props="props">
+            {{props.row.direccion}}
+          </q-td>
+           
+          
+          <q-td key="action" :props="props">
+                  
              <q-btn
               dense
               round
@@ -513,13 +516,14 @@ import Empresa from "pages/Empresa"
 const  columns= [
   { name: 'departamento', align:"left",label: 'Departamento', field: 'departamento', sortable: true },
   { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
+  { name: 'asociados',align:"left", label: 'Asociados', field: 'asociados', sortable: true },
+   { name: 'opcion',align:"center",label: 'Accion', field: 'opcion', sortable: false },
   { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
   { name: 'fono1', align:"center",label: 'Celular', field: 'fono1', sortable: true },
   { name: 'fono2', align:"center",label: 'Telefono', field: 'fono2', sortable: true },
   { name: 'email',align:"Center", label: 'Correo', field: 'email', sortable: true },
   { name: 'direccion', align:"left",label: 'Direccion', field: 'direccion', sortable: true },
-  { name: 'asociados',align:"left", label: 'Asociados', field: 'asociados', sortable: true },
-  { name: 'opcion', label: 'Opcion', field: 'action', sortable: false }
+  { name: 'action',align:"center", label: 'Accion', field: 'action', sortable: false }
    ]
 export default {
     components: {
@@ -592,7 +596,7 @@ export default {
     this.$q.loading.show();
        this.$api.get(process.env.API+"/sociedad").then((res)=>{
          this.data =res.data;
-      // console.log(this.data);
+        console.log(this.data);
        this.$q.loading.hide();
        });
     },

@@ -15,9 +15,8 @@ class TipoSeeder extends Seeder
     public function run()
     {
         DB::table('tipos')->insert([
-            ["id"=>1,"nombre"=>"PARA EMPRESAS/ASOCIACIONES"],
-            ["id"=>2,"nombre"=>"PARA CONSULTORES"],
-            
+            ["id"=>1,"nombre"=>"EMP.-ASOC."],
+            ["id"=>2,"nombre"=>"CONSUL"],
             ]);
     }
 }

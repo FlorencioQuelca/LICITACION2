@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Programa extends Model
-{
-    use HasFactory;
-    protected $table ='programas';
-
+class Codigo extends Model
+{  use HasFactory;
+    protected $table ="codigos";
     protected $fillable = [
-       
-        "nombre",
+        "nombre", 
     ];
+
     protected $hidden =['created_at','updated_at'];
-    
+    //relacion muchos a muchos
     public function proyectos(){
-        return $this->hasMany(Proyecto::class);
-     }
+        return $this->belongsToMany(Proyecto::class);
+        
+    }
 }
