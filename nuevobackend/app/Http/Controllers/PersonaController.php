@@ -114,6 +114,8 @@ class PersonaController extends Controller
         catch(\Exception $e){
             return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
         }
-        
+    }
+    public function consultorci($id){
+        return Persona::where('ci',$id)->get();
     }
 }

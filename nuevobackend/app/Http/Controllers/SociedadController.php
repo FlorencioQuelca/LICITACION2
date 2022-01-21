@@ -19,7 +19,7 @@ class SociedadController extends Controller
     public function index()
     {
         try{  
-            $sociedades = Sociedad::with('asociados')->get();
+            $sociedades = Sociedad::with('empresas')->get();
               return \response()->json($sociedades,200);
            }
            catch(\Exception $e){
@@ -28,7 +28,7 @@ class SociedadController extends Controller
     }
     public function detalle1(){
       
-     $detalles = Sociedad::with('asociados')->get();
+     $detalles = Sociedad::with('empresas')->get();
       return \response()->json($detalles, 200);
     }
 
@@ -68,4 +68,9 @@ class SociedadController extends Controller
             return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
         }
     }
+    public function sociedadcodigo($id){
+        return Sociedad::where('codigo',$id)->get();
+    }
+    
+
 }

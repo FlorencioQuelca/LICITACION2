@@ -23,7 +23,7 @@ class EmpresaFactory extends Factory
     {
         return [
             "nombreEmpresa" =>$this->faker->streetName,
-            "nit"=>$this->faker->unique()->numberBetween(5775077013,5999999999),
+            "nit"=>$this->faker->unique()->numberBetween(577513,59999999),
             "nombreLegal"=>$this->faker->name,
             "direccion"=>$this->faker->address,
             "fono1" =>rand(75402473,99999999),

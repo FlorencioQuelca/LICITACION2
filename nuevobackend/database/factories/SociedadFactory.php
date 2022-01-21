@@ -22,7 +22,8 @@ class SociedadFactory extends Factory
     public function definition()
     {
         return [
-        "nombreEmpresa"=>$this->faker->unique()->lastName,
+        "nombreEmpresa"=>$this->faker->lastName,
+        "codigo"=>$this->faker->unique()->numberBetween(577513,59999999),
         "nombreLegal"=>$this->faker->name,
         "direccion"=>$this->faker->text,
         "fono1"=>rand(75402473,99999999),   

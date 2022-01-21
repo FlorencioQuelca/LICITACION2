@@ -24,7 +24,8 @@ class CreateSociedadAccidentalRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombreEmpresa'=> "required|unique:sociedads,nombreEmpresa|min:5|max:200",
+            'codigo'=> "required|unique:sociedads,codigo",
+            'nombreEmpresa'=> "required|min:5|max:200",
             'nombreLegal'=> "required|min:10|max:255",
             'fono1'=> "required",
             'email'=> "required",

@@ -28,9 +28,12 @@ class Empresa extends Model
     //public function asociados(){
      //   return $this->hasMany(Asociado::class)->with('sociedad');
     //}
-    public function empresas(){
-        return $this->hasMany(Empresa::class);
-    }
+   // public function empresas(){
+  //      return $this->hasMany(Empresa::class);
+    //}
+    public function sociedads(){
+        return $this->belongsToMany(Sociedad::class);
+     }
    //relacion muchos a muchos polimorfica
    public function proyectos(){
     return $this->morphToMany('App\Models\Proyecto','detalle');

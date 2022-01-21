@@ -4,51 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\Proyecto;
 use App\Models\Codigo;
+use App\Models\Persona;
+use App\Models\Empresa;
+use App\Models\Sociedad;
 use Illuminate\Http\Request;
 
 class ProyectoController extends Controller
 {
    
     public function index(){
-        $proyectos = Proyecto::with(['sociedads','personas','empresas','programa', 'tipo', 'departamento','codigos'])->get();
+        $proyectos = Proyecto::with(['sociedads.asociados','personas','empresas','programa', 'tipo', 'departamento','codigos'])->get();
         return \response()->json($proyectos, 200);
-    }
-
-    
+    }   
     public function create()
     {
         //
-    }
-
-    
+    } 
     public function store(Request $request)
     {
        Proyecto::create($request->all());
-      return \response()->json(['res'=> true, 'message'=>'insertado correctamente'],200);
-       
+      return \response()->json(['res'=> true, 'message'=>'insertado correctamente'],200);   
     }
-
-   
     public function show(Proyecto $proyecto)
     {
         return $proyecto;
         return \response()->json($proyecto,200);
     }
-
-    
     public function edit(Proyecto $proyecto)
     {
         //
-    }
-
-   
-    public function update(Request $request, Proyecto $proyecto)
-    {
+    } 
+    public function update(Request $request, Proyecto $proyecto) {
         $proyecto->update($request->all());
         return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
     }
-
-    
     public function destroy(Proyecto $proyecto)
     {
        
@@ -72,6 +61,33 @@ class ProyectoController extends Controller
        $proyecto->codigos()->detach($codigo->id);       
      }
      
-    
+     public function personaproyectos(Request $request,Proyecto $proyecto){
+        $persona= Persona::find($request->id);
+        $proyecto->personas()->attach($persona);       
+     }
+     public function personaproyectosdetach(Request $request,Proyecto $proyecto){
+        $persona= Persona::find($request->id);
+        $proyecto->personas()->detach($persona->id);
+     }
+     
+     public function empresaproyectos(Request $request,Proyecto $proyecto){
+        $empresa= Empresa::find($request->id);
+        $proyecto->empresas()->attach($empresa);       
+     }
+     public function empresaproyectosdetach(Request $request,Proyecto $proyecto){
+        $empresa= Empresa::find($request->id);
+        $proyecto->empresas()->detach($empresa->id);
+     }
+       
+     public function sociedadproyectos(Request $request,Proyecto $proyecto){
+        $sociedad= Sociedad::find($request->id);
+        $proyecto->sociedads()->attach($sociedad->id);       
+     }
+     public function sociedadproyectosdetach(Request $request,Proyecto $proyecto){
+        $sociedad= Sociedad::find($request->id);
+        $proyecto->sociedads()->detach($sociedad->id);
+     }
+     
+
 
 }

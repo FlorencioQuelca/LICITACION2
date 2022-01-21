@@ -20,8 +20,7 @@ class CodigoProyectoSeeder extends Seeder
             ['codigo_id'=>3,'proyecto_id'=>1],
             ['codigo_id'=>3,'proyecto_id'=>2],
             ['codigo_id'=>2,'proyecto_id'=>2],
-            ['codigo_id'=>1,'proyecto_id'=>2],
-            
+            ['codigo_id'=>1,'proyecto_id'=>2]
         ]);
     }
 }

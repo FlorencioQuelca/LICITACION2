@@ -2,9 +2,16 @@
    <div class="q-pa-md">
      <q-btn
       label="Nuevo Consultor/Supervisor"
-      color="positive"
+      color="red"
       icon="add_circle"
       @click="alert = true"
+      class="q-mb-xs"
+    />
+    <q-btn
+      label="ir a Proyectos"
+      color="green"
+      icon="add_circle"
+      @click= "this.$router.push('Proyecto')"
       class="q-mb-xs"
     />
       <!--          ADICIONAR REGISTRO -->

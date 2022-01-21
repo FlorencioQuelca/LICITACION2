@@ -2,9 +2,30 @@
    <div class="q-pa-md">
      <q-btn
       label="Nuevo proyecto para Licitación"
-      color="positive"
+      color="green"
       icon="add_circle"
       @click="alert = true"
+      class="q-mb-xs"
+    />
+     <q-btn
+      label="Empresa"
+      color="orange"
+      icon="add_circle"
+      @click= "this.$router.push('Empresa')"
+      class="q-mb-xs"
+    />
+     <q-btn
+      label="Consultor"
+      color="red"
+      icon="add_circle"
+      @click= "this.$router.push('Consultor')"
+      class="q-mb-xs"
+    />
+     <q-btn
+      label="Sociedad"
+      color="blue"
+      icon="add_circle"
+      @click= "this.$router.push('Sociedad')"
       class="q-mb-xs"
     />
       <!--          ADICIONAR REGISTRO -->
@@ -131,7 +152,7 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-  <!--          tabla -->
+  <!--          tabla PRINCIPOAL -->
 
     <q-table
       :filter="filter"
@@ -200,15 +221,22 @@
            <q-td key="nombre" :props="props">
             {{props.row.nombre}}
           </q-td>
-           <q-td key="action1" :props="props">
+            <q-td key="action1" :props="props">
                       <q-btn
                         dense
                         round
                         flat
-                        color="purple"
+                        color="blue"
                         @click="addRow1(props)"
-
-                        icon="style"
+                        icon="playlist_add"
+                      ></q-btn>
+                        <q-btn
+                        dense
+                        round
+                        flat
+                        color="blue"
+                        @click="verRow1(props)"
+                        icon="list"
                       ></q-btn>
             </q-td>      
            <q-td key="cuce" :props="props">
@@ -253,7 +281,6 @@
           </q-td>
            </q-tr>
       </template>
-
     </q-table>
    <!--          ELIMINAR REGISTRO -->
       <q-dialog v-model="dialog_del">
@@ -427,7 +454,6 @@
                     title="Codigos de proyecto"
                     :rows="dato2.codigos"
                     :columns="subcol"
-                    
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -453,14 +479,13 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-
+<!-- empresas asociados  eliminar codigo de proyecto />-->
      <q-dialog v-model="dialog_delsub">
       <q-card>
         <q-card-section class="row items-center">
           <q-avatar icon="clear" color="red" text-color="white" />
           <span class="q-ml-sm">Seguro de eliminar Registro.</span>
         </q-card-section>
-
         <q-card-actions align="right">
           <q-btn flat label="Eliminar" color="deep-orange" @click="onDelsub" />
           <q-btn flat label="Cancelar" color="primary" v-close-popup />
@@ -468,6 +493,263 @@
       </q-card>
     </q-dialog>
 
+
+    
+     <!-- empresas asociados  adicionar consultor />-->
+      <q-dialog v-model="dialog_add1">
+      <q-card style="max-width: 80%; width: 50%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Agregar Consultor</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+      
+          <q-form @submit="onAdd1" class="q-gutter-md">
+            <q-input
+              outlined
+              v-model="codigo.ci"
+              type="text"
+              label="Cedula de Identidad"
+              hint="Ingresar CI del consultor"
+               lazy-rules
+              :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
+            />
+       
+            <div>
+              <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+     <!-- Adicionar empresa y/o sociedad accidentañl/>-->
+      <q-dialog v-model="dialog_add2">
+      <q-card style="max-width: 80%; width: 50%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Agregar Empresa/Sociedad Accidental</div>
+        </q-card-section>
+        <div class="row">
+        <div class="col-12">
+          <q-option-group
+            v-model="group"
+            :options="opciones"
+            color="primary"
+            inline
+          />
+        </div> 
+        </div>
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onAdd2" class="q-gutter-md">
+            <q-input v-if="group=='op1'"
+              outlined
+              v-model="codigo.nit"
+              type="text"
+              label="N.I.T. de la empresa"
+              hint="Ingresar NIT"
+            />
+            <q-input v-else
+              outlined
+              v-model="codigo.codigo"
+              type="text"
+              label="codigo de la Sociedad Accidental"
+              hint="Ingresar Codigo"
+            />
+             <q-input 
+              outlined
+              v-model="codigo.monto"
+              type="number"
+              step="0.01"
+              label="Monto Ofertante"
+              hint="Ingresar Monto ofertante"
+            />
+            <div>
+              <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+       <!-- VER LISTA de PERSONAS Y ELIMINAR />-->
+   <q-dialog v-model="dialog_list1">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Lista de consultores presentados</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+                <q-table
+                    title="Lista de oferentes"
+                    :rows="dato2.personas"
+                    :columns="subcol1"
+                    >
+      <template v-slot:body="props">
+          <q-tr :props="props">
+          <q-td key="nombre" :props="props">
+            {{ props.row.datosp}}
+          </q-td>
+          <q-td key="ci" :props="props">
+            {{ props.row.ci}}
+          </q-td>
+           <q-td key="fecha" :props="props">
+            {{ props.row.fechaNacimiento}}
+          </q-td>
+          <q-td key="opcion" :props="props">
+                        <q-btn
+                        dense
+                        round
+                        flat
+                        color="red"
+                        @click="deletesub1(props)"
+                        icon="delete"
+                      ></q-btn>
+          </q-td>
+          </q-tr>
+          </template>
+          </q-table>
+            <div>
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+<!-- eliminar PERSONAS asociados  />-->
+     <q-dialog v-model="dialog_delsub1">
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="clear" color="red" text-color="white" />
+          <span class="q-ml-sm">Seguro de eliminar Registro.</span>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Eliminar" color="deep-orange" @click="onDelsub1" />
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+       <!-- VER LISTAR de EMPRESAS y sociedades Y ELIMINAR />-->
+   <q-dialog v-model="dialog_list2">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Lista de empresas y/o Sociedades presentados</div>
+        </q-card-section>
+         <div class="row">
+        <div class="col-12">
+          <q-option-group
+            v-model="group"
+            :options="opciones"
+            color="primary"
+            inline
+          />
+        </div> 
+        </div>
+        <q-card-section v-if="group=='op1'" class="q-pt-xs">
+                <q-table
+                    title="Lista de oferentes"
+                    :rows="dato2.empresas"
+                    :columns="subcol2"
+                    :rows-per-page-options="[5,10]"
+                    >
+      <template v-slot:body="props">
+          <q-tr :props="props">
+          <q-td key="nit" :props="props">
+            {{ props.row.nit}}
+          </q-td>
+          <q-td key="nombre" :props="props">
+            {{ props.row.nombreEmpresa}}
+          </q-td>
+           <q-td key="monto" :props="props">
+            {{ props.row.pivot.monto}}
+          </q-td>
+          <q-td key="opcion" :props="props">
+                        <q-btn
+                        dense
+                        round
+                        flat
+                        color="red"
+                        @click="deletesub2(props)"
+                        icon="delete"
+                      ></q-btn>
+          </q-td>
+          </q-tr>
+          </template>
+          </q-table>
+            <div>
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+        </q-card-section>
+          <q-card-section v-else class="q-pt-xs">
+                <q-table
+                    title="Lista de oferentes"
+                    :rows="dato2.sociedads"
+                    :columns="subcol3"
+                    :rows-per-page-options="[5,10]"
+                    >
+      <template v-slot:body="props">
+          <q-tr :props="props">
+          <q-td key="codigo" :props="props">
+            {{ props.row.codigo}}
+          </q-td>
+          <q-td key="nombre" :props="props">
+            {{ props.row.nombreEmpresa}}
+          </q-td>
+           <q-td key="monto" :props="props">
+            {{ props.row.pivot.monto}}
+          </q-td>
+              <q-td key="asociados" :props="props">
+              <ul>
+              <span v-for="(asociados,index) in props.row.asociados" :key="index">
+                  <li>
+                    {{asociados.empresa.nit}}  ({{asociados.participacion}}) % - {{asociados.empresa.nombreEmpresa}}         
+                </li>
+              </span>
+            </ul>
+          </q-td>
+          <q-td key="opcion" :props="props">
+                        <q-btn
+                        dense
+                        round
+                        flat
+                        color="red"
+                        @click="deletesub3(props)"
+                        icon="delete"
+                      ></q-btn>
+          </q-td>
+          </q-tr>
+          </template>
+          </q-table>
+            <div>
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <!-- eliminar EMPRESAS   />-->
+     <q-dialog v-model="dialog_delsub2">
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="clear" color="red" text-color="white" />
+          <span class="q-ml-sm">Seguro de eliminar Registro.</span>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Eliminar" color="deep-orange" @click="onDelsub2" />
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+<!-- eliminar SOCIEDADES   />-->
+     <q-dialog v-model="dialog_delsub3">
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="clear" color="red" text-color="white" />
+          <span class="q-ml-sm">Seguro de eliminar Registro.</span>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Eliminar" color="deep-orange" @click="onDelsub3" />
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
  
   </div>
 </template>
@@ -515,6 +797,14 @@ export default {
    dialog_add:false,
    dialog_list:false,
    dialog_delsub: false,
+    
+   dialog_add1:false,
+   dialog_add2:false,
+   dialog_list1:false,
+   dialog_list2:false,
+   dialog_delsub1:false,
+    dialog_delsub2: false,
+       dialog_delsub3: false,
    selected: [],
    filter:'',
    errores: null,
@@ -550,6 +840,108 @@ proyecto:{},
          sortable: true,
         },
    ],
+   subcol1: [
+        {
+          name: "nombre",
+          label: "Nombre completo",
+          align: "left",
+      
+         field:"nombre",
+         sortable: true,
+        },
+         {
+          name: "fecha",
+          required: true,
+          label: "Fecha nac.",
+          align: "left",
+          field:"fecha",
+          sortable: true,
+        },
+        {
+          name: "ci",
+          required: true,
+          label: "C.I.",
+          align: "left",
+          field:"ci",
+          sortable: true,
+        },
+        {
+          name: "opcion",
+          label: "opcion",
+          align: "rigth",
+          field:"opcion",
+         sortable: true,
+        },
+   ],
+   subcol2: [
+        {
+          name: "nit",
+          required: true,
+          label: "N.I.T.",
+          align: "left",
+          field:"nit",
+          sortable: true,
+        },
+        {
+          name: "nombre",
+          label: "Nombre de la Empresa",
+          align: "left",
+         field:"nombre",
+         sortable: true,
+        },
+        {
+          name: "monto",
+          label: "Monto Ofertado",
+          align: "left",
+         field:"monto",
+         sortable: true,
+        },    
+        {
+          name: "opcion",
+          label: "opcion",
+          align: "rigth",
+          field:"opcion",
+         sortable: true,
+        },
+   ],
+    subcol3: [
+         {
+          name: "codigo",
+          required: true,
+          label: "codigo",
+          align: "left",
+          field:"codigo",
+          sortable: true,
+        },
+        {
+          name: "nombre",
+          label: "Nombre de la Sociedad",
+          align: "left",
+         field:"nombre",
+         sortable: true,
+        },    
+          {
+          name: "monto",
+          label: "Monto Ofertado",
+          align: "left",
+         field:"monto",
+         sortable: true,
+        },    
+         {
+          name: "asociados",
+          label: "asociados",
+          align: "left",
+         field:"asociados",
+         sortable: true,
+        },    
+        {
+          name: "opcion",
+          label: "opcion",
+          align: "rigth",
+          field:"opcion",
+         sortable: true,
+        },
+   ],
 
    data:[],
    dato:{},
@@ -557,6 +949,17 @@ proyecto:{},
    dato2:{},
    dato3:{},
    options:{},
+    opciones: [
+        {
+          label: 'Empresa',
+          value: 'op1'
+        },
+        {
+          label: 'Sociedad Accidental',
+          value: 'op2'
+        }
+      ],
+      group: 'op1',
       };
   },
   created(){
@@ -581,7 +984,7 @@ proyecto:{},
     misdatos(){
     this.$q.loading.show();
        this.$api.get(process.env.API+"/proyectos").then((res)=>{
-        console.log(res.data)
+      //  console.log(res.data)
          this.data =res.data;
     this.$q.loading.hide();
        });
@@ -645,17 +1048,49 @@ proyecto:{},
       this.dialog_add = true;
     },
     addRow1(item) {
-      this.proyecto= item.row;
-      this.$router.push({name:'detalle1',params:{title:'hola11111'}});
-      console.log(this.proyecto);
+      //this.proyecto= item.row;
+     // this.$router.push({name:'detalle1',params:{title:'hola11111'}});
+      this.dato2 = item.row;
+       this.codigo={}
+   //   console.log(this.dato2)
+        if (this.dato2.tipo_id===2)
+         {
+                 this.dialog_add1 = true;
+         }else{
+                 this.dialog_add2 = true;
+         }  
+
+     // console.log(this.proyecto);
     },
      verRow(item) {
       this.dato2 = item.row;
       this.dialog_list = true;
     },
+    verRow1(item) {
+      this.dato2 = item.row;
+       if (this.dato2.tipo_id===2)
+         {
+                  this.dialog_list1 = true;
+         }else{
+                 this.dialog_list2 = true;
+         }  
+     
+    },
     deletesub(item) {
       this.dato3 = item.row;
       this.dialog_delsub = true;
+    },
+     deletesub1(item) {
+      this.dato3 = item.row;
+      this.dialog_delsub1 = true;
+    },
+    deletesub2(item) {
+      this.dato3 = item.row;
+      this.dialog_delsub2 = true;
+    },
+    deletesub3(item) {
+      this.dato3 = item.row;
+      this.dialog_delsub3 = true;
     },
     onDelsub() {
       this.$q.loading.show();
@@ -667,17 +1102,19 @@ proyecto:{},
                          mssage: "Eliminado correctamente",
         });
         this.dialog_delsub = false; 
+        this.dialog_list = false; 
         this.misdatos();
       });
     },
+   
     onAdd() {
       this.$q.loading.show();
        this.$api.get(process.env.API + "/codigofound/"+this.codigo.nombre).then((res1) => {
-        console.log(res1.data)
+        //console.log(res1.data)
             if(res1.data.length===0) {
               this.$api.post(process.env.API + "/codigos/", this.codigo).then((res2) => {
-                    console.log("adicionado correctamente")
-                         console.log(res2.data) 
+                 //   console.log("adicionado correctamente")
+                  //       console.log(res2.data) 
                      this.$api.put(process.env.API + "/codigoproyectos1/"+this.dato2.id,res2.data).then((res) => {
                               this.$q.notify({
                           color: "green-4",
@@ -687,14 +1124,14 @@ proyecto:{},
                         });
                        this.dialog_add = false;
                         this.misdatos(); 
-                         console.log("entro a nuevo")
-                         console.log(res.data) 
+                         //console.log("entro a nuevo")
+                        // console.log(res.data) 
                         });
                     });    
               
            }else{
-                console.log("encontrado correctamente")
-                         console.log(res1.data) 
+               // console.log("encontrado correctamente")
+                   //      console.log(res1.data) 
                   this.$api.put(process.env.API + "/codigoproyectos1/"+this.dato2.id,res1.data[0]).then((res) => {
                               this.$q.notify({
                           color: "green-4",
@@ -704,13 +1141,166 @@ proyecto:{},
                         });
                        this.dialog_add = false;
                         this.misdatos();  
-                         console.log(res.data)
+                        // console.log(res.data)
                         });
-
-
            }
        });
      },
+      onAdd1() {
+      this.$q.loading.show();
+       this.$api.get(process.env.API + "/consultorci/"+this.codigo.ci).then((res1) => {
+      //  console.log(res1.data)
+            if(res1.data.length===0) {
+                      this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "consultor no registrado,  registre porfavor",
+                        });
+                       this.dialog_add1 = false;
+                 this.$q.loading.hide();       
+           }else{
+                  this.$api.put(process.env.API + "/personaproyectos/"+this.dato2.id,res1.data[0]).then((res) => {
+                              this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Agregado Correctamente",
+                        });
+                       this.dialog_add1 = false;
+                        this.misdatos();  
+                        // console.log(res.data)
+                        });
+                       
+           }
+       });
+     },
+      onDelsub1() {
+      this.$q.loading.show();
+       this.$api.put(process.env.API + "/personaproyectosdetach/"+this.dato2.id,this.dato3).then((res) => {
+                              this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                           mssage: "Eliminado correctamente",
+        });
+        this.dialog_delsub1 = false; 
+        this.dialog_list1 = false; 
+        this.misdatos();
+      });
+    },
+     onDelsub2() {
+      this.$q.loading.show();
+       this.$api.put(process.env.API + "/empresaproyectosdetach/"+this.dato2.id,this.dato3).then((res) => {
+                              this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                           mssage: "Eliminado correctamente",
+        });
+        this.dialog_delsub2 = false; 
+        this.dialog_list2 = false; 
+        this.misdatos();
+      });
+    },
+     onDelsub3() {
+      this.$q.loading.show();
+       this.$api.put(process.env.API + "/sociedadproyectosdetach/"+this.dato2.id,this.dato3).then((res) => {
+                              this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                           mssage: "Eliminado correctamente",
+        });
+        this.dialog_delsub3 = false; 
+        this.dialog_list2 = false; 
+        this.misdatos();
+      });
+    },
+       onAdd2() {
+      this.$q.loading.show();
+      if (this.group==='op1'){
+        //es empresa
+       this.$api.get(process.env.API + "/empresanit/"+this.codigo.nit).then((res1) => {
+      //  console.log(res1.data)
+            if(res1.data.length===0) {
+                      this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Empresa no registrado,  registre porfavor",
+                        });
+                       this.dialog_add2 = false;
+                 this.$q.loading.hide();       
+           }else{
+
+
+                  this.$api.put(process.env.API + "/empresaproyectos/"+this.dato2.id,res1.data[0]).then((res) => {
+                     
+                      this.$api.get(process.env.API + "/detalle").then((res2) => {
+                       // console.log('id encontrado')   
+                        //console.log(res2.data)   
+                         
+                           this.$api.put(process.env.API + "/setmonto/"+res2.data,this.codigo).then((res) => {
+                           // console.log('adicionado el monto')    
+                              
+                     this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Agregado Correctamente",
+                        });
+                        // console.log('respuesta del join emporesa')
+                       // console.log(res.data)
+                       this.dialog_add2 = false;
+                        this.misdatos();                                   
+                       });                                   
+                       });
+                        });
+
+           }
+       });
+    
+       }else{
+         //es sociedad accidental
+           this.$api.get(process.env.API + "/sociedadcodigo/"+this.codigo.codigo).then((res1) => { 
+          // console.log(res1.data)
+            if(res1.data.length===0) {
+                      this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Sociedad accidental No registrado,  registre porfavor",
+                        });
+                       this.dialog_add2 = false;
+                 this.$q.loading.hide();       
+           }else{
+                  this.$api.put(process.env.API + "/sociedadproyectos/"+this.dato2.id,res1.data[0]).then((res) => {
+
+                       this.$api.get(process.env.API + "/detalle").then((res2) => {
+                       // console.log('id encontrado')   
+                        //console.log(res2.data)   
+                         
+                           this.$api.put(process.env.API + "/setmonto/"+res2.data,this.codigo).then((res) => {
+                           // console.log('adicionado el monto')    
+                              
+                              this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Agregado Correctamente",
+                        });
+                       this.dialog_add2 = false;
+                        this.misdatos();  
+                        // console.log(res.data)
+                        });
+                        });
+                        });
+           }
+          });
+       }
+       },
+
     deleteRow(item) {
       this.dato2 = item.row;
       this.dialog_del = true;
@@ -725,8 +1315,7 @@ proyecto:{},
          message: "Eliminado correctamente",
        });
         this.dialog_del = false;
-        this.misdatos();
-        
+        this.misdatos();    
       });
     },
      onSubmit() {
@@ -736,7 +1325,7 @@ proyecto:{},
        this.dato.departamento_id=this.depa.value;
        this.dato.programa_id=this.prog.value;
        this.dato.tipo_id=this.tipo.value;
-      console.log(this.dato)
+   //   console.log(this.dato)
       this.$api.post(process.env.API+"/proyectos/", this.dato).then((res) => {
        
          if(res.data.res===true)
@@ -786,10 +1375,7 @@ proyecto:{},
           this.errores = e.response.data.errors;
         });
     }, 
-    
-
     exportTable () {
-    
      const content = [columns.map(col => wrapCsvValue(col.label))].concat(
           this.data.map(row => columns.map(col => wrapCsvValue(
             typeof col.field === 'function'

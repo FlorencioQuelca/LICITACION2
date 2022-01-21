@@ -2,16 +2,23 @@
    <div class="q-pa-md">
      <q-btn
       label="Nueva Sociedad/Asociacion Accidental"
-      color="positive"
+      color="blue"
       icon="add_circle"
       @click="alert = true"
       class="q-mb-xs"
     />
      <q-btn
       label="Empresa"
-      color="negative"
+      color="red"
       icon="add_circle"
       @click= "this.$router.push('Empresa')"
+      class="q-mb-xs"
+    />
+     <q-btn
+      label="ir a Proyectos"
+      color="green"
+      icon="add_circle"
+      @click= "this.$router.push('Proyecto')"
       class="q-mb-xs"
     />
       <!--          ADICIONAR REGISTRO -->
@@ -24,6 +31,15 @@
           <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
              <div class="row">
              <div class="col-6">
+                <q-input
+              outlined
+              v-model="dato.codigo"
+              type="number"
+              label="Codigo"
+              hint="Ingresar codigo Identificativo"  
+               lazy-rules
+              :rules="[v => !!v || 'Telefono requerido']"
+            />
               <q-input
               outlined
               v-model="dato.nombreEmpresa"
@@ -41,9 +57,7 @@
             type="text"
             hint="Seleccionar Departamento"
            />
-          
-           
-             <q-input
+          <q-input
               outlined
               v-model="dato.nombreLegal"
               type="text"
@@ -54,8 +68,6 @@
             />
              </div>
              <div class="col-6">
-                
-            
             <q-input
               outlined
               v-model="dato.fono1"
@@ -70,8 +82,7 @@
               v-model="dato.fono2"
               type="number"
               label="Celular o Telefono 2"
-              hint="Ingresar Numero de Telefono"
-              
+              hint="Ingresar Numero de Telefono"  
             />
               <q-input
               outlined
@@ -133,14 +144,17 @@
           <q-td key="departamento" :props="props">
             {{props.row.departamento}}
           </q-td>
+            <q-td key="codigo" :props="props">
+            {{props.row.codigo}}
+          </q-td>
           <q-td key="nombreEmpresa" :props="props">
             {{props.row.nombreEmpresa}}
           </q-td>
-           <q-td key="asociados" :props="props">
+           <q-td key="empresas" :props="props">
               <ul>
-              <span v-for="(asociados,index) in props.row.asociados" :key="index">
+              <span v-for="(empresas,index) in props.row.empresas" :key="index">
                   <li>
-                    {{asociados.empresa.nit}}  ({{asociados.participacion}}) % - {{asociados.empresa.nombreEmpresa}}         
+                    {{empresas.nit}}  ({{empresas.pivot.participacion}}) % - {{empresas.nombreEmpresa}}         
                 </li>
               </span>
             </ul>
@@ -179,10 +193,7 @@
           <q-td key="direccion" :props="props">
             {{props.row.direccion}}
           </q-td>
-           
-          
-          <q-td key="action" :props="props">
-                  
+          <q-td key="action" :props="props">      
              <q-btn
               dense
               round
@@ -191,7 +202,6 @@
               @click="editRow(props)"
               icon="edit"
           />
-         
             <q-btn
               dense
               round
@@ -232,6 +242,15 @@
           <q-form @submit="onMod" class="q-gutter-md">
                <div class="row">
              <div class="col-6">
+               <q-input
+              outlined
+              v-model="dato2.codigo"
+              type="number"
+              label="Codigo"
+              hint="Ingresar codigo Identificativo"  
+               lazy-rules
+              :rules="[v => !!v || 'Telefono requerido']"
+            />
            <q-input
               outlined
               v-model="dato2.nombreEmpresa"
@@ -515,8 +534,10 @@ import Empresa from "pages/Empresa"
 }
 const  columns= [
   { name: 'departamento', align:"left",label: 'Departamento', field: 'departamento', sortable: true },
+   { name: 'codigo',required:true,align:"left", label: 'Codigo', field: 'codigo',sortable: true },
   { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
-  { name: 'asociados',align:"left", label: 'Asociados', field: 'asociados', sortable: true },
+ 
+  { name: 'empresas',align:"left", label: 'Asociados', field: 'empresas', sortable: true },
    { name: 'opcion',align:"center",label: 'Accion', field: 'opcion', sortable: false },
   { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
   { name: 'fono1', align:"center",label: 'Celular', field: 'fono1', sortable: true },
@@ -561,7 +582,7 @@ export default {
         'EXTRANGERO',
       ],
        subcol: [
-         { name: "codigo", required: true,label: "N° Sociedad", align: "left",field:(row) => row.sociedad_id,sortable: true },
+         { name: "codigo", required: true,label: "N° Sociedad", align: "left",field:(row) => row.codigo,sortable: true },
          { name: "nit", label: "NIT", align: "left",field: "nit",sortable: true,},
          { name: "empresa",align: "left",label: "Nombre Empresa",field: "empresa", sortable: true },   
          { name: "participacion",align: "left",label: "Participacion",field: "participacion",sortable: true},

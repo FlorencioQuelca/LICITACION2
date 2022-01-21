@@ -2,9 +2,23 @@
    <div class="q-pa-md">
      <q-btn
       label="Nueva Empresa"
-      color="positive"
+      color="orange"
       icon="add_circle"
       @click="alert = true"
+      class="q-mb-xs"
+    />
+     <q-btn
+      label="ir a Proyectos"
+      color="green"
+      icon="add_circle"
+      @click= "this.$router.push('Proyecto')"
+      class="q-mb-xs"
+    />
+    <q-btn
+      label="ir a Sociedad"
+      color="blue"
+      icon="add_circle"
+      @click= "this.$router.push('Sociedad')"
       class="q-mb-xs"
     />
       <!--          ADICIONAR REGISTRO -->
@@ -104,7 +118,7 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-  <!--          tabla -->
+  <!--          tabla PRINCIPAL -->
     <q-table
       :filter="filter"
       title="EMPRESAS REGISTRADAS"

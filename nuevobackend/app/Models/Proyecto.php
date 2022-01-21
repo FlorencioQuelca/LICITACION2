@@ -41,14 +41,17 @@ class Proyecto extends Model
     }
     //relacion muchos a muchospolimorfica
     public function empresas(){
-        return $this->morphedByMany('App\Models\Empresa','detalle');
+        return $this->morphedByMany('App\Models\Empresa','detalle')->withPivot(['monto']);
      }
      //relacion muchos a muchos polimorfica
     public function personas(){
-        return $this->morphedByMany('App\Models\Persona','detalle');
+        return $this->morphedByMany('App\Models\Persona','detalle')->withPivot(['monto']);
      }
      //relacion uno a muchos
     public function sociedads(){
-        return $this->morphedByMany('App\Models\Sociedad','detalle');
+        return $this->morphedByMany('App\Models\Sociedad','detalle')->withPivot(['monto']);
      }
+
+     // otros
+     
 }

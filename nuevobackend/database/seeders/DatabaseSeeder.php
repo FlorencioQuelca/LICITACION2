@@ -16,25 +16,27 @@ class DatabaseSeeder extends Seeder
        
        //  \App\Models\User::factory(10)->create();
        //  \App\Models\Persona::factory(10)->create();
-         \App\Models\Empresa::factory(10)->create();
-         \App\Models\Sociedad::factory(10)->create();
+        \App\Models\Empresa::factory(10)->create();
+        \App\Models\Sociedad::factory(10)->create();
         
          $this->call([
             TipoSeeder::class,
             ProgramaSeeder::class,
             DepartamentoSeeder::class,
-            AsociadoSeeder::class,
+           // AsociadoSeeder::class,
+            EmpresaSociedadSeeder::class,
             
             UserSeeder::class,
-             PermisoSeeder::class,
+            PermisoSeeder::class,
             PermisoUserSeeder::class,
             
             ProyectoSeeder::class,
             CodigoSeeder::class,
-            CodigoProyectoSeeder::class,
+           
             PersonaSeeder::class,
 
             DetalleSeeder::class,
+            CodigoProyectoSeeder::class,
             
         ]);
 

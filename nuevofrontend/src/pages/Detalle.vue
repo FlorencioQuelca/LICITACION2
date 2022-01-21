@@ -1,18 +1,55 @@
 <template> 
    <div class="q-pa-md">
      <q-btn
-      label="Nuevo"
+      label="Nuevo Consultor/Supervisor"
       color="positive"
       icon="add_circle"
       @click="alert = true"
       class="q-mb-xs"
     />
+     <div class="row">
+        <div class="col-3">
+          <q-option-group
+            v-model="group"
+            :options="options"
+            color="primary"
+            inline
+          />
+        </div> 
+
+  <div class="col-3">
+        <q-select
+             outlined
+            :options="generos"
+            label="proyecto"
+            type="text"
+            hint="Seleccionar nombre del Proyecto"
+           />
+         </div>  
+    <div class="col-3">
+     <q-input
+              type="text"
+              label="C.I."
+              hint="Ingresar CI, NIT O NOMBRE  SEGUN CORRESPONDA"
+            />
+            </div>
+    <div class="col-3">
+     <q-btn
+      label="Buscar"
+      color="positive"
+      icon="add_circle"
+      @click="alert = true"
+      class="q-mb-xs"
+    />
+     </div>
+
+  </div>
       <!--          ADICIONAR REGISTRO -->
    <q-dialog v-model="alert">
       <q-card style="max-width: 80%; width: 80%">
        
         <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6"><q-icon name="add_circle" /> Nuevo </div>
+          <div class="text-h6"><q-icon name="add_circle" /> Nuevo Consultor</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
           <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
@@ -135,7 +172,7 @@
 
     <q-table
       :filter="filter"
-      title="DETALLE"
+      title="CONSULTORES REGISTRADOS"
       :rows="data"
       :columns="columns"
       row-key="ci"
@@ -404,16 +441,18 @@ export default {
       'HOMBRE',
       'MUJER'
   ],
-   grados: [
-        'LIC.',
-        'ING.',
-        'ABG.',
-        'DIP.',
-        'PHD.',
-        'MED.',
-        'MSC.',
+  options: [
+        {
+          label: 'Consultor',
+          value: 'op1'
+        },
+        {
+          label: 'Empresa/Sociedad',
+          value: 'op2'
+        }
       ],
-  
+   group: 'op1',
+   
    
    data:[],
    dato:{},
@@ -443,8 +482,8 @@ export default {
     },
     misdatos(){
     this.$q.loading.show();
-       this.$api.get(process.env.API+"/detalle").then((res)=>{
-         console.log(res.data)
+       this.$api.get(process.env.API+"/consultor").then((res)=>{
+         //console.log(res.data)
          this.data =res.data;
     this.$q.loading.hide();
        });

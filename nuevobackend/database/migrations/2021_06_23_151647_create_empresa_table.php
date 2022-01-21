@@ -16,7 +16,7 @@ class CreateEmpresaTable extends Migration
         Schema::create('empresas', function (Blueprint $table) {
             $table->id();
             $table->string('nombreEmpresa')->nullable();   
-            $table->string('nit',20)->unique();    
+            $table->bigInteger('nit')->unique();    
             $table->string('nombreLegal')->nullable();
             $table->text('direccion')->nullable();
             $table->integer('fono1')->nullable();
@@ -25,8 +25,6 @@ class CreateEmpresaTable extends Migration
             $table->string('departamento',20)->nullable();
             $table->text('observacion',100)->default("NINGUNA");
             $table->timestamps();
-
-           
         });
     }
 

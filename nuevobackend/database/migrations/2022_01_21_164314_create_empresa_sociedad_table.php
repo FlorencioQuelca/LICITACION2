@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAsociadosTable extends Migration
+class CreateEmpresaSociedadTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateAsociadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('asociados', function (Blueprint $table) {
+        Schema::create('empresa_sociedad', function (Blueprint $table) {
             $table->id();
-            $table->integer('num')->nullable();
             $table->integer('participacion');
             $table->unsignedBigInteger('empresa_id')->nullable();
             $table->unsignedBigInteger('sociedad_id')->nullable();
@@ -38,6 +37,6 @@ class CreateAsociadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asociados');
+        Schema::dropIfExists('empresa_sociedad');
     }
 }

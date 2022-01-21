@@ -14,9 +14,8 @@ class DetalleController extends Controller
      */
     public function index()
     {
-        $detalle = Detalle::with(['proyecto'])->get();
+        $detalle = Detalle::max('id');
         return \response()->json($detalle, 200);
-    
     }
 
     /**
@@ -84,4 +83,11 @@ class DetalleController extends Controller
     {
         //
     }
+    public function setmonto(Request $request,$id){
+      
+        $detalle = Detalle::find($id);
+        $detalle->monto = $request->monto;
+      return   $detalle->save();
+    }
+
 }
