@@ -27,8 +27,11 @@ class CreatePersonaTable extends Migration
             $table->integer('fono1')->nullable();
             $table->integer('fono2')->nullable();
             $table->string('email')->nullable();
-            $table->string('genero',10)->nullable();
-            $table->text('observacion',100)->default('NINGUNA');
+            $table->string('genero',10)->nullable('HOMBRE');
+            $table->text('observacion',100)->default('FUNCIONARIO PUBLICO');
+            $table->string('departamento')->nullable('CENTRAL');
+            $table->string('status')->default('ACTIVO');
+
             $table->timestamps();
         });
     }

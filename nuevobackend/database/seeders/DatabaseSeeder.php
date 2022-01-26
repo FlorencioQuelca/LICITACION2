@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
             TipoSeeder::class,
             ProgramaSeeder::class,
             DepartamentoSeeder::class,
-           // AsociadoSeeder::class,
             EmpresaSociedadSeeder::class,
             
             UserSeeder::class,
@@ -38,6 +37,8 @@ class DatabaseSeeder extends Seeder
             DetalleSeeder::class,
             CodigoProyectoSeeder::class,
             
+            CategoriaSeeder::class,
+            ContratoSeeder::class,
         ]);
 
     }

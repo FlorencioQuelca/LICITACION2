@@ -20,7 +20,7 @@ class EmpresaController extends Controller
             $empresa = Empresa::where('nit','like',"%{$request->txtBuscar}%")
            //return $personas;//->whereCi($request->txtBuscar)
                             ->orWhere('nombreEmpresa', 'like', "%{$request->txtBuscar}%")
-                            ->get();
+                            ->orderByDesc('id')->get();
               return \response()->json($empresa,200);
            }
             catch(\Exception $e){
@@ -29,16 +29,6 @@ class EmpresaController extends Controller
            
     }
     
-    public function empresanit($id){
-        return Empresa::where('nit',$id)->get();
-        
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(CreateEmpresaRequest $request)
     {
         $imput = $request->all();
@@ -58,13 +48,7 @@ class EmpresaController extends Controller
          return \response()->json($empresa,200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(UpdateEmpresaRequest $request, $id)
     {
         $imput = $request->all();
@@ -73,12 +57,7 @@ class EmpresaController extends Controller
         return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy($id)
     {
         try{
@@ -89,4 +68,9 @@ class EmpresaController extends Controller
             return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
         }
     }
+    public function empresanit($id){
+        return Empresa::where('nit',$id)->get();
+        
+    }
+    
 }

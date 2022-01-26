@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAsociadosTable extends Migration
+class CreatePersonaProyectoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,17 @@ class CreateAsociadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('asociados', function (Blueprint $table) {
+        Schema::create('persona_proyecto', function (Blueprint $table) {
             $table->id();
-            $table->integer('num')->nullable();
-            $table->integer('participacion');
-            $table->unsignedBigInteger('empresa_id')->nullable();
-            $table->unsignedBigInteger('sociedad_id')->nullable();
-            $table->foreign('empresa_id')
+            $table->unsignedBigInteger('persona_id')->nullable();
+            $table->unsignedBigInteger('proyecto_id')->nullable();
+            $table->foreign('proyecto_id')
                             ->references('id')
-                            ->on('empresas')
+                            ->on('proyectos')
                             ->onDelete('set null')->onUpdate('cascade');                   
-          $table->foreign('sociedad_id')
+          $table->foreign('persona_id')
                           ->references('id')
-                          ->on('sociedads')
+                          ->on('personas')
                           ->onDelete('set null')->onUpdate('cascade');
             $table->timestamps();
         });
@@ -38,6 +36,6 @@ class CreateAsociadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asociados');
+        Schema::dropIfExists('persona_proyecto');
     }
 }

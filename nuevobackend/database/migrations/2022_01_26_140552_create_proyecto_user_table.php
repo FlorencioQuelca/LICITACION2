@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmpresaSociedadTable extends Migration
+class CreateProyectoUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CreateEmpresaSociedadTable extends Migration
      */
     public function up()
     {
-        Schema::create('empresa_sociedad', function (Blueprint $table) {
+        Schema::create('proyecto_user', function (Blueprint $table) {
             $table->id();
-            $table->integer('participacion')->default(0);
-            $table->unsignedBigInteger('sociedad_id')->nullable();
-            $table->unsignedBigInteger('empresa_id')->nullable();
-            $table->foreign('empresa_id')
+           /*  $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('proyecto_id')->nullable();
+            $table->foreign('proyecto_id')
                             ->references('id')
-                            ->on('empresas')
+                            ->on('proyectos')
                             ->onDelete('set null')->onUpdate('cascade');                   
-          $table->foreign('sociedad_id')
+          $table->foreign('user_id')
                           ->references('id')
-                          ->on('sociedads')
-                          ->onDelete('set null')->onUpdate('cascade');
+                          ->on('users')
+                          ->onDelete('set null')->onUpdate('cascade'); */
             $table->timestamps();
         });
     }
@@ -37,6 +36,6 @@ class CreateEmpresaSociedadTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('empresa_sociedad');
+        Schema::dropIfExists('proyecto_user');
     }
 }

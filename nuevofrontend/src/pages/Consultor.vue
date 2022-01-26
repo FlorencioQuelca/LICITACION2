@@ -30,6 +30,7 @@
               v-model="dato.ci"
               type="text"
               label="C.I."
+              mask="####XXXXXXXXXXX"
               hint="Ingresar Cedula de Identidad"
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
@@ -126,7 +127,20 @@
               type="text"
               label="Direccion Domiciliaria"
               hint="Ingresar Direccion Domiciliaria"
-             
+            />
+                <q-option-group
+                v-model="dato.observacion"
+                :options="[{label:'Servidor publico', value:'SERVIDOR PUBLICO'},{label:'Natural', value:'NATURAL'}]"
+                color="primary"
+                inline
+              />
+                 <q-input v-if='dato.observacion==="SERVIDOR PUBLICO"'
+              outlined
+              v-model="dato.departamento"
+              type="text"
+              label="departamento"
+              mask="XXXXXXXXXXXX"
+              hint="Ingresar departamento de trabajo"
             />
              </div>
              </div>
@@ -349,7 +363,20 @@
               type="text"
               label="Direccion Domiciliaria"
               hint="Ingresar Direccion Domiciliaria"
-            
+            />
+            <q-option-group
+                v-model="dato2.observacion"
+                :options="[{label:'Servidor publico', value:'SERVIDOR PUBLICO'},{label:'Natural', value:'NATURAL'}]"
+                color="primary"
+                inline
+              />
+                 <q-input v-if='dato.observacion==="SERVIDOR PUBLICO"'
+              outlined
+              v-model="dato2.departamento"
+              type="text"
+              label="departamento"
+              mask="XXXXXXXXXXXX"
+              hint="Ingresar departamento de trabajo"
             />
              </div>
              </div>

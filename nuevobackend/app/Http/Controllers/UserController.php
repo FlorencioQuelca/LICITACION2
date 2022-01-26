@@ -41,7 +41,7 @@ class UserController extends Controller
 
     //CRUD
     public function index(){
-        return User::with('unid')->with('permisos')->where('id', '!=', 1)->get();
+        return User::with('unid')->with('permisos')->where('id', '!=', 1)->orderByDesc('id')->get();
     }
     public function store(Request $request){
         //        return ;
@@ -89,5 +89,8 @@ class UserController extends Controller
     public function me(Request $request){
         $user = User::where('id', $request->user()->id)->with('unid')->with('permisos')->firstOrFail();
         return $user;
+    }
+    public function userci($id){
+        return User::where('ci',$id)->get();
     }
 }

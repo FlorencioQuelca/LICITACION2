@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
+
 
 use App\Models\Sociedad;
+use App\Models\Empresa;
+use Illuminate\Http\Request;
 
 use App\Http\Requests\CreateSociedadAccidentalRequest;
 use App\Http\Requests\UpdateSociedadAccidentalRequest;
@@ -19,8 +21,8 @@ class SociedadController extends Controller
     public function index()
     {
         try{  
-            $sociedades = Sociedad::with('empresas')->get();
-              return \response()->json($sociedades,200);
+            $sociedad = Sociedad::with('empresas')->orderByDesc('id')->get();
+              return \response()->json($sociedad,200);
            }
            catch(\Exception $e){
             return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
@@ -32,7 +34,7 @@ class SociedadController extends Controller
       return \response()->json($detalles, 200);
     }
 
-    public function store(CreateSociedadAccidentalRequest $request)
+    public function store(Request $request)
     {
         $imput = $request->all();
         $sociedadAccidental = Sociedad::create($imput);
@@ -49,7 +51,7 @@ class SociedadController extends Controller
     }
 
     
-    public function update(UpdateSociedadAccidentalRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $imput = $request->all();
         $sociedadaccidental = Sociedad::find($id);
@@ -71,6 +73,15 @@ class SociedadController extends Controller
     public function sociedadcodigo($id){
         return Sociedad::where('codigo',$id)->get();
     }
+    public function empresaSociedad(Request $request, Sociedad $sociedad){
+        $empresa = Empresa::find($request->id);
+     //   $sociedad = Sociedad::find($sociedad->id);
+        $sociedad->empresas()->attach($empresa,['participacion'=>$request->participacion]);    
+     }
+     public function empresasociedaddetach(Request $request,Sociedad $sociedad){
+        $empresa = Empresa::find($request->id);
+        $sociedad->empresas()->detach($empresa->id);
+     }
+     
     
-
 }

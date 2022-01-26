@@ -25,6 +25,8 @@ class User extends Authenticatable
         'email',
         'tipo',
         'fechalimite',
+        'ci',
+        'status'
         
     ];
     /**
@@ -36,9 +38,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'created_at',
-        'updated_at'
-        
-       
+        'updated_at',
+        'email_verified_at',
+        'api_token',
     ];
 
     /**
@@ -53,6 +55,12 @@ class User extends Authenticatable
      public function permisos()
      {
          return $this->belongsToMany(Permiso::class);
+     }
+     public function proyectos(){
+        return $this->belongsToMany(Proyecto::class);
+     }
+     public function contratos(){
+         return $this->hasMany(Contrato::class);
      }
    
 }

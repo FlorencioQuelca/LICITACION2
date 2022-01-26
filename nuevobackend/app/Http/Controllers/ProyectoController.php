@@ -7,13 +7,18 @@ use App\Models\Codigo;
 use App\Models\Persona;
 use App\Models\Empresa;
 use App\Models\Sociedad;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProyectoController extends Controller
 {
    
     public function index(){
-        $proyectos = Proyecto::with(['sociedads.asociados','personas','empresas','programa', 'tipo', 'departamento','codigos'])->get();
+        $proyectos = Proyecto::with(['sociedads.asociados','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])->orderByDesc('id')->get();
+        return \response()->json($proyectos, 200);
+    }   
+    public function proyectoslibre(){
+        $proyectos = Proyecto::with(['sociedads.asociados','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])->orderByDesc('id')->get();
         return \response()->json($proyectos, 200);
     }   
     public function create()
@@ -88,6 +93,13 @@ class ProyectoController extends Controller
         $proyecto->sociedads()->detach($sociedad->id);
      }
      
-
+        public function funcionarioproyectos(Request $request,Proyecto $proyecto){
+            $funcionario = Persona::find($request->id);
+            $proyecto->funcionarios()->attach($funcionario);       
+         }
+         public function funcionarioproyectosdetach(Request $request,Proyecto $proyecto){
+            $funcionario = Persona::find($request->id);
+            $proyecto->funcionarios()->detach($funcionario->id);
+         }
 
 }

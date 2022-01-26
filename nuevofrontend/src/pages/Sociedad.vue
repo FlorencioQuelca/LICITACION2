@@ -342,11 +342,9 @@
               type="text"
               label="N.I.T."
               hint="Ingresar Numero de NIT"
-              lazy-rules
-              :rules="[v => !!v || 'Dato requerido']"
+             
             /> 
-            <q-btn icon="search" label="buscar Empresa" color="primary" @click="buscarEmpresa"   />  
-            {{respuesta}}
+           
              <q-input
               outlined
               v-model="participacion"
@@ -356,9 +354,7 @@
               lazy-rules
               :rules="[v => !!v || 'Dato requerido']"
             /> 
-              <div>
-                {{nit}} , {{respuesta.length}}, {{total}}
-                </div>
+             
 
             <q-card-actions align="right">
               <q-btn icon="send" label="Agregar" color="deep-orange" type="submit" />
@@ -378,27 +374,23 @@
         </q-card-section>
         <q-card-section class="q-pt-xs">
       
-          <q-form @submit="onAdd" class="q-gutter-md">
+          <q-form @submit.prevent="onAdd" class="q-gutter-md">
             <q-input
               outlined
               v-model="dat.nit"
-              type="number"
+              type="text"
               label="NIT empresa"
               hint="Ingresar NIT"
-              lazy-rules
-              :rules="[(val) => (val && val > 0) || 'Por favor ingresa datos']"
+               lazy-rules
+              :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
             />
-          <q-btn icon="search" label="buscar Empresa" color="primary" @click="buscarEmpresa"   />  
             <q-input
               outlined
               v-model="dat.participacion"
-              type="number"
+              type="text"
               label="Participacion"
               hint="Ingresar Paticipacion"
-              lazy-rules
-              :rules="[(val) => (val && val > 0) || 'Por favor ingresa datos']"
             />
-              {{mensaje}}
             <div>
               <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
@@ -410,40 +402,31 @@
    <!-- empresas asociados listar  />-->
    
     <q-dialog v-model="dialog_list">
-      <q-card style="max-width: 80%; width: 50%">
+      <q-card style="max-width: 80%; width: 60%">
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6">Lista de Asociados</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
                 <q-table
                     title="Empresas asociadas"
-                    :rows="asociados"
+                    :rows="dato3.empresas"
                     :columns="subcol"
                    
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
-          <q-td key="codigo" :props="props">
-            {{ props.row.sociedad_id}}
-          </q-td>
+          
             <q-td key="nit" :props="props">
-            {{ props.row.empresa.nit}}
+            {{ props.row.nit}}
           </q-td>
           <q-td key="empresa" :props="props">
-            {{ props.row.empresa.nombreEmpresa }}
+            {{ props.row.nombreEmpresa }}
           </q-td>
             <q-td key="participacion" :props="props">
-            {{ props.row.participacion }}
+            {{ props.row.pivot.participacion }}
           </q-td>
           <q-td>
-            <q-btn
-                        dense
-                        round
-                        flat
-                        color="yellow"
-                        @click="editsub(props)"
-                        icon="edit"
-                      ></q-btn>
+          
                       <q-btn
                         dense
                         round
@@ -462,43 +445,7 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-       <!-- empresas asociados editar empresa />-->
-    <q-dialog v-model="dialog_modsub">
-      <q-card style="max-width: 80%; width: 50%">
-        <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6">Modificar Empresa y/o Participacion</div>
-        </q-card-section>
-        <q-card-section class="q-pt-xs">
-          <q-form @submit="onModsub" class="q-gutter-md">
-            <q-input
-              filled
-              v-model="dato4.empresa.nit"
-              type="number"
-              label="NIT Empresa"
-              hint="Ingresar NIT"
-              lazy-rules
-              :rules="[(val) => (val && val> 0) || 'Por favor ingresa datos']"
-            />
-             <q-btn icon="search" label="buscar Empresa" color="primary" @click="buscarEmpresa"   />  
-            <q-input
-              filled
-              v-model="dato4.participacion"
-              type="number"
-              step="1"
-              label="Participacion"
-              hint="Ingresar % Participacion"
-              lazy-rules
-              :rules="[(val) => (val && val >= 0) || 'Por favor ingresa datos']"
-            />
-            {{mensaje}}
-            <div>
-              <q-btn label="Modificar" type="submit" color="positive" icon="add_circle" />
-              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
-            </div>
-          </q-form>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+
         <!-- empresas asociados eliminar empresa/>-->
     <q-dialog v-model="dialog_delsub">
       <q-card>
@@ -558,7 +505,7 @@ export default {
    dialog_add:false,
    dialog_list:false,
    dialog_addEmpresa:false,
-   dialog_modsub:false,
+
    dialog_delsub:false,
    selected: [],
    filter:'',
@@ -582,8 +529,7 @@ export default {
         'EXTRANGERO',
       ],
        subcol: [
-         { name: "codigo", required: true,label: "N° Sociedad", align: "left",field:(row) => row.codigo,sortable: true },
-         { name: "nit", label: "NIT", align: "left",field: "nit",sortable: true,},
+         { name: "nit",required: true, label: "NIT", align: "left",field: "nit",sortable: true,},
          { name: "empresa",align: "left",label: "Nombre Empresa",field: "empresa", sortable: true },   
          { name: "participacion",align: "left",label: "Participacion",field: "participacion",sortable: true},
       ],
@@ -596,7 +542,7 @@ export default {
    dato4:{},
    dato5:{},
    asociados:[],
-   dato3:{asociados:[]},
+   dato3:{},
     };
   },
   created(){
@@ -605,6 +551,7 @@ export default {
   methods:{
      onReset() {
       this.dato.nombreLegal = null;
+      this.dato.codigo = null;
       this.dato.mombreEmpresa = null;
       this.dato.departamento=null;
       this.dato.fono1 =null;
@@ -638,56 +585,33 @@ export default {
       this.dialog_addEmpresa = true;
     },
      addRow(item) {
-      this.dato5 = item.row;
-      this.dat.nit=null
-      this.dat.participacion=null
+      this.dato3 = item.row;
+      this.dat={}
       this.dialog_add = true;
     },
     verRow(item) {
       this.dato3 = item.row;
-      //console.log(this.dato3)
-      this.$api.get(process.env.API + "/asociadolist/"+this.dato3.id).then((res) => {
-           this.asociados=res.data
-           //console.log(res.data)
-         });
       this.dialog_list = true;
     },
-    editsub(item) {
-      this.dato4 = item.row;
-      this.dialog_modsub = true;
-    },
     deletesub(item) {
-      this.dato3 = item.row;
+      this.dato4 = item.row;
       this.dialog_delsub = true;
     },
-    onModsub() {
-      this.$q.loading.show();
-   
-      this.$api.put(process.env.API + "/asociado/" + this.dato4.id, this.dato4).then((res) => {
-          this.$q.notify({
-            color: "green-4",
-            textColor: "white",
-            icon: "cloud_done",
-            message: "Modificado correctamente",
-          });
-          this.dialog_modsub = false;
-          this.misdatos();
-        });
-       
-    },
+  
        onDelsub() {
       this.$q.loading.show();
-      this.$api.delete(process.env.API + "/asociado/" + this.dato3.id).then((res) => {
-        this.$q.notify({
-          color: "green-4",
-          textColor: "white",
-          icon: "cloud_done",
-          message: "Eliminado correctamente",
-        });
-        this.dialog_delsub = false;
-        this.misdatos();
-        //this.verRow();
-      });
+         this.$api.put(process.env.API + "/empresasociedaddetach/"+this.dato3.id,this.dato4).then((res) => {
+                         this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Desasociado Correctamente",
+                        });
+                       this.dialog_delsub=false;
+                        this.dialog_list = false;
+                        this.misdatos();                   
+                      });
+
     },
      onDel() {
       this.$q.loading.show();
@@ -754,56 +678,49 @@ export default {
         });
     }, 
     //adicion de empresas
-     onaddEmpresa(){
-      this.$q.loading.show();
-      this.$api.post(process.env.API + "/itemunidad" ,{
-        item_id:this.dato2.id,
-        unid_id:this.uni3.value
-      }).then((res) => {
-        console.log(res.data)
-        this.$q.notify({
-          color: "green-4",
-          textColor: "white",
-          icon: "cloud_done",
-          message: "Agregado",
-        });
-        this.dialog_unidad = false;
-        this.misdatos();
-      });
-    },
+   
      onAdd() {
       this.$q.loading.show();
-     
-       if (this.respuesta.length===0) 
-       {
+       this.$api.get(process.env.API+ "/empresanit/"+this.dat.nit).then((res1) => {
+          if (res1.data.length===0) {
          this.$q.notify({
             color: "red-4",
             textColor: "white",
             icon: "cloud_done",
-            message: "El Numero de Nit no fue encontrado Registre Porfavor",
+            message: "Empresa no registrada,  Registre Porfavor",
           });
-          this.$q.loading.hide();
+               this.dialog_add = false;
+            this.$q.loading.hide();
+
        }else{
-      //console.log(this.dato5)
-         this.$api.post(process.env.API + "/asociado/",{participacion:this.dat.participacion,empresa_id:this.respuesta[0].id,sociedad_id:this.dato5.id}).then((res) => {
-         // console.log(res.data)
-          this.$q.notify({
-            color: "green-4",
-            textColor: "white",
-            icon: "cloud_done",
-            message: "Agregado empresa correctamente",
-          });
-          this.dialog_add = false;
-          this.misdatos();
-        });
+                console.log(res1.data[0])
+                console.log(this.dato3.id)
+                res1.data[0].participacion=this.dat.participacion
+                this.$api.put(process.env.API + "/empresaSociedad/"+this.dato3.id,res1.data[0]).then((res) => {
+                     console.log('enlazado')   
+                     //console.log(res.data)   
+                    
+                     this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Agregado Correctamente",
+                        });
+                        // console.log('respuesta del join emporesa')
+                       // console.log(res.data)
+                        this.dialog_add = false;
+                        this.misdatos();                   
+                      });
        }
+
+
+       
+      });
+     
+      
     },
       buscarEmpresa(){
-             this.$api.get(process.env.API + "/empresanit/"+this.dat.nit).then((res) => {
-        //console.log(res.data)
-        this.respuesta=res.data
-        this.mensaje ="Empresa Encontrada : "+ this.respuesta[0].nombreEmpresa;
-      });
+            
        },
        
    

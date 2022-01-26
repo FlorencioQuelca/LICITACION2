@@ -15,10 +15,10 @@ class CreateDetallesTable extends Migration
     {
         Schema::create('detalles', function (Blueprint $table) {
             $table->id();
-            $table->double('tiempo')->nullable();
+            $table->integer('tiempo')->nullable();
             $table->integer('num')->nullable();
             $table->decimal('monto',10,2)->default(0);
-
+            $table->string('observacion')->nullable();    
             $table->unsignedBigInteger('detalle_id');
             $table->string('detalle_type');
 

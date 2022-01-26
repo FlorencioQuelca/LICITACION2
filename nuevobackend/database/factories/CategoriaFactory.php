@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\PresentadosProyectoEmpresa;
+use App\Models\Categoria;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PresentadosProyectoEmpresaFactory extends Factory
+class CategoriaFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = PresentadosProyectoEmpresa::class;
+    protected $model = Categoria::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +22,7 @@ class PresentadosProyectoEmpresaFactory extends Factory
     public function definition()
     {
         return [
-            "num"=> rand(0, 10),
-            "monto"=>$this->faker->randomNumber(2),
+            //
         ];
     }
 }

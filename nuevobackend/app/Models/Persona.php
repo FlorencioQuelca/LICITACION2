@@ -32,6 +32,10 @@ class Persona extends Model
     public function proyectos(){
         return $this->morphToMany('App\Models\Proyecto','detalle');
     }
-
+//
+    public function proyects(){
+        return $this->belongsToMany(Proyecto::class,'persona_proyecto');
+     }
+    
 }
    

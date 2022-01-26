@@ -39,6 +39,9 @@ class Proyecto extends Model
      public function codigos(){
         return $this->belongsToMany(Codigo::class);   
     }
+    public function funcionarios(){
+        return $this->belongsToMany(Persona::class,'persona_proyecto');
+     }
     //relacion muchos a muchospolimorfica
     public function empresas(){
         return $this->morphedByMany('App\Models\Empresa','detalle')->withPivot(['monto']);
@@ -51,7 +54,6 @@ class Proyecto extends Model
     public function sociedads(){
         return $this->morphedByMany('App\Models\Sociedad','detalle')->withPivot(['monto']);
      }
-
-     // otros
      
+
 }

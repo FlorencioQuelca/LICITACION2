@@ -28,6 +28,12 @@
 
           <q-item-section>Home</q-item-section>
         </q-item>
+           <q-item clickable v-ripple to="Licitaciones" exact>
+          <q-item-section avatar>
+            <q-icon color="teal" name="details" />
+          </q-item-section>
+          <q-item-section>Licitaciones</q-item-section>
+        </q-item>
 
         <q-item clickable v-ripple to="Login" exact>
           <q-item-section avatar>
@@ -49,7 +55,7 @@
             <q-icon color="teal" name="apartment" />
           </q-item-section>
 
-          <q-item-section>Asociaciones Accidentales</q-item-section>
+          <q-item-section>Sociedades</q-item-section>
         </q-item>
         <q-item clickable v-ripple to="Consultor" exact>
           <q-item-section avatar>
@@ -65,17 +71,14 @@
 
           <q-item-section>Proyectos</q-item-section>
         </q-item>
-        <q-item clickable v-ripple to="Detalle" exact>
-          <q-item-section avatar>
-            <q-icon color="teal" name="details" />
-          </q-item-section>
-          <q-item-section>Detalle</q-item-section>
-        </q-item>
-        <q-item clickable v-ripple to="Registrar" exact>
+        
+     
+
+        <q-item clickable v-ripple to="Contratos" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="today" />
           </q-item-section>
-          <q-item-section>Registrar</q-item-section>
+          <q-item-section>Contratos</q-item-section>
         </q-item>
         <q-item clickable v-ripple @click="logout">
           <q-item-section avatar>

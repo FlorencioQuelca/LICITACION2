@@ -260,6 +260,25 @@
           <q-td key="lotes" :props="props">
             {{props.row.lotes}}
           </q-td>
+           
+           <q-td key="comision" :props="props">
+                      <q-btn
+                        dense
+                        round
+                        flat
+                        color="orange"
+                        @click="addRow2(props)"
+                        icon="playlist_add"
+                      ></q-btn>
+                        <q-btn
+                        dense
+                        round
+                        flat
+                        color="orange"
+                        @click="verRow2(props)"
+                        icon="list"
+                      ></q-btn>
+            </q-td>      
           
           <q-td key="opcion" :props="props">
            <q-btn
@@ -445,13 +464,13 @@
     </q-dialog>
       <!-- empresas asociados  VER LISTA Y ELIMINAR />-->
    <q-dialog v-model="dialog_list">
-      <q-card style="max-width: 80%; width: 50%">
+      <q-card style="max-width: 80%; width: 40%">
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6">Codigos</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
                 <q-table
-                    title="Codigos de proyecto"
+                    title="Lista de codigos de proyecto"
                     :rows="dato2.codigos"
                     :columns="subcol"
                     >
@@ -750,6 +769,96 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+     <!-- Adicionar COMISION CALIFICADORA/>-->
+    <q-dialog v-model="dialog_add3">
+      <q-card style="max-width: 80%; width: 50%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Agregar Comision calificadora </div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onAdd3" class="q-gutter-md">
+             <q-option-group
+                v-model="opcion"
+                :options="[{label:'Cedula de Identidad', value:'op1'}]"
+                color="primary"
+                inline
+              />
+
+            <q-input v-if='opcion==="op1"'
+              outlined
+              v-model="codigo.ci"
+              type="text"
+              label="C.I.   si lo tiene"
+              hint="CI del profesional Tecnico"
+            />
+            <q-input v-else
+              outlined
+              v-model="codigo.datosp"
+              type="text"
+               mask="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+              label="Nombre Completo Del profesional tecnico"
+              hint="Ingresar Nombre Completo del Profesional Tecnico"
+            />
+
+            <div>
+              <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+       <!-- LISTA DE LA COMISION CALIFICADORA />-->
+   <q-dialog v-model="dialog_list3">
+      <q-card style="max-width: 80%; width: 50%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">COMISION CALIFICADORA</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+                <q-table
+                    title="Comision Calificadora"
+                    :rows="dato2.funcionarios"
+                    :columns="subcol"
+                    >
+      <template v-slot:body="props">
+          <q-tr :props="props">
+          <q-td key="nombre" :props="props">
+              {{ props.row.grado}} {{ props.row.datosp}}
+          </q-td>
+          <q-td key="opcion" :props="props">
+                        <q-btn
+                        dense
+                        round
+                        flat
+                        color="red"
+                        @click="deletesub4(props)"
+                        icon="delete"
+                      ></q-btn>
+          </q-td>
+          </q-tr>
+          </template>
+          </q-table>
+            <div>
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+    <!-- eliminar SOCIEDADES   />-->
+     <q-dialog v-model="dialog_delsub4">
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="clear" color="red" text-color="white" />
+          <span class="q-ml-sm">Seguro de eliminar Registro.</span>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Eliminar" color="deep-orange" @click="onDelsub4" />
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
  
   </div>
 </template>
@@ -782,6 +891,7 @@ const  columns= [
   { name: 'precio', align:"center",label: 'Precio', field: 'precio', sortable: true },
   { name: 'plazo', align:"center",label: 'plazo', field: 'plazo', sortable: true },
   { name: 'lotes',align:"Center", label: 'Lotes', field: 'lotes', sortable: true },
+  { name: 'comision',align:"left", label: 'Comision', field: 'comision', sortable: true },
   { name: 'opcion', label: 'Opcion', field: 'opcion' }
    ]
 
@@ -797,14 +907,16 @@ export default {
    dialog_add:false,
    dialog_list:false,
    dialog_delsub: false,
-    
    dialog_add1:false,
    dialog_add2:false,
    dialog_list1:false,
    dialog_list2:false,
    dialog_delsub1:false,
-    dialog_delsub2: false,
-       dialog_delsub3: false,
+   dialog_delsub2: false,
+   dialog_delsub3: false,
+   dialog_delsub4:false,
+   dialog_add3:false, 
+   dialog_list3:false,
    selected: [],
    filter:'',
    errores: null,
@@ -949,6 +1061,7 @@ proyecto:{},
    dato2:{},
    dato3:{},
    options:{},
+   opcion:'op1',
     opciones: [
         {
           label: 'Empresa',
@@ -984,7 +1097,7 @@ proyecto:{},
     misdatos(){
     this.$q.loading.show();
        this.$api.get(process.env.API+"/proyectos").then((res)=>{
-      //  console.log(res.data)
+       console.log(res.data)
          this.data =res.data;
     this.$q.loading.hide();
        });
@@ -1047,20 +1160,20 @@ proyecto:{},
       this.codigo={}
       this.dialog_add = true;
     },
-    addRow1(item) {
-      //this.proyecto= item.row;
-     // this.$router.push({name:'detalle1',params:{title:'hola11111'}});
+    addRow1(item) {  
       this.dato2 = item.row;
        this.codigo={}
-   //   console.log(this.dato2)
         if (this.dato2.tipo_id===2)
          {
                  this.dialog_add1 = true;
          }else{
                  this.dialog_add2 = true;
          }  
-
-     // console.log(this.proyecto);
+    },
+    addRow2(item) {  
+       this.dato2 = item.row;
+       this.codigo={}
+       this.dialog_add3 = true;
     },
      verRow(item) {
       this.dato2 = item.row;
@@ -1074,7 +1187,10 @@ proyecto:{},
          }else{
                  this.dialog_list2 = true;
          }  
-     
+    },
+    verRow2(item) {
+      this.dato2 = item.row;
+      this.dialog_list3 = true;
     },
     deletesub(item) {
       this.dato3 = item.row;
@@ -1091,6 +1207,10 @@ proyecto:{},
     deletesub3(item) {
       this.dato3 = item.row;
       this.dialog_delsub3 = true;
+    },
+    deletesub4(item) {
+      this.dato3 = item.row;
+      this.dialog_delsub4 = true;
     },
     onDelsub() {
       this.$q.loading.show();
@@ -1217,6 +1337,20 @@ proyecto:{},
         this.misdatos();
       });
     },
+     onDelsub4() {
+      this.$q.loading.show();
+       this.$api.put(process.env.API + "/funcionarioproyectosdetach/"+this.dato2.id,this.dato3).then((res) => {
+                              this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                           mssage: "Eliminado correctamente",
+        });
+        this.dialog_delsub4 = false; 
+        this.dialog_list3 = false; 
+        this.misdatos();
+      });
+    },
        onAdd2() {
       this.$q.loading.show();
       if (this.group==='op1'){
@@ -1233,10 +1367,7 @@ proyecto:{},
                        this.dialog_add2 = false;
                  this.$q.loading.hide();       
            }else{
-
-
-                  this.$api.put(process.env.API + "/empresaproyectos/"+this.dato2.id,res1.data[0]).then((res) => {
-                     
+             this.$api.put(process.env.API+"/empresaproyectos/"+this.dato2.id,res1.data[0]).then((res) => {               
                       this.$api.get(process.env.API + "/detalle").then((res2) => {
                        // console.log('id encontrado')   
                         //console.log(res2.data)   
@@ -1300,6 +1431,40 @@ proyecto:{},
           });
        }
        },
+       onAdd3() {
+      this.$q.loading.show();
+       if (this.opcion==='op1'){
+        this.$api.get(process.env.API + "/consultorci/"+this.codigo.ci).then((res1) => {
+         if(res1.data.length===0) {
+           this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "ci no encontrado - registre porfavor",
+                        });
+                       this.dialog_add3 = false;
+                       this.$q.loading.hide();
+              }else{
+
+          this.$api.put(process.env.API + "/funcionarioproyectos/"+this.dato2.id,res1.data[0]).then((res) => {
+                              this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Agregado - funcionario correctamente",
+                        });
+                       this.dialog_add3 = false;
+                        this.misdatos(); 
+                        });
+
+              }
+        });
+        
+       }else{
+         
+       }
+      
+     },
 
     deleteRow(item) {
       this.dato2 = item.row;

@@ -25,7 +25,7 @@ class SociedadFactory extends Factory
         "nombreEmpresa"=>$this->faker->lastName,
         "codigo"=>$this->faker->unique()->numberBetween(577513,59999999),
         "nombreLegal"=>$this->faker->name,
-        "direccion"=>$this->faker->text,
+        "direccion"=>"calle 24 entre calle 26  NRO 2321",
         "fono1"=>rand(75402473,99999999),   
         "fono2"=>rand(75402473,99999999),   
         "email"=>$this->faker->unique()->safeEmail(),
