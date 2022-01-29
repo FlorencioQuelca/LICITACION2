@@ -17,6 +17,6 @@ class Permiso extends Model
 
     use HasFactory;
 public function users(){
-    return $this->belongsToMany(Permiso::class);
+    return $this->belongsToMany(User::class);
 }
 }

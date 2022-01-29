@@ -17,11 +17,13 @@ class PermisoSeeder extends Seeder
         DB::table('permisos')->insert([
             ["id"=>1,"nombre"=>"Empresas"],
             ["id"=>2,"nombre"=>"Usuarios"],
-            ["id"=>3,"nombre"=>"Asociaciones"],
+            ["id"=>3,"nombre"=>"Sociedades"],
             ["id"=>4,"nombre"=>"Consultores"],
-            ["id"=>5,"nombre"=>"Asociados"],
+            ["id"=>5,"nombre"=>"Licitaciones"],
             ["id"=>6,"nombre"=>"Proyectos"],
-           
+            ["id"=>7,"nombre"=>"Contratos"],
+            ["id"=>8,"nombre"=>"Visitas"],
+            
              
         ]);
     }

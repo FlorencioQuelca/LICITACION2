@@ -65,6 +65,14 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
 
   Route::apiResource('contratos',\App\Http\Controllers\ContratoController::class);
   Route::put('setPdf/{contrato}',[\App\Http\Controllers\ContratoController::class,'setPdf']);
+  Route::get('getPdf/{contrato}',[\App\Http\Controllers\ContratoController::class,'getPdf']);
+  
+  Route::apiResource('categorias',\App\Http\Controllers\CategoriaController::class); //CRUD de SociedadAccidental;
+  Route::apiResource('users',\App\Http\Controllers\UserController::class); 
+  Route::apiResource('permisos',\App\Http\Controllers\PermisoController::class); 
+  Route::put('/updatepermisos/{user}',[\App\Http\Controllers\UserController::class,'updatepermisos']);
+  
+  Route::put('/pass/{user}',[\App\Http\Controllers\UserController::class,'pass']);
 
   Route::post('logout',[\App\Http\Controllers\UserController::class,'logout'])->name('logout');
    

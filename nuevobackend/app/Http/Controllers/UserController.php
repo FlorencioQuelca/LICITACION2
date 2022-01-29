@@ -23,7 +23,7 @@ class UserController extends Controller
 
       
         if (!Auth::attempt($request->all())) {
-            return response()->json(['res' => 'No existe el usuario'], 200);
+            return response()->json(['res' => 'No existe el usuario'], 400);
         }
        if (User::where('email', $request->email)->whereDate('fechalimite', '>', now())->get()->count() == 0) {
            return response()->json(['res' => 'Su usuario sobre paso el limite de ingreso'], 200);
@@ -41,37 +41,42 @@ class UserController extends Controller
 
     //CRUD
     public function index(){
-        return User::with('unid')->with('permisos')->where('id', '!=', 1)->orderByDesc('id')->get();
+        return User::
+        with('permisos')->get();
+    }
+    public function listuser(){
+        return User::
+//            ->with('permisos')
+            all();
     }
     public function store(Request $request){
         //        return ;
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->unid_id = $request->unid_id;
-        $user->fechalimite = $request->fechalimite;
-        $user->codigo = strtoupper(substr($request->name, 0, 3));
-        $user->save();
-        $permisos = array();
-        foreach ($request->permisos as $permiso) {
-            //            echo $permiso['estado'].'  ';
-            if ($permiso['estado'] == true)
-                $permisos[] = $permiso['id'];
-        }
-        $permiso = Permiso::find($permisos);
-        $user->permisos()->attach($permiso);
-    }
+                $user=new User();
+                $user->name=$request->name;
+                $user->email=$request->email;
+                $user->fechalimite=$request->fechalimite;
+                $user->password= Hash::make($request->password) ;
+                $user->save();
+                $permisos= array();
+                foreach ($request->permisos as $permiso){
+        //            echo $permiso['estado'].'  ';
+                    if ($permiso['estado']==true)
+                        $permisos[]=$permiso['id'];
+                }
+                $permiso = Permiso::find($permisos);
+                $user->permisos()->attach($permiso);
+        
+            }
     public function update(Request $request, User $user)
     {
         $user->update($request->all());
         return $user;
     }
     public function updatepermisos(Request $request, User $user){
-        $permisos = array();
-        foreach ($request->permisos as $permiso) {
-            if ($permiso['estado'] == true)
-                $permisos[] = $permiso['id'];
+        $permisos= array();
+        foreach ($request->permisos as $permiso){
+            if ($permiso['estado']==true)
+                $permisos[]=$permiso['id'];
         }
         $permiso = Permiso::find($permisos);
         $user->permisos()->detach();
@@ -87,8 +92,11 @@ class UserController extends Controller
         $user->delete();
     }
     public function me(Request $request){
-        $user = User::where('id', $request->user()->id)->with('unid')->with('permisos')->firstOrFail();
-        return $user;
+        $user=User::where('id',$request->user()->id)
+        //            ->with('unid')
+                    ->with('permisos')
+                    ->firstOrFail();
+                return $user;
     }
     public function userci($id){
         return User::where('ci',$id)->get();

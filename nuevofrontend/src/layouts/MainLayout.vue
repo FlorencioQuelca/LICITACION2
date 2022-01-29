@@ -11,31 +11,36 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Admin </q-toolbar-title>
+        <q-toolbar-title> 
+          {{this.$store.state.login.user.name}}
+          
+         </q-toolbar-title>
 
         <div>FONDO NACIONAL DE INVERSION PRODUCTIVA Y SOCIAL</div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered  class="bg-grey-1">
       <q-list>
-        <q-item-label header> FPS-LAPAZ </q-item-label>
+        <q-item-label header
+        class="text-grey-8">   Opciones del menu </q-item-label>
 
-        <q-item clickable v-ripple to="/" exact>
+        <q-item clickable   active-class="my-menu-link" to="/" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="home" />
           </q-item-section>
 
           <q-item-section>Home</q-item-section>
         </q-item>
-           <q-item clickable v-ripple to="Licitaciones" exact>
+           <q-item clickable   active-class="my-menu-link" to="Licitaciones" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="details" />
           </q-item-section>
           <q-item-section>Licitaciones</q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple to="Login" exact>
+        <q-item v-if="!$store.getters['login/isLoggedIn']"
+         clickable v-ripple to="Login" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="login" />
           </q-item-section>
@@ -43,28 +48,39 @@
           <q-item-section>Login</q-item-section>
         </q-item> 
 
-        <q-item clickable v-ripple to="Empresa" exact>
+        <q-item  v-if="$store.getters['login/isLoggedIn']"
+         active-class="my-menu-link"
+         clickable 
+          to="Empresa" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="store" />
           </q-item-section>
-
           <q-item-section>Empresas</q-item-section>
         </q-item>
-        <q-item clickable v-ripple to="Sociedad" exact>
+
+        <q-item v-if="$store.state.login.sociedades"
+         active-class="my-menu-link"
+        clickable 
+        exact
+         to="Sociedad" 
+         >
           <q-item-section avatar>
             <q-icon color="teal" name="apartment" />
           </q-item-section>
-
           <q-item-section>Sociedades</q-item-section>
         </q-item>
-        <q-item clickable v-ripple to="Consultor" exact>
+
+        <q-item v-if="$store.getters['login/isLoggedIn']"
+        clickable  active-class="my-menu-link" to="Consultor" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="person" />
           </q-item-section>
 
           <q-item-section>Consultores</q-item-section>
         </q-item>
-        <q-item clickable v-ripple to="Proyecto" exact>
+
+        <q-item  v-if="$store.getters['login/isLoggedIn']"
+        clickable  active-class="my-menu-link" to="Proyecto" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="mode" />
           </q-item-section>
@@ -74,13 +90,24 @@
         
      
 
-        <q-item clickable v-ripple to="Contratos" exact>
+        <q-item    v-if="$store.getters['login/isLoggedIn']"
+         clickable   active-class="my-menu-link" to="Contratos" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="today" />
           </q-item-section>
           <q-item-section>Contratos</q-item-section>
         </q-item>
-        <q-item clickable v-ripple @click="logout">
+
+           <q-item  v-if="$store.getters['login/isLoggedIn']"
+           clickable   active-class="my-menu-link" to="Usuarios" exact>
+          <q-item-section avatar>
+            <q-icon color="teal" name="today" />
+          </q-item-section>
+          <q-item-section>Usuarios</q-item-section>
+        </q-item>
+
+        <q-item  v-if="$store.getters['login/isLoggedIn']"
+         clickable  @click="logout">
           <q-item-section avatar>
             <q-icon color="teal" name="logout" />
           </q-item-section>
@@ -96,22 +123,39 @@
 </template>
 
 <script>
-export default {
-  data(){
+import { defineComponent, ref } from 'vue'
+export default defineComponent({
+  name: 'MainLayout',
+  components: {
+    // EssentialLink
+  },
+  setup () {
+    const leftDrawerOpen = ref(false)
     return {
-      leftDrawerOpen:false
+      // essentialLinks: linksList,
+      leftDrawerOpen,
+      toggleLeftDrawer () {
+        leftDrawerOpen.value = !leftDrawerOpen.value
+      }
     }
   },
   methods:{
-    toggleLeftDrawer () {
-        this.leftDrawerOpen = !this.leftDrawerOpen
-      },
     logout(){
+      this.$q.loading.show()
       this.$store.dispatch('login/logout')
         .then(() => {
+          this.$q.loading.hide()
           this.$router.push('/login')
         })
     }
+  },
+  mounted() {
+    // console.log(this.$store.state.login.user.name)
   }
-}
+})
 </script>
+<style lang="sass">
+.my-menu-link
+  color: white
+  background: #4a148c
+</style>

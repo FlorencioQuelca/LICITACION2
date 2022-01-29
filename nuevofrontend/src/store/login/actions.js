@@ -9,7 +9,7 @@ export function login({commit}, user){
         const user = resp.data.user
         localStorage.setItem('token', token)
         api.defaults.headers.common['Authorization'] = 'Bearer' + token
-        commit('auth_success', token, user)
+        commit('auth_success', {token, user})
         resolve(resp)
       })
       .catch(err => {
