@@ -252,8 +252,6 @@ import { exportFile } from 'quasar'
 }
 const  columns= [
   { name: 'departamento', align:"center",label: 'Departamento', field: 'departamento', sortable: true },
-  { name: 'programa',align:"center", label: 'Programa', field: 'programa', sortable: true },
-  { name: 'tipo', align:"tipo", label:'Tipos',field: "tipo", sortable: true},
   { name: 'codigos', align:"left", label:'Codigo(s)',field: "codigos", sortable: true},
   { name: 'nombre',required: true, align:"left",label: 'Nombre del Proyecto', field: 'nombre', sortable: true },
   { name: 'action1', align:"center",label: 'Detalle', field: 'action1'},

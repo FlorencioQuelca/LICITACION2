@@ -20,12 +20,12 @@ class CreatePersonaTable extends Migration
             $table->string('materno')->nullable();
             $table->string('nombres')->nullable();
             $table->string('datosp')->nullable();
-            $table->bigInteger('nit')->nullable();
+            $table->string('nit')->nullable();
             $table->string('grado',10)->nullable();
-            $table->text('direccion')->nullable();
+            $table->string('direccion')->nullable();
             $table->date('fechaNacimiento')->nullable();
-            $table->integer('fono1')->nullable();
-            $table->integer('fono2')->nullable();
+            $table->string('fono1')->nullable();
+            $table->string('fono2')->nullable();
             $table->string('email')->nullable();
             $table->string('genero')->nullable();
             $table->string('observacion',200)->default('NATURAL');

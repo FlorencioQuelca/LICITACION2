@@ -15,8 +15,8 @@ class DepartamentoSeeder extends Seeder
     public function run()
     {
         DB::table('departamentos')->insert([
-            ["id"=>1,"nombre"=>"LA PAZ"],
-            ["id"=>2,"nombre"=>"ORURO"],
+            ["id"=>2,"nombre"=>"LA PAZ"],
+            ["id"=>1,"nombre"=>"ORURO"],
             ["id"=>3,"nombre"=>"POTOSI"],
             ["id"=>4,"nombre"=>"COCHABAMBA"],
             ["id"=>5,"nombre"=>"SANTA CRUZ"],

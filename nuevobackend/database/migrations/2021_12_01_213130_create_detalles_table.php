@@ -17,6 +17,8 @@ class CreateDetallesTable extends Migration
             $table->id();
             $table->integer('tiempo')->nullable();
             $table->integer('num')->nullable();
+            $table->string('descripcion')->nullable();
+            $table->string('tipo')->nullable();            
             $table->decimal('monto',10,2)->default(0);
             $table->string('observacion')->nullable();    
             $table->unsignedBigInteger('detalle_id');

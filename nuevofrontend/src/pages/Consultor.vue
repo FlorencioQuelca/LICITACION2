@@ -415,7 +415,7 @@ const  columns= [
   { name: 'fono1', align:"center",label: 'Celular', field: 'fono1', sortable: true },
   { name: 'fono2', align:"center",label: 'Telefono', field: 'fono2', sortable: true },
   { name: 'email',align:"Center", label: 'Correo', field: 'email', sortable: true },
-  { name: 'direccion', align:"center",label: 'Direccion', field: 'direccion', sortable: true },
+  { name: 'direccion', align:"left",label: 'Direccion', field: 'direccion', sortable: true },
   { name: 'nit',align:"center", label: 'nit', field: 'nit', sortable: true },
   { name: 'opcion', label: 'Opcion', field: 'action', sortable: false }
    ]

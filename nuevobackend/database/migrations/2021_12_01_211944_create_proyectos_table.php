@@ -15,7 +15,8 @@ class CreateProyectosTable extends Migration
     {
         Schema::create('proyectos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique();
+            $table->string('nombre')->nullable();
+            $table->integer('convocatoria')->default(1);
             $table->date('fecha')->nullable();
             $table->time('hora')->nullable();
             $table->string('link')->nullable();
@@ -23,6 +24,7 @@ class CreateProyectosTable extends Migration
             $table->integer('plazo')->default(0);
             $table->integer('lotes')->default(1);
             $table->string('cuce')->nullable();
+            $table->string('observacion')->nullable('NINGUNA');
             $table->unsignedBigInteger('departamento_id')->nullable();
             $table->unsignedBigInteger('programa_id')->nullable();
             $table->unsignedBigInteger('tipo_id')->nullable();

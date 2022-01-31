@@ -15,8 +15,8 @@ class ProgramaSeeder extends Seeder
     public function run()
     {
         DB::table('programas')->insert([
-            ["id"=>1,"nombre"=>"MI RIEGO"],
-            ["id"=>2,"nombre"=>"MI AGUA"],
+            ["id"=>2,"nombre"=>"MI RIEGO"],
+            ["id"=>1,"nombre"=>"MI AGUA"],
             ["id"=>3,"nombre"=>"PAR"],
             ["id"=>4,"nombre"=>"PIU"],
             ["id"=>5,"nombre"=>"FOCCIP"],

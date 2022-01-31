@@ -58,7 +58,7 @@
           <q-item-section>Empresas</q-item-section>
         </q-item>
 
-        <q-item v-if="$store.state.login.sociedades"
+        <q-item v-if="$store.getters['login/isLoggedIn']"
          active-class="my-menu-link"
         clickable 
         exact

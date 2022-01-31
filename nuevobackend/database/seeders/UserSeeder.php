@@ -27,10 +27,10 @@ class UserSeeder extends Seeder
             ],
             [
                 'id'=>2,
-                'email'=>'florens.lonwee@gmail.com',
-                'name'=>'FLORENCIO QUELCA MAMANI',
-                'tipo'=>'admin',
-                'ci'=>'5775077',
+                'email'=>'pmarco@fps.gob.bo',
+                'name'=>'PATRICIA MARCO',
+                'tipo'=>'USUARIO',
+                'ci'=>'123',
                 'password'=>Hash::make('123456')
             ]
          ]);

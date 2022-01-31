@@ -15,15 +15,15 @@ class CreateSociedadsTable extends Migration
     {
         Schema::create('sociedads', function (Blueprint $table) {
             $table->id();
-            $table->string('nombreEmpresa');
-            $table->bigInteger('codigo')->unique();
+            $table->string('nombreEmpresa')->nullable();
+            $table->string('codigo')->unique();
             $table->string('nombreLegal')->nullable();
-            $table->text('direccion')->nullable();
-            $table->integer('fono1')->nullable();
-            $table->integer('fono2')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('fono1')->nullable();
+            $table->string('fono2')->nullable();
             $table->string('email')->nullable();
             $table->string('departamento')->nullable();
-            $table->text('observacion')->default("NINGUNA"); 
+            $table->string('observacion')->default("NINGUNA"); 
             $table->timestamps();
         });
     }
