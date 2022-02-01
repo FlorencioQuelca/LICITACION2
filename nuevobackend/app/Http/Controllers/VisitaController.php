@@ -14,7 +14,7 @@ class VisitaController extends Controller
      */
     public function index()
     {
-        //
+        return Visita::all();
     }
 
     /**

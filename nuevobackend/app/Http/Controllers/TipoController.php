@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tipo;
+use App\Models\Tipo;
 use Illuminate\Http\Request;
 
 class TipoController extends Controller
@@ -44,7 +44,7 @@ class TipoController extends Controller
      * @param  \App\Models\tipo  $tipo
      * @return \Illuminate\Http\Response
      */
-    public function show(tipo $tipo)
+    public function show(Tipo $tipo)
     {
         //
     }
@@ -55,7 +55,7 @@ class TipoController extends Controller
      * @param  \App\Models\tipo  $tipo
      * @return \Illuminate\Http\Response
      */
-    public function edit(tipo $tipo)
+    public function edit(Tipo $tipo)
     {
         //
     }
@@ -67,7 +67,7 @@ class TipoController extends Controller
      * @param  \App\Models\tipo  $tipo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, tipo $tipo)
+    public function update(Request $request, Tipo $tipo)
     {
         //
     }
@@ -78,7 +78,7 @@ class TipoController extends Controller
      * @param  \App\Models\tipo  $tipo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tipo $tipo)
+    public function destroy(Tipo $tipo)
     {
         //
     }
