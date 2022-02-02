@@ -120,7 +120,7 @@
               outlined
               v-model="dato.precio"
               type="number"
-              
+              step="0.01"
               label="precio Referencial"
               hint="Ingresar precio Referencial"
              
@@ -570,7 +570,7 @@
               outlined
               v-model="codigo.codigo"
               type="text"
-              label="codigo de la Sociedad Accidental"
+              label="Codigo de la Sociedad Accidental"
               hint="Ingresar Codigo"
             />
              <q-input 
@@ -714,11 +714,11 @@
            <q-td key="monto" :props="props">
             {{ props.row.pivot.monto}}
           </q-td>
-              <q-td key="asociados" :props="props">
+             <q-td key="empresas" :props="props">
               <ul>
-              <span v-for="(asociados,index) in props.row.asociados" :key="index">
+              <span v-for="(empresas,index) in props.row.empresas" :key="index">
                   <li>
-                    {{asociados.empresa.nit}}  ({{asociados.participacion}}) % - {{asociados.empresa.nombreEmpresa}}         
+                    {{empresas.nit}}  ({{empresas.pivot.participacion}}) %         
                 </li>
               </span>
             </ul>
@@ -1040,7 +1040,7 @@ proyecto:{},
          sortable: true,
         },    
          {
-          name: "asociados",
+          name: "empresas",
           label: "asociados",
           align: "left",
          field:"asociados",
@@ -1097,7 +1097,7 @@ proyecto:{},
     misdatos(){
     this.$q.loading.show();
        this.$api.get(process.env.API+"/proyectos").then((res)=>{
-      // console.log(res.data)
+       console.log(res.data)
          this.data =res.data;
     this.$q.loading.hide();
        });
@@ -1369,13 +1369,9 @@ proyecto:{},
                        this.dialog_add2 = false;
                  this.$q.loading.hide();       
            }else{
+             res1.data[0].monto =this.codigo.monto;
              this.$api.put(process.env.API+"/empresaproyectos/"+this.dato2.id,res1.data[0]).then((res) => {               
-                      this.$api.get(process.env.API + "/detalle").then((res2) => {
-                       // console.log('id encontrado')   
-                        //console.log(res2.data)   
-                         
-                           this.$api.put(process.env.API + "/setmonto/"+res2.data,this.codigo).then((res) => {
-                           // console.log('adicionado el monto')    
+                   
                               
                      this.$q.notify({
                           color: "green-4",
@@ -1388,8 +1384,7 @@ proyecto:{},
                        this.dialog_add2 = false;
                         this.misdatos();                                   
                        });                                   
-                       });
-                        });
+                      
 
            }
        });
@@ -1408,15 +1403,9 @@ proyecto:{},
                        this.dialog_add2 = false;
                  this.$q.loading.hide();       
            }else{
-                  this.$api.put(process.env.API + "/sociedadproyectos/"+this.dato2.id,res1.data[0]).then((res) => {
-
-                       this.$api.get(process.env.API + "/detalle").then((res2) => {
-                       // console.log('id encontrado')   
-                        //console.log(res2.data)   
-                         
-                           this.$api.put(process.env.API + "/setmonto/"+res2.data,this.codigo).then((res) => {
-                           // console.log('adicionado el monto')    
-                              
+               res1.data[0].monto =this.codigo.monto;
+               console.log(res1.data[0]);
+                  this.$api.put(process.env.API + "/sociedadproyectos/"+this.dato2.id,res1.data[0]).then((res) => {                   
                               this.$q.notify({
                           color: "green-4",
                           textColor: "white",
@@ -1427,8 +1416,7 @@ proyecto:{},
                         this.misdatos();  
                         // console.log(res.data)
                         });
-                        });
-                        });
+                      
            }
           });
        }

@@ -15,15 +15,14 @@ class CreateDetallesTable extends Migration
     {
         Schema::create('detalles', function (Blueprint $table) {
             $table->id();
-            $table->integer('tiempo')->nullable();
-            $table->integer('num')->nullable();
-            $table->string('descripcion')->nullable();
-            $table->string('tipo')->nullable();            
+            $table->integer('tiempo')->default(0);
+            $table->integer('num')->default(0);
+            $table->string('descripcion')->default('NINGUNA');
+            $table->string('tipo')->default('NINGULA');            
             $table->decimal('monto',10,2)->default(0);
-            $table->string('observacion')->nullable();    
+            $table->string('observacion')->default('INGUNA');    
             $table->unsignedBigInteger('detalle_id');
             $table->string('detalle_type');
-
             $table->unsignedBigInteger('proyecto_id')->nullable();
             $table->foreign('proyecto_id')->references('id')->on('proyectos')->onDelete('set null')->onUpdate('cascade');
             

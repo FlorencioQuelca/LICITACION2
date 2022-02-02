@@ -89,7 +89,7 @@
              <q-input
                   outlined                  
                   type="date"
-                  v-model="dato2.fechaNacimiento"
+                  v-model="dato.fechaNacimiento"
                   hint="Ingresar Fecha de Nacimiento"
                 />
             <q-input
@@ -370,7 +370,7 @@
                 color="primary"
                 inline
               />
-                 <q-input v-if='dato.observacion==="SERVIDOR PUBLICO"'
+                 <q-input v-if='dato2.observacion==="SERVIDOR PUBLICO"'
               outlined
               v-model="dato2.departamento"
               type="text"

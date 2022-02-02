@@ -14,11 +14,11 @@ class ProyectoController extends Controller
 {
    
     public function index(){
-        $proyectos = Proyecto::with(['sociedads.asociados','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])->orderByDesc('id')->get();
+        $proyectos = Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])->orderByDesc('id')->get();
         return \response()->json($proyectos, 200);
     }   
     public function proyectoslibre(){
-        $proyectos = Proyecto::with(['sociedads.asociados','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])->orderByDesc('id')->get();
+        $proyectos = Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])->orderByDesc('id')->get();
         return \response()->json($proyectos, 200);
     }   
     public function create()
@@ -77,7 +77,8 @@ class ProyectoController extends Controller
      
      public function empresaproyectos(Request $request,Proyecto $proyecto){
         $empresa= Empresa::find($request->id);
-        $proyecto->empresas()->attach($empresa);       
+        $proyecto->empresas()->attach($empresa,['monto'=>$request->monto]);    
+
      }
      public function empresaproyectosdetach(Request $request,Proyecto $proyecto){
         $empresa= Empresa::find($request->id);
@@ -86,7 +87,7 @@ class ProyectoController extends Controller
        
      public function sociedadproyectos(Request $request,Proyecto $proyecto){
         $sociedad= Sociedad::find($request->id);
-        $proyecto->sociedads()->attach($sociedad->id);       
+        $proyecto->sociedads()->attach($sociedad,['monto'=>$request->monto]);       
      }
      public function sociedadproyectosdetach(Request $request,Proyecto $proyecto){
         $sociedad= Sociedad::find($request->id);

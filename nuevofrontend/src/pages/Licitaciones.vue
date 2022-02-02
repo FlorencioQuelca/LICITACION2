@@ -179,16 +179,7 @@
            <q-td key="monto" :props="props">
             {{ props.row.pivot.monto}}
           </q-td>
-          <q-td key="opcion" :props="props">
-                        <q-btn
-                        dense
-                        round
-                        flat
-                        color="red"
-                        @click="deletesub2(props)"
-                        icon="delete"
-                      ></q-btn>
-          </q-td>
+        
           </q-tr>
           </template>
           </q-table>
@@ -214,11 +205,11 @@
            <q-td key="monto" :props="props">
             {{ props.row.pivot.monto}}
           </q-td>
-              <q-td key="asociados" :props="props">
+               <q-td key="empresas" :props="props">
               <ul>
-              <span v-for="(asociados,index) in props.row.asociados" :key="index">
+              <span v-for="(empresas,index) in props.row.empresas" :key="index">
                   <li>
-                    {{asociados.empresa.nit}}  ({{asociados.participacion}}) % - {{asociados.empresa.nombreEmpresa}}         
+                    {{empresas.nit}}  ({{empresas.pivot.participacion}}) %         
                 </li>
               </span>
             </ul>
@@ -338,13 +329,7 @@ proyecto:{},
           field:"ci",
           sortable: true,
         },
-        {
-          name: "opcion",
-          label: "opcion",
-          align: "rigth",
-          field:"opcion",
-         sortable: true,
-        },
+       
    ],
    subcol2: [
         {
@@ -369,13 +354,6 @@ proyecto:{},
          field:"monto",
          sortable: true,
         },    
-        {
-          name: "opcion",
-          label: "opcion",
-          align: "rigth",
-          field:"opcion",
-         sortable: true,
-        },
    ],
     subcol3: [
          {
@@ -401,19 +379,13 @@ proyecto:{},
          sortable: true,
         },    
          {
-          name: "asociados",
+          name: "empresas",
           label: "asociados",
           align: "left",
          field:"asociados",
          sortable: true,
         },    
-        {
-          name: "opcion",
-          label: "opcion",
-          align: "rigth",
-          field:"opcion",
-         sortable: true,
-        },
+      
    ],
    data:[],
    dato:{},
