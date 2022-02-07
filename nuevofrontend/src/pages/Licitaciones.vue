@@ -104,7 +104,7 @@
     
           <!-- VER LISTA de PERSONAS Y ELIMINAR />-->
    <q-dialog v-model="dialog_list1">
-      <q-card style="max-width: 80%; width: 80%">
+      <q-card style="max-width: 80%; width: 50%">
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6">Lista de consultores presentados</div>
         </q-card-section>
@@ -302,14 +302,6 @@ proyecto:{},
           label: "C.I.",
           align: "left",
           field:"ci",
-          sortable: true,
-        },
-          {
-          name: "fecha",
-          required: true,
-          label: "Fecha nac.",
-          align: "left",
-          field:"fecha",
           sortable: true,
         },
        
