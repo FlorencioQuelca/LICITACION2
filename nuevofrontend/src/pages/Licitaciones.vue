@@ -122,9 +122,7 @@
           <q-td key="ci" :props="props">
             {{ props.row.ci}}
           </q-td>
-          
-       
-          </q-tr>
+           </q-tr>
           </template>
           </q-table>
             <div>
@@ -261,16 +259,12 @@ export default {
    selected: [],
    filter:'',
    errores: null,
-
    props:[],
-
   depa:{},
-
   prog:{},
   tipos:[],
   tipo:{},
   codigo:{},
-
 proyecto:{},
    subcol: [
         {
