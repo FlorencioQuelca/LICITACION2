@@ -404,6 +404,7 @@
               outlined
               v-model="dato2.precio"
               type="number"
+              step="0.01"
               label="precio Referencial"
               hint="Ingresar precio Referencial"
             />
@@ -411,6 +412,7 @@
               outlined
               v-model="dato2.plazo"
               type="number"
+              
               label="Plazo de Entrega"
               hint="Ingresar plazo de Entrega"
             />
@@ -961,20 +963,19 @@ proyecto:{},
          field:"nombre",
          sortable: true,
         },
-         {
-          name: "fecha",
-          required: true,
-          label: "Fecha nac.",
-          align: "left",
-          field:"fecha",
-          sortable: true,
-        },
         {
           name: "ci",
           required: true,
           label: "C.I.",
           align: "left",
           field:"ci",
+          sortable: true,
+        }, {
+          name: "fecha",
+          required: true,
+          label: "Fecha nac.",
+          align: "left",
+          field:"fecha",
           sortable: true,
         },
         {

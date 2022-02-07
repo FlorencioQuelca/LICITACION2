@@ -474,6 +474,8 @@ export default {
       this.dato.email =null;
       this.dato.genero =null;
       this.dato.grado =null;
+      this.dato.observacion=null;
+      this.dato.departamento=null;
     },
     misdatos(){
     this.$q.loading.show();

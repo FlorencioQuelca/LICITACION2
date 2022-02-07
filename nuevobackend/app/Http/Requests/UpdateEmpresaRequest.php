@@ -26,7 +26,7 @@ class UpdateEmpresaRequest extends FormRequest
         return [
              'nit'=> "required|unique:empresas,nit,".$this->empresa,
              'nombreEmpresa'=> "required|min:3|max:255",
-             'nombreLegal'=> "required|min:5|max:255",
+             'nombreLegal'=> "required|min:3|max:255",
              'fono1'=> "required",
              'email'=> "required",
         ];

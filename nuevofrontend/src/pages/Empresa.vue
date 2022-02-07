@@ -385,7 +385,7 @@ export default {
   methods:{
      onReset() {
       this.dato.nombreLegal = null;
-      this.dato.mombreEmpresa = null;
+      this.dato.nombreEmpresa = null;
       this.dato.nit = null;
       this.dato.departamento=null;
       this.dato.fono1 =null;

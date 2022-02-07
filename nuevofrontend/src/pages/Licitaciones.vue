@@ -122,19 +122,8 @@
           <q-td key="ci" :props="props">
             {{ props.row.ci}}
           </q-td>
-           <q-td key="fecha" :props="props">
-            {{ props.row.fechaNacimiento}}
-          </q-td>
-          <q-td key="opcion" :props="props">
-                        <q-btn
-                        dense
-                        round
-                        flat
-                        color="red"
-                        @click="deletesub1(props)"
-                        icon="delete"
-                      ></q-btn>
-          </q-td>
+          
+       
           </q-tr>
           </template>
           </q-table>
@@ -166,7 +155,7 @@
                     title="Lista de oferentes"
                     :rows="dato2.empresas"
                     :columns="subcol2"
-                    :rows-per-page-options="[5,10]"
+                  
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -192,7 +181,7 @@
                     title="Lista de oferentes"
                     :rows="dato2.sociedads"
                     :columns="subcol3"
-                    :rows-per-page-options="[5,10]"
+                  
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -313,20 +302,20 @@ proyecto:{},
          field:"nombre",
          sortable: true,
         },
-         {
-          name: "fecha",
-          required: true,
-          label: "Fecha nac.",
-          align: "left",
-          field:"fecha",
-          sortable: true,
-        },
         {
           name: "ci",
           required: true,
           label: "C.I.",
           align: "left",
           field:"ci",
+          sortable: true,
+        },
+          {
+          name: "fecha",
+          required: true,
+          label: "Fecha nac.",
+          align: "left",
+          field:"fecha",
           sortable: true,
         },
        
