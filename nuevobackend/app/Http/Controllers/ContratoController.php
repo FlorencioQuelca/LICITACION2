@@ -160,7 +160,7 @@ class ContratoController extends Controller
     public function getPdf($id)
     {
         $contrato = Contrato::find($id);
-        $file = \public_path('archivos\\'.$contrato->url);
+        $file= public_path().'/archivos/'.$contrato->url;
 
         $headers = [
               'Content-Type' => 'application/pdf',
