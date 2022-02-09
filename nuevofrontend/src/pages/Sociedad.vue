@@ -564,7 +564,7 @@ export default {
     this.$q.loading.show();
        this.$api.get(process.env.API+"/sociedad").then((res)=>{
          this.data =res.data;
-        console.log(this.data);
+      //  console.log(this.data);
        this.$q.loading.hide();
        });
     },

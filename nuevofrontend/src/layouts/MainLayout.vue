@@ -48,7 +48,7 @@
           <q-item-section>Login</q-item-section>
         </q-item> 
 
-        <q-item  v-if="$store.getters['login/isLoggedIn']"
+        <q-item   v-if="$store.state.login.empresas"
          active-class="my-menu-link"
          clickable 
           to="Empresa" exact>
@@ -58,7 +58,7 @@
           <q-item-section>Empresas</q-item-section>
         </q-item>
 
-        <q-item v-if="$store.getters['login/isLoggedIn']"
+        <q-item  v-if="$store.state.login.sociedades"
          active-class="my-menu-link"
         clickable 
         exact
@@ -70,7 +70,7 @@
           <q-item-section>Sociedades</q-item-section>
         </q-item>
 
-        <q-item v-if="$store.getters['login/isLoggedIn']"
+        <q-item  v-if="$store.state.login.personas"
         clickable  active-class="my-menu-link" to="Consultor" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="person" />
@@ -79,7 +79,7 @@
           <q-item-section>Consultores</q-item-section>
         </q-item>
 
-        <q-item  v-if="$store.getters['login/isLoggedIn']"
+        <q-item   v-if="$store.state.login.proyectos"
         clickable  active-class="my-menu-link" to="Proyecto" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="mode" />
@@ -90,15 +90,16 @@
         
      
 
-        <q-item    v-if="$store.getters['login/isLoggedIn']"
+        <q-item    v-if="$store.state.login.contratos"
          clickable   active-class="my-menu-link" to="Contratos" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="today" />
           </q-item-section>
           <q-item-section>Contratos</q-item-section>
         </q-item>
+       
 
-           <q-item  v-if="$store.getters['login/isLoggedIn']"
+           <q-item   v-if="$store.state.login.usuarios"
            clickable   active-class="my-menu-link" to="Usuarios" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="today" />

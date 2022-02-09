@@ -68,7 +68,9 @@ export default {
         this.$store.dispatch('login/login', { email, password })
        .then(() =>{
           this.$q.loading.hide();
+        
         this.$router.push('/')
+        
         })
        .catch(err => {
         this.$q.loading.hide();

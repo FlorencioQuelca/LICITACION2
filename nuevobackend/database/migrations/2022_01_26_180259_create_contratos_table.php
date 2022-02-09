@@ -19,6 +19,8 @@ class CreateContratosTable extends Migration
             $table->string('url')->nullable();
             $table->date('fecha')->nullable();
             $table->time('hora')->nullable();
+
+            
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')
                           ->references('id')

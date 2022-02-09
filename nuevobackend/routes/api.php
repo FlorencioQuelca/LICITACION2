@@ -75,6 +75,7 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   Route::put('/pass/{user}',[\App\Http\Controllers\UserController::class,'pass']);
 
   Route::post('logout',[\App\Http\Controllers\UserController::class,'logout'])->name('logout');
+  Route::post('/me',[\App\Http\Controllers\UserController::class,'me']);
    
 });
 

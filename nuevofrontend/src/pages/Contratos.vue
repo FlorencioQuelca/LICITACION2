@@ -278,7 +278,7 @@
             </template>
               </q-file> -->
             <input type="file" 
-                  accept="pdf/pdf"
+                  accept="application/pdf"
                   required
                    @change="escogerArchivo"
              >

@@ -1098,7 +1098,7 @@ proyecto:{},
     misdatos(){
     this.$q.loading.show();
        this.$api.get(process.env.API+"/proyectos").then((res)=>{
-       console.log(res.data)
+       //console.log(res.data)
          this.data =res.data;
     this.$q.loading.hide();
        });
@@ -1126,7 +1126,7 @@ proyecto:{},
        res.data.forEach(tip => {
             this.tipos.push({label:tip.nombre,value:tip.id});
         }); 
-          console.log(this.tipos)
+         // console.log(this.tipos)
       //  console.log('ok')
         this.$q.loading.hide();
        });

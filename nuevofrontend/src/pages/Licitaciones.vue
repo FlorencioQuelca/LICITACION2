@@ -240,7 +240,6 @@ const  columns= [
   { name: 'precio', align:"center",label: 'Precio', field: 'precio', sortable: true },
   { name: 'plazo', align:"center",label: 'plazo', field: 'plazo', sortable: true },
   { name: 'lotes',align:"Center", label: 'Lotes', field: 'lotes', sortable: true },
-  { name: 'funcionarios',align:"left", label: 'Comision Revisora', field: 'funcionarios', sortable: true },
  
    ]
 
