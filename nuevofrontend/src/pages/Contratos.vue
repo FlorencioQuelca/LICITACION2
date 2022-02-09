@@ -495,7 +495,7 @@ export default {
                        this.dialog_add = false;
                         this.misdatos();  
                         this.onReset();
-                        console.log(res.data)
+                      //  console.log(res.data)
                         });
       
      },
@@ -503,7 +503,7 @@ export default {
         this.dato2 = item.row;
       this.$q.loading.show();
              // console.log(this.dato2.id);
-             this.$api.get(process.env.API + "/getPdf/"+this.dato2.id,{responseType: 'arraybuffer'}).then((response) => {
+             this.$api.get(process.env.API + "/getPdf/"+this.dato2.id,{responseType: 'blob'}).then((response) => {
                   /*  var fileURL = window.URL.createObjectURL(new Blob([response.data]));
                      var fURL = document.createElement('a');
     
@@ -513,8 +513,9 @@ export default {
      */
     let blob = new Blob([response.data], { type: 'application/pdf' })
       let link = document.createElement('a')
-      link.href = window.URL.createObjectURL(blob)
+      link.href = window.URL.createObjectURL(blob)  
       link.download = this.dato2.nombre;
+      document.body.appendChild(link);
       link.click()
                     
                       // this.dialog_add = false;

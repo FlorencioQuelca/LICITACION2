@@ -138,7 +138,7 @@ class ContratoController extends Controller
         $file->move(\public_path('archivos'), $nombreArchivo);
         return $nombreArchivo;
     }
-    public function getPdf($id)
+    public function getPdf1($id)
     {
         $contrato = Contrato::find($id);
        /*  $file = Storage::disk('public')->get($contrato->url);
@@ -147,6 +147,7 @@ class ContratoController extends Controller
               $file = \public_path('archivos\\'.$contrato->url);
               $headers =  [
                 'Content-Type' => 'application/pdf',
+                'responseType'=> 'arraybuffer'
             ];
       return response()->download($file,$contrato->url,$headers);
      // return response()->download(public_path('archivos/'.$contrato->url));
@@ -155,5 +156,17 @@ class ContratoController extends Controller
       /* 
       $pdf = \PDF::loadView('imprimir');
       return $pdf->download('imprimir.pdf'); */
+    }
+    public function getPdf($id)
+    {
+        $contrato = Contrato::find($id);
+        $file= public_path()."/archivos/".$contrato->url;
+
+        $headers = [
+              'Content-Type' => 'application/pdf',
+              'responseType'=> 'blob'
+           ];
+
+    return response()->download($file, $contrato->url, $headers);
     }
 }
