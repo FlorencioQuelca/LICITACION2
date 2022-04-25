@@ -92,8 +92,10 @@ module.exports = configure(function (ctx) {
       config: {
         loading:{},
         notify:{},
-       
+
       },
+      lang: 'es',
+      
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -110,7 +112,8 @@ module.exports = configure(function (ctx) {
         'Loading',
         'Notify',
         'Dialog'
-      ]
+      ],
+     
     },
 
     // animations: 'all', // --- includes all animations

@@ -9,10 +9,10 @@
       :rows="data"
       :columns="columns"
       row-key="nombre"
-      :rows-per-page-options="[10,100]"
+      :rows-per-page-options="[10,20,100]"
    >
        <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Buscar">
+        <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
@@ -39,20 +39,6 @@
               </span>
              </ul>
           </q-td>
-            <q-td key="action" :props="props">
-                     
-                        <q-btn
-                        dense
-                        round
-                        flat
-                        color="green"
-                        @click="verRow(props)"
-                        icon="list"
-                      ></q-btn>
-            </q-td>      
-           <q-td key="nombre" :props="props">
-            {{props.row.nombre}}
-          </q-td>
             <q-td key="action1" :props="props">
                      
                         <q-btn
@@ -64,14 +50,22 @@
                         icon="list"
                       ></q-btn>
             </q-td>      
+           <q-td key="nombre" :props="props">
+            {{props.row.nombre}}
+          </q-td>
+           
            <q-td key="cuce" :props="props">
             {{props.row.cuce}}
           </q-td>
             <q-td key="link" :props="props">
             {{props.row.link}}
           </q-td>
-            <q-td key="fecha" :props="props">
-            {{props.row.fecha}}
+            <q-td key="fecha"  :props="props">
+             
+            {{ props.row.fecha    }}
+              
+               
+               
           </q-td>
            <q-td key="hora" :props="props">
             {{props.row.hora}}
@@ -102,9 +96,9 @@
    
 
     
-          <!-- VER LISTA de PERSONAS Y ELIMINAR />-->
+          <!-- VER LISTA de PERSONAS  />-->
    <q-dialog v-model="dialog_list1">
-      <q-card style="max-width: 80%; width: 50%">
+      <q-card style="max-width: 90%; width: 70%">
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6">Lista de consultores presentados</div>
         </q-card-section>
@@ -116,12 +110,25 @@
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
+            <q-td key="ci" :props="props">
+            {{ props.row.ci}}
+          </q-td>
+          <q-td key="fechanac" :props="props">
+            {{ props.row.fechaNacimiento}}
+          </q-td>
+                <q-td key="paterno" :props="props">
+            {{ props.row.paterno}}
+          </q-td>
+              <q-td key="materno" :props="props">
+            {{ props.row.materno}}
+          </q-td>
+              <q-td key="nombres" :props="props">
+            {{ props.row.nombres}}
+          </q-td>
           <q-td key="nombre" :props="props">
             {{ props.row.datosp}}
           </q-td>
-          <q-td key="ci" :props="props">
-            {{ props.row.ci}}
-          </q-td>
+          
            </q-tr>
           </template>
           </q-table>
@@ -217,7 +224,8 @@
 
 <script>
 
-import { exportFile } from 'quasar'
+import { exportFile, format } from 'quasar'
+import { date } from 'quasar'
  function wrapCsvValue(val, formatFn) {
   let formatted = formatFn !== void 0
     ? formatFn(val)
@@ -231,15 +239,17 @@ import { exportFile } from 'quasar'
 const  columns= [
   { name: 'departamento', align:"center",label: 'Departamento', field: 'departamento', sortable: true },
   { name: 'codigos', align:"left", label:'Codigo(s)',field: "codigos", sortable: true},
-  { name: 'nombre',required: true, align:"left",label: 'Nombre del Proyecto', field: 'nombre', sortable: true },
   { name: 'action1', align:"center",label: 'Detalle', field: 'action1'},
+  { name: 'nombre',required: true, align:"left",label: 'Nombre del Proyecto', field: 'nombre', sortable: true },
   { name: 'cuce',align:"Center", label: 'cuce', field: 'cuce', sortable: true },
   { name: 'link',align:"left", label: 'link de la reunion', field: 'link', sortable: true },
-  { name: 'fecha', align:"left",label: 'Fecha', field: 'fecha', sortable: true },
+  { name: 'fecha', align:"left",label: 'Fecha', field: 'fecha', sortable: true, format: val => `${mask='DD-MM-YYYY'}` },
   { name: 'hora', align:"center",label: 'hora', field: 'hora', sortable: true },
   { name: 'precio', align:"center",label: 'Precio', field: 'precio', sortable: true },
   { name: 'plazo', align:"center",label: 'plazo', field: 'plazo', sortable: true },
-  { name: 'lotes',align:"Center", label: 'Lotes', field: 'lotes', sortable: true },
+  //{ name: 'lotes',align:"Center", label: 'Lotes', field: 'lotes', sortable: true },
+  { name: 'funcionarios',align:"funcionarios", label: 'Comision Calificadora', field: 'funcionarios', sortable: true },
+ 
  
    ]
 
@@ -287,22 +297,52 @@ proyecto:{},
         },
    ],
    subcol1: [
-        {
-          name: "nombre",
-          label: "Nombre completo",
-          align: "left",
-      
-         field:"nombre",
-         sortable: true,
-        },
-        {
+     {
           name: "ci",
           required: true,
           label: "C.I.",
-          align: "left",
+          align: "center",
           field:"ci",
           sortable: true,
         },
+         {
+          name: "fechanac",
+          label: "Fecha de Nacimiento",
+          align: "center",
+         field:"fechanac",
+         sortable: true,
+        },
+        {
+          name: "paterno",
+          label: "Apellido Paterno",
+          align: "left",
+         field:"paterno",
+         sortable: true,
+        },
+         {
+          name: "materno",
+          label: "Apellido Materno",
+          align: "left",
+         field:"materno",
+         sortable: true,
+        },
+         {
+          name: "nombres",
+          label: "Nombres",
+          align: "left",
+         field:"nombres",
+         sortable: true,
+        },
+        {
+          name: "nombre",
+          label: "Nombre Completo",
+          align: "left",
+         field:"nombre",
+         sortable: true,
+        },
+       
+       
+        
        
    ],
    subcol2: [
@@ -406,6 +446,32 @@ proyecto:{},
       this.dialog_list3 = true;
     },
   },
+  function:{
+    dateFormat(inputDate, format) {
+    //parse the input date
+    const date = new Date(inputDate);
+
+    //extract the parts of the date
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();    
+
+    //replace the month
+    format = format.replace("MM", month.toString().padStart(2,"0"));        
+
+    //replace the year
+    if (format.indexOf("yyyy") > -1) {
+        format = format.replace("yyyy", year.toString());
+    } else if (format.indexOf("yy") > -1) {
+        format = format.replace("yy", year.toString().substr(2,2));
+    }
+
+    //replace the day
+    format = format.replace("dd", day.toString().padStart(2,"0"));
+
+    return format;
+    }
+  }
 
 };
 </script>
