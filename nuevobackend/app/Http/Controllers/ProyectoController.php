@@ -21,6 +21,12 @@ class ProyectoController extends Controller
         $proyectos = Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])->orderByDesc('id')->get();
         return \response()->json($proyectos, 200);
     }   
+    public function proyectoid(Proyecto $proyecto){
+        $proyecto =Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])
+                            ->orWhere('id', '=', $proyecto->id)->get();
+      
+        return \response()->json($proyecto,200);
+    }   
     public function create()
     {
         //

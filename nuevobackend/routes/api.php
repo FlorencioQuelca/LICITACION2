@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::get('proyectoslibre',[\App\Http\Controllers\ProyectoController::class,'proyectoslibre'])->name('proyectoslibre'); //CRUD de proyectos;
+Route::get('/proyectoid/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'proyectoid'])->name('proyectoid');; //un solo proyecto
+
 //login
 Route::post('/login',[\App\Http\Controllers\UserController::class,'login'])->name('login');
 Route::group(['middleware'=>"auth:sanctum"],function (){

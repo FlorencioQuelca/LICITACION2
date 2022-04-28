@@ -47,7 +47,7 @@
                         flat
                         color="blue"
                         @click="verRow1(props)"
-                        icon="list"
+                        icon="groups"
                       ></q-btn>
             </q-td>      
            <q-td key="nombre" :props="props">
@@ -181,7 +181,8 @@
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
             </div>
         </q-card-section>
-          <q-card-section v-else class="q-pt-xs">
+
+        <q-card-section v-else class="q-pt-xs">
                 <q-table
                     title="Lista de oferentes"
                     :rows="dato2.sociedads"
@@ -434,12 +435,17 @@ proyecto:{},
     },
     verRow1(item) {
       this.dato2 = item.row;
-       if (this.dato2.tipo_id===2)
+       this.$router.push({name: 'presentados.view', params: {id:this.dato2.id}})
+//this.$router.push("Licitaciones")
+      
+     /*
+      if (this.dato2.tipo_id===2)
          {
-                  this.dialog_list1 = true;
+            this.dialog_list1 = true;
          }else{
-                 this.dialog_list2 = true;
-         }  
+            this.dialog_list2 = true;
+         }
+        */  
     },
     verRow2(item) {
       this.dato2 = item.row;

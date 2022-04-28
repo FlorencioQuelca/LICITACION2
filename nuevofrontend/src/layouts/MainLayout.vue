@@ -21,7 +21,7 @@
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered  class="bg-grey-1">
-      <q-list>
+      <q-list bordered padding class="rounded-borders text-primary">
         <q-item-label header
         class="text-grey-8">   Opciones del menu </q-item-label>
 
@@ -30,17 +30,18 @@
             <q-icon color="teal" name="home" />
           </q-item-section>
 
-          <q-item-section>Home</q-item-section>
+          <q-item-section>Principal</q-item-section>
         </q-item>
-           <q-item clickable   active-class="my-menu-link" to="Licitaciones" exact>
+
+           <q-item active-class="my-menu-link" clicklable to= "/Licitaciones" exact>
           <q-item-section avatar>
-            <q-icon color="teal" name="details" />
+            <q-icon color="teal" name="account_tree" />
           </q-item-section>
           <q-item-section>Licitaciones</q-item-section>
         </q-item>
 
         <q-item v-if="!$store.getters['login/isLoggedIn']"
-         clickable v-ripple to="Login" exact>
+         clickable v-ripple to="/Login" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="login" />
           </q-item-section>
@@ -51,7 +52,7 @@
         <q-item   v-if="$store.state.login.empresas"
          active-class="my-menu-link"
          clickable 
-          to="Empresa" exact>
+          to="/Empresa" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="store" />
           </q-item-section>
@@ -62,7 +63,7 @@
          active-class="my-menu-link"
         clickable 
         exact
-         to="Sociedad" 
+         to="/Sociedad" 
          >
           <q-item-section avatar>
             <q-icon color="teal" name="apartment" />
@@ -71,7 +72,7 @@
         </q-item>
 
         <q-item  v-if="$store.state.login.personas"
-        clickable  active-class="my-menu-link" to="Consultor" exact>
+        clickable  active-class="my-menu-link" to="/Consultor" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="person" />
           </q-item-section>
@@ -80,7 +81,7 @@
         </q-item>
 
         <q-item   v-if="$store.state.login.proyectos"
-        clickable  active-class="my-menu-link" to="Proyecto" exact>
+        clickable  active-class="my-menu-link" to="/Proyecto" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="mode" />
           </q-item-section>
@@ -91,7 +92,7 @@
      
 
         <q-item    v-if="$store.state.login.contratos"
-         clickable   active-class="my-menu-link" to="Contratos" exact>
+         clickable   active-class="my-menu-link" to="/Contratos" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="today" />
           </q-item-section>
@@ -100,7 +101,7 @@
        
 
            <q-item   v-if="$store.state.login.usuarios"
-           clickable   active-class="my-menu-link" to="Usuarios" exact>
+           clickable   active-class="my-menu-link" to="/Usuarios" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="today" />
           </q-item-section>
@@ -110,7 +111,7 @@
         <q-item  v-if="$store.getters['login/isLoggedIn']"
          clickable  @click="logout">
           <q-item-section avatar>
-            <q-icon color="teal" name="logout" />
+            <q-icon color="teal" name="/logout" />
           </q-item-section>
           <q-item-section>Salir</q-item-section>
         </q-item>
@@ -157,6 +158,6 @@ export default defineComponent({
 </script>
 <style lang="sass">
 .my-menu-link
-  color: white
-  background: #4a148c
+  color: blue
+  background: #F2C037
 </style>
