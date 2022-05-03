@@ -185,6 +185,17 @@
           <q-td key="grado" :props="props">
             {{props.row.grado}}
           </q-td>
+            <q-td key="detalle" :props="props">
+          <q-btn
+              dense
+              round
+              flat
+              color="red"
+              @click="verRow(props)"
+              icon="list"
+          />
+           
+          </q-td>
           <q-td key="nombrecompleto" :props="props">
             {{props.row.datosp}}
           </q-td>
@@ -389,6 +400,82 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
+      <!-- Listar proyectos asociados />-->
+   
+    <q-dialog v-model="dialog_list">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">CONSULTOR SE PRESENTO  Y/O TIENE CONTRATO CON LOS PROYECTOS :</div>
+        </q-card-section>
+         
+         <div class="row">
+        <div class="col-12">
+          <q-option-group
+            v-model="group"
+            :options="opciones"
+            color="primary"
+            inline
+          />
+        </div> 
+        </div>
+        <q-card-section v-if="group==='op1'" class="q-pt-xs">
+                <q-table
+                    :rows="dato3.proyectos"
+                    :columns="subcol"
+                    >
+      <template v-slot:body="props">
+          <q-tr :props="props">
+          
+            <q-td key="departamento" :props="props">
+            {{ props.row.departamento.nombre}}
+          </q-td>
+          <q-td key="nombre" :props="props">
+            {{ props.row.nombre }}
+          </q-td>
+            <q-td key="fecha" :props="props">
+            {{ props.row.fecha }}
+          </q-td>
+           <q-td key="cuce" :props="props">
+            {{ props.row.cuce }}
+          </q-td>
+        
+          </q-tr>
+          </template>
+          </q-table>
+        </q-card-section>
+
+          <q-card-section v-if="group==='op2'" class="q-pt-xs">
+                <q-table
+                    :rows="dato3.contratos"
+                    :columns="subcol1"
+                   
+                    >
+      <template v-slot:body="props">
+          <q-tr :props="props">
+          
+            <q-td key="departamento" :props="props">
+            {{ props.row.departamento.nombre}}
+          </q-td>
+          <q-td key="nombre" :props="props">
+            {{ props.row.nombre }}
+          </q-td>
+            <q-td key="fecha" :props="props">
+            {{ props.row.fecha }}
+          </q-td>
+           <q-td key="fecha1" :props="props">
+            {{ props.row.fecha}}
+          </q-td>
+         <q-td key="status" :props="props">
+            {{ props.row.status}}
+          </q-td>
+          </q-tr>
+          </template>
+          </q-table>
+            
+        </q-card-section>
+      </q-card>
+    </q-dialog>
  
   </div>
 </template>
@@ -409,6 +496,7 @@ import { exportFile } from 'quasar'
 const  columns= [
   { name: 'ci', required: true,align:"left", label:'C.I.',field: "ci", sortable: true},
   { name: 'grado', align:"left",label: 'Grado', field: 'grado', sortable: true },
+  { name: 'detalle', label: 'Detalle', field: 'detalle', sortable: false },
   { name: 'nombrecompleto',align:"left", label: 'Nombre Completo', field: 'datosp', sortable: true },
   { name: 'fechanacimiento', align:"left",label: 'Fecha Nac.', field: 'fechanacimiento', sortable: true },
   { name: 'genero', align:"center",label: 'Genero', field: 'genero', sortable: true },
@@ -429,6 +517,7 @@ export default {
    dialog_del:false,
    dialog_mod:false,
    dialog_add:false,
+   dialog_list:false,
    selected: [],
    filter:'',
    errores: null,
@@ -441,18 +530,44 @@ export default {
    grados: [
         'LIC.',
         'ING.',
+        'ARQ.',
         'ABG.',
         'DIP.',
         'PHD.',
-        'MED.',
         'MSC.',
+        'MED.',
+        'ENF.',
+        
       ],
-  
-   
-   data:[],
-   dato:{},
-   columns,
-   dato2:{},
+    data:[],
+    columns,
+    dato:{},
+    dato2:{},
+    dato3:{},
+     subcol: [
+         { name: "departamento",required: true, label: "Departamento", align: "left",field:  row => row.departamento,sortable: true,},
+         { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },   
+         { name: "fecha",align: "left",label: "fecha de la Presentacion",field: "fecha",sortable: true},  
+         { name: "cuce",align: "left",label: "CUCE del proyecto",field: "cuce",sortable: true},
+      ],
+     subcol1: [
+         { name: "departamento",required: true, label: "Departamento", align: "left",field:  row => row.departamento,sortable: true,},
+         { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },   
+         { name: "fecha",align: "left",label: "fecha de la Presentacion",field: "fecha",sortable: true},  
+         { name: "fecha1",align: "left",label: "Fecha de Culminacion",field: "fecha1",sortable: true},
+          { name: "status",align: "left",label: "Estado",field: "status",sortable: true},
+      ],
+      opciones: [
+        {
+          label: 'Presentados',
+          value: 'op1'
+        },
+        {
+          label: 'Contratos',
+          value: 'op2'
+        }
+      ],
+      group: 'op1',
  
     };
   },
@@ -460,6 +575,10 @@ export default {
     this.misdatos()
   },
   methods:{
+    verRow(item) {
+      this.dato3 = item.row;
+      this.dialog_list = true;
+    },
      onReset() {
       this.dato.nombres = null;
       this.dato.paterno = null;
@@ -480,7 +599,7 @@ export default {
     misdatos(){
     this.$q.loading.show();
        this.$api.get(process.env.API+"/consultor").then((res)=>{
-         //console.log(res.data)
+       //  console.log(res.data)
          this.data =res.data;
     this.$q.loading.hide();
        });

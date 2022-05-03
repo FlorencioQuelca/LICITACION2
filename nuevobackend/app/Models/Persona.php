@@ -32,7 +32,7 @@ class Persona extends Model
     public function proyectos(){
         return $this->morphToMany('App\Models\Proyecto','detalle');
     }
-//
+// creo que no sirve revisar
     public function proyects(){
         return $this->belongsToMany(Proyecto::class,'persona_proyecto');
      }

@@ -408,7 +408,7 @@
         </q-card-section>
         <q-card-section class="q-pt-xs">
                 <q-table
-                    title="Empresas asociadas"
+                    title="Empresas Asociadas"
                     :rows="dato3.empresas"
                     :columns="subcol"
                    

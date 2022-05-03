@@ -145,6 +145,7 @@
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6">Lista de empresas y/o Sociedades presentados</div>
         </q-card-section>
+       
          <div class="row">
         <div class="col-12">
           <q-option-group
@@ -426,7 +427,7 @@ proyecto:{},
     this.$q.loading.show();
        this.$api.get(process.env.API+"/proyectoslibre").then((res)=>{
          this.data =res.data;
-    this.$q.loading.hide();
+         this.$q.loading.hide();
        });
     },
      verRow(item) {

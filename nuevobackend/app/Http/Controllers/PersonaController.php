@@ -33,11 +33,12 @@ class PersonaController extends Controller
          //select * from Persona where ci like %par% or...
        //  $imput = $request->all();
        try{
-         
-        $personas = Persona::where('ci','like',"%{$request->txtBuscar}%")
+        $personas= Persona::with(['proyectos','proyectos.departamento', 'proyects'])->orderByDesc('id')->get();
+       
+       // $personas = Persona::where('ci','like',"%{$request->txtBuscar}%")
                             //->whereCi($request->txtBuscar)
-                            ->orWhere('datosp', 'like', "%{$request->txtBuscar}%")
-                            ->orderByDesc('id')->get();
+       //                     ->orWhere('datosp', 'like', "%{$request->txtBuscar}%")
+     //                       ->orderByDesc('id')->get();
        //return $personas;
           return \response()->json($personas,200);
        }

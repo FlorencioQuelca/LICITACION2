@@ -414,7 +414,7 @@ export default {
         */
         this.departamento=res.data[0].departamento.nombre;
         this.programa=res.data[0].programa.nombre;
-          console.log(res.data[0]);
+         // console.log(res.data[0]);
           this.$q.loading.hide();
         });
     },
