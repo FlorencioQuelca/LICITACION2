@@ -12,12 +12,14 @@
       :rows-per-page-options="[10,20,100]"
    >
        <template v-slot:top-right>
-        <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar">
+        <q-input outlined  dense debounce="300" v-model="filter" placeholder="Buscar" >
           <template v-slot:append>
-            <q-icon name="search" />
+            <q-icon  name="search" />
+            
           </template>
         </q-input>
       </template>
+
       
      <template v-slot:body="props"> 
         <q-tr :props="props">
@@ -245,7 +247,7 @@ const  columns= [
   { name: 'nombre',required: true, align:"left",label: 'Nombre del Proyecto', field: 'nombre', sortable: true },
   { name: 'cuce',align:"Center", label: 'cuce', field: 'cuce', sortable: true },
   { name: 'link',align:"left", label: 'link de la reunion', field: 'link', sortable: true },
-  { name: 'fecha', align:"left",label: 'Fecha', field: 'fecha', sortable: true, format: val => `${mask='DD-MM-YYYY'}` },
+  { name: 'fecha', align:"left",label: 'Fecha', field: 'fecha', sortable: true },
   { name: 'hora', align:"center",label: 'hora', field: 'hora', sortable: true },
   { name: 'precio', align:"center",label: 'Precio', field: 'precio', sortable: true },
   { name: 'plazo', align:"center",label: 'plazo', field: 'plazo', sortable: true },

@@ -21,7 +21,8 @@ class SociedadController extends Controller
     public function index()
     {
         try{  
-            $sociedad = Sociedad::with('empresas')->orderByDesc('id')->get();
+            $sociedad= Sociedad::with(['proyectos','proyectos.departamento','empresas'])->orderByDesc('id')->get();
+           //$sociedad = Sociedad::with('empresas')->orderByDesc('id')->get();
               return \response()->json($sociedad,200);
            }
            catch(\Exception $e){

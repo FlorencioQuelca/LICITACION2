@@ -160,15 +160,16 @@
       :rows="data"
       :columns="columns"
       row-key="nombre"
-      :rows-per-page-options="[50,100]"
+      :rows-per-page-options="[10,50,100]"
    >
        <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Buscar">
+        <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
         </q-input>
       </template>
+      
       <template v-slot:top-row>
         <q-btn
           color="primary"

@@ -114,7 +114,7 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-  <!--          tabla -->
+  <!--          tabla PRINCIPAL-->
   
     <q-table
       :filter="filter"
@@ -146,6 +146,16 @@
           </q-td>
             <q-td key="codigo" :props="props">
             {{props.row.codigo}}
+          </q-td>
+           <q-td key="detalle" :props="props">
+          <q-btn
+              dense
+              round
+              flat
+              color="red"
+              @click="verRow1(props)"
+              icon="list"
+          />
           </q-td>
           <q-td key="nombreEmpresa" :props="props">
             {{props.row.nombreEmpresa}}
@@ -461,6 +471,83 @@
       </q-card>
     </q-dialog>
 
+    
+      <!-- Listar proyectos asociados />-->
+   
+    <q-dialog v-model="dialog_list1">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">LA ASOCIACION ACCIDENTAL SE PRESENTO  Y/O TIENE CONTRATO CON LOS PROYECTOS :</div>
+        </q-card-section>
+         
+         <div class="row">
+        <div class="col-12">
+          <q-option-group
+            v-model="group"
+            :options="opciones"
+            color="primary"
+            inline
+          />
+        </div> 
+        </div>
+        <q-card-section v-if="group==='op1'" class="q-pt-xs">
+                <q-table
+                    :rows="dato4.proyectos"
+                    :columns="subcol1"
+                    >
+      <template v-slot:body="props">
+          <q-tr :props="props">
+          
+            <q-td key="departamento" :props="props">
+            {{ props.row.departamento.nombre}}
+          </q-td>
+          <q-td key="nombre" :props="props">
+            {{ props.row.nombre }}
+          </q-td>
+            <q-td key="fecha" :props="props">
+            {{ props.row.fecha }}
+          </q-td>
+           <q-td key="cuce" :props="props">
+            {{ props.row.cuce }}
+          </q-td>
+        
+          </q-tr>
+          </template>
+          </q-table>
+        </q-card-section>
+
+          <q-card-section v-if="group==='op2'" class="q-pt-xs">
+                <q-table
+                    :rows="dato3.contratos"
+                    :columns="subcol2"
+                   
+                    >
+      <template v-slot:body="props">
+          <q-tr :props="props">
+          
+            <q-td key="departamento" :props="props">
+            {{ props.row.departamento.nombre}}
+          </q-td>
+          <q-td key="nombre" :props="props">
+            {{ props.row.nombre }}
+          </q-td>
+            <q-td key="fecha" :props="props">
+            {{ props.row.fecha }}
+          </q-td>
+           <q-td key="fecha1" :props="props">
+            {{ props.row.fecha}}
+          </q-td>
+         <q-td key="status" :props="props">
+            {{ props.row.status}}
+          </q-td>
+          </q-tr>
+          </template>
+          </q-table>
+            
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
 
   </div>
 </template>
@@ -482,8 +569,8 @@ import Empresa from "pages/Empresa"
 const  columns= [
   { name: 'departamento', align:"left",label: 'Departamento', field: 'departamento', sortable: true },
    { name: 'codigo',required:true,align:"left", label: 'Codigo', field: 'codigo',sortable: true },
+   { name: 'detalle', label: 'Detalle', field: 'detalle', sortable: false },
   { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
- 
   { name: 'empresas',align:"left", label: 'Asociados', field: 'empresas', sortable: true },
    { name: 'opcion',align:"center",label: 'Accion', field: 'opcion', sortable: false },
   { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
@@ -504,6 +591,8 @@ export default {
    dialog_mod:false,
    dialog_add:false,
    dialog_list:false,
+   dialog_list1:false,
+   
    dialog_addEmpresa:false,
 
    dialog_delsub:false,
@@ -537,18 +626,47 @@ export default {
    
    data:[],
    dato:{},
-   columns,
    dato2:{},
    dato4:{},
    dato5:{},
    asociados:[],
    dato3:{},
+   daot4:{},
+   columns,
+       subcol1: [
+         { name: "departamento",required: true, label: "Departamento", align: "left",field:  row => row.departamento,sortable: true,},
+         { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },   
+         { name: "fecha",align: "left",label: "fecha de la Presentacion",field: "fecha",sortable: true},  
+         { name: "cuce",align: "left",label: "CUCE del proyecto",field: "cuce",sortable: true},
+      ],
+     subcol2: [
+         { name: "departamento",required: true, label: "Departamento", align: "left",field:  row => row.departamento,sortable: true,},
+         { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },   
+         { name: "fecha",align: "left",label: "fecha de la Presentacion",field: "fecha",sortable: true},  
+         { name: "fecha1",align: "left",label: "Fecha de Culminacion",field: "fecha1",sortable: true},
+          { name: "status",align: "left",label: "Estado",field: "status",sortable: true},
+      ],
+    opciones: [
+        {
+          label: 'Presentados',
+          value: 'op1'
+        },
+        {
+          label: 'Contratos',
+          value: 'op2'
+        }
+      ],
+      group: 'op1',
     };
   },
   created(){
     this.misdatos()
   },
   methods:{
+     verRow1(item) {
+      this.dato4 = item.row;
+      this.dialog_list1 = true;
+    },
      onReset() {
       this.dato.nombreLegal = null;
       this.dato.codigo = null;
