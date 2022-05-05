@@ -56,8 +56,7 @@
               type="text"
               label="Apellido Paterno"
               hint="Ingresar Apellido Paterno"
-              lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+              
             />
             <q-input
               outlined
@@ -98,8 +97,7 @@
               type="number"
               label="Celular o Telefono 1"
               hint="Ingresar Numero de Telefono"
-              lazy-rules
-              :rules="[v => !!v || 'Telefono requerido']"
+             
             />
             <q-input
               outlined
@@ -115,11 +113,7 @@
               type="email"
               label="Correo Electronico"
               hint="Ingresar Correo Electronico"
-              lazy-rules
-              :rules="[v => !!v || 'Correo electronio requerido',
-                    v => (v && v.length >= 7  && v.length <=50) || 'Cantidad de caracteres invalido',
-                    v => (v || '').indexOf(' ') < 0 ||  'no se permite spacios en blanco',
-                    v => /.+@.+\..+/.test(v) || 'correo invalido']"
+              
             />
              <q-input
               outlined
