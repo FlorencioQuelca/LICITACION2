@@ -469,7 +469,7 @@ export default {
     misdatos(){
     this.$q.loading.show();
        this.$api.get(process.env.API+"/contratos").then((res)=>{
-    
+        console.log(res.data);
          this.data =res.data;
     this.$q.loading.hide();
        });

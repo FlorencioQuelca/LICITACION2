@@ -25,7 +25,7 @@
         <q-item-label header
         class="text-grey-8">   Opciones del menu </q-item-label>
 
-        <q-item clickable   active-class="my-menu-link" to="/" exact>
+        <q-item clickable active-class="my-menu-link" to="/" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="home" />
           </q-item-section>
@@ -111,7 +111,7 @@
         <q-item  v-if="$store.getters['login/isLoggedIn']"
          clickable  @click="logout">
           <q-item-section avatar>
-            <q-icon color="teal" name="/logout" />
+            <q-icon color="teal" name="logout" />
           </q-item-section>
           <q-item-section>Salir</q-item-section>
         </q-item>

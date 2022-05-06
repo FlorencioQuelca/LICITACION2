@@ -509,7 +509,7 @@ export default {
     this.$q.loading.show();
           this.$api.get(process.env.API+"/empresa").then((res)=>{
           this.data =res.data;
-          console.log(res.data)
+          //console.log(res.data)
           this.$q.loading.hide();
        });
     },

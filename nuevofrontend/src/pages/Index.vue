@@ -1,29 +1,29 @@
 <template>
   <q-page class="flex flex-center">
-  <div>
-   <q-row>
-      <img
-      alt="Quasar logo"
-      src="~assets/logofps.png"
-      style="width: 200px; height: 200px"
-    >
-     <br>
-   </q-row>
-   
-   <q-row>
-   <q-btn
-        class="q-mt-xl"
-        color="primary"
-        text-color="white"
-        to="/Licitaciones"
-        label=" Ver proyectos Licitados "
-        no-caps
-      />
-   </q-row>
-    
-  </div>
+          <div>
+          <div class="row">
+              <img
+              alt="Quasar logo"
+              src="~assets/logofps.png"
+              style="width: 200px; height: 200px"
+            >
+            
+          </div>
+          <br>
+          <div>
+          <q-btn
+                class="q-mt-xl"
+                color="primary"
+                text-color="white"
+                to="/Licitaciones"
+                label=" Ver proyectos Licitados "
+                no-caps
+              />
+          </div>
+            
+          </div>
        <q-footer bordered class="bg-white text-primary">
-        <q-tabs no-caps active-color="primary" indicator-color="transparent" class="text-grey" v-model="tab">
+        <q-tabs no-caps active-color="primary" indicator-color="transparent" class="text-grey" >
          <h6>
           Copyright © 2022 FPS - LAPAZ               
          </h6>
@@ -34,6 +34,7 @@
         
         </q-tabs>
       </q-footer>
+
   </q-page>
 </template>
 
