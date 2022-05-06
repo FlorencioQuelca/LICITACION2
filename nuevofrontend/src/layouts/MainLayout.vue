@@ -98,7 +98,22 @@
           </q-item-section>
           <q-item-section>Contratos</q-item-section>
         </q-item>
-       
+
+        <q-item    v-if="$store.state.login.solicitud"
+         clickable   active-class="my-menu-link" to="/Solicitud" exact>
+          <q-item-section avatar>
+            <q-icon color="teal" name="garage" />
+          </q-item-section>
+          <q-item-section>Solicitud</q-item-section>
+        </q-item>
+
+      <q-item    v-if="$store.state.login.visitas"
+         clickable   active-class="my-menu-link" to="/Visitas" exact>
+          <q-item-section avatar>
+            <q-icon color="teal" name="tour" />
+          </q-item-section>
+          <q-item-section>Visitas</q-item-section>
+        </q-item>
 
            <q-item   v-if="$store.state.login.usuarios"
            clickable   active-class="my-menu-link" to="/Usuarios" exact>
@@ -107,6 +122,9 @@
           </q-item-section>
           <q-item-section>Usuarios</q-item-section>
         </q-item>
+
+        
+       
 
         <q-item  v-if="$store.getters['login/isLoggedIn']"
          clickable  @click="logout">

@@ -16,6 +16,8 @@ export function auth_request(state){
     state.empresas=data.user.permisos.find(p=>p.id===1)!=undefined
     state.contratos=data.user.permisos.find(p=>p.id===7)!=undefined
     state.visitas=data.user.permisos.find(p=>p.id===8)!=undefined
+    state.solicitud=data.user.permisos.find(p=>p.id===9)!=undefined
+    
      
   }
   export function auth_error(state){
@@ -31,4 +33,6 @@ export function auth_request(state){
     state.empresas=false
     state.contratos=false
     state.visitas=false
+    state.solicitud=false
+    
   }

@@ -9,6 +9,9 @@ import Licitaciones from "pages/Licitaciones";
 import Contratos from "pages/Contratos";
 import Usuarios from "pages/Usuarios";
 import Presentados from "pages/Presentados";
+import Solicitud from "pages/Solicitud";
+import Visitas from "pages/Visitas";
+
 
 
 const routes = [
@@ -28,6 +31,8 @@ const routes = [
       { path: 'Contratos', component: Contratos,meta: { requiresAuth: true }},
       { path: 'Usuarios', component: Usuarios,meta: { requiresAuth: true }},
       { path: '/Presentados/:id/view',  name: 'presentados.view',component: Presentados,meta: { requiresAuth: false}},
+      { path: 'Solicitud', component: Solicitud,meta: { requiresAuth: true }},
+      { path: 'Visitas', component: Visitas,meta: { requiresAuth: true }},
       
       
     ]
