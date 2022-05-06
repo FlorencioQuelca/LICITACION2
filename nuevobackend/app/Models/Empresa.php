@@ -35,8 +35,11 @@ class Empresa extends Model
         return $this->belongsToMany(Sociedad::class);
      }
    //relacion muchos a muchos polimorfica
-   public function proyectos(){
-    return $this->morphToMany('App\Models\Proyecto','detalle');
+    public function proyectos(){
+        return $this->morphToMany('App\Models\Proyecto','detalle');
+    }
+    public function contratos(){
+        return $this->morphToMany('App\Models\Contrato','detalle1');
     }
    
 

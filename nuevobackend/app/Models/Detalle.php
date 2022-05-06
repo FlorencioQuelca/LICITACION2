@@ -29,6 +29,10 @@ class Detalle extends Model
         return $this->belongsTo(Proyecto::class);
     }
 
+    public function archivos(){
+        return $this->morphMany('App\Models\Archivos','archivotable');
+    }
+
     
    
 }

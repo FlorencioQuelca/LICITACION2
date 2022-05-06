@@ -32,10 +32,18 @@ class Persona extends Model
     public function proyectos(){
         return $this->morphToMany('App\Models\Proyecto','detalle');
     }
-// creo que no sirve revisar
+// funciona para el funcionario
     public function proyects(){
         return $this->belongsToMany(Proyecto::class,'persona_proyecto');
      }
-    
+
+    public function contratos(){
+        return $this->morphToMany('App\Models\Contrato','detalle1');
+    }
+    // firma el contrato
+    public function firmas(){
+        return $this->belongsToMany(Contrato::class,'contrato_persona');
+     }
+
 }
    

@@ -26,10 +26,8 @@ class CreatePersonaRequest extends FormRequest
 
         return [
             'ci'=> "required|unique:personas,ci",
-            'paterno'=> "required|min:3|max:255",
             'nombres'=> "required|min:3|max:255",
-            'fono1'=> "required",
-            'email'=> "required",
+           
         ];
     }
 }

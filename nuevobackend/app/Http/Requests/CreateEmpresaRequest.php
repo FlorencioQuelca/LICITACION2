@@ -27,8 +27,7 @@ class CreateEmpresaRequest extends FormRequest
             'nit'=> "required|unique:empresas,nit",
             'nombreEmpresa'=> "required|min:3|max:255",
             'nombreLegal'=> "required|min:3|max:255",
-            'fono1'=> "required",
-            'email'=> "required",
+          
         ];
     }
 }

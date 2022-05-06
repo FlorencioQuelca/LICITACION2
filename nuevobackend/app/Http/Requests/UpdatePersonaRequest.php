@@ -30,10 +30,9 @@ class UpdatePersonaRequest extends FormRequest
             //'ci'=> "required|unique:personas,ci,".$this->persona,
            
             'ci'=> "required|unique:personas,ci,".$this->persona,
-            'paterno'=> "required|min:3|max:100",
+           
             'nombres'=> "required|min:3|max:100",
-            'fono1'=> "required|min:3",
-            'email'=> "required",
+            
             
         ];
     }

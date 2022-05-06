@@ -54,6 +54,12 @@ class Proyecto extends Model
     public function sociedads(){
         return $this->morphedByMany('App\Models\Sociedad','detalle')->withPivot(['monto']);
      }
+     // relacion uno a muchos
+    public function contratos(){
+        return $this->hasMany(Contrato::class);
+    }
+
+
      
 
 }

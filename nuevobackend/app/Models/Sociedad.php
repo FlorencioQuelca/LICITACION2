@@ -25,12 +25,17 @@ class Sociedad extends Model
     
      public function empresas(){
        return $this->belongsToMany(Empresa::class)->withPivot('participacion');
-       }
+    }
    
     //relacion muchos a muchos polimorfica
     public function proyectos(){
         return $this->morphToMany('App\Models\Proyecto','detalle');
     }
+    //
+    public function contratos(){
+        return $this->morphToMany('App\Models\Contrato','detalle1');
+    }
+    
 
    
 }

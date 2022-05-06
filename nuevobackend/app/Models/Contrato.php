@@ -12,20 +12,46 @@ class Contrato extends Model
     protected $table ="contratos";
     protected $fillable = [
         "nombre", 
+        "url",
         "fecha",
         "hora",
-        "url",
-        "user_id",
-        "categoria_id"        
+        "fechaini",
+        "fechafin",
+        "duracion",
+        "seguimiento",
+        "status",
+        "montosus",
+        "montobs",
+        "onservacion",
+        "proyecto_id",
     ];
 
     protected $hidden =['created_at','updated_at'];
 
-    //relacion uno a muchos inversa
-    public function user(){
-        return $this->belongsTo(User::class);
+  
+    // relacion uno a muchos
+    public function proyecto(){
+        return $this->belongsTo(Proyecto::class);
     }
-    public function categoria(){
-        return $this->belongsTo(Categoria::class);
+     //relacion polimorfica 
+     public function archivos(){
+        return $this->morphMany('App\Models\Archivos','archivotable');
     }
+
+    //relacion muchos a muchospolimorfica
+    public function empresas(){
+        return $this->morphedByMany('App\Models\Empresa','detalle1')->withPivot(['categoria']);
+     }
+     //relacion muchos a muchos polimorfica
+    public function personas(){
+        return $this->morphedByMany('App\Models\Persona','detalle1')->withPivot(['categoria']);
+     }
+     //relacion uno a muchos
+    public function sociedads(){
+        return $this->morphedByMany('App\Models\Sociedad','detalle1')->withPivot(['categoria']);
+     }
+     //persona que firma
+     public function firmas(){
+        return $this->belongsToMany(Persona::class,'contrato_persona');
+     }
 }

@@ -19,18 +19,20 @@ class CreateContratosTable extends Migration
             $table->string('url')->nullable();
             $table->date('fecha')->nullable();
             $table->time('hora')->nullable();
-
-            
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')
+            $table->date('fechaini')->nullable();
+            $table->date('fechafin')->nullable();
+            $table->integer('duracion')->nullable();
+            $table->decimal('montobs',10,2)->nullable();
+            $table->decimal('montosus',10,2)->nullable();
+            $table->string('seguimiento')->nullable();     
+            $table->string("status")->default("activo");
+            $table->string("observacion")->nullable();
+            $table->unsignedBigInteger('proyecto_id')->nullable();
+            $table->foreign('proyecto_id')
                           ->references('id')
-                          ->on('users')
+                          ->on('proyectos')
                           ->onDelete('set null')->onUpdate('cascade');
-            $table->unsignedBigInteger('categoria_id')->nullable();
-            $table->foreign('categoria_id')
-                          ->references('id')
-                          ->on('categorias')
-                          ->onDelete('set null')->onUpdate('cascade');
+           
             
             $table->timestamps();
         });
