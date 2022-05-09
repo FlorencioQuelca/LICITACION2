@@ -25,6 +25,6 @@ class Solicitud extends Model
         return $this->belongsTo(Car::class);
     }
     public function taller(){
-        return $this->belongsTo(Taller::class)
+        return $this->belongsTo(Taller::class);
     }
 }

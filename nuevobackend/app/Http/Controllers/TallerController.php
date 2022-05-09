@@ -14,7 +14,8 @@ class TallerController extends Controller
      */
     public function index()
     {
-        //
+        return Taller::all();
+  
     }
 
     /**

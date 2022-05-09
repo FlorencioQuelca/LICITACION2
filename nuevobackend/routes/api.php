@@ -78,6 +78,13 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
 
   Route::post('logout',[\App\Http\Controllers\UserController::class,'logout'])->name('logout');
   Route::post('/me',[\App\Http\Controllers\UserController::class,'me']);
+
+  //rutas nuevas
+  Route::apiResource('/Tallers',\App\Http\Controllers\TallerController::class);
+  Route::apiResource('/Solicituds',\App\Http\Controllers\SolicitudController::class);
+  Route::apiResource('/Cars',\App\Http\Controllers\CarController::class);
+  
+
    
 });
 

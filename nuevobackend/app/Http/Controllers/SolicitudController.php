@@ -14,7 +14,9 @@ class SolicitudController extends Controller
      */
     public function index()
     {
-        //
+        $solicituds = Solicitud::with(['taller','car'])->orderByDesc('id')->get();
+        return \response()->json($solicituds, 200);
+
     }
 
     /**
@@ -35,7 +37,16 @@ class SolicitudController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      //  $imput = $request->all();
+       // Solicitud::create($imput);
+        $solicitud=new Solicitud();
+        $solicitud->seguimiento=strtoupper($request->nombre);
+        $solicitud->car_id=$request->car_id;
+        $solicitud->taller_id=$request->taller_id;
+        $solicitud->fechaini=date('Y-m-d');
+        $solicitud->fechafin=date('Y-m-d');
+        $solicitud->save();
+        return \response()->json(['res'=> true, 'message'=>'insertado correctamente'],200);
     }
 
     /**
@@ -46,7 +57,7 @@ class SolicitudController extends Controller
      */
     public function show(Solicitud $solicitud)
     {
-        //
+        return $solicitud;
     }
 
     /**
@@ -67,9 +78,15 @@ class SolicitudController extends Controller
      * @param  \App\Models\Solicitud  $solicitud
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Solicitud $solicitud)
+    public function update(Request $request, $id)
     {
-        //
+        
+       // return $solicitud->update($request->all);
+        $imput = $request->all();
+        $solicitud= Solicitud::find($id);
+        $solicitud->update($imput);
+        return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
+       
     }
 
     /**
@@ -78,8 +95,10 @@ class SolicitudController extends Controller
      * @param  \App\Models\Solicitud  $solicitud
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Solicitud $solicitud)
+    public function destroy($id)
     {
-        //
+       //$solicitud->delete();
+         Solicitud::destroy($id);
+       return response()->json(['res'=>'Borrado exitoso'],200);
     }
 }
