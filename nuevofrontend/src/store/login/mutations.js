@@ -17,8 +17,8 @@ export function auth_request(state){
     state.contratos=data.user.permisos.find(p=>p.id===7)!=undefined
     state.visitas=data.user.permisos.find(p=>p.id===8)!=undefined
     state.solicitud=data.user.permisos.find(p=>p.id===9)!=undefined
-    
-     
+
+
   }
   export function auth_error(state){
     state.status = 'error'
@@ -26,6 +26,7 @@ export function auth_request(state){
   export function logout(state){
     state.status = ''
     state.token = ''
+    state.user ={}
     state.usuarios=false
     state.personas=false
     state.proyectos=false
@@ -34,5 +35,6 @@ export function auth_request(state){
     state.contratos=false
     state.visitas=false
     state.solicitud=false
-    
+    state.vehiculos=false
+
   }

@@ -1,4 +1,4 @@
-<template> 
+<template>
    <div class="q-pa-md">
      <q-btn
       label="Nuevo proyecto para Licitación"
@@ -35,7 +35,7 @@
           <div class="text-h6"><q-icon name="add_circle" /> Nuevo proyecto</div>
         </q-card-section>
          <errores
-         v-if="errores !== null" 
+         v-if="errores !== null"
           :errores="errores"
         ></errores>
         <q-card-section class="q-pt-xs">
@@ -72,7 +72,7 @@
              lazy-rules
               :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
            />
-          
+
             <q-input
               outlined
               v-model="dato.nombre"
@@ -88,7 +88,7 @@
               type="text"
               label="escriba el CUCE"
               hint="Ingresar el CUCE del proceso"
-            
+
             />
              <q-input
               outlined
@@ -97,11 +97,11 @@
               label="Enlace meet/zoom/otro"
               hint="Ingresar enlace para zoom"
             />
-           
+
              </div>
-             <div class="col-6">  
+             <div class="col-6">
              <q-input
-                  outlined                  
+                  outlined
                   type="date"
                   v-model="dato.fecha"
                   hint="Ingresar Fecha de Apertura"
@@ -109,7 +109,7 @@
               :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
                 />
                 <q-input
-                  outlined                  
+                  outlined
                   type="time"
                   v-model="dato.hora"
                   hint="Ingresar Hora de Apertura"
@@ -123,7 +123,7 @@
               step="0.01"
               label="precio Referencial"
               hint="Ingresar precio Referencial"
-             
+
             />
             <q-input
               outlined
@@ -131,16 +131,16 @@
               type="number"
               label="Plazo de Entrega"
               hint="Ingresar plazo de Entrega"
-              
+
             />
-            
+
              <q-input
               outlined
               v-model="dato.lotes"
               type="text"
               label="Numero de Lotes"
               hint="Ingresar numero de lotes"
-             
+
             />
              </div>
              </div>
@@ -169,7 +169,7 @@
           </template>
         </q-input>
       </template>
-      
+
       <template v-slot:top-row>
         <q-btn
           color="primary"
@@ -178,7 +178,7 @@
           @click="exportTable"
         />
         </template>
-     <template v-slot:body="props"> 
+     <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="departamento" :props="props">
             {{props.row.departamento.nombre}}
@@ -196,7 +196,7 @@
               <ul>
               <span v-for="(codigos,index) in props.row.codigos" :key="index">
                   <li>
-                    {{codigos.nombre}}        
+                    {{codigos.nombre}}
                 </li>
               </span>
              </ul>
@@ -218,7 +218,7 @@
                         @click="verRow(props)"
                         icon="list"
                       ></q-btn>
-            </q-td>      
+            </q-td>
            <q-td key="nombre" :props="props">
             {{props.row.nombre}}
           </q-td>
@@ -239,7 +239,7 @@
                         @click="verRow1(props)"
                         icon="list"
                       ></q-btn>
-            </q-td>      
+            </q-td>
            <q-td key="cuce" :props="props">
             {{props.row.cuce}}
           </q-td>
@@ -261,7 +261,7 @@
           <q-td key="lotes" :props="props">
             {{props.row.lotes}}
           </q-td>
-           
+
            <q-td key="comision" :props="props">
                       <q-btn
                         dense
@@ -279,8 +279,8 @@
                         @click="verRow2(props)"
                         icon="list"
                       ></q-btn>
-            </q-td>      
-          
+            </q-td>
+
           <q-td key="opcion" :props="props">
            <q-btn
               dense
@@ -324,7 +324,7 @@
           <div class="text-h6"><q-icon name="edit"/> Modificar Registro</div>
         </q-card-section>
          <errores
-         v-if="errores !== null" 
+         v-if="errores !== null"
           :errores="errores"
         ></errores>
         <q-card-section class="q-pt-xs">
@@ -346,7 +346,7 @@
             label="Categoria"
             type="text"
             hint="Seleccionar Categoria"
-            
+
              lazy-rules
               :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
            />
@@ -384,9 +384,9 @@
               hint="Ingresar su Codigo"
             />
              </div>
-             <div class="col-6">  
+             <div class="col-6">
              <q-input
-                  outlined                  
+                  outlined
                   type="date"
                   v-model="dato2.fecha"
                   hint="Ingresar Fecha de Apertura"
@@ -394,7 +394,7 @@
               :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
                 />
                 <q-input
-                  outlined                  
+                  outlined
                   type="time"
                   v-model="dato2.hora"
                   hint="Ingresar Hora de Apertura"
@@ -413,7 +413,7 @@
               outlined
               v-model="dato2.plazo"
               type="number"
-              
+
               label="Plazo de Entrega"
               hint="Ingresar plazo de Entrega"
             />
@@ -423,7 +423,7 @@
               type="text"
               label="Numero de Lotes"
               hint="Ingresar numero de lotes"
-             
+
             />
              </div>
              </div>
@@ -432,7 +432,7 @@
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
             </div>
           </q-form>
-          
+
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -445,7 +445,7 @@
           <div class="text-h6">Agregar Codigo</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
-      
+
           <q-form @submit="onAdd" class="q-gutter-md">
             <q-input
               outlined
@@ -456,7 +456,7 @@
                lazy-rules
               :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
             />
-       
+
             <div>
               <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
@@ -516,7 +516,7 @@
     </q-dialog>
 
 
-    
+
      <!-- empresas asociados  adicionar consultor />-->
       <q-dialog v-model="dialog_add1">
       <q-card style="max-width: 80%; width: 50%">
@@ -524,7 +524,7 @@
           <div class="text-h6">Agregar Consultor</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
-      
+
           <q-form @submit="onAdd1" class="q-gutter-md">
             <q-input
               outlined
@@ -535,7 +535,7 @@
                lazy-rules
               :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
             />
-       
+
             <div>
               <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
@@ -558,7 +558,7 @@
             color="primary"
             inline
           />
-        </div> 
+        </div>
         </div>
         <q-card-section class="q-pt-xs">
           <q-form @submit="onAdd2" class="q-gutter-md">
@@ -576,7 +576,7 @@
               label="Codigo de la Sociedad Accidental"
               hint="Ingresar Codigo"
             />
-             <q-input 
+             <q-input
               outlined
               v-model="codigo.monto"
               type="number"
@@ -662,7 +662,7 @@
             color="primary"
             inline
           />
-        </div> 
+        </div>
         </div>
         <q-card-section v-if="group=='op1'" class="q-pt-xs">
                 <q-table
@@ -721,7 +721,7 @@
               <ul>
               <span v-for="(empresas,index) in props.row.empresas" :key="index">
                   <li>
-                    {{empresas.nit}}  ({{empresas.pivot.participacion}}) %         
+                    {{empresas.nit}}  ({{empresas.pivot.participacion}}) %
                 </li>
               </span>
             </ul>
@@ -862,7 +862,7 @@
       </q-card>
     </q-dialog>
 
- 
+
   </div>
 </template>
 
@@ -918,7 +918,7 @@ export default {
    dialog_delsub2: false,
    dialog_delsub3: false,
    dialog_delsub4:false,
-   dialog_add3:false, 
+   dialog_add3:false,
    dialog_list3:false,
    selected: [],
    filter:'',
@@ -960,7 +960,7 @@ proyecto:{},
           name: "nombre",
           label: "Nombre completo",
           align: "left",
-      
+
          field:"nombre",
          sortable: true,
         },
@@ -1009,7 +1009,7 @@ proyecto:{},
           align: "left",
          field:"monto",
          sortable: true,
-        },    
+        },
         {
           name: "opcion",
           label: "opcion",
@@ -1033,21 +1033,21 @@ proyecto:{},
           align: "left",
          field:"nombre",
          sortable: true,
-        },    
+        },
           {
           name: "monto",
           label: "Monto Ofertado",
           align: "left",
          field:"monto",
          sortable: true,
-        },    
+        },
          {
           name: "empresas",
           label: "asociados",
           align: "left",
          field:"asociados",
          sortable: true,
-        },    
+        },
         {
           name: "opcion",
           label: "opcion",
@@ -1080,7 +1080,7 @@ proyecto:{},
   created(){
     this.misdatos();
     this.cargardatos();
-   
+
   },
   methods:{
      onReset() {
@@ -1112,21 +1112,22 @@ proyecto:{},
        res.data.forEach(depa => {
             this.departamentos.push({label:depa.nombre,value:depa.id});
         });
-        
+
        });
       this.programas=[];
        this.$api.get(process.env.API+"/programas").then((res)=>{
        res.data.forEach(prog => {
             this.programas.push({label:prog.nombre,value:prog.id});
         });
-  
-        
+
+
        });
      this.tipos=[];
        this.$api.get(process.env.API+"/tipos").then((res)=>{
        res.data.forEach(tip => {
             this.tipos.push({label:tip.nombre,value:tip.id});
-        }); 
+
+        });
          // console.log(this.tipos)
       //  console.log('ok')
         this.$q.loading.hide();
@@ -1139,22 +1140,22 @@ proyecto:{},
    editRow(item) {
       this.dato2 = item.row
  //console.log(this.depa);
-     
+
     //this.depa={label:this.nombre, value:item.row.departamento_id}
     this.depa={}
       this.departamentos.forEach(tipo => {
-           if(tipo.value===item.row.departamento_id)   
+           if(tipo.value===item.row.departamento_id)
                 this.depa={label:tipo.label,value:tipo.value};
-        }); 
+        });
       //  console.log(this.depa);
     this.prog={}
       this.programas.forEach(tipo => {
-           if(tipo.value===item.row.programa_id)   
+           if(tipo.value===item.row.programa_id)
                 this.prog={label:tipo.label,value:tipo.value};
-        }); 
+        });
     this.tipo={}
       this.tipos.forEach(tipo => {
-           if(tipo.value===item.row.tipo_id)   
+           if(tipo.value===item.row.tipo_id)
                 this.tipo={label:tipo.label,value:tipo.value};
         });
       this.dialog_mod = true;
@@ -1164,7 +1165,7 @@ proyecto:{},
       this.codigo={}
       this.dialog_add = true;
     },
-    addRow1(item) {  
+    addRow1(item) {
       this.dato2 = item.row;
        this.codigo={}
         if (this.dato2.tipo_id===2)
@@ -1172,9 +1173,9 @@ proyecto:{},
                  this.dialog_add1 = true;
          }else{
                  this.dialog_add2 = true;
-         }  
+         }
     },
-    addRow2(item) {  
+    addRow2(item) {
        this.dato2 = item.row;
        this.codigo={}
        this.dialog_add3 = true;
@@ -1190,7 +1191,7 @@ proyecto:{},
                   this.dialog_list1 = true;
          }else{
                  this.dialog_list2 = true;
-         }  
+         }
     },
     verRow2(item) {
       this.dato2 = item.row;
@@ -1225,12 +1226,12 @@ proyecto:{},
                           icon: "cloud_done",
                          mssage: "Eliminado correctamente",
         });
-        this.dialog_delsub = false; 
-        this.dialog_list = false; 
+        this.dialog_delsub = false;
+        this.dialog_list = false;
         this.misdatos();
       });
     },
-   
+
     onAdd() {
       this.$q.loading.show();
        this.$api.get(process.env.API + "/codigofound/"+this.codigo.nombre).then((res1) => {
@@ -1238,7 +1239,7 @@ proyecto:{},
             if(res1.data.length===0) {
               this.$api.post(process.env.API + "/codigos/", this.codigo).then((res2) => {
                  //   console.log("adicionado correctamente")
-                  //       console.log(res2.data) 
+                  //       console.log(res2.data)
                      this.$api.put(process.env.API + "/codigoproyectos1/"+this.dato2.id,res2.data).then((res) => {
                               this.$q.notify({
                           color: "green-4",
@@ -1247,15 +1248,15 @@ proyecto:{},
                           message: "Agregado - codigo correctamente",
                         });
                        this.dialog_add = false;
-                        this.misdatos(); 
+                        this.misdatos();
                          //console.log("entro a nuevo")
-                        // console.log(res.data) 
+                        // console.log(res.data)
                         });
-                    });    
-              
+                    });
+
            }else{
                // console.log("encontrado correctamente")
-                   //      console.log(res1.data) 
+                   //      console.log(res1.data)
                   this.$api.put(process.env.API + "/codigoproyectos1/"+this.dato2.id,res1.data[0]).then((res) => {
                               this.$q.notify({
                           color: "green-4",
@@ -1264,7 +1265,7 @@ proyecto:{},
                           message: "Agregado - codigo correctamente",
                         });
                        this.dialog_add = false;
-                        this.misdatos();  
+                        this.misdatos();
                         // console.log(res.data)
                         });
            }
@@ -1282,7 +1283,7 @@ proyecto:{},
                           message: "consultor no registrado,  registre porfavor",
                         });
                        this.dialog_add1 = false;
-                 this.$q.loading.hide();       
+                 this.$q.loading.hide();
            }else{
                   this.$api.put(process.env.API + "/personaproyectos/"+this.dato2.id,res1.data[0]).then((res) => {
                               this.$q.notify({
@@ -1292,10 +1293,10 @@ proyecto:{},
                           message: "Agregado Correctamente",
                         });
                        this.dialog_add1 = false;
-                        this.misdatos();  
+                        this.misdatos();
                         // console.log(res.data)
                         });
-                       
+
            }
        });
      },
@@ -1308,8 +1309,8 @@ proyecto:{},
                           icon: "cloud_done",
                            mssage: "Eliminado correctamente",
         });
-        this.dialog_delsub1 = false; 
-        this.dialog_list1 = false; 
+        this.dialog_delsub1 = false;
+        this.dialog_list1 = false;
         this.misdatos();
       });
     },
@@ -1322,8 +1323,8 @@ proyecto:{},
                           icon: "cloud_done",
                            mssage: "Eliminado correctamente",
         });
-        this.dialog_delsub2 = false; 
-        this.dialog_list2 = false; 
+        this.dialog_delsub2 = false;
+        this.dialog_list2 = false;
         this.misdatos();
       });
     },
@@ -1336,8 +1337,8 @@ proyecto:{},
                           icon: "cloud_done",
                            mssage: "Eliminado correctamente",
         });
-        this.dialog_delsub3 = false; 
-        this.dialog_list2 = false; 
+        this.dialog_delsub3 = false;
+        this.dialog_list2 = false;
         this.misdatos();
       });
     },
@@ -1350,8 +1351,8 @@ proyecto:{},
                           icon: "cloud_done",
                            mssage: "Eliminado correctamente",
         });
-        this.dialog_delsub4 = false; 
-        this.dialog_list3 = false; 
+        this.dialog_delsub4 = false;
+        this.dialog_list3 = false;
         this.misdatos();
       });
     },
@@ -1369,12 +1370,12 @@ proyecto:{},
                           message: "Empresa no registrado,  registre porfavor",
                         });
                        this.dialog_add2 = false;
-                 this.$q.loading.hide();       
+                 this.$q.loading.hide();
            }else{
              res1.data[0].monto =this.codigo.monto;
-             this.$api.put(process.env.API+"/empresaproyectos/"+this.dato2.id,res1.data[0]).then((res) => {               
-                   
-                              
+             this.$api.put(process.env.API+"/empresaproyectos/"+this.dato2.id,res1.data[0]).then((res) => {
+
+
                      this.$q.notify({
                           color: "green-4",
                           textColor: "white",
@@ -1384,16 +1385,16 @@ proyecto:{},
                         // console.log('respuesta del join emporesa')
                        // console.log(res.data)
                        this.dialog_add2 = false;
-                        this.misdatos();                                   
-                       });                                   
-                      
+                        this.misdatos();
+                       });
+
 
            }
        });
-    
+
        }else{
          //es sociedad accidental
-           this.$api.get(process.env.API + "/sociedadcodigo/"+this.codigo.codigo).then((res1) => { 
+           this.$api.get(process.env.API + "/sociedadcodigo/"+this.codigo.codigo).then((res1) => {
           // console.log(res1.data)
             if(res1.data.length===0) {
                       this.$q.notify({
@@ -1403,11 +1404,11 @@ proyecto:{},
                           message: "Sociedad accidental No registrado,  registre porfavor",
                         });
                        this.dialog_add2 = false;
-                 this.$q.loading.hide();       
+                 this.$q.loading.hide();
            }else{
                res1.data[0].monto =this.codigo.monto;
                console.log(res1.data[0]);
-                  this.$api.put(process.env.API + "/sociedadproyectos/"+this.dato2.id,res1.data[0]).then((res) => {                   
+                  this.$api.put(process.env.API + "/sociedadproyectos/"+this.dato2.id,res1.data[0]).then((res) => {
                               this.$q.notify({
                           color: "green-4",
                           textColor: "white",
@@ -1415,10 +1416,10 @@ proyecto:{},
                           message: "Agregado Correctamente",
                         });
                        this.dialog_add2 = false;
-                        this.misdatos();  
+                        this.misdatos();
                         // console.log(res.data)
                         });
-                      
+
            }
           });
        }
@@ -1446,16 +1447,16 @@ proyecto:{},
                           message: "Agregado - funcionario correctamente",
                         });
                        this.dialog_add3 = false;
-                        this.misdatos(); 
+                        this.misdatos();
                         });
 
               }
         });
-        
+
        }else{
-         
+
        }
-      
+
      },
 
     deleteRow(item) {
@@ -1472,28 +1473,28 @@ proyecto:{},
          message: "Eliminado correctamente",
        });
         this.dialog_del = false;
-        this.misdatos();    
+        this.misdatos();
       });
     },
      onSubmit() {
       this.errores =null;
       this.$q.loading.show();
-       
+
        this.dato.departamento_id=this.depa.value;
        this.dato.programa_id=this.prog.value;
        this.dato.tipo_id=this.tipo.value;
    //   console.log(this.dato)
       this.$api.post(process.env.API+"/proyectos/", this.dato).then((res) => {
-       
+
          if(res.data.res===true)
           {
-            this.$q.notify({ 
+            this.$q.notify({
             color: "green-4",
             textColor: "white",
             icon: "cloud_done",
             message: "Creado Correctamente",
           });
-          
+
           }else{
             this.errores = res.data.errors;
           }
@@ -1505,7 +1506,7 @@ proyecto:{},
           this.errores = e.response.data.errors;
         });
     },
-    //modificar 
+    //modificar
      onMod() {
       this.errores =null;
        this.$q.loading.show();
@@ -1515,7 +1516,7 @@ proyecto:{},
       this.$api.put(process.env.API+"/proyectos/"+this.dato2.id,this.dato2).then((res) => {
           if(res.data.res===true)
           {
-            this.$q.notify({ 
+            this.$q.notify({
             color: "green-4",
             textColor: "white",
             icon: "cloud_done",
@@ -1531,7 +1532,7 @@ proyecto:{},
           this.$q.loading.hide();
           this.errores = e.response.data.errors;
         });
-    }, 
+    },
     exportTable () {
      const content = [columns.map(col => wrapCsvValue(col.label))].concat(
           this.data.map(row => columns.map(col => wrapCsvValue(
@@ -1557,7 +1558,7 @@ proyecto:{},
         }
   }
   },
-  
+
 
 };
 </script>

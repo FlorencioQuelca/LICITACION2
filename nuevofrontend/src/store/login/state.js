@@ -10,7 +10,8 @@ export default function () {
     sociedades:false,
     contratos:false,
     visitas:false,
-    
-   
+    vehiculos:false,
+
+
   }
 }

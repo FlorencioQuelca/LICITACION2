@@ -4,11 +4,11 @@ export function login({commit}, user){
     return new Promise((resolve, reject) => {
       commit('auth_request')
       // api({url: process.env.API+'/login', data: user, method: 'POST' })
-      api.post('login',user).then(resp => {
+      api.post(process.env.API+'/login',user).then(resp => {
         const token = resp.data.token
         const user = resp.data.user
         localStorage.setItem('token', token)
-        api.defaults.headers.common['Authorization'] = 'Bearer' + token
+        api.defaults.headers.common['Authorization'] = 'Bearer ' + token
         commit('auth_success', {token, user})
         resolve(resp)
       })
@@ -32,6 +32,6 @@ export function logout({commit}){
         localStorage.removeItem('token')
         reject(err)
       })
-     
+
     })
   }
