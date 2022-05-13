@@ -16,7 +16,7 @@ class ContratoController extends Controller
      */
     public function index()
     {
-        return Contrato::with(['categoria','user'])->get();
+        return Contrato::with(['proyecto','empresas','personas','sociedads','archivos','firmas'])->get();
     }
 
     /**
@@ -37,14 +37,13 @@ class ContratoController extends Controller
      */
     public function store(Request $request)
     {
-      
-        $contrato=new Contrato();
-        $contrato->nombre=strtoupper($request->nombre);
-        $contrato->categoria_id=$request->categoria;
-        $contrato->user_id=$request->usuario;
-        $contrato->fecha=date('Y-m-d');
-        $contrato->hora=date('H:i:s');
-        $contrato->save();
+
+       // $contrato=new Contrato();
+      //  $contrato->nombre=strtoupper($request->nombre);
+       // $contrato->fecha=date('Y-m-d');
+       // $contrato->hora=date('H:i:s');
+      //  $contrato->save();
+      $contrato=Contrato::create($request->all());
         return $contrato;
     }
 
@@ -86,7 +85,7 @@ class ContratoController extends Controller
         $contrato->hora=date('H:i:s');
         $contrato->save();
         return $contrato;
-       
+
     }
 
     /**
@@ -107,11 +106,11 @@ class ContratoController extends Controller
         $contrato->save();
 
         return \response()->json(['res' => true, 'message'=>'archivo cargado corretamente'], 200);
-      
+
       /*   $contrato = Contrato::findOrFail($id);
-   
+
             $file=$request->file;
-            
+
             $nombre = "pdf_".time().".".$file->guessExtension();
 
             $ruta = public_path("pdf/".$nombre);
@@ -129,7 +128,7 @@ class ContratoController extends Controller
     private function cargarPdf($file, $id)
     {
         // nombeArchivo = 7897877987_55.png
-     
+
         $nombreArchivo = "pdf_".time() . "_{$id}.".$file->getClientOriginalExtension();
       //  $ruta = public_path("archivos/".$nombreArchivo);
        // if($file->guessExtension()=="pdf"){
@@ -153,7 +152,7 @@ class ContratoController extends Controller
      // return response()->download(public_path('archivos/'.$contrato->url));
       //return Contrato::findOrFail($contrato->id);
      // window.open(`http://mysite.test/api/getdload/${id}`);
-      /* 
+      /*
       $pdf = \PDF::loadView('imprimir');
       return $pdf->download('imprimir.pdf'); */
     }

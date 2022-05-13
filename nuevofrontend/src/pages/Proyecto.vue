@@ -1112,27 +1112,22 @@ proyecto:{},
        res.data.forEach(depa => {
             this.departamentos.push({label:depa.nombre,value:depa.id});
         });
-
        });
       this.programas=[];
        this.$api.get(process.env.API+"/programas").then((res)=>{
        res.data.forEach(prog => {
             this.programas.push({label:prog.nombre,value:prog.id});
         });
-
-
        });
      this.tipos=[];
        this.$api.get(process.env.API+"/tipos").then((res)=>{
        res.data.forEach(tip => {
             this.tipos.push({label:tip.nombre,value:tip.id});
-
         });
          // console.log(this.tipos)
       //  console.log('ok')
         this.$q.loading.hide();
        });
-
         this.depa=this.departamentos[0]
       this.prog=this.programas[0]
       this.tipo=this.tipos[0]

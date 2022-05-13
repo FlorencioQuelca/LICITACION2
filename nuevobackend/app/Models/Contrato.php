@@ -11,7 +11,7 @@ class Contrato extends Model
     use HasFactory;
     protected $table ="contratos";
     protected $fillable = [
-        "nombre", 
+        "nombre",
         "url",
         "fecha",
         "hora",
@@ -28,14 +28,14 @@ class Contrato extends Model
 
     protected $hidden =['created_at','updated_at'];
 
-  
+
     // relacion uno a muchos
     public function proyecto(){
         return $this->belongsTo(Proyecto::class);
     }
-     //relacion polimorfica 
+     //relacion polimorfica
      public function archivos(){
-        return $this->morphMany('App\Models\Archivos','archivotable');
+        return $this->morphMany('App\Models\Archivo','archivotable');
     }
 
     //relacion muchos a muchospolimorfica
