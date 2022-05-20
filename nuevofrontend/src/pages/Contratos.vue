@@ -4,7 +4,7 @@
       label="Nuevo Documento"
       color="red"
       icon="add_circle"
-      @click="onaalert()"
+      @click="onalert()"
       class="q-mb-xs"
      />
      <!--          ADICIONAR REGISTRO -->
@@ -18,19 +18,44 @@
                  <div class="row">
               <div class="col-6">
             <q-select
-             outlined
-            v-model="proyecto"
+             filled
+              v-model="proyecto"
+             use-input
+              hide-selected
+              fill-input
+              input-debounce="0"
             :options="proyectos"
-            label="Proyecto asociado"
-            type="text"
-            hint="Seleccionar Proyecto Licitado"
-           />
+            label="proyecto asociado"
+            @filter="filtarProyectos"
+             @popup-hide="seleccion"
+           >
+             <template v-slot:no-option>
+          <q-item>
+            <q-item-section class="text-grey">
+              NO HAY RESULTADOS DE BUSQUEDA
+            </q-item-section>
+          </q-item>
+        </template>
+        </q-select>
             <q-input
               outlined
               v-model="dato.nombre"
               type="text"
+              label="Nombre unico de el contrato"
+              hint="Ingresar nombre unico de contrato"
+                 lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+
+            />
+            <q-input
+              outlined
+              v-model="dato.numero"
+              type="text"
               label="Numero de contrato"
-              hint="Ingresar Numero de contrato"
+              hint="Ingresar Numero de contrato Ej.(02-2022)"
+                 lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+
             />
             <q-input
               outlined
@@ -38,6 +63,7 @@
               type="text"
               label="Nombre del seguimiento ejemplo FPS/02/2020"
               hint="Ingresar EL SEGUIMIENTO"
+
             />
             <q-input
               outlined
@@ -57,6 +83,13 @@
             />
              </div>
               <div class="col-6">
+                <q-input
+                  outlined
+                  v-model="dato.codigos"
+                  type="text"
+                  label="codigo(s) de los proyectos"
+                  hint="Ingresar codigo o codigos de los proyectos"
+                />
                  <q-input
                   outlined
                   type="date"
@@ -79,11 +112,11 @@
                   />
                    <q-input
                     outlined
-                    v-model="dato.url"
+                    v-model="dato.plus"
                     type="number"
                     step="1"
-                    label="Duracion extra"
-                    hint="Ingresar +- duracion"
+                    label="Duracion plus"
+                    hint="Ingresar +/- duracion"
                   />
               <q-option-group
                 v-model="dato.status"
@@ -107,7 +140,7 @@
 
     <q-table
       :filter="filter"
-      title="Lista de Documentos Compartidos"
+      title="Lista de Contratos firmados"
       :rows="data"
       :columns="columns"
       row-key="nombre"
@@ -126,10 +159,21 @@
            <q-td key="nombre" :props="props">
             {{props.row.proyecto.nombre}}
           </q-td>
-           <q-td key="docuemntos" :props="props">
-            {{props.row.archivos_id}}
+          <q-td key="numero" :props="props">
+            {{props.row.numero}}
           </q-td>
-
+           <q-td key="seguimiento" :props="props">
+            {{props.row.seguimiento}}
+          </q-td>
+           <q-td key="archivos" :props="props">
+              <ul>
+              <span v-for="(codigos,index) in props.row.archivos" :key="index">
+                  <li>
+                    {{codigos.nombre}}
+                </li>
+              </span>
+             </ul>
+          </q-td>
             <q-td key="opcion1" :props="props">
                                   <q-btn
                                     dense
@@ -150,16 +194,13 @@
             {{props.row.duracion}}
           </q-td>
             <q-td key="plus" :props="props" >
-               {{props.row.url}}
+               {{props.row.plus}}
           </q-td>
         <q-td key="montobs" :props="props">
             {{props.row.montobs}}
           </q-td>
            <q-td key="montosus" :props="props">
             {{props.row.montosus}}
-          </q-td>
-           <q-td key="seguimiento" :props="props">
-            {{props.row.seguimiento}}
           </q-td>
           <q-td key="status" :props="props">
             {{props.row.status}}
@@ -330,10 +371,47 @@
     </q-dialog>
 
   <!-- empresas asociados  adicionar archivo pdf/>-->
-      <q-dialog v-model="dialog_add">
+   <q-dialog v-model="dialog_add">
       <q-card style="max-width: 80%; width: 50%">
         <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6">Agregar  Archivo</div>
+          <div class="text-h6">Agregar  Archivo |  Usuario:  {{$store.state.login.user.name}}</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+               <q-select
+             outlined
+            v-model="categoria"
+            :options="categorias"
+            label="categoria de documento"
+            type="text"
+            hint="Seleccionar Tipo de Documento"
+           />
+            <q-uploader
+              class="full-width"
+              label="Subir archivo PDF"
+              :factory="uploadFile"
+            />
+              <q-input
+              outlined
+              v-model="archivo.nombre"
+              type="text"
+              label="Nombre del documento"
+              hint="Ingresar el nombre del Documento"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+
+        </q-card-section>
+          <q-card-actions class="bg-green-14 text-white">
+          <q-btn class="full-width" flat label="subir al servidor" v-close-popup />
+        </q-card-actions>
+
+      </q-card>
+    </q-dialog>
+  <!--hola   este es un o que funciona -->
+      <q-dialog >
+      <q-card style="max-width: 80%; width: 50%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Agregar  Archivo |  Usuario:  {{$store.state.login.user.name}}</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
 
@@ -437,18 +515,18 @@
 <script>
 const  columns= [
   { name: 'nombre',required: true, align:"left",label: 'Nombre del Proyecto', field: 'nombre', sortable: true },
-  { name: 'documentos', label: 'Documentos PDF', field: 'documentos', sortable: false },
+  { name: 'numero', align:"left",label: 'Numero del contrato', field: 'numero', sortable: true },
+  { name: 'seguimiento',align:"left", label: 'Seguimiento', field: 'seguimiento', sortable: true },
+  { name: 'archivos', label: 'lista de contratos PDF', field: 'archivos', sortable: false },
   { name: 'opcion1', label: 'Opcion', field: 'opcion1', sortable: false },
   { name: 'fechaini', align:"left",label: 'Fecha de Inicio de contrato', field: 'fechaini', sortable: true },
   { name: 'fechafin', align:"left",label: 'Fecha de Fin de contrato', field: 'fechafin', sortable: true },
   { name: 'duracion',align:"left", label: 'Duracion contrato', field: 'duracion', sortable: true },
-  { name: 'url', align:"center",label: 'plus', field: 'url', sortable: true },
+  { name: 'plus', align:"center",label: 'plus', field: 'url', sortable: true },
   { name: 'montobs',align:"left", label: 'Monto de Contrato Bs', field: 'montobs', sortable: true },
   { name: 'montosus',align:"left", label: 'Monto de Contrato SUS', field: 'montosus', sortable: true },
-  { name: 'seguimiento',align:"left", label: 'Seguimiento', field: 'seguimiento', sortable: true },
   { name: 'status',align:"left", label: 'Status', field: 'status', sortable: true },
   { name: 'observacion',align:"left", label: 'Observacion', field: 'observacion', sortable: true },
-  { name: 'nombre',required: true, align:"left",label: 'Nombre del Proyecto', field: 'nombre', sortable: true },
  { name: 'opcion', label: 'Opcion', field: 'opcion', sortable: false }
    ]
 
@@ -499,9 +577,17 @@ export default {
    proyectos:[],
    proyecto:{},
    columns,
+   options:[],
    file:null,
 
+
        };
+  },
+  computed:{
+    //nombre1: function () {
+   //   return this.proyectos1[parseInt(this.proyecto.pos)].nombre;
+   // }
+
   },
   created(){
     this.misdatos()
@@ -509,6 +595,32 @@ export default {
   },
 
   methods:{
+    filtarProyectos (val, update, abort){
+         update(() => {
+          const needle = val.toLowerCase()
+          this.proyectos= this.options.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+        })
+    },
+    seleccion(){
+      this.dato.nombre=this.proyectos1[parseInt(this.proyecto.pos)].nombre;
+      this.dato.montobs=this.proyectos1[parseInt(this.proyecto.pos)].precio;
+      this.dato.duracion=this.proyectos1[parseInt(this.proyecto.pos)].plazo;
+          this.dato.codigos="";
+          this.dato.codigos="";
+      this.proyectos1[parseInt(this.proyecto.pos)].codigos.forEach(tipo => {
+
+        this.dato.codigos =this.dato.codigos+tipo.nombre+ " - ";
+        });
+      this.dato.status="VIGENTE"
+     // this.dato.fechaini=new Date('01/01/2022');
+    //  this.dato.fechafin=this.dato.fechaini+this.dato.duracion;
+       this.dato.numero ="01-2022"
+       this.dato.plus =90
+       this.dato.seguimiento="FPS/GDLP/"+ this.proyectos1[parseInt(this.proyecto.pos)].programa.nombre;
+
+
+
+    },
      editRow(item) {
       this.dato2 = item.row
       this.usuario={}
@@ -524,15 +636,22 @@ export default {
         });
      this.dialog_mod = true;
     },
-    onaalert() {
-        this.dato.nombre = null;
-       this.categoria=this.categorias[0]
-        this.usuario=this.usuarios[0]
+    onalert() {
+         this.categoria=this.categorias[0]
+         this.usuario=this.usuarios[0]
+         this.proyecto=this.proyectos[0]
         this.alert=true;
+        //if(this.proyecto.value){
+         //this.dato.nombre=this.proyectos1[parseInt(this.proyecto.pos)].nombre;
+         //this.proyecto.value
+        //}
+
+
      },
     onReset() {
         this.dato.nombre = null;
-       this.categoria=this.categorias[0]
+        this.proyectos = this.proyectos[0]
+        this.categoria=this.categorias[0]
         this.usuario=this.usuarios[0]
      },
     escogerArchivo(event){
@@ -541,42 +660,36 @@ export default {
     addRow(item) {
       this.dato2 = item.row;
        this.model=null,
+      this.categoria=this.categorias[1];
+      this.archivo.nombre="Contrato N° "+item.row.numero
       this.dialog_add = true;
     },
     cargardatos(){
         this.categorias=[];
         this.$q.loading.show();
-       this.$api.get(process.env.API+"/categorias").then((res)=>{
-
-       res.data.forEach(cat=> {
-            this.categorias.push({label:cat.nombre,value:cat.id});
-        });
-
-       });
-      this.usuarios=[];
-       this.$api.get(process.env.API+"/users").then((res)=>{
-
-       res.data.forEach(user => {
-            this.usuarios.push({label:user.name,value:user.id});
-        });
-
-       });
-
-        this.$q.loading.show();
          this.proyectos=[];
          this.$api.get(process.env.API+"/proyectos").then((res)=>{
-
+           this.proyectos1=res.data;
+            let num=0;
+            res.data.forEach(pro=> {
+            this.proyectos.push({label:pro.nombre,value:pro.id, pos:num});
+            num=num+1;
+             this.$q.loading.hide();
+            });
+              });
+         this.options=this.proyectos;
+         this.$q.loading.show();
+         this.categorias=[];
+         this.$api.get("/categorias").then((res)=>{
             res.data.forEach(cat=> {
-            this.proyectos.push({label:cat.nombre,value:cat.id});
+            this.categorias.push({label:cat.nombre,value:cat.id});
+            this.$q.loading.hide();
         });
-
-         //  console.log(this.proyectos)
-         //this.proyectos =res.data;
-         this.$q.loading.hide();
-    });
-
-
         this.categoria=this.categorias[0]
+          });
+      ///  console.log(this.proyectos1)
+
+        this.categoria=this.categorias[1]
         this.usuario=this.usuarios[0]
         this.proyecto=this.proyectos[0]
 
@@ -596,8 +709,8 @@ export default {
 
     onAdd() {
       this.$q.loading.show();
-      this.archivo.user_id =this.$store.state.login.user.id;
-      this.archivo.categoria_id = this.categoria.value;
+      //this.archivo.user_id =this.$store.state.login.user.id;
+     // this.archivo.categoria_id = this.categoria.value;
 
       let archivo =new FormData();
       archivo.append('file',this.file);
@@ -615,6 +728,22 @@ export default {
                         this.onReset();
                       //  console.log(res.data)
                         });
+
+     },
+     uploadFile(files){
+       this.$q.loading.show()
+      const fileData= new FormData()
+      fileData.append('archivo',files[0])
+      fileData.append('contrato_id',this.dato2.id)
+      fileData.append('nombre',this.archivo.nombre)
+      fileData.append('categoria_id',this.categoria.value)
+      fileData.append('user_id',this.$store.state.login.user.id)
+      this.$api.post(process.env.API+'/upload',fileData)
+      .then(res=>{
+        console.log(res.data)
+          this.dialog_add = false;
+        this.misdatos()
+      })
 
      },
      descargar(item) {

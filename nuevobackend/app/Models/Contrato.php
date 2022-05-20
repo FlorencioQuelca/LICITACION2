@@ -13,11 +13,11 @@ class Contrato extends Model
     protected $fillable = [
         "nombre",
         "numero",
+        "seguimiento",
         "fechaini",
         "fechafin",
         "duracion",
         "plus",
-        "seguimiento",
         "status",
         "montosus",
         "montobs",
@@ -37,7 +37,7 @@ class Contrato extends Model
     }
      //relacion polimorfica
      public function archivos(){
-        return $this->morphMany('App\Models\Archivo','archivotable');
+        return $this->morphMany(Archivo::class,'archivotable');
     }
 
     //relacion muchos a muchospolimorfica

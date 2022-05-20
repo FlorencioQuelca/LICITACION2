@@ -19,7 +19,8 @@ class CreateArchivosTable extends Migration
             $table->string('nombre')->nullable();
             $table->string('detalle')->nullable();
             $table->string('tipo')->nullable();
-            $table->integer('tamanio')->default();
+            $table->decimal('tamanio1',20,2)->nullable();
+            $table->integer('tamanio')->nullable();
             //polimorfica
             $table->unsignedBigInteger('archivotable_id');
             $table->string('archivotable_type');
@@ -33,7 +34,7 @@ class CreateArchivosTable extends Migration
                           ->onDelete('set null')->onUpdate('cascade');
 
             $table->timestamps();
-            
+
         });
     }
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contrato;
+use App\Models\Archivo;
+
 use Illuminate\Http\Request;
 
 
@@ -15,7 +17,7 @@ class ContratoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        return Contrato::with(['proyecto','proyecto.codigos','proyecto.empresas', 'proyecto.sociedads','proyecto.personas','empresas','personas','sociedads','archivos','firmas'])->get();
+        return Contrato::with(['proyecto','proyecto.codigos','proyecto.empresas', 'proyecto.sociedads','proyecto.personas','empresas','personas','sociedads','archivos'])->get();
     }
 
     /**
@@ -166,5 +168,44 @@ class ContratoController extends Controller
            ];
 
     return response()->download($file, $contrato->url, $headers);
+    }
+
+
+    //oficial
+    public function upload(Request $request){
+        if ($request->hasFile('archivo')){
+            $file=$request->file('archivo');
+            $size=$file->getSize();  //tamaño en bytes // hay que convertir
+            $url=time().'.'.$file->getClientOriginalExtension();
+            $file->move(\public_path('contratos'),$url);
+
+            $archivo=new Archivo;// Persona()::find($request->persona_id);
+            $archivo->url=$url;
+            $archivo->categoria_id=$request->categoria_id;
+            $archivo->user_id=$request->user_id;
+           // $archivo->contrato_id=$request->contrato_id;
+            $archivo->nombre=$request->nombre;
+           // $archivo->archivotable_type='App\Models\Contrato';
+           /// $archivo->archivotable_id=$request->contrato_id;
+            $archivo->tamanio=$size;
+            $archivo->tipo=$file->getClientOriginalExtension();
+            $contrato = Contrato::find($request->contrato_id);
+            $contrato->archivos()->save($archivo);
+            //$archivo->save();
+            return $archivo;
+        }else{
+            return "no existe el archivo";
+        }
+    }
+    public function base64(Request $request){
+        if ($request->imagen==''){
+            return '';
+        }
+        $path = 'imagenes/'.$request->imagen;
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $base64;
+
     }
 }

@@ -15,16 +15,18 @@ class CreateContratoPersonaTable extends Migration
     {
         Schema::create('contrato_persona', function (Blueprint $table) {
             $table->id();
+            /*
             $table->unsignedBigInteger('persona_id')->nullable();
             $table->unsignedBigInteger('contrato_id')->nullable();
             $table->foreign('contrato_id')
                             ->references('id')
                             ->on('contratos')
-                            ->onDelete('set null')->onUpdate('cascade');                   
+                            ->onDelete('set null')->onUpdate('cascade');
           $table->foreign('persona_id')
                           ->references('id')
                           ->on('personas')
                           ->onDelete('set null')->onUpdate('cascade');
+                          */
             $table->timestamps();
         });
     }

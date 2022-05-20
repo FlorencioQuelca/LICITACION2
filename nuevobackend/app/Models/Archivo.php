@@ -10,17 +10,16 @@ class Archivo extends Model
     use HasFactory;
     protected $table ="archivos";
     protected $fillable = [
-        "url", 
+        "url",
         "nombre",
         "detalle",
         "tipo",
         "tamanio",
         "user_id",
-        "categoria_id"        
+        "categoria_id",
+        "archivotable_id",
+        "archivotable_type",
     ];
-
-
-
     protected $hidden =['created_at','updated_at'];
     //relacion polimorfica
     public function archivotable(){

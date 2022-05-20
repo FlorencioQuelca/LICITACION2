@@ -35,10 +35,10 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
    Route::apiResource('/sociedad',\App\Http\Controllers\SociedadController::class); //CRUD de SociedadAccidental;
    Route::get('/sociedadcodigo/{id}',[\App\Http\Controllers\SociedadController::class,'sociedadcodigo']); //CRUD de SociedadAccidental;
    Route::get('/userci/{id}',[\App\Http\Controllers\UserController::class,'userci']); //CRUD de Personas;
-  
+
    Route::put('empresaSociedad/{sociedad}',[\App\Http\Controllers\SociedadController::class,'empresaSociedad']); //CRUD de SociedadAccidental;
    Route::put('empresasociedaddetach/{sociedad}',[\App\Http\Controllers\SociedadController::class,'empresasociedaddetach']); //CRUD de SociedadAccidental;
-  
+
    //proyecto
   Route::apiResource('proyectos',\App\Http\Controllers\ProyectoController::class); //CRUD de proyectos;
   Route::apiResource('programas',\App\Http\Controllers\ProgramaController::class); //CRUD de SociedadAccidental;
@@ -50,10 +50,10 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   Route::put('codigoproyectos1/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'codigoproyectos1']); //CRUD de SociedadAccidental;
   Route::put('personaproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'personaproyectos']); //CRUD de SociedadAccidental;
   Route::put('personaproyectosdetach/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'personaproyectosdetach']); //CRUD de SociedadAccidental;
-  
+
   Route::put('empresaproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'empresaproyectos']); //CRUD de SociedadAccidental;
   Route::put('empresaproyectosdetach/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'empresaproyectosdetach']); //CRUD de SociedadAccidental;
-  
+
   Route::put('sociedadproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'sociedadproyectos']); //CRUD de SociedadAccidental;
   Route::put('sociedadproyectosdetach/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'sociedadproyectosdetach']); //CRUD de SociedadAccidental;
   //funcionario
@@ -68,24 +68,25 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   Route::apiResource('contratos',\App\Http\Controllers\ContratoController::class);
   Route::put('setPdf/{contrato}',[\App\Http\Controllers\ContratoController::class,'setPdf']);
   Route::get('getPdf/{contrato}',[\App\Http\Controllers\ContratoController::class,'getPdf']);
-  
+
   Route::apiResource('categorias',\App\Http\Controllers\CategoriaController::class); //CRUD de SociedadAccidental;
-  Route::apiResource('users',\App\Http\Controllers\UserController::class); 
-  Route::apiResource('permisos',\App\Http\Controllers\PermisoController::class); 
+  Route::apiResource('users',\App\Http\Controllers\UserController::class);
+  Route::apiResource('permisos',\App\Http\Controllers\PermisoController::class);
   Route::put('/updatepermisos/{user}',[\App\Http\Controllers\UserController::class,'updatepermisos']);
-  
+
   Route::put('/pass/{user}',[\App\Http\Controllers\UserController::class,'pass']);
 
-  Route::post('logout',[\App\Http\Controllers\UserController::class,'logout'])->name('logout');
+  Route::post('/logout',[\App\Http\Controllers\UserController::class,'logout'])->name('logout');
   Route::post('/me',[\App\Http\Controllers\UserController::class,'me']);
 
   //rutas nuevas
   Route::apiResource('/Tallers',\App\Http\Controllers\TallerController::class);
   Route::apiResource('/Solicituds',\App\Http\Controllers\SolicitudController::class);
   Route::apiResource('/Cars',\App\Http\Controllers\CarController::class);
-  
 
-   
+   Route::post('/upload',[\App\Http\Controllers\ContratoController::class,'upload']);
+   Route::post('/base64',[\App\Http\Controllers\ContratoController::class,'base64']);
+
 });
 
 
@@ -103,16 +104,16 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
 //Route::group(['middleware'=>'auth:api'], function(){
 
 
-   
+
    //Route::apiResource('sociedad',[\App\Http\Controllers\SociedadController::class,'sociedad']);
    //ruta asociados sociedad accidental
   // Route::apiResource('asociados',\App\Http\Controllers\AsociadoController::class);
-   
+
    //Route::apiResource('proyectoPersona',\App\Http\Controllers\ProyectoPersonaController::class,['except' => ['index']]); //CRUD de Proyecto Persona;
-   //Route::apiResource('proyectoEmpresa',\App\Http\Controllers\ProyectoEmpresaController::class,['except' => ['index']]); 
-   
+   //Route::apiResource('proyectoEmpresa',\App\Http\Controllers\ProyectoEmpresaController::class,['except' => ['index']]);
+
   //  Route::post('logout',[\App\Http\Controllers\UserController::class,'logout'])->name('logout');
-    
+
 //});
 //Route::get('personas',[\App\Http\Controllers\PersonaController::class,'index']);
 //Route::get('personas/{persona}',[\App\Http\Controllers\PersonaController::class,'show']);
