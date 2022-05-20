@@ -17,6 +17,7 @@ class CreateDetalle1sTable extends Migration
             $table->id();
             $table->string('observacion')->nullable();
             $table->string('categoria')->nullable();
+            $table->string('oficial')->nullable();
             $table->unsignedBigInteger('detalle1_id');
             $table->string('detalle1_type');
             $table->unsignedBigInteger('contrato_id')->nullable();

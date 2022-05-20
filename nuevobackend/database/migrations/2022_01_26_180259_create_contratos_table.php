@@ -16,15 +16,17 @@ class CreateContratosTable extends Migration
         Schema::create('contratos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->unique();
-            $table->string('url')->nullable();
-            $table->date('fecha')->nullable();
-            $table->time('hora')->nullable();
+            $table->string('codigos')->nullable();
+            $table->string('departamento')->nullable();
+            $table->string('seguimiento')->nullable();
+            $table->string('programa')->nullable();
+            $table->string('numero')->nullable();
             $table->date('fechaini')->nullable();
             $table->date('fechafin')->nullable();
             $table->integer('duracion')->nullable();
+            $table->integer('plus')->nullable();
             $table->decimal('montobs',10,2)->nullable();
             $table->decimal('montosus',10,2)->nullable();
-            $table->string('seguimiento')->nullable();     
             $table->string("status")->default("activo");
             $table->string("observacion")->nullable();
             $table->unsignedBigInteger('proyecto_id')->nullable();
@@ -32,8 +34,8 @@ class CreateContratosTable extends Migration
                           ->references('id')
                           ->on('proyectos')
                           ->onDelete('set null')->onUpdate('cascade');
-           
-            
+
+
             $table->timestamps();
         });
     }

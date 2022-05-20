@@ -12,17 +12,19 @@ class Contrato extends Model
     protected $table ="contratos";
     protected $fillable = [
         "nombre",
-        "url",
-        "fecha",
-        "hora",
+        "numero",
         "fechaini",
         "fechafin",
         "duracion",
+        "plus",
         "seguimiento",
         "status",
         "montosus",
         "montobs",
         "onservacion",
+        "departamento",
+        "programa",
+        "codigos",
         "proyecto_id",
     ];
 

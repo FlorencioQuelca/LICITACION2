@@ -14,9 +14,8 @@ class ContratoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return Contrato::with(['proyecto','empresas','personas','sociedads','archivos','firmas'])->get();
+    public function index(){
+        return Contrato::with(['proyecto','proyecto.codigos','proyecto.empresas', 'proyecto.sociedads','proyecto.personas','empresas','personas','sociedads','archivos','firmas'])->get();
     }
 
     /**
