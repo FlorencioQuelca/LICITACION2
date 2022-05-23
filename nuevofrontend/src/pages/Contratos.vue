@@ -169,7 +169,16 @@
               <ul>
               <span v-for="(codigos,index) in props.row.archivos" :key="index">
                   <li>
-                    {{codigos.nombre}}
+
+                    {{codigos.nombre}}  {{codigos.id}}
+                        <q-btn
+                            dense
+                            round
+                            flat
+                            color="green"
+                            @click="download(codigos)"
+                            icon="download"
+                          ></q-btn>
                 </li>
               </span>
              </ul>
@@ -524,9 +533,9 @@ const  columns= [
   { name: 'duracion',align:"left", label: 'Duracion contrato', field: 'duracion', sortable: true },
   { name: 'plus', align:"center",label: 'plus', field: 'url', sortable: true },
   { name: 'montobs',align:"left", label: 'Monto de Contrato Bs', field: 'montobs', sortable: true },
-  { name: 'montosus',align:"left", label: 'Monto de Contrato SUS', field: 'montosus', sortable: true },
+ // { name: 'montosus',align:"left", label: 'Monto de Contrato SUS', field: 'montosus', sortable: true },
   { name: 'status',align:"left", label: 'Status', field: 'status', sortable: true },
-  { name: 'observacion',align:"left", label: 'Observacion', field: 'observacion', sortable: true },
+ // { name: 'observacion',align:"left", label: 'Observacion', field: 'observacion', sortable: true },
  { name: 'opcion', label: 'Opcion', field: 'opcion', sortable: false }
    ]
 
@@ -770,7 +779,27 @@ export default {
                            this.$q.loading.hide();
                         console.log(response.data)
                         });
-
+     },
+     download(item) {
+       console.log(item);
+        this.$q.loading.show();
+         this.$api.get(process.env.API + "/getContrato/"+item.id,{responseType: 'blob'}).then((response) => {
+          // console.log(response.data);
+           if(response.data.res){
+               console.log("error");
+                //console.log(response.data)
+                   this.$q.loading.hide();
+             }else{
+            let blob = new Blob([response.data], { type: 'application/pdf' })
+            let link = document.createElement('a')
+            link.href = window.URL.createObjectURL(blob)
+            link.download = item.nombre;
+            document.body.appendChild(link);
+            link.click()
+            this.$q.loading.hide();
+            console.log(response.data)
+             }
+        });
 
      },
       onSubmit() {

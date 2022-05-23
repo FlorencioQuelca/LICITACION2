@@ -86,6 +86,7 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
 
    Route::post('/upload',[\App\Http\Controllers\ContratoController::class,'upload']);
    Route::post('/base64',[\App\Http\Controllers\ContratoController::class,'base64']);
+   Route::get('getContrato/{archivo}',[\App\Http\Controllers\ArchivoController::class,'getContrato']);
 
 });
 

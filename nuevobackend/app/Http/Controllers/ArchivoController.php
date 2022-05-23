@@ -82,4 +82,21 @@ class ArchivoController extends Controller
     {
         //
     }
+
+    public function getContrato($id)
+    {
+        $contrato = Archivo::findOrFail($id);
+          if($contrato->url ==''){
+            return \response()->json(['res'=> false, 'message'=>'Archivo No Encontrado'],200);
+          }else{
+
+            $file= public_path().'/contratos/'.$contrato->url;
+            $headers = [
+                'Content-Type' => 'application/pdf',
+                'responseType'=> 'blob'
+            ];
+            return response()->download($file, $contrato->url, $headers);
+        }
+    }
+
 }
