@@ -1,6 +1,6 @@
-<template> 
+<template>
    <div class="q-pa-md">
-           
+
   <!--          tabla PRINCIPOAL -->
 
     <q-table
@@ -10,18 +10,20 @@
       :columns="columns"
       row-key="nombre"
       :rows-per-page-options="[10,20,100]"
+       separator="cell"
+       dense
    >
        <template v-slot:top-right>
         <q-input outlined  dense debounce="300" v-model="filter" placeholder="Buscar" >
           <template v-slot:append>
             <q-icon  name="search" />
-            
+
           </template>
         </q-input>
       </template>
 
-      
-     <template v-slot:body="props"> 
+
+     <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="departamento" :props="props">
             {{props.row.departamento.nombre}}
@@ -36,13 +38,13 @@
               <ul>
               <span v-for="(codigos,index) in props.row.codigos" :key="index">
                   <li>
-                    {{codigos.nombre}}        
+                    {{codigos.nombre}}
                 </li>
               </span>
              </ul>
           </q-td>
             <q-td key="action1" :props="props">
-                     
+
                         <q-btn
                         dense
                         round
@@ -51,11 +53,11 @@
                         @click="verRow1(props)"
                         icon="groups"
                       ></q-btn>
-            </q-td>      
+            </q-td>
            <q-td key="nombre" :props="props">
             {{props.row.nombre}}
           </q-td>
-           
+
            <q-td key="cuce" :props="props">
             {{props.row.cuce}}
           </q-td>
@@ -63,11 +65,11 @@
             {{props.row.link}}
           </q-td>
             <q-td key="fecha"  :props="props">
-             
+
             {{ props.row.fecha    }}
-              
-               
-               
+
+
+
           </q-td>
            <q-td key="hora" :props="props">
             {{props.row.hora}}
@@ -81,23 +83,23 @@
           <q-td key="lotes" :props="props">
             {{props.row.lotes}}
           </q-td>
-  
+
             <q-td key="funcionarios" :props="props">
               <ul>
               <span v-for="(funcionarios,index) in props.row.funcionarios" :key="index">
                   <li>
-                    {{funcionarios.grado}} {{funcionarios.datosp}}        
+                    {{funcionarios.grado}} {{funcionarios.datosp}}
                 </li>
               </span>
              </ul>
           </q-td>
-         
+
            </q-tr>
       </template>
     </q-table>
-   
 
-    
+
+
           <!-- VER LISTA de PERSONAS  />-->
    <q-dialog v-model="dialog_list1">
       <q-card style="max-width: 90%; width: 70%">
@@ -130,7 +132,7 @@
           <q-td key="nombre" :props="props">
             {{ props.row.datosp}}
           </q-td>
-          
+
            </q-tr>
           </template>
           </q-table>
@@ -147,7 +149,7 @@
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6">Lista de empresas y/o Sociedades presentados</div>
         </q-card-section>
-       
+
          <div class="row">
         <div class="col-12">
           <q-option-group
@@ -156,14 +158,14 @@
             color="primary"
             inline
           />
-        </div> 
+        </div>
         </div>
         <q-card-section v-if="group==='op1'" class="q-pt-xs">
                 <q-table
                     title="Lista de oferentes"
                     :rows="dato2.empresas"
                     :columns="subcol2"
-                  
+
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -176,7 +178,7 @@
            <q-td key="monto" :props="props">
             {{ props.row.pivot.monto}}
           </q-td>
-        
+
           </q-tr>
           </template>
           </q-table>
@@ -190,7 +192,7 @@
                     title="Lista de oferentes"
                     :rows="dato2.sociedads"
                     :columns="subcol3"
-                  
+
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -207,12 +209,12 @@
               <ul>
               <span v-for="(empresas,index) in props.row.empresas" :key="index">
                   <li>
-                    {{empresas.nit}}  ({{empresas.pivot.participacion}}) %         
+                    {{empresas.nit}}  ({{empresas.pivot.participacion}}) %
                 </li>
               </span>
             </ul>
           </q-td>
-         
+
           </q-tr>
           </template>
           </q-table>
@@ -253,19 +255,19 @@ const  columns= [
   { name: 'plazo', align:"center",label: 'plazo', field: 'plazo', sortable: true },
   //{ name: 'lotes',align:"Center", label: 'Lotes', field: 'lotes', sortable: true },
   { name: 'funcionarios',align:"funcionarios", label: 'Comision Calificadora', field: 'funcionarios', sortable: true },
- 
- 
+
+
    ]
 
 export default {
    components: {
-   
+
     },
   data() {
     return {
-  
+
    dialog_list:false,
-  
+
    dialog_list1:false,
    dialog_list2:false,
    dialog_list3:false,
@@ -344,10 +346,10 @@ proyecto:{},
          field:"nombre",
          sortable: true,
         },
-       
-       
-        
-       
+
+
+
+
    ],
    subcol2: [
         {
@@ -371,7 +373,7 @@ proyecto:{},
           align: "left",
          field:"monto",
          sortable: true,
-        },    
+        },
    ],
     subcol3: [
          {
@@ -388,22 +390,22 @@ proyecto:{},
           align: "left",
          field:"nombre",
          sortable: true,
-        },    
+        },
           {
           name: "monto",
           label: "Monto Ofertado",
           align: "left",
          field:"monto",
          sortable: true,
-        },    
+        },
          {
           name: "empresas",
           label: "asociados",
           align: "left",
          field:"asociados",
          sortable: true,
-        },    
-      
+        },
+
    ],
    data:[],
    dato:{},
@@ -422,7 +424,7 @@ proyecto:{},
       };
   },
   created(){
-    this.misdatos() 
+    this.misdatos()
   },
   methods:{
     misdatos(){
@@ -440,7 +442,7 @@ proyecto:{},
       this.dato2 = item.row;
        this.$router.push({name: 'presentados.view', params: {id:this.dato2.id}})
 //this.$router.push("Licitaciones")
-      
+
      /*
       if (this.dato2.tipo_id===2)
          {
@@ -448,7 +450,7 @@ proyecto:{},
          }else{
             this.dialog_list2 = true;
          }
-        */  
+        */
     },
     verRow2(item) {
       this.dato2 = item.row;
@@ -463,10 +465,10 @@ proyecto:{},
     //extract the parts of the date
     const day = date.getDate();
     const month = date.getMonth() + 1;
-    const year = date.getFullYear();    
+    const year = date.getFullYear();
 
     //replace the month
-    format = format.replace("MM", month.toString().padStart(2,"0"));        
+    format = format.replace("MM", month.toString().padStart(2,"0"));
 
     //replace the year
     if (format.indexOf("yyyy") > -1) {

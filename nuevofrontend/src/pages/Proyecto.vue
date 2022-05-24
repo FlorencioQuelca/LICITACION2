@@ -161,6 +161,7 @@
       :columns="columns"
       row-key="nombre"
       :rows-per-page-options="[10,50,100]"
+      separator="cell"
    >
        <template v-slot:top-right>
         <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar">
@@ -169,7 +170,7 @@
           </template>
         </q-input>
       </template>
-
+    <!--
       <template v-slot:top-row>
         <q-btn
           color="primary"
@@ -178,6 +179,7 @@
           @click="exportTable"
         />
         </template>
+        -->
      <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="departamento" :props="props">
@@ -514,8 +516,6 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
-
-
 
      <!-- empresas asociados  adicionar consultor />-->
       <q-dialog v-model="dialog_add1">
@@ -1553,7 +1553,5 @@ proyecto:{},
         }
   }
   },
-
-
 };
 </script>

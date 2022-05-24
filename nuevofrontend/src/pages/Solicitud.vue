@@ -7,7 +7,7 @@
       @click="alert = true"
       class="q-mb-xs"
     />
-   
+
       <!--          tabla -->
     <q-table
       :filter="filter"
@@ -16,6 +16,8 @@
       :columns="columns"
       row-key="seguimiento"
       :rows-per-page-options="[50,100]"
+       separator="cell"
+       dense
    >
        <template v-slot:top-right>
         <q-input outlined borderless dense debounce="300" v-model="filter" placeholder="Buscar">
@@ -24,20 +26,20 @@
           </template>
         </q-input>
       </template>
-      
-     <template v-slot:body="props"> 
+
+     <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="seguimiento" :props="props">
             {{props.row.seguimiento}}
           </q-td>
-            
+
            <q-td key="fechaini" :props="props">
             {{props.row.fechaini}}
           </q-td>
            <q-td key="fechafin" :props="props">
             {{props.row.fechafin}}
           </q-td>
-           
+
            <q-td key="car" :props="props">
             {{props.row.car.placa }} - {{props.row.car.tipo }} {{props.row.car.marca }}  modelo:{{props.row.car.modelo }}
           </q-td>
@@ -46,7 +48,7 @@
           </q-td>
           <q-td key="status" :props="props">
             {{props.row.status}}
-          </q-td>         
+          </q-td>
           <q-td key="opcion" :props="props">
           <q-btn
               dense
@@ -73,7 +75,7 @@
        <!--          ADICIONAR NUEVO INFORME  -->
    <q-dialog v-model="alert">
       <q-card style="max-width: 80%; width: 80%">
-       
+
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6"><q-icon name="add_circle" /> Nuevo Informe Mensual</div>
         </q-card-section>
@@ -91,19 +93,19 @@
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
             />
              <q-input
-                  outlined                  
+                  outlined
                   type="date"
                   v-model="dato.fechaini"
                   hint="Ingresar Fecha de Inicio"
                 />
                 <q-input
-                  outlined                  
+                  outlined
                   type="date"
                   v-model="dato.fechafin"
                   hint="Ingresar Fecha de finzalizacion"
                 />
-            
-         
+
+
              </div>
              <div class="col-6">
                 <q-select
@@ -129,7 +131,7 @@
                 color="primary"
                 inline
               />
-           
+
              </div>
              </div>
             <div>
@@ -146,7 +148,7 @@
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6"><q-icon name="edit"/> Modificar Registro</div>
         </q-card-section>
-        
+
         <q-card-section class="q-pt-xs">
           <q-form @submit="onMod" class="q-gutter-md">
                    <div class="row">
@@ -161,13 +163,13 @@
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
             />
              <q-input
-                  outlined                  
+                  outlined
                   type="date"
                   v-model="dato2.fechaini"
                   hint="Ingresar Fecha de Inicio"
                 />
                 <q-input
-                  outlined                  
+                  outlined
                   type="date"
                   v-model="dato2.fechafin"
                   hint="Ingresar Fecha de finzalizacion"
@@ -197,7 +199,7 @@
                 color="primary"
                 inline
               />
-           
+
              </div>
              </div>
             <div>
@@ -205,7 +207,7 @@
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
             </div>
           </q-form>
-          
+
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -230,7 +232,7 @@
 <script>
 import { exportFile } from 'quasar'
 const  columns= [
-  { name: 'seguimiento', required: true,align:"left", label:'Nro. Seguimiento',field: "seguimiento", sortable: true}, 
+  { name: 'seguimiento', required: true,align:"left", label:'Nro. Seguimiento',field: "seguimiento", sortable: true},
   { name: 'fechaini', align:"left",label: 'Fecha Inicio', field: 'fechaini', sortable: true },
   { name: 'fechafin', align:"left",label: 'Fecha fin', field: 'fechafin', sortable: true },
   { name: 'car', align:"center",label: 'AUTO descripcion', field: 'car', sortable: true },
@@ -280,7 +282,7 @@ export default {
                     if(prog.status==="activo"){
             this.cars.push({label:prog.placa+' - '+prog.tipo+' '+prog.marca+ ' modelo: '+prog.modelo,value:prog.id});
                     }
-        }); 
+        });
           this.$q.loading.hide();
        });
           this.tallers=[];
@@ -290,7 +292,7 @@ export default {
                   if(prog.status=="activo"){
             this.tallers.push({label:prog.nombre+" ("+prog.representante+")" ,value:prog.id});
                   }
-              }); 
+              });
           this.$q.loading.hide();
        });
         this.car=this.cars[0]
@@ -298,16 +300,16 @@ export default {
 
     },
      onSubmit() {
-      
+
       this.$q.loading.show();
       this.dato.car_id=this.car.value;
       this.dato.taller_id=this.taller.value;
       console.log(this.dato);
       this.$api.post(process.env.API+"/Solicituds/", this.dato).then((res) => {
-       
+
          if(res.data.res===true)
           {
-            this.$q.notify({ 
+            this.$q.notify({
             color: "green-4",
             textColor: "white",
             icon: "cloud_done",
@@ -315,7 +317,7 @@ export default {
           });
           }
             this.$q.loading.hide();
-         
+
          this.alert= false;
           this.misdatos();
           this.onReset();
@@ -328,21 +330,21 @@ export default {
       this.dato.fechafin = null;
       this.dato.seguimiento = null;
       this.dato.status = 'activo';
-     
+
      },
      editRow(item) {
       this.dato2 = item.row
       this.car={}
       this.cars.forEach(tipo => {
-           if(tipo.value===item.row.car_id)   
+           if(tipo.value===item.row.car_id)
                 this.car={label:tipo.label,value:tipo.value};
-        }); 
+        });
     this.taller={}
       this.tallers.forEach(tipo => {
-           if(tipo.value===item.row.taller_id)   
+           if(tipo.value===item.row.taller_id)
                 this.taller={label:tipo.label,value:tipo.value};
         });
-      
+
      this.dialog_mod = true;
     },
     deleteRow(item) {
@@ -365,7 +367,7 @@ if(res.data.res===true)
           }
         this.dialog_del = false;
         this.misdatos();
-        
+
       });
     },
     onMod() {
@@ -375,21 +377,21 @@ if(res.data.res===true)
       this.$api.put(process.env.API+"/Solicituds/"+this.dato2.id,this.dato2).then((res) => {
           if(res.data.res===true)
           {
-            this.$q.notify({ 
+            this.$q.notify({
             color: "green-4",
             textColor: "white",
             icon: "cloud_done",
             message: "Modificado correctamente",
           });
-          
+
           }
            this.dialog_mod = false;
           this.misdatos();
            this.$q.loading.hide();
-        
-        
+
+
         })
-    }, 
+    },
 
 
    },

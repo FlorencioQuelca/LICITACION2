@@ -6,8 +6,8 @@
       icon="account_tree"
       @click="this.$router.push('/Licitaciones')"
       class="q-mb-xs"
-    />   
-    
+    />
+
     <q-card >
          <q-card-section>
           <div class="row no-wrap items-center">
@@ -47,17 +47,17 @@
               <ul>
               <span v-for="(codigos,index) in data.codigos" :key="index">
                      <li>
-                    {{codigos.nombre}}  
-                     </li>     
+                    {{codigos.nombre}}
+                     </li>
               </span>
              </ul>
              <q-item-label caption>Codigo de Proyecto</q-item-label>
               </q-item-section>
                  </q-item >
         </q-list>
-             
+
           </div>
-         
+
               <div class="col-6">
            <q-list>
             <q-item >
@@ -66,7 +66,7 @@
                 <q-item-label caption>Enlace de la reunion</q-item-label>
               </q-item-section>
             </q-item>
-            
+
              <q-item >
                 <q-item-section>
                 <q-item-label>{{data.plazo}}</q-item-label>
@@ -87,14 +87,14 @@
             </q-item>
            <q-item >
               <q-item-section>
-               
+
               <ul>
               <span v-for="(codigos,id) in data.funcionarios" :key="id">
                   <li>
-                    Ing. {{codigos.datosp}}   
-                  </li>   
+                    Ing. {{codigos.datosp}}
+                  </li>
               </span>
-              
+
              </ul>
               <q-item-label caption>Funcionario(s): Comision Calificadora</q-item-label>
               </q-item-section>
@@ -103,10 +103,10 @@
            </div>
           </div>
 
-        
+
       </q-card-section>
 
-     
+
     </q-card>
      <q-separator />
 
@@ -122,14 +122,15 @@
             color="primary"
             inline
           />
-        </div> 
+        </div>
         </div>
         <q-card-section v-if="group==='op1'" class="q-pt-xs">
                 <q-table
-                    
+
                     :rows="data.empresas"
                     :columns="subcol2"
-                  
+                    separator="cell"
+                     dense
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -142,19 +143,20 @@
            <q-td key="monto" :props="props">
             {{ props.row.pivot.monto}}
           </q-td>
-        
+
           </q-tr>
           </template>
           </q-table>
-            
+
         </q-card-section>
 
         <q-card-section v-else class="q-pt-xs">
                 <q-table
-                   
+
                     :rows="data.sociedads"
                     :columns="subcol3"
-                  
+                  separator="cell"
+                      dense
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -171,18 +173,18 @@
               <ul>
               <span v-for="(empresas,index) in props.row.empresas" :key="index">
                   <li>
-                    {{empresas.nit}}  ({{empresas.pivot.participacion}}) %         
+                    {{empresas.nit}}  ({{empresas.pivot.participacion}}) %
                 </li>
               </span>
             </ul>
           </q-td>
-         
+
           </q-tr>
           </template>
           </q-table>
-             
+
         </q-card-section>
-        
+
       </q-card>
 
     <div>
@@ -195,6 +197,8 @@
                 <q-table
                     :rows="data.personas"
                     :columns="subcol1"
+                      separator="cell"
+                     dense
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -216,30 +220,30 @@
           <q-td key="nombre" :props="props">
             {{ props.row.datosp}}
           </q-td>
-          
+
            </q-tr>
           </template>
           </q-table>
         </q-card-section>
-         
+
       </q-card>
 
 
-      
+
     </div>
  <q-footer bordered class="bg-white text-primary">
         <q-tabs no-caps active-color="primary" indicator-color="transparent" class="text-grey">
          <h6>
-          Copyright © 2022 FPS - LAPAZ               
+          Copyright © 2022 FPS - LAPAZ
          </h6>
           <div class="text-purple q-gutter-md" style="font-size: 2em">
            <q-icon round color="primary" name="facebook" ></q-icon>
           </div>
            <a href="https://www.facebook.com/fpslapaz" target="_blanck"> Ir a la pagina</a>
-        
+
         </q-tabs>
       </q-footer>
-    
+
   </div>
 </template>
 
@@ -316,10 +320,10 @@ export default {
          field:"nombre",
          sortable: true,
         },
-       
-       
-        
-       
+
+
+
+
    ],
    subcol2: [
         {
@@ -343,7 +347,7 @@ export default {
           align: "left",
          field:"monto",
          sortable: true,
-        },    
+        },
    ],
     subcol3: [
          {
@@ -360,22 +364,22 @@ export default {
           align: "left",
          field:"nombre",
          sortable: true,
-        },    
+        },
           {
           name: "monto",
           label: "Monto Ofertado",
           align: "left",
          field:"monto",
          sortable: true,
-        },    
+        },
          {
           name: "empresas",
           label: "asociados",
           align: "left",
          field:"asociados",
          sortable: true,
-        },    
-      
+        },
+
    ]  ,
 
     opciones: [
@@ -387,11 +391,11 @@ export default {
           label: 'Lista de Sociedad Accidental',
           value: 'op2'
         },
-        
+
       ],
       group: 'op1',
-     
-   
+
+
   }),
   created() {},
   mounted() {
@@ -407,7 +411,7 @@ export default {
         /*
         res.data[0].departamento.foreach(tip => {
                this.departamento.push({label:tip.nombre,value:tip.id});
-        }); 
+        });
         res.data[0].programa.foreach(tip => {
                this.programa.push({label:tip.nombre,value:tip.id});
         });

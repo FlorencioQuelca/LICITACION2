@@ -67,11 +67,14 @@
       </q-card>
     </q-dialog>
 <!-- TABLA PRINCIPAL -->
-    <q-table :filter="filter" title="Usuarios del sistema" 
-      :rows="data" 
-      :columns="columns" 
-      row-key="name" 
-      :rows-per-page-options="[50,100]">
+    <q-table :filter="filter" title="Usuarios del sistema"
+      :rows="data"
+      :columns="columns"
+      row-key="name"
+      :rows-per-page-options="[50,100]"
+       separator="cell"
+       dense
+       >
       <template v-slot:top-right>
         <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
@@ -83,6 +86,9 @@
         <q-tr :props="props">
           <q-td key="name" :props="props">
             {{props.row.name}}
+          </q-td>
+           <q-td key="tipo" :props="props">
+            {{props.row.tipo}}
           </q-td>
           <q-td key="email" :props="props">
             {{props.row.email}}
@@ -234,6 +240,7 @@ export default {
       uni:{},
       columns: [
         {name: "name", align: "left", label: "Nombre ", field: "name", sortable: true,},
+        {name: "tipo", align: "left", label: "tipo ", field: "tipo", sortable: true,},
         {name: "email", align: "left", label: "Email", field: "email", sortable: true,},
         {name: "fechalimite", align: "left", label: "Fecha limite", field: "fechalimite", sortable: true,
         },
@@ -241,7 +248,7 @@ export default {
         { name: "opcion", label: "Opcion", field: "action", sortable: false },
       ],
       data: [],
-    
+
     };
   },
   created() {

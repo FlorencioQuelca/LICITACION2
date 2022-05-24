@@ -1,6 +1,7 @@
-<template> 
+<template>
    <div class="q-pa-md">
-     <q-btn
+    <div v-if="$store.state.login.user.tipo==='admin'">
+         <q-btn
       label="Nuevo Consultor/Supervisor"
       color="red"
       icon="add_circle"
@@ -14,10 +15,11 @@
       @click= "this.$router.push('Proyecto')"
       class="q-mb-xs"
     />
+    </div>
       <!--          ADICIONAR REGISTRO -->
    <q-dialog v-model="alert">
       <q-card style="max-width: 80%; width: 80%">
-       
+
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6"><q-icon name="add_circle" /> Nuevo Consultor</div>
         </q-card-section>
@@ -56,7 +58,7 @@
               type="text"
               label="Apellido Paterno"
               hint="Ingresar Apellido Paterno"
-              
+
             />
             <q-input
               outlined
@@ -64,7 +66,7 @@
               type="text"
               label="Apellido Materno"
               hint="Ingresar Apellido Materno"
-             
+
             />
              <q-input
               outlined
@@ -86,7 +88,7 @@
             hint="Seleccionar Genero"
             />
              <q-input
-                  outlined                  
+                  outlined
                   type="date"
                   v-model="dato.fechaNacimiento"
                   hint="Ingresar Fecha de Nacimiento"
@@ -97,7 +99,7 @@
               type="number"
               label="Celular o Telefono 1"
               hint="Ingresar Numero de Telefono"
-             
+
             />
             <q-input
               outlined
@@ -105,7 +107,7 @@
               type="number"
               label="Celular o Telefono 2"
               hint="Ingresar Numero de Telefono"
-              
+
             />
               <q-input
               outlined
@@ -113,7 +115,7 @@
               type="email"
               label="Correo Electronico"
               hint="Ingresar Correo Electronico"
-              
+
             />
              <q-input
               outlined
@@ -155,6 +157,8 @@
       :columns="columns"
       row-key="ci"
       :rows-per-page-options="[50,100]"
+       separator="cell"
+       dense
    >
        <template v-slot:top-right>
         <q-input outlined borderless dense debounce="300" v-model="filter" placeholder="Buscar">
@@ -163,6 +167,7 @@
           </template>
         </q-input>
       </template>
+      <!--
       <template v-slot:top-row>
         <q-btn
           color="primary"
@@ -171,7 +176,8 @@
           @click="exportTable"
         />
         </template>
-     <template v-slot:body="props"> 
+     -->
+     <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="ci" :props="props">
             {{props.row.ci}}
@@ -188,7 +194,7 @@
               @click="verRow(props)"
               icon="list"
           />
-           
+
           </q-td>
           <q-td key="nombrecompleto" :props="props">
             {{props.row.datosp}}
@@ -214,8 +220,8 @@
           <q-td key="nit" :props="props">
             {{props.row.nit}}
           </q-td>
-          
-          <q-td key="opcion" :props="props">
+
+          <q-td v-if="$store.state.login.user.tipo==='admin'" key="opcion" :props="props">
           <q-btn
               dense
               round
@@ -224,7 +230,7 @@
               @click="editRow(props)"
               icon="edit"
           />
-           
+
             <q-btn
               dense
               round
@@ -255,12 +261,12 @@
    <!--          MODIFICAR REGISTRO -->
     <q-dialog v-model="dialog_mod">
       <q-card style="max-width: 80%; width: 80%">
-        
+
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6"><q-icon name="edit"/> Modificar Registro</div>
         </q-card-section>
          <errores
-         v-if="errores !== null" 
+         v-if="errores !== null"
           :errores="errores"
         ></errores>
         <q-card-section class="q-pt-xs">
@@ -306,7 +312,7 @@
               type="text"
               label="Apellido Materno"
               hint="Ingresar Apellido Materno"
-             
+
             />
              <q-input
               outlined
@@ -328,7 +334,7 @@
             hint="Seleccionar Genero"
             />
              <q-input
-                  outlined                  
+                  outlined
                   type="date"
                   v-model="dato2.fechaNacimiento"
                   hint="Ingresar Fecha de Nacimiento"
@@ -348,7 +354,7 @@
               type="number"
               label="Celular o Telefono 2"
               hint="Ingresar Numero de Telefono"
-              
+
             />
               <q-input
               outlined
@@ -390,19 +396,19 @@
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
             </div>
           </q-form>
-          
+
         </q-card-section>
       </q-card>
     </q-dialog>
 
       <!-- Listar proyectos asociados />-->
-   
+
     <q-dialog v-model="dialog_list">
       <q-card style="max-width: 80%; width: 80%">
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6">CONSULTOR SE PRESENTO  Y/O TIENE CONTRATO CON LOS PROYECTOS :</div>
         </q-card-section>
-         
+
          <div class="row">
         <div class="col-12">
           <q-option-group
@@ -411,7 +417,7 @@
             color="primary"
             inline
           />
-        </div> 
+        </div>
         </div>
         <q-card-section v-if="group==='op1'" class="q-pt-xs">
                 <q-table
@@ -420,7 +426,7 @@
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
-          
+
             <q-td key="departamento" :props="props">
             {{ props.row.departamento.nombre}}
           </q-td>
@@ -433,7 +439,7 @@
            <q-td key="cuce" :props="props">
             {{ props.row.cuce }}
           </q-td>
-        
+
           </q-tr>
           </template>
           </q-table>
@@ -443,11 +449,11 @@
                 <q-table
                     :rows="dato3.contratos"
                     :columns="subcol1"
-                   
+
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
-          
+
             <q-td key="departamento" :props="props">
             {{ props.row.departamento.nombre}}
           </q-td>
@@ -466,11 +472,11 @@
           </q-tr>
           </template>
           </q-table>
-            
+
         </q-card-section>
       </q-card>
     </q-dialog>
- 
+
   </div>
 </template>
 
@@ -531,7 +537,7 @@ export default {
         'MSC.',
         'MED.',
         'ENF.',
-        
+
       ],
     data:[],
     columns,
@@ -540,14 +546,14 @@ export default {
     dato3:{},
      subcol: [
          { name: "departamento",required: true, label: "Departamento", align: "left",field:  row => row.departamento,sortable: true,},
-         { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },   
-         { name: "fecha",align: "left",label: "fecha de la Presentacion",field: "fecha",sortable: true},  
+         { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },
+         { name: "fecha",align: "left",label: "fecha de la Presentacion",field: "fecha",sortable: true},
          { name: "cuce",align: "left",label: "CUCE del proyecto",field: "cuce",sortable: true},
       ],
      subcol1: [
          { name: "departamento",required: true, label: "Departamento", align: "left",field:  row => row.departamento,sortable: true,},
-         { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },   
-         { name: "fecha",align: "left",label: "fecha de la Presentacion",field: "fecha",sortable: true},  
+         { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },
+         { name: "fecha",align: "left",label: "fecha de la Presentacion",field: "fecha",sortable: true},
          { name: "fecha1",align: "left",label: "Fecha de Culminacion",field: "fecha1",sortable: true},
           { name: "status",align: "left",label: "Estado",field: "status",sortable: true},
       ],
@@ -562,7 +568,7 @@ export default {
         }
       ],
       group: 'op1',
- 
+
     };
   },
   created(){
@@ -617,24 +623,24 @@ export default {
        });
         this.dialog_del = false;
         this.misdatos();
-        
+
       });
     },
      onSubmit() {
        this.errores =null;
-       this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno; 
+       this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
       this.$q.loading.show();
       this.$api.post(process.env.API+"/consultor/", this.dato).then((res) => {
-       
+
          if(res.data.res===true)
           {
-            this.$q.notify({ 
+            this.$q.notify({
             color: "green-4",
             textColor: "white",
             icon: "cloud_done",
             message: "Creado Correctamente",
           });
-          
+
           }else{
             this.$q.loading.hide();
             this.errores = res.data.errors;
@@ -647,23 +653,23 @@ export default {
           this.errores = e.response.data.errors;
         });
     },
-    //modigicar 
+    //modigicar
      onMod() {
 //      this.dato2={ci:this.dato2.ci,paterno:this.dato2.paterno,materno:this.dato2.materno,nombres:this.dato2.nombres,fechaNacimiento:this.dato2.fechaNacimiento,fono1:this.dato2.fono1,fono2:this.dato2.fono2,grado:this.dato2.grado,datosp:this.dato2.nombres+" "+this.dato2.paterno+" "+this.dato2.materno,genero:this.dato2.genero,nit:this.dato2.nit,email:this.dato2.email,direccion:this.dato2.direccion}
       this.errores =null;
        this.$q.loading.show();
-        this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno; 
+        this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
       // console.log(this.dato2.id)
       this.$api.put(process.env.API+"/consultor/"+this.dato2.id,this.dato2).then((res) => {
           if(res.data.res===true)
           {
-            this.$q.notify({ 
+            this.$q.notify({
             color: "green-4",
             textColor: "white",
             icon: "cloud_done",
             message: "Modificado correctamente",
           });
-          
+
           }else{
             this.$q.loading.hide();
             this.errores = res.data.errors;
@@ -671,16 +677,16 @@ export default {
          this.dialog_mod = false;
           this.misdatos();
 
-        
+
         }).catch((e)=>{
           this.$q.loading.hide();
           this.errores = e.response.data.errors;
         });
-    }, 
-    
+    },
+
 
     exportTable () {
-    
+
      const content = [columns.map(col => wrapCsvValue(col.label))].concat(
           this.data.map(row => columns.map(col => wrapCsvValue(
             typeof col.field === 'function'
@@ -705,7 +711,7 @@ export default {
         }
   }
   },
-  
+
 
 };
 </script>
