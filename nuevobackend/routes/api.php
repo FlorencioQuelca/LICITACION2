@@ -88,6 +88,23 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
    Route::post('/base64',[\App\Http\Controllers\ContratoController::class,'base64']);
    Route::get('getContrato/{archivo}',[\App\Http\Controllers\ArchivoController::class,'getContrato']);
 
+   Route::apiResource('/archivos',\App\Http\Controllers\ArchivoController::class);
+
+   // contrato
+   Route::put('personacontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'personacontratos']); //CRUD de SociedadAccidental;
+   Route::put('personacontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'personacontratosdetach']); //CRUD de SociedadAccidental;
+
+   Route::put('empresacontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'empresacontratos']); //CRUD de SociedadAccidental;
+   Route::put('empresacontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'empresacontratosdetach']); //CRUD de SociedadAccidental;
+
+   Route::put('sociedadcontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'sociedadcontratos']); //CRUD de SociedadAccidental;
+   Route::put('sociedadcontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'sociedadcontratosdetach']); //CRUD de SociedadAccidental;
+   //dependiente  con categoria
+   Route::put('dependientecontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'dependientecontratos']); //CRUD de SociedadAccidental;
+   Route::put('dependientecontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'dependientecontratosdetach']); //CRUD de SociedadAccidental;
+
+
+
 });
 
 

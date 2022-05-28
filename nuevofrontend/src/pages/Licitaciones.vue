@@ -111,6 +111,7 @@
                     title="Lista de oferentes"
                     :rows="dato2.personas"
                     :columns="subcol1"
+
                     >
       <template v-slot:body="props">
           <q-tr :props="props">

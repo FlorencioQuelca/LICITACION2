@@ -162,6 +162,7 @@
       row-key="nombre"
       :rows-per-page-options="[10,50,100]"
       separator="cell"
+      dense
    >
        <template v-slot:top-right>
         <q-input outlined dense debounce="300" v-model="filter" placeholder="Buscar">
@@ -1165,9 +1166,9 @@ proyecto:{},
        this.codigo={}
         if (this.dato2.tipo_id===2)
          {
-                 this.dialog_add1 = true;
+                 this.dialog_add1 = true; //personas
          }else{
-                 this.dialog_add2 = true;
+                 this.dialog_add2 = true; // empresas y sociedades
          }
     },
     addRow2(item) {
@@ -1219,7 +1220,7 @@ proyecto:{},
                           color: "green-4",
                           textColor: "white",
                           icon: "cloud_done",
-                         mssage: "Eliminado correctamente",
+                         message: "Eliminado correctamente",
         });
         this.dialog_delsub = false;
         this.dialog_list = false;
@@ -1302,7 +1303,7 @@ proyecto:{},
                           color: "green-4",
                           textColor: "white",
                           icon: "cloud_done",
-                           mssage: "Eliminado correctamente",
+                          message: "Eliminado correctamente",
         });
         this.dialog_delsub1 = false;
         this.dialog_list1 = false;
@@ -1316,7 +1317,7 @@ proyecto:{},
                           color: "green-4",
                           textColor: "white",
                           icon: "cloud_done",
-                           mssage: "Eliminado correctamente",
+                          message: "Eliminado correctamente",
         });
         this.dialog_delsub2 = false;
         this.dialog_list2 = false;
@@ -1330,7 +1331,7 @@ proyecto:{},
                           color: "green-4",
                           textColor: "white",
                           icon: "cloud_done",
-                           mssage: "Eliminado correctamente",
+                          message: "Eliminado correctamente",
         });
         this.dialog_delsub3 = false;
         this.dialog_list2 = false;
@@ -1344,7 +1345,7 @@ proyecto:{},
                           color: "green-4",
                           textColor: "white",
                           icon: "cloud_done",
-                           mssage: "Eliminado correctamente",
+                           message: "Eliminado correctamente",
         });
         this.dialog_delsub4 = false;
         this.dialog_list3 = false;

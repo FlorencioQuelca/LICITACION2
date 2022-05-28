@@ -78,9 +78,19 @@ class ArchivoController extends Controller
      * @param  \App\Models\Archivo  $archivo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Archivo $archivo)
+    public function destroy($id)
     {
-        //
+
+        try{
+         //  $empresa = Empresa::findOrFail($id);
+             $archivo=Archivo::findOrFail($id);
+            //$archivo->delete();
+            Archivo::destroy($archivo->id);
+            return \response()->json(['res'=> true, 'message'=>'Eliminado Correctamente'],200);
+        }
+        catch(\Exception $e){
+            return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
+        }
     }
 
     public function getContrato($id)

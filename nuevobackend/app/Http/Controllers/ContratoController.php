@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Contrato;
 use App\Models\Archivo;
+use App\Models\Persona;
+use App\Models\Empresa;
+use App\Models\Sociedad;
+
 
 use Illuminate\Http\Request;
 
@@ -17,7 +21,7 @@ class ContratoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        return Contrato::with(['proyecto','proyecto.codigos','proyecto.empresas', 'proyecto.sociedads','proyecto.personas','empresas','personas','sociedads','archivos'])->get();
+        return Contrato::with(['proyecto','proyecto.codigos','proyecto.empresas', 'proyecto.sociedads','proyecto.sociedads.empresas','proyecto.personas','empresas','personas','sociedads','sociedads.empresas','archivos','dependientes'])->get();
     }
 
     /**
@@ -208,4 +212,41 @@ class ContratoController extends Controller
         return $base64;
 
     }
+    public function personacontratos(Request $request,Contrato $contrato){
+
+        $persona= Persona::find($request->id);
+        $contrato->personas()->attach($persona);
+     }
+     public function personacontratosdetach(Request $request,Contrato $contrato){
+        $persona= Persona::find($request->id);
+        $contrato->personas()->detach($persona->id);
+     }
+            public function empresacontratos(Request $request,Contrato $contrato){
+                $empresa= Empresa::find($request->id);
+                $contrato->empresas()->attach($empresa);
+
+            }
+            public function empresacontratosdetach(Request $request,Contrato $contrato){
+                $empresa= Empresa::find($request->id);
+                $contrato->empresas()->detach($empresa->id);
+            }
+
+            public function sociedadcontratos(Request $request,Contrato $contrato){
+                $sociedad= Sociedad::find($request->id);
+                $contrato->sociedads()->attach($sociedad);
+            }
+            public function sociedadcontratosdetach(Request $request,Contrato $contrato){
+                $sociedad= Sociedad::find($request->id);
+                $contrato->sociedads()->detach($sociedad->id);
+            }
+// caso especial
+        public function dependientecontratos(Request $request,Contrato $contrato){
+            $persona = Persona::find($request->id);
+            $contrato->dependientes()->attach($persona, ['categoria'=>$request->categoria]);
+         }
+         public function dependientecontratosdetach(Request $request,Contrato $contrato){
+            $persona = Persona::find($request->id);
+            $contrato->dependientes()->detach($persona->id);
+         }
+
 }

@@ -8,8 +8,10 @@
       class="q-mb-xs"
     />
 
-    <q-card >
-         <q-card-section>
+    <q-card
+    dense
+    >
+         <q-card-section dense>
           <div class="row no-wrap items-center">
             <div class="col text-h6 ellipsis">
               {{data.nombre}}
@@ -17,7 +19,7 @@
           </div>
           <div class="row">
               <div class="col-6">
-           <q-list>
+           <q-list dense>
             <q-item >
                 <q-item-section>
                 <q-item-label>  {{departamento}}</q-item-label>
@@ -110,7 +112,7 @@
     </q-card>
      <q-separator />
 
-      <q-card  v-if="data.tipo_id===1">
+      <q-card  v-if="data.tipo_id===1" dense >
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6">Lista oficial de Oferentes Presentados</div>
         </q-card-section>
@@ -126,11 +128,11 @@
         </div>
         <q-card-section v-if="group==='op1'" class="q-pt-xs">
                 <q-table
-
                     :rows="data.empresas"
                     :columns="subcol2"
                     separator="cell"
                      dense
+                    :rows-per-page-options="[0]"
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -155,8 +157,9 @@
 
                     :rows="data.sociedads"
                     :columns="subcol3"
-                  separator="cell"
-                      dense
+                    separator="cell"
+                    dense
+                    :rows-per-page-options="[0]"
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -189,9 +192,9 @@
 
     <div>
 
-       <q-card  v-if="data.tipo_id===2">
-        <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6">Lista de consultores presentados</div>
+       <q-card  v-if="data.tipo_id===2" dense>
+        <q-card-section class="bg-green-14 text-white" dense>
+          <div class="text-h6" dense>Lista de consultores presentados</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
                 <q-table
@@ -199,6 +202,7 @@
                     :columns="subcol1"
                       separator="cell"
                      dense
+                      :rows-per-page-options="[0]"
                     >
       <template v-slot:body="props">
           <q-tr :props="props">

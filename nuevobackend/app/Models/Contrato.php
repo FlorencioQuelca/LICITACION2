@@ -56,4 +56,8 @@ class Contrato extends Model
      public function firmas(){
         return $this->belongsToMany(Persona::class,'contrato_persona');
      }
+      //relacion muchos a muchos polimorfica
+    public function dependientes(){
+        return $this->morphedByMany('App\Models\Persona','detalle1')->withPivot(['categoria']);
+     }
 }
