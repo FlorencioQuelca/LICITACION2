@@ -95,14 +95,30 @@ class ArchivoController extends Controller
 
     public function getContrato($id)
     {
+        /**
+
+        * $contrato = Archivo::findOrFail($id);
+       * $file= public_path().'/contratos/'.$contrato->url;
+        *        $file= public_path().'/contratos/'.$contrato->url;
+         *   $headers = [
+          *     // 'Content-Type' => 'application/pdf',
+          *       'Content-Type'=> 'application/x-www-form-urlencoded',
+         *       //'responseType'=> 'blob'
+         *       'Accept'=> 'application/json'
+          *  ];
+        *    return response()->download($file, $contrato->url, $headers);
+
+
+        */
         $contrato = Archivo::findOrFail($id);
-        $file= public_path().'/contratos/'.$contrato->url;
-         $file= public_path().'/contratos/'.$contrato->url;
-            $headers = [
-                'Content-Type' => 'application/pdf',
-                'responseType'=> 'blob'
-            ];
-            return response()->download($file, $contrato->url, $headers);
+        if ($contrato->url==''){
+            return '';
+        }
+        $path = 'contratos/'.$contrato->url;
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:application/' . $type . ';base64,' . base64_encode($data);
+        return $base64;
 
     }
 

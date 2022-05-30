@@ -171,7 +171,7 @@
               <span v-for="(codigos,index) in props.row.archivos" :key="index">
                   <li>
 
-                    {{codigos.nombre}}  {{codigos.id}}
+                    {{codigos.nombre}}  {{codigos.tipo}}
                         <q-btn
                             dense
                             round
@@ -1637,19 +1637,34 @@ export default {
                         });
      },
      download(item) {
-       console.log(item);
+      // console.log(item);
         this.$q.loading.show();
-         this.$api.get(process.env.API + "/getContrato/"+item.id,{responseType: 'blob'}).then((response) => {
-          console.log(response.data);
+         //const doc = new jsPDF()
 
-            let blob = new Blob([response.data], { type: 'application/pdf' })
-            let link = document.createElement('a')
-            link.href = window.URL.createObjectURL(blob)
-            link.download = item.nombre;
-            document.body.appendChild(link);
-            link.click()
+         this.$api.post(process.env.API + "/getContrato/"+item.id).then(response => {
+        // console.log(response.data);
+
+        //   let blob = new Blob([response.data], { type: 'application/pdf' })
+         //   let link = document.createElement('a')
+          //  link.href = window.URL.createObjectURL(blob)
+
+          // link.download = item.nombre;
+         //   document.body.appendChild(link);
+        //   link.click()
+
+         const linkSource = response.data;
+          const downloadLink = document.createElement("a");
+          const fileName = item.nombre
+          downloadLink.href = linkSource;
+          downloadLink.download = fileName;
+          downloadLink.click();
+
+
+
+
+         //     window.open(response.data, '_blank')
             this.$q.loading.hide();
-            console.log(response.data)
+           // console.log(response.data)
 
         });
 
