@@ -21,7 +21,7 @@ class Contrato extends Model
         "status",
         "montosus",
         "montobs",
-        "onservacion",
+        "observacion",
         "departamento",
         "programa",
         "codigos",
@@ -53,9 +53,9 @@ class Contrato extends Model
         return $this->morphedByMany('App\Models\Sociedad','detalle1')->withPivot(['categoria']);
      }
      //persona que firma
-     public function firmas(){
-        return $this->belongsToMany(Persona::class,'contrato_persona');
-     }
+     //  public function firmas(){
+     //      return $this->belongsToMany(Persona::class,'contrato_persona');
+     // }
       //relacion muchos a muchos polimorfica
     public function dependientes(){
         return $this->morphedByMany('App\Models\Persona','detalle1')->withPivot(['categoria']);

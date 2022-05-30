@@ -21,7 +21,7 @@ class ContratoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        return Contrato::with(['proyecto','proyecto.codigos','proyecto.empresas', 'proyecto.sociedads','proyecto.sociedads.empresas','proyecto.personas','empresas','personas','sociedads','sociedads.empresas','archivos','dependientes'])->get();
+        return Contrato::with(['proyecto','proyecto.codigos','proyecto.empresas', 'proyecto.sociedads','proyecto.sociedads.empresas','proyecto.personas','empresas','personas','sociedads','sociedads.empresas','archivos','dependientes'])->orderByDesc('id')->get();
     }
 
     /**
@@ -49,7 +49,7 @@ class ContratoController extends Controller
        // $contrato->hora=date('H:i:s');
       //  $contrato->save();
       $contrato=Contrato::create($request->all());
-        return $contrato;
+      return \response()->json(['res'=> true, 'message'=>'insertado correctamente'],200);
     }
 
     /**
@@ -61,6 +61,7 @@ class ContratoController extends Controller
     public function show(Contrato $contrato)
     {
         return $contrato;
+        return \response()->json($contrato,200);
     }
 
     /**
@@ -83,13 +84,15 @@ class ContratoController extends Controller
      */
     public function update(Request $request, Contrato $contrato)
     {
-         $contrato->nombre=strtoupper($request->nombre);
-        $contrato->categoria_id=$request->categoria_id;
-        $contrato->user_id=$request->user_id;
-        $contrato->fecha=date('Y-m-d');
-        $contrato->hora=date('H:i:s');
-        $contrato->save();
-        return $contrato;
+       //  $contrato->nombre=strtoupper($request->nombre);
+      //  $contrato->categoria_id=$request->categoria_id;
+       // $contrato->user_id=$request->user_id;
+       // $contrato->fecha=date('Y-m-d');
+       // $contrato->hora=date('H:i:s');
+       // $contrato->save();
+        //return $contrato;
+        $contrato->update($request->all());
+        return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
 
     }
 

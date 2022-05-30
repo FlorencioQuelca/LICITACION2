@@ -1693,8 +1693,9 @@ export default {
      onMod() {
 
        this.$q.loading.show();
-       this.dato2.categoria_id=this.categoria.value;
-       this.dato2.user_id=this.usuario.value;
+       //this.dato2.categoria_id=this.categoria.value;
+       //this.dato2.user_id=this.usuario.value;
+        this.dato.proyecto_id =this.proyecto.value
 
       this.$api.put(process.env.API+"/contratos/"+this.dato2.id,this.dato2).then((res) => {
           if(res.data.res===true)
