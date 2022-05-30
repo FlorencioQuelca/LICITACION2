@@ -602,9 +602,12 @@
         </q-card-section>
         <q-card-section class="q-pt-xs">
                 <q-table
-                    title="Lista de oferentes"
+
                     :rows="dato2.personas"
                     :columns="subcol1"
+                   :rows-per-page-options="[0]"
+                    separator="cell"
+                    dense
                     >
       <template v-slot:body="props">
           <q-tr :props="props">

@@ -2,7 +2,7 @@
    <div class="q-pa-md">
     <div v-if="$store.state.login.user.tipo==='admin'">
      <q-btn
-      label="Nuevo Documento"
+      label="Nuevo Contrato"
       color="red"
       icon="add_circle"
       @click="onalert()"
@@ -130,7 +130,7 @@
 
              </div>
             <div>
-              <q-btn label="Crear Usuario" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Crear contrato" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
             </div>
           </q-form>
@@ -1656,7 +1656,6 @@ export default {
      },
       onSubmit() {
 
-       this.dato.proyecto_id =this.proyecto.value
        if(!this.dato.plus){
            this.dato.plus=0;
        } if(!this.dato.duracion){
@@ -1667,8 +1666,9 @@ export default {
      //  let suma=this.dato.fechaini.getTime()+dias;
 
       // this.dato.fechafin=new Date(suma);
+      this.dato.proyecto_id =this.proyecto.value
       this.$q.loading.show();
-      this.$api.post(process.env.API+"/contratos", this.dato).then((res) => {
+      this.$api.post(process.env.API+"/contratos/", this.dato).then((res) => {
 
          if(res.data.res===true)
           {
@@ -1684,7 +1684,7 @@ export default {
           }
           this.alert= false;
           this.misdatos();
-        this.onReset();
+          this.onReset();
         }).catch((e)=>{
           this.$q.loading.hide();
 
