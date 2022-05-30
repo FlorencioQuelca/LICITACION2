@@ -851,7 +851,20 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+   <!--          ELIMINAR REGISTRO -->
+      <q-dialog v-model="dialog_del">
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="clear" color="red" text-color="white" />
+          <span class="q-ml-sm">Seguro de eliminar Registro.</span>
+        </q-card-section>
 
+        <q-card-actions align="right">
+          <q-btn flat label="Eliminar" color="deep-orange" @click="onDel" />
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
 
           <!-- archivos subidos al contrato -->
@@ -996,6 +1009,7 @@ export default {
    dialog_add:false,
    dialog_add2:false,
    dialog_add1:false,
+   dialog_del:false,
    dialog_delsub:false,
    dialog_delsub1:false,
    dialog_delsub2: false,
@@ -1267,7 +1281,10 @@ export default {
   },
 
   methods:{
-
+    deleteRow(item) {
+      this.dato2 = item.row;
+      this.dialog_del = true;
+    },
      deletesub(item) {
       this.dato3 = item.row;
       this.dialog_delsub = true;
@@ -1707,6 +1724,19 @@ export default {
     },
     adicionarSociedad(item){
      this.sociedad=item.row;
+    },
+     onDel() {
+      this.$q.loading.show();
+      this.$api.delete( process.env.API+"/contratos/" + this.dato2.id).then((res) => {
+        this.$q.notify({
+         color: "green-4",
+         textColor: "white",
+         icon: "cloud_done",
+         message: "Eliminado correctamente",
+       });
+        this.dialog_del = false;
+        this.misdatos();
+      });
     },
 onDelsub() {
       this.$q.loading.show();
