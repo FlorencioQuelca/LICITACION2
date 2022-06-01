@@ -11,6 +11,8 @@ import Usuarios from "pages/Usuarios";
 import Presentados from "pages/Presentados";
 import Solicitud from "pages/Solicitud";
 import Visitas from "pages/Visitas";
+import Trabajos from "pages/Trabajos";
+
 
 
 
@@ -20,21 +22,22 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') },
-    
+
       { path: 'Login', component: Login, meta: { requiresAuth: false} },
       { path: 'Empresa', component: Empresa, meta: { requiresAuth: true}},
       { path: 'Consultor', component: Consultor,meta: { requiresAuth: true}},
       { path: 'Sociedad', component: Sociedad,meta: { requiresAuth: true}},
       { path: 'Proyecto', component: Proyecto,meta: { requiresAuth: true} },
-      { path: 'Licitaciones', name:'Licitaciones',component: Licitaciones,meta: { requiresAuth: false }},
+      { path: 'Licitaciones', name:'Licitaciones',component: Licitaciones,meta: { requiresAuth: true }},
       { name:'detalle' ,path: 'Detalle', component: Detalle, props:true,meta: { requiresAuth: true} },
       { path: 'Contratos', component: Contratos,meta: { requiresAuth: true }},
       { path: 'Usuarios', component: Usuarios,meta: { requiresAuth: true }},
-      { path: '/Presentados/:id/view',  name: 'presentados.view',component: Presentados,meta: { requiresAuth: false}},
+      { path: '/Presentados/:id/view',  name: 'presentados.view',component: Presentados,meta: { requiresAuth: true}},
       { path: 'Solicitud', component: Solicitud,meta: { requiresAuth: true }},
       { path: 'Visitas', component: Visitas,meta: { requiresAuth: true }},
-      
-      
+      { path: 'Trabajos', component: Trabajos,meta: { requiresAuth: true }},
+
+
     ]
   },
 

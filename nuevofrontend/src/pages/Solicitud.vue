@@ -289,7 +289,7 @@ export default {
          this.$api.get(process.env.API+"/Tallers").then((res)=>{
             console.log(res.data)
               res.data.forEach(prog => {
-                  if(prog.status=="activo"){
+                  if(prog.status=="ACTIVO"){
             this.tallers.push({label:prog.nombre+" ("+prog.representante+")" ,value:prog.id});
                   }
               });

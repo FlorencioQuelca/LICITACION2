@@ -11,9 +11,9 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> 
+        <q-toolbar-title>
           {{this.$store.state.login.user.name}}
-          
+
          </q-toolbar-title>
 
         <div>FONDO NACIONAL DE INVERSION PRODUCTIVA Y SOCIAL</div>
@@ -29,11 +29,10 @@
           <q-item-section avatar>
             <q-icon color="teal" name="home" />
           </q-item-section>
-
           <q-item-section>Principal</q-item-section>
         </q-item>
 
-           <q-item active-class="my-menu-link" clicklable to= "/Licitaciones" exact>
+           <q-item v-if="$store.state.login.licitaciones" active-class="my-menu-link" clicklable to= "/Licitaciones" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="account_tree" />
           </q-item-section>
@@ -47,11 +46,11 @@
           </q-item-section>
 
           <q-item-section>Login</q-item-section>
-        </q-item> 
+        </q-item>
 
         <q-item   v-if="$store.state.login.empresas"
          active-class="my-menu-link"
-         clickable 
+         clickable
           to="/Empresa" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="store" />
@@ -61,9 +60,9 @@
 
         <q-item  v-if="$store.state.login.sociedades"
          active-class="my-menu-link"
-        clickable 
+        clickable
         exact
-         to="/Sociedad" 
+         to="/Sociedad"
          >
           <q-item-section avatar>
             <q-icon color="teal" name="apartment" />
@@ -88,8 +87,8 @@
 
           <q-item-section>Proyectos</q-item-section>
         </q-item>
-        
-     
+
+
 
         <q-item    v-if="$store.state.login.contratos"
          clickable   active-class="my-menu-link" to="/Contratos" exact>
@@ -107,6 +106,14 @@
           <q-item-section>Solicitud</q-item-section>
         </q-item>
 
+        <q-item    v-if="$store.state.login.trabajos"
+         clickable   active-class="my-menu-link" to="/Trabajos" exact>
+          <q-item-section avatar>
+            <q-icon color="teal" name="garage" />
+          </q-item-section>
+          <q-item-section>Trabajos</q-item-section>
+        </q-item>
+
       <q-item    v-if="$store.state.login.visitas"
          clickable   active-class="my-menu-link" to="/Visitas" exact>
           <q-item-section avatar>
@@ -114,6 +121,8 @@
           </q-item-section>
           <q-item-section>Visitas</q-item-section>
         </q-item>
+
+
 
            <q-item   v-if="$store.state.login.usuarios"
            clickable   active-class="my-menu-link" to="/Usuarios" exact>
@@ -123,8 +132,8 @@
           <q-item-section>Usuarios</q-item-section>
         </q-item>
 
-        
-       
+
+
 
         <q-item  v-if="$store.getters['login/isLoggedIn']"
          clickable  @click="logout">

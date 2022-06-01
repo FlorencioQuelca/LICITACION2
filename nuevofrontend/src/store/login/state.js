@@ -11,6 +11,8 @@ export default function () {
     contratos:false,
     visitas:false,
     vehiculos:false,
+    trabajos:false,
+    licitaciones:false,
 
 
   }
