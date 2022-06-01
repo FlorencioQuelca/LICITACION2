@@ -18,7 +18,7 @@ class Solicitud extends Model
         "car_id"
     ];
 
-     
+
     protected $hidden =['created_at','updated_at'];
     //relacion uno a muchos inversa
     public function car(){
@@ -26,5 +26,8 @@ class Solicitud extends Model
     }
     public function taller(){
         return $this->belongsTo(Taller::class);
+    }
+    public function trabajos(){
+        return $this->hasMany(Trabajo::class);
     }
 }

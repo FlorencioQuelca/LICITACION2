@@ -12,6 +12,8 @@ import Presentados from "pages/Presentados";
 import Solicitud from "pages/Solicitud";
 import Visitas from "pages/Visitas";
 import Trabajos from "pages/Trabajos";
+import Actividades from "pages/Actividades";
+
 
 
 
@@ -36,6 +38,7 @@ const routes = [
       { path: 'Solicitud', component: Solicitud,meta: { requiresAuth: true }},
       { path: 'Visitas', component: Visitas,meta: { requiresAuth: true }},
       { path: 'Trabajos', component: Trabajos,meta: { requiresAuth: true }},
+      { path: '/actividades/:id/view',  name: 'actividades.view',component: Actividades,meta: { requiresAuth: true}},
 
 
     ]

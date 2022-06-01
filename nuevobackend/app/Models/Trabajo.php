@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Trabajos extends Model
+class Trabajo extends Model
 {
     use HasFactory;
      protected $table ="trabajos";
@@ -28,4 +28,8 @@ class Trabajos extends Model
     public function archivos(){
         return $this->morphMany('App\Models\Archivos','archivotable');
     }
+    public function solicitud(){
+        return $this->belongsTo(Solicitud::class);
+    }
+
 }

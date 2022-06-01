@@ -18,6 +18,12 @@ class SolicitudController extends Controller
         return \response()->json($solicituds, 200);
 
     }
+    public function solicitudid(Solicitud $solicitud)
+    {
+        $solicitud = Solicitud::with(['taller','car','trabajos']) ->orWhere('id', '=', $solicitud->id)->get();
+        return \response()->json($solicitud, 200);
+
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -80,13 +86,13 @@ class SolicitudController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
        // return $solicitud->update($request->all);
         $imput = $request->all();
         $solicitud= Solicitud::find($id);
         $solicitud->update($imput);
         return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
-       
+
     }
 
     /**

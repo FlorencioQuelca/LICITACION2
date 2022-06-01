@@ -22,9 +22,11 @@ class CreateTrabajosTable extends Migration
             $table->string('factura')->nullable();
             $table->integer('total')->nullable();
             $table->string('descripcion')->nullable();
-            $table->string("status")->default("activo");    
+            $table->string("status")->default("activo");
+
             $table->unsignedBigInteger('solicitud_id')->nullable();
             $table->foreign('solicitud_id')->references('id')->on('solicituds')->onDelete('set null')->onUpdate('cascade');
+
             $table->timestamps();
         });
     }

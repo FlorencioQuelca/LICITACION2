@@ -269,7 +269,7 @@ export default {
           this.$q.loading.show();
 
          this.$api.get(process.env.API+"/Solicituds").then((res)=>{
-               console.log(res.data)
+             // console.log(res.data)
                 this.data =res.data;
           this.$q.loading.hide();
        });

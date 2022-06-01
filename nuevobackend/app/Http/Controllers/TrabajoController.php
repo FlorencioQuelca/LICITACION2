@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Trabajos;
+use App\Models\Trabajo;
 use Illuminate\Http\Request;
 
-class TrabajosController extends Controller
+class TrabajoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class TrabajosController extends Controller
      */
     public function index()
     {
-        //
+        return Trabajo::with(['archivos','solicitud'])->orderByDesc('id')->get();
     }
 
     /**
@@ -35,7 +35,8 @@ class TrabajosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $trabajo=Trabajo::create($request->all());
+        return \response()->json(['res'=> true, 'message'=>'creado correctamente'],200);
     }
 
     /**
@@ -44,7 +45,7 @@ class TrabajosController extends Controller
      * @param  \App\Models\Trabajos  $trabajos
      * @return \Illuminate\Http\Response
      */
-    public function show(Trabajos $trabajos)
+    public function show(Trabajo $trabajos)
     {
         //
     }
@@ -55,7 +56,7 @@ class TrabajosController extends Controller
      * @param  \App\Models\Trabajos  $trabajos
      * @return \Illuminate\Http\Response
      */
-    public function edit(Trabajos $trabajos)
+    public function edit(Trabajo $trabajos)
     {
         //
     }
@@ -67,7 +68,7 @@ class TrabajosController extends Controller
      * @param  \App\Models\Trabajos  $trabajos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Trabajos $trabajos)
+    public function update(Request $request, Trabajo $trabajos)
     {
         //
     }
@@ -78,7 +79,7 @@ class TrabajosController extends Controller
      * @param  \App\Models\Trabajos  $trabajos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Trabajos $trabajos)
+    public function destroy(Trabajo $trabajos)
     {
         //
     }

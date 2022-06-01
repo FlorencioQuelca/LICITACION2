@@ -82,6 +82,10 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   //rutas nuevas
   Route::apiResource('/Tallers',\App\Http\Controllers\TallerController::class);
   Route::apiResource('/Solicituds',\App\Http\Controllers\SolicitudController::class);
+  Route::apiResource('/Trabajos',\App\Http\Controllers\TrabajoController::class);
+
+  Route::get('/solicitudid/{solicitud}',[\App\Http\Controllers\SolicitudController::class,'solicitudid'])->name('solicitudid');; //un solo proyecto
+
   Route::apiResource('/Cars',\App\Http\Controllers\CarController::class);
 
    Route::post('/upload',[\App\Http\Controllers\ContratoController::class,'upload']);
