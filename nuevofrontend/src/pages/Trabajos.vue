@@ -4,14 +4,16 @@
         <div class="cols-12" v-for="(row, index) in data" :key="index">
     <q-card >
       <q-card-section style="margin-top: 10px">
-         <div class="text-h6"> Taller: {{row.taller.nombre}}</div>
-         <q-separator/>
-         <div class="text-subtitle2">seguimiento: {{row.seguimiento}} </div>
-         <div class="text-subtitle2">fecha de Ingreso: {{row.fechaini}} </div>
-         <q-separator/>
-         <q-chip square color="orange" text-color="white" >
-         <div class="text-subtitle2"> {{row.car.tipo}}  Placa: {{row.car.placa}} - {{row.car.marca}} -{{row.car.modelo}} </div>
+         <q-chip square color="green" text-color="white" >
+         <div class="text-subtitle2"> {{row.car.tipo}} : {{row.car.placa}} - {{row.car.marca}} - Año: {{row.car.modelo}} </div>
          </q-chip>
+
+         <q-separator/>
+         <div class="text-subtitle2">Seguimiento: {{row.seguimiento}} </div>
+         <div class="text-subtitle2">Fecha de Ingreso: {{row.fechaini}} </div>
+          <div class="text-subtitle2">Asignado a: {{row.car.chofer}} </div>
+         <q-separator/>
+          <div class="text-subtitle2">Taller: {{row.taller.nombre}}</div>
          <q-separator/>
       </q-card-section>
       <q-separator />

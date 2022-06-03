@@ -476,9 +476,11 @@
         </q-card-section>
         <q-card-section class="q-pt-xs">
                 <q-table
-                    title="Lista de codigos de proyecto"
                     :rows="dato2.codigos"
                     :columns="subcol"
+                     :rows-per-page-options="[0]"
+                      separator="cell"
+                      dense
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -670,10 +672,12 @@
         </div>
         <q-card-section v-if="group=='op1'" class="q-pt-xs">
                 <q-table
-                    title="Lista de oferentes"
+
                     :rows="dato2.empresas"
                     :columns="subcol2"
-                    :rows-per-page-options="[5,10]"
+                    :rows-per-page-options="[0]"
+                      separator="cell"
+                      dense
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -705,10 +709,12 @@
         </q-card-section>
           <q-card-section v-else class="q-pt-xs">
                 <q-table
-                    title="Lista de oferentes"
+
                     :rows="dato2.sociedads"
                     :columns="subcol3"
-                    :rows-per-page-options="[5,10]"
+                    :rows-per-page-options="[0]"
+                      separator="cell"
+                      dense
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
@@ -824,9 +830,11 @@
         </q-card-section>
         <q-card-section class="q-pt-xs">
                 <q-table
-                    title="Comision Calificadora"
                     :rows="dato2.funcionarios"
                     :columns="subcol"
+                    :rows-per-page-options="[0]"
+                      separator="cell"
+                      dense
                     >
       <template v-slot:body="props">
           <q-tr :props="props">

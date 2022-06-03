@@ -9,7 +9,7 @@
       :rows="data"
       :columns="columns"
       row-key="nombre"
-      :rows-per-page-options="[10,20,100]"
+      :rows-per-page-options="[10,20,50,100,0]"
        separator="cell"
        dense
    >
@@ -108,9 +108,12 @@
         </q-card-section>
         <q-card-section class="q-pt-xs">
                 <q-table
-                    title="Lista de oferentes"
+
                     :rows="dato2.personas"
                     :columns="subcol1"
+                    :rows-per-page-options="[0]"
+                      separator="cell"
+                      dense
 
                     >
       <template v-slot:body="props">
@@ -163,9 +166,12 @@
         </div>
         <q-card-section v-if="group==='op1'" class="q-pt-xs">
                 <q-table
-                    title="Lista de oferentes"
+
                     :rows="dato2.empresas"
                     :columns="subcol2"
+                    :rows-per-page-options="[0]"
+                      separator="cell"
+                      dense
 
                     >
       <template v-slot:body="props">
@@ -190,9 +196,12 @@
 
         <q-card-section v-else class="q-pt-xs">
                 <q-table
-                    title="Lista de oferentes"
+
                     :rows="dato2.sociedads"
                     :columns="subcol3"
+                    :rows-per-page-options="[0]"
+                      separator="cell"
+                      dense
 
                     >
       <template v-slot:body="props">

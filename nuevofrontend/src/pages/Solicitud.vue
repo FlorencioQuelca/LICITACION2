@@ -383,7 +383,6 @@ if(res.data.res===true)
             icon: "cloud_done",
             message: "Modificado correctamente",
           });
-
           }
            this.dialog_mod = false;
           this.misdatos();

@@ -2,8 +2,15 @@
    <div>
 <q-card >
       <q-card-section style="margin-top: 0px">
+         <q-chip square color="green" text-color="white" >
+         <div class="text-subtitle2"> {{car.tipo}} : {{car.placa}} - {{car.marca}} - {{car.modelo}} </div>
+         </q-chip>
          <div class="text-subtitle2">SEGUIMIENTO: {{data.seguimiento}} </div>
          <div class="text-subtitle2">fecha de Ingreso: {{data.fechaini}} </div>
+         <div class="text-subtitle2">Asignado a: {{car.chofer}} </div>
+
+        <!-- <div class="text-subtitle2">{{data.car.tipo}}Placa: {{data.car.placa}} - {{data.car.marca}} -{{data.car.modelo}} </div> -->
+
          <!--<div class="text-subtitle2">  {{data.car.tipo}}  Placa: {{data.car.placa}} - {{data.car.marca}} -{{data.car.modelo}} </div>
         -->
       </q-card-section>
@@ -361,6 +368,7 @@ export default {
     data: () => ({
       url:process.env.API,
       data: {},
+      car:{},
       dato:{},
       dato2:{},
       dato3:{},
@@ -389,7 +397,8 @@ export default {
       this.$api.get(process.env.API + "/solicitudid/" + this.$route.params.id)
         .then((res) => {
           this.data = res.data[0];
-       // console.log(res.data)
+          this.car=this.data.car;
+        console.log(this.data)
           this.$q.loading.hide();
         });
     },

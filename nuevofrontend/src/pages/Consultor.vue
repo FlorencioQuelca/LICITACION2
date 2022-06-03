@@ -565,6 +565,10 @@ export default {
         {
           label: 'Contratos',
           value: 'op2'
+        },
+        {
+          label: 'Personal Clave',
+          value: 'op3'
         }
       ],
       group: 'op1',

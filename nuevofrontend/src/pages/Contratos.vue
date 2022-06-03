@@ -1259,7 +1259,7 @@ export default {
           value: 'op2'
         },
         {
-          label: 'Persona Natural',
+          label: 'Personal Clave',
           value: 'op3'
         }
 
