@@ -14,13 +14,13 @@ class SolicitudController extends Controller
      */
     public function index()
     {
-        $solicituds = Solicitud::with(['taller','car'])->orderByDesc('id')->get();
+        $solicituds = Solicitud::with(['taller','car','trabajos', 'trabajos.archivos'])->orderByDesc('id')->get();
         return \response()->json($solicituds, 200);
 
     }
     public function solicitudid(Solicitud $solicitud)
     {
-        $solicitud = Solicitud::with(['taller','car','trabajos']) ->orWhere('id', '=', $solicitud->id)->get();
+        $solicitud = Solicitud::with(['taller','car','trabajos', 'trabajos.archivos']) ->orWhere('id', '=', $solicitud->id)->get();
         return \response()->json($solicitud, 200);
 
     }

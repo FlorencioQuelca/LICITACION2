@@ -18,12 +18,11 @@ class CreateTrabajosTable extends Migration
             $table->string('nombre')->nullable();
             $table->string('repuesto')->nullable();
             $table->string('detalle')->nullable();
-            $table->integer('costo')->nullable();
+            $table->decimal('costo',10,2)->nullable();
             $table->string('factura')->nullable();
-            $table->integer('total')->nullable();
+            $table->decimal('total',10,2)->nullable();
             $table->string('descripcion')->nullable();
             $table->string("status")->default("activo");
-
             $table->unsignedBigInteger('solicitud_id')->nullable();
             $table->foreign('solicitud_id')->references('id')->on('solicituds')->onDelete('set null')->onUpdate('cascade');
 

@@ -26,7 +26,7 @@ class Trabajo extends Model
     // relacion uno a muchos polimorfica
 
     public function archivos(){
-        return $this->morphMany('App\Models\Archivos','archivotable');
+        return $this->morphMany(Archivo::class,'archivotable');
     }
     public function solicitud(){
         return $this->belongsTo(Solicitud::class);

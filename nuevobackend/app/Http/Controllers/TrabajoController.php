@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Trabajo;
+use App\Models\Archivo;
+
 use Illuminate\Http\Request;
 
 class TrabajoController extends Controller
@@ -45,9 +46,9 @@ class TrabajoController extends Controller
      * @param  \App\Models\Trabajos  $trabajos
      * @return \Illuminate\Http\Response
      */
-    public function show(Trabajo $trabajos)
+    public function show(Trabajo $trabajo)
     {
-        //
+       return $trabajo;
     }
 
     /**
@@ -68,9 +69,15 @@ class TrabajoController extends Controller
      * @param  \App\Models\Trabajos  $trabajos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Trabajo $trabajos)
+    public function update(Request $request, $id)
     {
-        //
+        $imput = $request->all();
+        $trabajo = Trabajo::find($id);
+        $trabajo->update($imput);
+
+     //   $trabajo->update($request->all());
+
+        return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
     }
 
     /**
@@ -79,8 +86,36 @@ class TrabajoController extends Controller
      * @param  \App\Models\Trabajos  $trabajos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Trabajo $trabajos)
+    public function destroy($id)
     {
-        //
+        //$solicitud->delete();
+        Trabajo::destroy($id);
+        return response()->json(['res'=>'eliminacion exitosa'],200);
+
+    }
+     //oficial
+     public function uploadPhotos(Request $request){
+        if ($request->hasFile('photo')){
+
+                $file=$request->file('photo');
+                $size=$file->getSize();  //tamaño en bytes // hay que convertir
+                $url=$request->nombre.'_'.time().'.'.$file->getClientOriginalExtension();
+                $file->move(\public_path('imagenes'),$url);
+
+                $archivo=new Archivo;//
+                $archivo->url=$url;
+                $archivo->categoria_id=$request->categoria_id;
+                $archivo->user_id=$request->user_id;
+                $archivo->nombre=$request->nombre;
+                $archivo->tamanio=$size;
+                $archivo->tipo=$file->getClientOriginalExtension();
+
+                $trabajo = Trabajo::find($request->trabajo_id);
+                $trabajo->archivos()->save($archivo);
+                return \response()->json(['res' => true, 'message'=>'imagen subida correctamente'], 200);
+
+     }else{
+                 return \response()->json(['res' => false, 'message'=>'error al cargar'], 200);
+        }
     }
 }
