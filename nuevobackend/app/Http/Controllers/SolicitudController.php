@@ -52,11 +52,15 @@ class SolicitudController extends Controller
       //  $imput = $request->all();
        // Solicitud::create($imput);
         $solicitud=new Solicitud();
-        $solicitud->seguimiento=strtoupper($request->nombre);
+        $solicitud->seguimiento=strtoupper($request->seguimiento);
         $solicitud->car_id=$request->car_id;
         $solicitud->taller_id=$request->taller_id;
-        $solicitud->fechaini=date('Y-m-d');
-        $solicitud->fechafin=date('Y-m-d');
+        $solicitud->fechaini=$request->fechaini;
+        $solicitud->fechafin=$request->fechafin;
+        $solicitud->status=$request->status;
+
+        //$solicitud->fechaini=date('Y-m-d');
+       // $solicitud->fechafin=date('Y-m-d');
         $solicitud->save();
         return \response()->json(['res'=> true, 'message'=>'insertado correctamente'],200);
     }
