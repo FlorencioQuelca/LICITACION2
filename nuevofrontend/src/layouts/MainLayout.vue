@@ -16,7 +16,7 @@
 
          </q-toolbar-title>
 
-        <div>FONDO NACIONAL DE INVERSION PRODUCTIVA Y SOCIAL</div>
+        <div>FPS</div>
       </q-toolbar>
     </q-header>
 

@@ -82,6 +82,8 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   //rutas nuevas
   Route::apiResource('/Tallers',\App\Http\Controllers\TallerController::class);
   Route::apiResource('/Solicituds',\App\Http\Controllers\SolicitudController::class);
+  Route::get('get_all',[\App\Http\Controllers\SolicitudController::class,'get_all'])->name('get_all');
+
   Route::apiResource('/Trabajos',\App\Http\Controllers\TrabajoController::class);
   Route::post('/uploadPhotos',[\App\Http\Controllers\TrabajoController::class,'uploadPhotos'])->name('uploadPhotos');;
 

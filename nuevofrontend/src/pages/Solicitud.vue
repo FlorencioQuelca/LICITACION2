@@ -268,7 +268,7 @@ export default {
        misdatos(){
           this.$q.loading.show();
 
-         this.$api.get(process.env.API+"/Solicituds").then((res)=>{
+         this.$api.get(process.env.API+"/get_all").then((res)=>{
              // console.log(res.data)
                 this.data =res.data;
           this.$q.loading.hide();
@@ -277,7 +277,7 @@ export default {
        cargardatos(){
       this.cars=[];
         this.$api.get(process.env.API+"/Cars").then((res)=>{
-          console.log(res.data);
+        //  console.log(res.data);
                res.data.forEach(prog => {
                     if(prog.status==="activo"){
             this.cars.push({label:prog.placa+' - '+prog.tipo+' '+prog.marca+ ' modelo: '+prog.modelo,value:prog.id});
@@ -287,7 +287,7 @@ export default {
        });
           this.tallers=[];
          this.$api.get(process.env.API+"/Tallers").then((res)=>{
-            console.log(res.data)
+         //   console.log(res.data)
               res.data.forEach(prog => {
                   if(prog.status=="ACTIVO"){
             this.tallers.push({label:prog.nombre+" ("+prog.representante+")" ,value:prog.id});
@@ -304,7 +304,7 @@ export default {
       this.$q.loading.show();
       this.dato.car_id=this.car.value;
       this.dato.taller_id=this.taller.value;
-      console.log(this.dato);
+     // console.log(this.dato);
       this.$api.post(process.env.API+"/Solicituds/", this.dato).then((res) => {
 
          if(res.data.res===true)
@@ -353,11 +353,11 @@ export default {
     },
     onDel() {
       this.$q.loading.show();
-      console.log(this.dato2.id);
+     // console.log(this.dato2.id);
       this.$api.delete( process.env.API+"/Solicituds/" + this.dato2.id).then((res) => {
 if(res.data.res===true)
           {
-        console.log(res.data);
+      //  console.log(res.data);
         this.$q.notify({
          color: "green-4",
          textColor: "white",

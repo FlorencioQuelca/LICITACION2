@@ -12,15 +12,21 @@ class SolicitudController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function get_all()
     {
         $solicituds = Solicitud::with(['taller','car','trabajos', 'trabajos.archivos'])->orderByDesc('id')->get();
         return \response()->json($solicituds, 200);
 
     }
+    public function index()  ///para el taller reparar
+    {
+        $solicituds = Solicitud::with(['taller','car','trabajos', 'trabajos.archivos'])->where('status', '=','activo')->orderBy('id','desc')->get();
+        return \response()->json($solicituds, 200);
+
+    }
     public function solicitudid(Solicitud $solicitud)
     {
-        $solicitud = Solicitud::with(['taller','car','trabajos', 'trabajos.archivos']) ->orWhere('id', '=', $solicitud->id)->get();
+        $solicitud = Solicitud::with(['taller','car','trabajos', 'trabajos.archivos'])->where('id', '=', $solicitud->id)->get();
         return \response()->json($solicitud, 200);
 
     }

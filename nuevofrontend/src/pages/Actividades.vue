@@ -24,16 +24,16 @@
           </div>
           <div class="col-auto">
             <q-btn color="grey-7" round flat icon="more_vert">
-              <q-menu cover auto-close>
+              <q-menu cover auto-close v-if="row.status=='activo'" >
                 <q-list>
-                  <q-item clickable @click="editRow(row)" exact>
+                  <q-item clickable @click="editRow(row)" exact active-class="my-menu-link">
                     <q-item-section  >EDITAR</q-item-section>
                   </q-item>
-                  <q-item clickable @click="deleteRow(row)" exact>
+                  <q-item clickable @click="deleteRow(row)" exact active-class="my-menu-link" >
                     <q-item-section>ELIMINAR</q-item-section>
                   </q-item>
-                  <q-item clickable exact >
-                    <q-item-section>CERRAR</q-item-section>
+                  <q-item clickable exact @click="modificar_Row(row)" active-class="my-menu-link" >
+                    <q-item-section>ENVIAR AL FISCAL</q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
@@ -63,7 +63,7 @@
        </q-card-section>
       </div>
       <q-separator />
-      <q-card-actions>
+      <q-card-actions  v-if="row.status=='activo'">
         <q-btn   color="primary" @click="add_photo(row)" >ADD FOTOS</q-btn>
         <q-btn   color="secondary" @click="ver_photos(row)">VER FOTOS</q-btn>
       </q-card-actions>
@@ -336,6 +336,22 @@
       </q-card>
     </q-dialog>
 
+
+     <!--          CERRAR -->
+      <q-dialog v-model="dialog_close">
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="clear" color="green" text-color="white" />
+          <span class="q-ml-sm">Seguro que quiere enviar ?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Enviar" color="deep-orange" @click="onClose" />
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
    </div>
 
 </template>
@@ -355,6 +371,7 @@ export default {
       dialog_photo:false,
       dialog_ver_photos:false,
       dialog_del_photo:false,
+      dialog_close:false,
       repuesto:false,
       factura:false,
       archivo:{},
@@ -378,7 +395,7 @@ export default {
     },
     onSubmit(){
       this.$q.loading.show();
-      console.log(this.dato);
+     // console.log(this.dato);
        this.dato.status = 'activo';
        this.dato.solicitud_id=this.$route.params.id
        this.dato.nombre=(this.dato.nombre).toUpperCase()
@@ -534,7 +551,7 @@ export default {
     ver_photos(item) {
      this.dato2 = item.archivos
      //this.url=process.env.API+'/../imagenes/'+this.dato2.archivos[50].url;
-     console.log(this.dato2)
+    // console.log(this.dato2)
      this.slide=0;
      this.url=process.env.API
      this.dialog_ver_photos = true;
@@ -544,7 +561,7 @@ export default {
       },
      delete_photo(item) {
        this.dato3 = item
-     console.log(item);
+   // console.log(item);
      this.dialog_del_photo = true;
     },
     onDel_photo() {
@@ -569,16 +586,49 @@ export default {
         this.dialog_ver_photos = false;
         this.dialog_del_photo = false;
         this.misdatos();
-
       });
 
     },
+    modificar_Row(item){
+       this.dato2 = item
+     // console.log(this.dato2);
+      this.dialog_close = true;
+    },
+    onClose(){
+       this.$q.loading.show();
+       this.dato2.status = 'inactivo';
+       this.$api.put(process.env.API+"/Trabajos/"+this.dato2.id,this.dato2).then((res) => {
+          if(res.data.res===true)
+          {
+            this.$q.notify({
+            color: "green-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "cerrado correctamente",
+          });
+          }else{
 
-
+            this.$q.notify({
+            color: "red-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "no se se pudo enviar al fiscal",
+          });
+          }
+           this.$q.loading.hide();
+           this.dialog_close=false;
+          this.misdatos();
+        }).catch((e)=>{
+          this.$q.loading.hide();
+        });
+    }
   },
 }
 </script>
 
-<style>
-
+<style lang="sass">
+.my-menu-link
+  color: blue
+  background: #F2C037
 </style>
+

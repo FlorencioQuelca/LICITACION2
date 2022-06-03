@@ -7,7 +7,7 @@
               src="~assets/logofps.png"
               style="width: 200px; height: 200px"
             >
-            
+
           </div>
           <br>
           <div>
@@ -20,18 +20,18 @@
                 no-caps
               />
           </div>
-            
+
           </div>
        <q-footer bordered class="bg-white text-primary">
         <q-tabs no-caps active-color="primary" indicator-color="transparent" class="text-grey" >
          <h6>
-          Copyright © 2022 FPS - LAPAZ               
+          Copyright © 2022 <br> FPS - LAPAZ
          </h6>
           <div class="text-purple q-gutter-md" style="font-size: 2em">
            <q-icon round color="primary" name="facebook" ></q-icon>
           </div>
            <a href="https://www.facebook.com/fpslapaz" target="_blanck"> Ir a la pagina</a>
-        
+
         </q-tabs>
       </q-footer>
 

@@ -238,7 +238,7 @@
  <q-footer bordered class="bg-white text-primary">
         <q-tabs no-caps active-color="primary" indicator-color="transparent" class="text-grey">
          <h6>
-          Copyright © 2022 FPS - LAPAZ
+          Copyright © 2022 <br> FPS - LAPAZ
          </h6>
           <div class="text-purple q-gutter-md" style="font-size: 2em">
            <q-icon round color="primary" name="facebook" ></q-icon>
