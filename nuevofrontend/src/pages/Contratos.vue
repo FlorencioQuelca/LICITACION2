@@ -141,11 +141,11 @@
 
     <q-table
       :filter="filter"
-      title="Lista de Contratos firmados"
+      title="LISTA DE CONTRATOS FIRMADOS"
       :rows="data"
       :columns="columns"
       row-key="nombre"
-      :rows-per-page-options="[50,100,200]"
+      :rows-per-page-options="[20,50,100,200,0]"
       separator="cell"
    >
        <template v-slot:top-right>
@@ -885,8 +885,8 @@
           <q-td key="nombre" :props="props">
             {{ props.row.nombre}}
           </q-td>
-          <q-td key="opcion" :props="props">
-                        <q-btn
+          <q-td key="opcion" :props="props" >
+                        <q-btn v-if="$store.state.login.user.tipo==='admin'"
                         dense
                         round
                         flat
