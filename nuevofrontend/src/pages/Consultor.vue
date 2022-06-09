@@ -451,16 +451,19 @@
           <q-tr :props="props">
 
             <q-td key="departamento" :props="props">
-            {{ props.row.departamento.nombre}}
+            {{ props.row.proyecto.departamento}}
           </q-td>
           <q-td key="nombre" :props="props">
             {{ props.row.nombre }}
           </q-td>
             <q-td key="fecha" :props="props">
-            {{ props.row.fecha }}
+            {{ props.row.fechaini }}
           </q-td>
            <q-td key="fecha1" :props="props">
-            {{ props.row.fecha}}
+            {{ props.row.fechafin}}
+          </q-td>
+            <q-td key="descripcion" :props="props">
+            {{ props.row.pivot.detalle}}
           </q-td>
          <q-td key="status" :props="props">
             {{ props.row.status}}
@@ -550,8 +553,9 @@ export default {
      subcol1: [
          { name: "departamento",required: true, label: "Departamento", align: "left",field:  row => row.departamento,sortable: true,},
          { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },
-         { name: "fecha",align: "left",label: "fecha de la Presentacion",field: "fecha",sortable: true},
-         { name: "fecha1",align: "left",label: "Fecha de Culminacion",field: "fecha1",sortable: true},
+         { name: "fecha",align: "center",label: "fecha de la Presentacion",field: "fecha",sortable: true},
+         { name: "fecha1",align: "center",label: "Fecha de Culminacion",field: "fecha1",sortable: true},
+         { name: "descripcion",align: "center",label: "Descripcion",field: "descripcion",sortable: true},
           { name: "status",align: "left",label: "Estado",field: "status",sortable: true},
       ],
       opciones: [

@@ -382,10 +382,10 @@
             {{ props.row.nombre }}
           </q-td>
             <q-td key="fecha" :props="props">
-            {{ props.row.fecha }}
+            {{ props.row.fechaini }}
           </q-td>
            <q-td key="fecha1" :props="props">
-            {{ props.row.fecha}}
+            {{ props.row.fechafin}}
           </q-td>
          <q-td key="status" :props="props">
             {{ props.row.status}}
