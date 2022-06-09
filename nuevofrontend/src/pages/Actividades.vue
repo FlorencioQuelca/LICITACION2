@@ -398,7 +398,7 @@ export default {
         .then((res) => {
           this.data = res.data[0];
           this.car=this.data.car;
-        console.log(this.data)
+       // console.log(this.data)
           this.$q.loading.hide();
         });
     },

@@ -518,6 +518,7 @@ export default {
    filter:'',
    errores: null,
    consultores:[],
+   contratos:[],
    props:[],
    generos:[
       'HOMBRE',
@@ -599,7 +600,7 @@ export default {
     misdatos(){
     this.$q.loading.show();
        this.$api.get(process.env.API+"/consultor").then((res)=>{
-       //  console.log(res.data)
+        console.log(res.data)
          this.data =res.data;
     this.$q.loading.hide();
        });

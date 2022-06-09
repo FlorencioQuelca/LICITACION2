@@ -17,7 +17,7 @@ class EmpresaController extends Controller
     public function index(Request $request)
     {
         try{
-            $empresa= Empresa::with(['proyectos','proyectos.departamento','sociedads'])->orderByDesc('id')->get();
+            $empresa= Empresa::with(['proyectos','proyectos.departamento','sociedads','contratos'])->orderByDesc('id')->get();
            // $empresa = Empresa::where('nit','like',"%{$request->txtBuscar}%")
            //return $personas;//->whereCi($request->txtBuscar)
           //                  ->orWhere('nombreEmpresa', 'like', "%{$request->txtBuscar}%")
@@ -27,9 +27,9 @@ class EmpresaController extends Controller
             catch(\Exception $e){
             return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
            }
-           
+
     }
-    
+
     public function store(CreateEmpresaRequest $request)
     {
         $imput = $request->all();
@@ -49,7 +49,7 @@ class EmpresaController extends Controller
          return \response()->json($empresa,200);
     }
 
-   
+
     public function update(UpdateEmpresaRequest $request, $id)
     {
         $imput = $request->all();
@@ -58,7 +58,7 @@ class EmpresaController extends Controller
         return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
     }
 
-   
+
     public function destroy($id)
     {
         try{
@@ -71,7 +71,7 @@ class EmpresaController extends Controller
     }
     public function empresanit($id){
         return Empresa::where('nit',$id)->get();
-        
+
     }
-    
+
 }

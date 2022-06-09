@@ -21,7 +21,7 @@ class PersonaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     //sirve para listar y buscar dentro de una tabla 
+     //sirve para listar y buscar dentro de una tabla
     public function index(Request $request)
     {
         //return $request->all();
@@ -33,8 +33,8 @@ class PersonaController extends Controller
          //select * from Persona where ci like %par% or...
        //  $imput = $request->all();
        try{
-        $personas= Persona::with(['proyectos','proyectos.departamento', 'proyects'])->orderByDesc('id')->get();
-       
+        $personas= Persona::with(['proyectos','proyectos.departamento', 'proyects','contratos'])->orderByDesc('id')->get();
+
        // $personas = Persona::where('ci','like',"%{$request->txtBuscar}%")
                             //->whereCi($request->txtBuscar)
        //                     ->orWhere('datosp', 'like', "%{$request->txtBuscar}%")
@@ -65,7 +65,7 @@ class PersonaController extends Controller
         return \response()->json(['res'=> true, 'message'=>'insertado correctamente'],200);
        // return \response()->json($persona,200);
    }
-    
+
     /**
      * Display the specified resource.
      *

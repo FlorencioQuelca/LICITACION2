@@ -20,8 +20,8 @@ class SociedadController extends Controller
      */
     public function index()
     {
-        try{  
-            $sociedad= Sociedad::with(['proyectos','proyectos.departamento','empresas'])->orderByDesc('id')->get();
+        try{
+            $sociedad= Sociedad::with(['proyectos','proyectos.departamento','empresas','contratos'])->orderByDesc('id')->get();
            //$sociedad = Sociedad::with('empresas')->orderByDesc('id')->get();
               return \response()->json($sociedad,200);
            }
@@ -30,7 +30,7 @@ class SociedadController extends Controller
            }
     }
     public function detalle1(){
-      
+
      $detalles = Sociedad::with('empresas')->get();
       return \response()->json($detalles, 200);
     }
@@ -42,16 +42,16 @@ class SociedadController extends Controller
         return \response()->json(['res'=> true, 'message'=>'insertado correctamente'],200);
     }
 
-   
+
     public function show($id)
     {
         //
         $sociedadAccidental = Sociedad::findOrFail($id);
         return \response()->json($sociedadAccidental,200);
-        
+
     }
 
-    
+
     public function update(Request $request, $id)
     {
         $imput = $request->all();
@@ -60,7 +60,7 @@ class SociedadController extends Controller
         return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
     }
 
-    
+
     public function destroy($id)
     {
         try{
@@ -77,12 +77,12 @@ class SociedadController extends Controller
     public function empresaSociedad(Request $request, Sociedad $sociedad){
         $empresa = Empresa::find($request->id);
      //   $sociedad = Sociedad::find($sociedad->id);
-        $sociedad->empresas()->attach($empresa,['participacion'=>$request->participacion]);    
+        $sociedad->empresas()->attach($empresa,['participacion'=>$request->participacion]);
      }
      public function empresasociedaddetach(Request $request,Sociedad $sociedad){
         $empresa = Empresa::find($request->id);
         $sociedad->empresas()->detach($empresa->id);
      }
-     
-    
+
+
 }
