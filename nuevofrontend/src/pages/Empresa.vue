@@ -299,11 +299,7 @@
               type="email"
               label="Correo Electronico"
               hint="Ingresar Correo Electronico"
-              lazy-rules
-              :rules="[v => !!v || 'Correo electronio requerido',
-                    v => (v && v.length >= 7  && v.length <=50) || 'Cantidad de caracteres invalido',
-                    v => (v || '').indexOf(' ') < 0 ||  'no se permite spacios en blanco',
-                    v => /.+@.+\..+/.test(v) || 'correo invalido']"
+
             />
              <q-input
               outlined

@@ -15,7 +15,7 @@ class CreatePersonaTable extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
-            $table->string('ci',20)->unique();    
+            $table->string('ci',20)->unique();
             $table->string('paterno')->nullable();
             $table->string('materno')->nullable();
             $table->string('nombres')->nullable();

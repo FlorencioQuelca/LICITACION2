@@ -23,7 +23,7 @@ class CreateSociedadsTable extends Migration
             $table->string('fono2')->nullable();
             $table->string('email')->nullable();
             $table->string('departamento')->nullable();
-            $table->string('observacion')->default("NINGUNA"); 
+            $table->string('observacion')->default("NINGUNA");
             $table->timestamps();
         });
     }
