@@ -451,7 +451,7 @@
           <q-tr :props="props">
 
             <q-td key="departamento" :props="props">
-            {{ props.row.proyecto.departamento}}
+            {{ props.row.departamento}}
           </q-td>
           <q-td key="nombre" :props="props">
             {{ props.row.nombre }}
@@ -463,7 +463,7 @@
             {{ props.row.fechafin}}
           </q-td>
             <q-td key="descripcion" :props="props">
-            {{ props.row.pivot.detalle}}
+            {{ props.row.fechaini}}
           </q-td>
          <q-td key="status" :props="props">
             {{ props.row.status}}
