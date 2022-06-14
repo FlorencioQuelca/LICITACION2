@@ -110,7 +110,8 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
    Route::put('dependientecontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'dependientecontratos']); //CRUD de SociedadAccidental;
    Route::put('dependientecontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'dependientecontratosdetach']); //CRUD de SociedadAccidental;
 
-
+//visitas
+   Route::apiResource('/visitas',\App\Http\Controllers\VisitaController::class);
 
 });
 

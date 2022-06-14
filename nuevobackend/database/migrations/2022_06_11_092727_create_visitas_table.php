@@ -15,7 +15,6 @@ class CreateVisitasTable extends Migration
     {
         Schema::create('visitas', function (Blueprint $table) {
             $table->id();
-
             $table->date('fecha')->nullable();
             $table->time('horain')->nullable();
             $table->time('horaout')->nullable();

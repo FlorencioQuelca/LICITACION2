@@ -35,7 +35,26 @@ class VisitaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        ///  $imput = $request->all();
+       // Solicitud::create($imput);
+        $visita=new Visita();
+       // $solicitud->seguimiento=strtoupper($request->seguimiento);
+       // $solicitud->car_id=$request->car_id;
+        $visita->num=$request->num;
+        $visita->fecha=date('Y-m-d');
+        $visita->horain=time();
+        $visita->horaout=time();
+
+        $visita->motivo=$request->motivo;
+        $visita->empresa=$request->empresa;
+        $visita->mochila=$request->mochila;
+
+
+
+        //$solicitud->fechaini=date('Y-m-d');
+       // $solicitud->fechafin=date('Y-m-d');
+        $visita->save();
+        return \response()->json(['res'=> true, 'message'=>'insertado correctamente'],200);
     }
 
     /**
@@ -46,7 +65,7 @@ class VisitaController extends Controller
      */
     public function show(Visita $visita)
     {
-        //
+        return $visita;
     }
 
     /**
@@ -67,9 +86,14 @@ class VisitaController extends Controller
      * @param  \App\Models\Visita  $visita
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Visita $visita)
+    public function update(Request $request, Visita $id)
     {
-        //
+        $imput = $request->all();
+        $solicitud= Visita::find($id);
+        $solicitud->update($imput);
+        return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
+
+
     }
 
     /**
@@ -78,8 +102,10 @@ class VisitaController extends Controller
      * @param  \App\Models\Visita  $visita
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Visita $visita)
+    public function destroy(Visita $id)
     {
-        //
+
+        Visita::destroy($id);
+       return response()->json(['res'=>'Borrado Exitoso'],200);
     }
 }
