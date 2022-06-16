@@ -112,6 +112,8 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
 
 //visitas
    Route::apiResource('/visitas',\App\Http\Controllers\VisitaController::class);
+   Route::get('/funcionarios',[\App\Http\Controllers\PersonaController::class,'funcionarios'])->name('funcionarios');
+   Route::get('/visitantes',[\App\Http\Controllers\PersonaController::class,'visitantes'])->name('visitantes');
 
 });
 

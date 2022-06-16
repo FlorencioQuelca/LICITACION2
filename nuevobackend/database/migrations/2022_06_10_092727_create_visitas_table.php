@@ -25,8 +25,6 @@ class CreateVisitasTable extends Migration
             $table->string('observacion')->nullable();
             $table->string('status')->nullable();
             $table->string('mochila')->nullable();
-            $table->unsignedBigInteger('persona_id')->nullable();
-            $table->foreign('persona_id')->references('id')->on('personas')->onDelete('set null')->onUpdate('cascade');
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
             $table->unsignedBigInteger('departamento_id')->nullable();

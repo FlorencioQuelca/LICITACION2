@@ -27,7 +27,7 @@ class Persona extends Model
         "observacion",
     ];
     protected $hidden =['created_at','updated_at'];
-    
+
     //relacion uno a muchos polimorfica
     public function proyectos(){
         return $this->morphToMany('App\Models\Proyecto','detalle');
@@ -44,6 +44,10 @@ class Persona extends Model
     public function firmas(){
         return $this->belongsToMany(Contrato::class,'contrato_persona');
      }
+     //relacion muchos a muchos personas
+    public function visitas(){
+        return $this->morphToMany(Visita::class,'persona_visita')->withPivot(['tipo','mochila','observacion']);;
+    }
 
 }
-   
+

@@ -15,6 +15,10 @@ class CreatePersonaVisitaTable extends Migration
     {
         Schema::create('persona_visita', function (Blueprint $table) {
             $table->id();
+            $table->string('observacion')->nullable();
+            $table->string('mochila')->nullable();
+            $table->string('tipo')->nullable();
+            $table->string('status')->nullable();
             $table->unsignedBigInteger('persona_id')->nullable();
             $table->unsignedBigInteger('visita_id')->nullable();
             $table->foreign('visita_id')

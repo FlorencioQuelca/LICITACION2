@@ -22,6 +22,7 @@ class PersonaController extends Controller
      */
 
      //sirve para listar y buscar dentro de una tabla
+
     public function index(Request $request)
     {
         //return $request->all();
@@ -33,7 +34,7 @@ class PersonaController extends Controller
          //select * from Persona where ci like %par% or...
        //  $imput = $request->all();
        try{
-        $personas= Persona::with(['proyectos','proyectos.departamento', 'proyects','contratos','contratos'])->orderByDesc('id')->get();
+        $personas= Persona::with(['proyectos','proyectos.departamento', 'proyects','contratos'])->orderByDesc('id')->get();
 
        // $personas = Persona::where('ci','like',"%{$request->txtBuscar}%")
                             //->whereCi($request->txtBuscar)
@@ -119,4 +120,25 @@ class PersonaController extends Controller
     public function consultorci($id){
         return Persona::where('ci',$id)->get();
     }
+    public function funcionarios(){
+        try{
+       // return Persona::get();
+         $personas= Persona::where('observacion', '=','SERVIDOR PUBLICO')->get();
+          return \response()->json($personas,200);
+        }
+        catch(\Exception $e){
+         return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
+        }
+     }
+     public function visitantes(){
+        try{
+       // return Persona::get();
+         $personas= Persona::where('observacion', '=','NATURAL')->orderByDesc('id')->get();
+          return \response()->json($personas,200);
+        }
+        catch(\Exception $e){
+         return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
+        }
+
+     }
 }

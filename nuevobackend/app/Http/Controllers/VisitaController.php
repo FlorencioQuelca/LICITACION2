@@ -38,21 +38,15 @@ class VisitaController extends Controller
         ///  $imput = $request->all();
        // Solicitud::create($imput);
         $visita=new Visita();
-       // $solicitud->seguimiento=strtoupper($request->seguimiento);
-       // $solicitud->car_id=$request->car_id;
         $visita->num=$request->num;
         $visita->fecha=date('Y-m-d');
         $visita->horain=time();
         $visita->horaout=time();
-
         $visita->motivo=$request->motivo;
         $visita->empresa=$request->empresa;
         $visita->mochila=$request->mochila;
-
-
-
-        //$solicitud->fechaini=date('Y-m-d');
-       // $solicitud->fechafin=date('Y-m-d');
+        $visita->user_id=$request->user_id;
+        $visita->departamento_id=$request->departamento_id;
         $visita->save();
         return \response()->json(['res'=> true, 'message'=>'insertado correctamente'],200);
     }

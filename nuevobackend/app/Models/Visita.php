@@ -26,6 +26,10 @@ class Visita extends Model
         "status"
     ];
     protected $hidden =['created_at','updated_at'];
+
     //relacion uno a muchos
+    public function personas(){
+        return $this->morphToMany(Persona::class,'persona_visita')->withPivot(['tipo','mochila','observacion']);
+    }
 
 }

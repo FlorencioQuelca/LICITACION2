@@ -4,7 +4,7 @@
       label=" REGISTRAR NUEVA VISITA"
       color="red"
       icon="add_circle"
-      @click="alert = true"
+      @click="nuevo()"
       class="q-mb-xs"
     />
 
@@ -47,13 +47,11 @@
             {{ props.row.fechafin }}
           </q-td>
 
-          <q-td key="car" :props="props">
-            {{ props.row.car.placa }} - {{ props.row.car.tipo }}
-            {{ props.row.car.marca }} modelo:{{ props.row.car.modelo }}
+          <q-td key="empresa" :props="props">
+            {{ props.row.empresa }}
           </q-td>
-          <q-td key="taller" :props="props">
-            {{ props.row.taller.nombre }} de:
-            {{ props.row.taller.representante }}
+          <q-td key="motivo" :props="props">
+            {{ props.row.motivo }}
           </q-td>
           <q-td key="status" :props="props">
             {{ props.row.status }}
@@ -102,14 +100,12 @@
                   separator="cell"
                   dense
                 >
-
                   <template v-slot:body="props">
                     <q-tr :props="props">
-
                       <q-td key="ci" :props="props">
                         {{ props.row.ci }}
                       </q-td>
-                       <q-td key="nombre" :props="props">
+                      <q-td key="nombre" :props="props">
                         {{ props.row.datosp }}
                       </q-td>
                       <q-td key="opcion" :props="props">
@@ -124,12 +120,12 @@
                       </q-td>
                     </q-tr>
                   </template>
-                   <template v-slot:top-right>
+                  <template v-slot:top-right>
                     <q-input
                       outlined
                       borderless
                       dense
-                      debounce="100"
+                      debounce="300"
                       v-model="filter1"
                       placeholder="Buscar Visitantes"
                     >
@@ -139,26 +135,24 @@
                     </q-input>
                   </template>
                 </q-table>
-
               </div>
               <div class="col-6">
                 <q-table
                   :filter="filter2"
                   title="Lista de funcionarios publicos"
-                  :rows="personas"
+                  :rows="funcionarios"
                   :columns="subcol2"
                   row-key="nombre"
                   :rows-per-page-options="[5, 10, 20, 0]"
                   separator="cell"
                   dense
                 >
-
                   <template v-slot:body="props">
                     <q-tr :props="props">
                       <q-td key="ci" :props="props">
                         {{ props.row.ci }}
                       </q-td>
-                        <q-td key="nombre" :props="props">
+                      <q-td key="nombre" :props="props">
                         {{ props.row.datosp }}
                       </q-td>
                       <q-td key="opcion" :props="props">
@@ -167,13 +161,13 @@
                           round
                           flat
                           color="green"
-                          @click="adicionarPersona(props)"
+                          @click="adicionarfuncionario(props)"
                           icon="add_circle"
                         ></q-btn>
                       </q-td>
                     </q-tr>
                   </template>
-                      <template v-slot:top-right>
+                  <template v-slot:top-right>
                     <q-input
                       outlined
                       borderless
@@ -188,36 +182,75 @@
                     </q-input>
                   </template>
                 </q-table>
-
-
               </div>
             </div>
-             <div class="row">
+
+            <div class="row">
               <div class="col-6">
-                  <q-select
+                <ul v-for="(it, index) in personasSelectos" :key="index">
+                  <li>
+                    {{ it.ci }} {{it.datosp}}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                <ul v-for="(it, index) in funcionariosSelectos" :key="index">
+                  <li>
+                    {{ it.ci }} {{it.datosp}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <q-select
                   outlined
-                  v-model="car"
+                  v-model="dato.motivo"
                   :options="motivos"
                   label="Motivo de visita"
                   type="text"
                   hint="Seleccione o Escriba El Motivo de la visita"
                 />
-
               </div>
               <div class="col-6">
-                 <q-select
+
+                <q-select
                   outlined
-                  v-model="taller"
+                  v-model="dato.empresa"
                   :options="instituciones"
-                  label="Taller"
+                  label="Institucion o Empresa"
                   type="text"
-                  hint="Seleccionar el taller de envio"
+                  hint="Seleccionar Institucion y/o Empresa"
                 />
-             </div>
-             </div>
+                <q-option-group
+                  v-model="dato.mochila"
+                  label="Status"
+                  :options="[
+                    { label: 'con Mochila', value: 'SI' },
+                    { label: 'Sin Mochila', value: 'NO' },
+                  ]"
+                  color="primary"
+                  inline
+                />
+                <q-checkbox
+                  keep-color
+                  v-model="dato.status"
+                  label="Mochila u activos"
+                  color="teal"
+                />
+                <q-input
+                  v-if="dato.status == true"
+                  outlined
+                  type="text"
+                  v-model="dato.mochila"
+                  hint="Ingresar descripcion de el activo que Ingresa"
+                />
+              </div>
+            </div>
             <div>
               <q-btn
-                label="Crear Visista"
+                label="Crear Visita"
                 type="submit"
                 color="positive"
                 icon="add_circle"
@@ -386,56 +419,60 @@ const columns = [
     field: "horaout",
     sortable: true,
   },
-  { name: "opcion", label: "Opcion", align: "center",field: "action", sortable: false },
+  {
+    name: "opcion",
+    label: "Opcion",
+    align: "center",
+    field: "action",
+    sortable: false,
+  },
 ];
- const subcol1 =[
-
-        {
-          name: "ci",
-          required: true,
-          label: "C.I.",
-          align: "left",
-          field: "ci",
-          sortable: true,
-        },
-          {
-          name: "nombre",
-          label: "Nombre completo",
-          align: "left",
-          field: "nombre",
-          sortable: true,
-        },
-        {
-          name: "opcion",
-          label: "opcion",
-          align: "center",
-          field: "opcion",
-        },
-      ];
-     const subcol2=[
-
-        {
-          name: "ci",
-          required: true,
-          label: "C.I.",
-          align: "left",
-          field: "ci",
-          sortable: true,
-        },
-          {
-          name: "nombre",
-          label: "Nombre completo",
-          align: "left",
-          field: "nombre",
-          sortable: true,
-        },
-        {
-          name: "opcion",
-          label: "opcion",
-          align: "center",
-          field: "opcion",
-        },
-      ];
+const subcol1 = [
+  {
+    name: "ci",
+    required: true,
+    label: "C.I.",
+    align: "left",
+    field: "ci",
+    sortable: true,
+  },
+  {
+    name: "nombre",
+    label: "Nombre completo",
+    align: "left",
+    field: "nombre",
+    sortable: true,
+  },
+  {
+    name: "opcion",
+    label: "opcion",
+    align: "center",
+    field: "opcion",
+  },
+];
+const subcol2 = [
+  {
+    name: "ci",
+    required: true,
+    label: "C.I.",
+    align: "left",
+    field: "ci",
+    sortable: true,
+  },
+  {
+    name: "nombre",
+    label: "Nombre completo",
+    align: "left",
+    field: "nombre",
+    sortable: true,
+  },
+  {
+    name: "opcion",
+    label: "opcion",
+    align: "center",
+    field: "opcion",
+  },
+];
 export default {
   data() {
     return {
@@ -445,31 +482,18 @@ export default {
       data: [],
       dato: {},
       dato2: {},
-      filter: '',
-      filter1: '',
-      filter2: '',
+      filter: "",
+      filter1: "",
+      filter2: "",
       columns,
-      tallers: [],
-      cars: [],
-      car: {},
-      taller: {},
       personas: [],
-      funcionarios:[],
+      personasSelectos: [],
+      funcionarios: [],
+      funcionariosSelectos: [],
       subcol1,
       subcol2,
-      motivos: [
-        "CONSULTA",
-        "VISITA PERSONAL",
-        "REUNION",
-      ],
-      instituciones: [
-        "EMPRESA ",
-        "COMUNIDAD ",
-        "MINISTERIO",
-        "ALCALDE DE",
-      ],
-
-
+      motivos: ["CONSULTA", "VISITA PERSONAL", "REUNION"],
+      instituciones: ["EMPRESA ", "COMUNIDAD ", "MINISTERIO", "ALCALDE DE"],
     };
   },
   created() {
@@ -487,19 +511,25 @@ export default {
       });
     },
     cargardatos() {
-         this.$api.get(process.env.API + "/consultor").then((res) => {
+      this.$api.get(process.env.API + "/visitantes").then((res) => {
         this.personas = res.data;
+        //  console.log(this.personas);
         this.$q.loading.hide();
       });
-
+      this.$api.get(process.env.API + "/funcionarios").then((res) => {
+        this.funcionarios = res.data;
+        // console.log(this.funcionarios);
+        this.$q.loading.hide();
+      });
     },
-    onSubmit() {
+    onSubmit() { /// trabajando aqui
       this.$q.loading.show();
-      this.dato.car_id = this.car.value;
-      this.dato.taller_id = this.taller.value;
-      // console.log(this.dato);
+      this.dato.user_id =this.$store.state.login.user.id
+      this.dato.departamento_id = 2
+      this.dato.num = 1
+
       this.$api
-        .post(process.env.API + "/Solicituds/", this.dato)
+        .post(process.env.API + "/visitas", this.dato)
         .then((res) => {
           if (res.data.res === true) {
             this.$q.notify({
@@ -510,6 +540,10 @@ export default {
             });
           }
           this.$q.loading.hide();
+
+    //creado
+
+
 
           this.alert = false;
           this.misdatos();
@@ -582,6 +616,20 @@ export default {
           this.misdatos();
           this.$q.loading.hide();
         });
+    },
+
+    nuevo() {
+      this.alert = true;
+      (this.personasSelectos = []), (this.funcionariosSelectos = []);
+      this.dato = {};
+    },
+    adicionarPersona(item) {
+      this.personasSelectos.push(item.row);
+      console.log(this.personasSelectos);
+    },
+    adicionarfuncionario(item) {
+      this.funcionariosSelectos.push(item.row);
+      console.log(this.funcionariosSelectos);
     },
   },
 };
