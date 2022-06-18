@@ -15,21 +15,20 @@ class Visita extends Model
         "horain",
         "horaout",
         "motivo",
-        "mun",
+        "num",
         "empresa",
         "mochila",
         "funcionario",
         "observacion",
         "user_id",
         "departamento_id",
-        "departamento_id",
         "status"
     ];
     protected $hidden =['created_at','updated_at'];
 
-    //relacion uno a muchos
+    //relacion muchos a muchos
     public function personas(){
-        return $this->morphToMany(Persona::class,'persona_visita')->withPivot(['tipo','mochila','observacion']);
+        return $this->BelongsToMany(Persona::class,'persona_visita')->withPivot(['tipo','mochila','observacion']);
     }
 
 }

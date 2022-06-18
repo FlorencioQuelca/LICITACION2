@@ -46,7 +46,7 @@ class Persona extends Model
      }
      //relacion muchos a muchos personas
     public function visitas(){
-        return $this->morphToMany(Visita::class,'persona_visita')->withPivot(['tipo','mochila','observacion']);;
+        return $this->BeleongsToMany(Visita::class,'persona_visita')->withPivot(['tipo','mochila','observacion']);;
     }
 
 }

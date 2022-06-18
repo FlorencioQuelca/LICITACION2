@@ -7,6 +7,14 @@
       @click="nuevo()"
       class="q-mb-xs"
     />
+     <q-btn
+      label=" REGISTRAR NUEVA PERSONA"
+      color="green"
+      icon="face"
+      @click="nuevaPersona()"
+      class="q-mb-xs"
+    />
+
 
     <!--          tabla  PRINCIPAL -->
     <q-table
@@ -14,7 +22,7 @@
       title="LISTA DE VISITAS  HOY "
       :rows="data"
       :columns="columns"
-      row-key="seguimiento"
+      row-key="num"
       :rows-per-page-options="[10, 20, 50, 100, 0]"
       separator="cell"
       dense
@@ -36,26 +44,89 @@
 
       <template v-slot:body="props">
         <q-tr :props="props">
-          <q-td key="seguimiento" :props="props">
-            {{ props.row.seguimiento }}
+          <q-td key="num" :props="props">
+            {{ props.row.num }}
+          </q-td>
+          <q-td key="nombre" :props="props">
+              <ul >
+              <span v-for="(persona,index) in props.row.personas" :key="index">
+                  <li v-if="persona.pivot.tipo==='visita'">
+                    {{persona.ci}} - {{persona.datosp}}
+                </li>
+              </span>
+             </ul>
+          </q-td>
+           <q-td key="opcion1" :props="props">
+                      <q-btn
+                        dense
+                        round
+                        flat
+                        color="green"
+                        @click="addRow1(props)"
+                        icon="playlist_add"
+                      ></q-btn>
+                        <q-btn
+                        dense
+                        round
+                        flat
+                        color="green"
+                        @click="verRow1(props)"
+                        icon="list"
+                      ></q-btn>
+            </q-td>
+          <q-td key="horain" :props="props">
+            {{ props.row.horain }}
           </q-td>
 
-          <q-td key="fechaini" :props="props">
-            {{ props.row.fechaini }}
-          </q-td>
-          <q-td key="fechafin" :props="props">
-            {{ props.row.fechafin }}
-          </q-td>
 
-          <q-td key="empresa" :props="props">
-            {{ props.row.empresa }}
-          </q-td>
+
           <q-td key="motivo" :props="props">
             {{ props.row.motivo }}
           </q-td>
-          <q-td key="status" :props="props">
-            {{ props.row.status }}
+           <q-td key="empresa" :props="props">
+            {{ props.row.empresa }}
           </q-td>
+
+           <q-td key="funcionarios" :props="props">
+              <ul>
+              <span v-for="(persona,index) in props.row.personas" :key="index">
+                  <li v-if="persona.pivot.tipo==='funcionario'">
+                    {{persona.datosp}}
+                </li>
+              </span>
+             </ul>
+          </q-td>
+          <q-td key="opcion2" :props="props">
+                      <q-btn
+                        dense
+                        round
+                        flat
+                        color="green"
+                        @click="addRow2(props)"
+                        icon="playlist_add"
+                      ></q-btn>
+                        <q-btn
+                        dense
+                        round
+                        flat
+                        color="green"
+                        @click="verRow2(props)"
+                        icon="list"
+                      ></q-btn>
+            </q-td>
+
+           <q-td key="horaout" :props="props">
+            {{ props.row.horaout }}
+             <q-btn
+              dense
+              round
+              flat
+              color="green"
+              @click="editRow1(props)"
+              icon="logout"
+            />
+          </q-td>
+
           <q-td key="opcion" :props="props">
             <q-btn
               dense
@@ -363,10 +434,166 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+     <!--          ELIMINAR REGISTRO -->
+    <q-dialog v-model="dialog_mod1">
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="clear" color="green" text-color="white" />
+          <span class="q-ml-sm">Registrar Salida y Devolver Documento</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Aceptar" color="deep-orange" @click="onout" />
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+     <!-- empresas asociados  adicionar  personas a la tabla de visitas/>-->
+      <q-dialog v-model="dialog_add1">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Agregar Persona</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+           <q-form @submit="onAdd1" class="q-gutter-md">
+            <q-table
+                  :filter="filter1"
+                  title="Lista de personas registradas"
+                  :rows="personas"
+                  :columns="subcol1"
+                  row-key="ci"
+                  :rows-per-page-options="[5, 10, 20, 0]"
+                  separator="cell"
+                  dense
+                >
+                  <template v-slot:body="props">
+                    <q-tr :props="props">
+                      <q-td key="ci" :props="props">
+                        {{ props.row.ci }}
+                      </q-td>
+                      <q-td key="nombre" :props="props">
+                        {{ props.row.datosp }}
+                      </q-td>
+                      <q-td key="opcion" :props="props">
+                        <q-btn
+                          dense
+                          round
+                          flat
+                          color="green"
+                          @click="adicionarPersona(props)"
+                          icon="add_circle"
+                        ></q-btn>
+                      </q-td>
+                    </q-tr>
+                  </template>
+                  <template v-slot:top-right>
+                    <q-input
+                      outlined
+                      borderless
+                      dense
+                      debounce="300"
+                      v-model="filter1"
+                      placeholder="Buscar Persona"
+                    >
+                      <template v-slot:append>
+                        <q-icon name="search" />
+                      </template>
+                    </q-input>
+                  </template>
+                </q-table>
+                  <div class="col-6">
+                <ul v-for="(it, index) in personasSelectos" :key="index">
+                  <li style="color=red">
+                    {{ it.ci }} {{it.datosp}}
+                  </li>
+                </ul>
+              </div>
+            <div>
+              <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+<!-- empresas asociados  adicionar  personas a la tabla de visitas/>-->
+      <q-dialog v-model="dialog_add2">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Agregar Funcionario</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+           <q-form @submit="onAdd1" class="q-gutter-md">
+            <q-table
+                  :filter="filter2"
+                  title="Lista de funcionarios del fps registradas"
+                  :rows="funcionarios"
+                  :columns="subcol2"
+                  row-key="ci"
+                  :rows-per-page-options="[5, 10, 20, 0]"
+                  separator="cell"
+                  dense
+                >
+                  <template v-slot:body="props">
+                    <q-tr :props="props">
+                      <q-td key="ci" :props="props">
+                        {{ props.row.ci }}
+                      </q-td>
+                      <q-td key="nombre" :props="props">
+                        {{ props.row.datosp }}
+                      </q-td>
+                      <q-td key="opcion" :props="props">
+                        <q-btn
+                          dense
+                          round
+                          flat
+                          color="green"
+                          @click="adicionarFuncionario(props)"
+                          icon="add_circle"
+                        ></q-btn>
+                      </q-td>
+                    </q-tr>
+                  </template>
+                  <template v-slot:top-right>
+                    <q-input
+                      outlined
+                      borderless
+                      dense
+                      debounce="300"
+                      v-model="filter2"
+                      placeholder="Buscar funcionario"
+                    >
+                      <template v-slot:append>
+                        <q-icon name="search" />
+                      </template>
+                    </q-input>
+                  </template>
+                </q-table>
+                  <div class="col-6">
+                <ul v-for="(it, index) in funcionariosSelectos" :key="index">
+                  <li >
+                    {{ it.ci }} {{it.datosp}}
+                  </li>
+                </ul>
+              </div>
+            <div>
+              <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+
+
   </div>
 </template>
 
 <script>
+import { date } from 'quasar';
 const columns = [
   {
     name: "num",
@@ -376,13 +603,19 @@ const columns = [
     field: "num",
     sortable: true,
   },
-  { name: "ci", align: "center", label: "C. I.", field: "ci", sortable: true },
   {
     name: "nombre",
-    align: "center",
+    align: "left",
     label: "Nombre Completo",
     field: "nombre",
     sortable: true,
+  },
+  {
+    name: "opcion1",
+    label: "+ Visita",
+    align: "center",
+    field: "action1",
+    sortable: false,
   },
   {
     name: "horain",
@@ -405,12 +638,20 @@ const columns = [
     field: "empresa",
     sortable: true,
   },
+
   {
-    name: "funcionario",
-    align: "center",
+    name: "funcionarios",
+    align: "left",
     label: "Funcionario(s)",
-    field: "funcionario",
+    field: "funcionarios",
     sortable: true,
+  },
+   {
+    name: "opcion2",
+    label: "+ funcionario",
+    align: "center",
+    field: "action2",
+    sortable: false,
   },
   {
     name: "horaout",
@@ -473,11 +714,15 @@ const subcol2 = [
     field: "opcion",
   },
 ];
+import moment from 'moment';
 export default {
   data() {
     return {
       alert: false,
       dialog_mod: false,
+      dialog_mod1:false,
+      dialog_add1:false,
+      dialog_add2:false,
       dialog_del: false,
       data: [],
       dato: {},
@@ -505,7 +750,7 @@ export default {
       this.$q.loading.show();
 
       this.$api.get(process.env.API + "/visitas").then((res) => {
-        // console.log(res.data)
+       console.log(res.data)
         this.data = res.data;
         this.$q.loading.hide();
       });
@@ -526,7 +771,8 @@ export default {
       this.$q.loading.show();
       this.dato.user_id =this.$store.state.login.user.id
       this.dato.departamento_id = 2
-      this.dato.num = 1
+     // this.dato.horain=moment().format('MMMM Do YYYY, h:mm:ss a');
+     // console.log(this.dato.horain)
 
       this.$api
         .post(process.env.API + "/visitas", this.dato)
@@ -542,8 +788,7 @@ export default {
           this.$q.loading.hide();
 
     //creado
-
-
+         console.log(this.data)
 
           this.alert = false;
           this.misdatos();
@@ -554,25 +799,11 @@ export default {
         });
     },
     onReset() {
-      this.dato.fechaini = null;
-      this.dato.fechafin = null;
-      this.dato.seguimiento = null;
-      this.dato.status = "activo";
+
     },
     editRow(item) {
       this.dato2 = item.row;
-      this.car = {};
-      this.cars.forEach((tipo) => {
-        if (tipo.value === item.row.car_id)
-          this.car = { label: tipo.label, value: tipo.value };
-      });
-      this.taller = {};
-      this.tallers.forEach((tipo) => {
-        if (tipo.value === item.row.taller_id)
-          this.taller = { label: tipo.label, value: tipo.value };
-      });
-
-      this.dialog_mod = true;
+       this.dialog_mod = true;
     },
     deleteRow(item) {
       this.dato2 = item.row;
@@ -580,12 +811,12 @@ export default {
     },
     onDel() {
       this.$q.loading.show();
-      // console.log(this.dato2.id);
+       this.dato.user_id =this.$store.state.login.user.id
+      this.dato.departamento_id = 2
       this.$api
-        .delete(process.env.API + "/Solicituds/" + this.dato2.id)
+        .delete(process.env.API + "/visitas/" + this.dato2.id)
         .then((res) => {
           if (res.data.res === true) {
-            //  console.log(res.data);
             this.$q.notify({
               color: "green-4",
               textColor: "white",
@@ -599,10 +830,8 @@ export default {
     },
     onMod() {
       this.$q.loading.show();
-      this.dato2.car_id = this.car.value;
-      this.dato2.taller_id = this.taller.value;
       this.$api
-        .put(process.env.API + "/Solicituds/" + this.dato2.id, this.dato2)
+        .put(process.env.API + "/visitas/" + this.dato2.id, this.dato2)
         .then((res) => {
           if (res.data.res === true) {
             this.$q.notify({
@@ -617,11 +846,47 @@ export default {
           this.$q.loading.hide();
         });
     },
+    onout() {
+      this.$q.loading.show();
+      this.$api
+        .put(process.env.API + "/registrarSalida/" + this.dato2.id)
+        .then((res) => {
+          console.log(res.data)
+          if (res.data.res === true) {
+            this.$q.notify({
+              color: "green-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "Modificado correctamente",
+            });
+          }
+          this.dialog_mod1= false;
+          this.misdatos();
+          this.$q.loading.hide();
+        });
+    },
+
 
     nuevo() {
-      this.alert = true;
-      (this.personasSelectos = []), (this.funcionariosSelectos = []);
+
+      this.personasSelectos = []
+      this.funcionariosSelectos = []
       this.dato = {};
+      let  maxi=-99;
+      this.dato.num=1
+      this.data.forEach(it=>{
+     //  console.log(it.num)
+          if(it.num > maxi){
+            this.dato.num=it.num+1
+            maxi=it.num
+          }
+      })
+      if(maxi<0){
+        this.dato.num=1
+      }
+  //    console.log(this.dato.num)
+       this.alert = true;
+
     },
     adicionarPersona(item) {
       this.personasSelectos.push(item.row);
@@ -631,6 +896,56 @@ export default {
       this.funcionariosSelectos.push(item.row);
       console.log(this.funcionariosSelectos);
     },
+    editRow1(item) {
+      this.dato2 = item.row;
+       this.dialog_mod1 = true;
+    },
+
+    addRow1(item) {
+      this.dato2 = item.row;
+      this.dialog_add1 = true;
+    },
+    addRow2(item) {
+      this.dato2 = item.row;
+      this.dialog_add2 = true;
+      this.funcionariosSelectos=[]
+    },
+      onAdd1() {
+        let ans={}
+      this.personasSelectos.forEach(it =>{
+      this.$q.loading.show();
+             ans=it
+              if(this.dialog_add1===true){
+                    ans.tipo="visita"
+              }else{
+                   ans.tipo="funcionario"
+              }
+             this.$api.put(process.env.API+"/personavisitas/"+this.dato2.id,ans).then((res) => {
+                  if(res.data.res===true){
+                  this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Agregado Correctamente",
+                        });
+                      this.$q.loading.hide();
+                        this.misdatos();
+                        }else{
+                            this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Error al agregar",
+                        });
+                             this.$q.loading.hide();
+                        }
+                       });
+
+      })
+       this.dialog_add1 = false;
+       this.dialog_add2 = false;
+
+     },
   },
 };
 </script>
