@@ -125,12 +125,12 @@
               hint="Ingresar Direccion Domiciliaria"
             />
                 <q-option-group
-                v-model="dato.observacion"
+                v-model="dato.status"
                 :options="[{label:'Servidor publico', value:'SERVIDOR PUBLICO'},{label:'Natural', value:'NATURAL'}]"
                 color="primary"
                 inline
               />
-                 <q-input v-if='dato.observacion==="SERVIDOR PUBLICO"'
+                 <q-input v-if='dato.status==="SERVIDOR PUBLICO"'
               outlined
               v-model="dato.departamento"
               type="text"
@@ -141,7 +141,7 @@
              </div>
              </div>
             <div>
-              <q-btn label="Crear Usuario" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Crear" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
             </div>
           </q-form>
@@ -218,7 +218,7 @@
             {{props.row.direccion}}
           </q-td>
           <q-td key="nit" :props="props">
-            {{props.row.nit}}
+            {{props.row.status}}
           </q-td>
 
           <q-td v-if="$store.state.login.user.tipo==='admin'" key="opcion" :props="props">
@@ -372,12 +372,12 @@
               hint="Ingresar Direccion Domiciliaria"
             />
             <q-option-group
-                v-model="dato2.observacion"
+                v-model="dato2.status"
                 :options="[{label:'Servidor publico', value:'SERVIDOR PUBLICO'},{label:'Natural', value:'NATURAL'}]"
                 color="primary"
                 inline
               />
-                 <q-input v-if='dato2.observacion==="SERVIDOR PUBLICO"'
+                 <q-input v-if='dato2.status==="SERVIDOR PUBLICO"'
               outlined
               v-model="dato2.departamento"
               type="text"
@@ -604,7 +604,7 @@ export default {
     misdatos(){
     this.$q.loading.show();
        this.$api.get(process.env.API+"/consultor").then((res)=>{
-        console.log(res.data)
+      //  console.log(res.data)
          this.data =res.data;
     this.$q.loading.hide();
        });
@@ -633,7 +633,8 @@ export default {
     },
      onSubmit() {
        this.errores =null;
-       this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
+       //this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
+       this.dato.datosp =(this.dato.nombres).trim().toUpperCase()+" "+(this.dato.paterno).trim().toUpperCase()+" "+(this.dato.materno).trim().toUpperCase();
       this.$q.loading.show();
       this.$api.post(process.env.API+"/consultor/", this.dato).then((res) => {
 
@@ -662,8 +663,10 @@ export default {
      onMod() {
 //      this.dato2={ci:this.dato2.ci,paterno:this.dato2.paterno,materno:this.dato2.materno,nombres:this.dato2.nombres,fechaNacimiento:this.dato2.fechaNacimiento,fono1:this.dato2.fono1,fono2:this.dato2.fono2,grado:this.dato2.grado,datosp:this.dato2.nombres+" "+this.dato2.paterno+" "+this.dato2.materno,genero:this.dato2.genero,nit:this.dato2.nit,email:this.dato2.email,direccion:this.dato2.direccion}
       this.errores =null;
+      console.log(this.dato2)
        this.$q.loading.show();
-        this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
+       this.dato2.datosp =(this.dato2.nombres).trim().toUpperCase()+" "+(this.dato2.paterno).trim().toUpperCase()+" "+(this.dato2.materno).trim().toUpperCase();
+      //  this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
       // console.log(this.dato2.id)
       this.$api.put(process.env.API+"/consultor/"+this.dato2.id,this.dato2).then((res) => {
           if(res.data.res===true)

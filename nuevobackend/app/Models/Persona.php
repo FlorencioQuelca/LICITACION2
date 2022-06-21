@@ -25,6 +25,8 @@ class Persona extends Model
         "email",
         "genero",
         "observacion",
+        "status",
+        "departamento"
     ];
     protected $hidden =['created_at','updated_at'];
 

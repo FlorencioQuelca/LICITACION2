@@ -4,16 +4,22 @@
       label=" REGISTRAR NUEVA VISITA"
       color="red"
       icon="add_circle"
-      @click="nuevo()"
+      @click="nuevo"
       class="q-mb-xs"
     />
      <q-btn
       label=" REGISTRAR NUEVA PERSONA"
       color="green"
       icon="face"
-      @click="nuevaPersona()"
+      @click="nuevaPersona"
       class="q-mb-xs"
     />
+   <q-btn
+      label=""
+      flat
+      class="q-mb-xs"
+    />
+    {{timenow}}
 
 
     <!--          tabla  PRINCIPAL -->
@@ -126,6 +132,9 @@
               icon="logout"
             />
           </q-td>
+          <q-td key="observacion" :props="props">
+            {{ props.row.observacion }} -  {{ props.row.mochil }}
+          </q-td>
 
           <q-td key="opcion" :props="props">
             <q-btn
@@ -158,7 +167,9 @@
           </div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
-          <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+          <q-form @submit="onSubmit" class="q-gutter-md">
+
+            <!--
             <div class="row">
               <div class="col-6">
                 <q-table
@@ -210,7 +221,7 @@
               <div class="col-6">
                 <q-table
                   :filter="filter2"
-                  title="Lista de funcionarios publicos"
+                  title="Lista de funcionarios"
                   :rows="funcionarios"
                   :columns="subcol2"
                   row-key="nombre"
@@ -272,7 +283,7 @@
                 </ul>
               </div>
             </div>
-
+-->
             <div class="row">
               <div class="col-6">
                 <q-select
@@ -294,16 +305,7 @@
                   type="text"
                   hint="Seleccionar Institucion y/o Empresa"
                 />
-                <q-option-group
-                  v-model="dato.mochila"
-                  label="Status"
-                  :options="[
-                    { label: 'con Mochila', value: 'SI' },
-                    { label: 'Sin Mochila', value: 'NO' },
-                  ]"
-                  color="primary"
-                  inline
-                />
+
                 <q-checkbox
                   keep-color
                   v-model="dato.status"
@@ -321,7 +323,7 @@
             </div>
             <div>
               <q-btn
-                label="Crear Visita"
+                label="Crear"
                 type="submit"
                 color="positive"
                 icon="add_circle"
@@ -337,7 +339,7 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-    <!--          MODIFICAR REGISTRO -->
+    <!--          MODIFICAR REGISTRO  PRINCIPAL-->
     <q-dialog v-model="dialog_mod">
       <q-card style="max-width: 80%; width: 80%">
         <q-card-section class="bg-green-14 text-white">
@@ -346,61 +348,43 @@
 
         <q-card-section class="q-pt-xs">
           <q-form @submit="onMod" class="q-gutter-md">
-            <div class="row">
+           <div class="row">
               <div class="col-6">
-                <q-input
+                <q-select
                   outlined
-                  v-model="dato2.seguimiento"
+                  v-model="dato2.motivo"
+                  :options="motivos"
+                  label="Motivo de visita"
                   type="text"
-                  label="Nro Serguimiento (Ej. 01-2022)"
-                  hint="Ingresar Numero de seguimiento"
-                  lazy-rules
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Favor ingresa datos',
-                  ]"
-                />
-                <q-input
-                  outlined
-                  type="date"
-                  v-model="dato2.fechaini"
-                  hint="Ingresar Fecha de Inicio"
-                />
-                <q-input
-                  outlined
-                  type="date"
-                  v-model="dato2.fechafin"
-                  hint="Ingresar Fecha de finzalizacion"
+                  hint="Seleccione o Escriba El Motivo de la visita"
                 />
               </div>
               <div class="col-6">
+
                 <q-select
                   outlined
-                  v-model="car"
-                  :options="cars"
-                  label="Movilidad"
+                  v-model="dato2.empresa"
+                  :options="instituciones"
+                  label="Institucion o Empresa"
                   type="text"
-                  hint="Seleccionar Un Automovil"
+                  hint="Seleccionar Institucion y/o Empresa"
                 />
-                <q-select
+                <q-input
                   outlined
-                  v-model="taller"
-                  :options="tallers"
-                  label="Taller"
                   type="text"
-                  hint="Seleccionar el taller de envio"
-                />
-                <q-option-group
-                  v-model="dato2.status"
-                  label="Status"
-                  :options="[
-                    { label: 'Vigente', value: 'activo' },
-                    { label: 'Caduco', value: 'inactivo' },
-                  ]"
-                  color="primary"
-                  inline
+                  v-model="dato2.mochila"
+                   label="Activo Ingresado"
+                  hint="Ingresar descripcion de el activo que Ingresa"
                 />
               </div>
             </div>
+             <q-input
+                  outlined
+                  type="text"
+                  label="Registre alguna observacion de la visita"
+                  v-model="dato2.observacion"
+                  hint="Observacion"
+                />
             <div>
               <q-btn
                 label="Modificar Registro"
@@ -518,17 +502,17 @@
       </q-card>
     </q-dialog>
 
-<!-- empresas asociados  adicionar  personas a la tabla de visitas/>-->
+<!-- empresas asociados  adicionar  funcionarios a la tabla de visitas/>-->
       <q-dialog v-model="dialog_add2">
       <q-card style="max-width: 80%; width: 80%">
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6">Agregar Funcionario</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
-           <q-form @submit="onAdd1" class="q-gutter-md">
+           <q-form @submit="onAdd2" class="q-gutter-md">
             <q-table
                   :filter="filter2"
-                  title="Lista de funcionarios del fps registradas"
+                  title="Lista de funcionarios"
                   :rows="funcionarios"
                   :columns="subcol2"
                   row-key="ci"
@@ -549,8 +533,8 @@
                           dense
                           round
                           flat
-                          color="green"
-                          @click="adicionarFuncionario(props)"
+                          color="red"
+                          @click="adicionarfuncionario(props)"
                           icon="add_circle"
                         ></q-btn>
                       </q-td>
@@ -587,7 +571,144 @@
       </q-card>
     </q-dialog>
 
+          <!-- VER LISTA Y ELIMINAR />-->
+   <q-dialog v-model="dialog_list">
+      <q-card style="max-width: 80%; width: 40%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">DESASOCIAR </div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+                <q-table
+                    :rows="personas1"
+                    :columns="subcol1"
+                     :rows-per-page-options="[0]"
+                      separator="cell"
+                      dense
+                    >
+      <template v-slot:body="props" >
+          <q-tr :props="props">
+           <q-td key="ci" :props="props"  >
+            {{ props.row.pivot.tipo}}
+          </q-td>
+          <q-td key="nombre" :props="props" >
+            {{ props.row.datosp}}
+          </q-td>
+          <q-td key="opcion" :props="props">
+                        <q-btn
 
+                        dense
+                        round
+                        flat
+                        color="red"
+                        @click="deletesub(props)"
+                        icon="delete"
+                      ></q-btn>
+          </q-td>
+          </q-tr>
+          </template>
+          </q-table>
+            <div>
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+     <q-dialog v-model="dialog_del1">
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="clear" color="red" text-color="white" />
+          <span class="q-ml-sm">DESASOCIAR?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Aceptar" color="deep-orange" @click="deletesub1" />
+          <q-btn flat label="Cancelar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+       <!--          ADICIONAR REGISTRO PERSONA -->
+   <q-dialog v-model="alert123">
+      <q-card style="max-width: 80%; width: 80%">
+
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6"><q-icon name="add_circle" /> Nueva Persona</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onSubmitPersona"  class="q-gutter-md">
+                 <div class="row">
+              <div class="col-6">
+            <q-input
+              outlined
+              v-model="dato1.ci"
+              type="text"
+              label="C.I."
+              mask="####XXXXXXXXXXX"
+              hint="Ingresar Cedula de Identidad"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+
+            <q-input
+              outlined
+              v-model="dato1.paterno"
+              type="text"
+              label="Apellido Paterno"
+              hint="Ingresar Apellido Paterno"
+
+            />
+            <q-input
+              outlined
+              v-model="dato1.materno"
+              type="text"
+              label="Apellido Materno"
+              hint="Ingresar Apellido Materno"
+
+
+            />
+             <q-input
+              outlined
+              v-model="dato1.nombres"
+              type="text"
+              label="Nombres"
+              hint="Ingresar Nombres"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+             </div>
+             <div class="col-6">
+                 <q-select
+             outlined
+            v-model="dato1.genero"
+            :options="generos"
+            label="Genero"
+            type="text"
+            hint="Seleccionar Genero"
+            />
+             <q-input
+                  outlined
+                  type="date"
+                  v-model="dato1.fechaNacimiento"
+                  hint="Ingresar Fecha de Nacimiento"
+                />
+
+             <q-input
+              outlined
+              v-model="dato1.observacion"
+              type="text"
+              label="Observacion"
+              hint="Ingresar alguna Observacion de la Persona"
+            />
+             </div>
+             </div>
+            <div>
+              <q-btn label="Crear" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
 
   </div>
 </template>
@@ -661,6 +782,13 @@ const columns = [
     sortable: true,
   },
   {
+    name: "observacion",
+    align: "center",
+    label: "Observacion",
+    field: "observacion",
+    sortable: true,
+  },
+  {
     name: "opcion",
     label: "Opcion",
     align: "center",
@@ -719,14 +847,22 @@ export default {
   data() {
     return {
       alert: false,
+      alert123:false,
       dialog_mod: false,
       dialog_mod1:false,
       dialog_add1:false,
       dialog_add2:false,
       dialog_del: false,
+      dialog_del1:false,
+      dialog_list:false,
+      funcionarios1:[],
+      personas1:[],
       data: [],
-      dato: {},
-      dato2: {},
+    //  timenow:moment(now()).format('MMMM Do YYYY, h:mm:ss a'),
+      dato:{},
+      dato1:{},
+      dato2:{},
+      dato3:{},
       filter: "",
       filter1: "",
       filter2: "",
@@ -737,13 +873,19 @@ export default {
       funcionariosSelectos: [],
       subcol1,
       subcol2,
-      motivos: ["CONSULTA", "VISITA PERSONAL", "REUNION"],
-      instituciones: ["EMPRESA ", "COMUNIDAD ", "MINISTERIO", "ALCALDE DE"],
+      motivos: ["CONSULTA", "VISITA", "SEGUIMIENTO DE TRAMITE","PERSONAL","SEGUIMIENTO", "FIRMA DE CONTRATO","REUNION", "COORDINACION","APERTURA DE SOBRES"],
+      instituciones: ["EMPRESA ","SUPERVISION","COMUNIDAD", "MINISTERIO", "PROVINCIA","FPS CENTRAL","PERSONAL"],
+       generos:[
+      'HOMBRE',
+      'MUJER'
+       ],
     };
   },
   created() {
     this.misdatos();
-    this.cargardatos();
+    this.cargardatos1();
+    this.cargardatos2();
+    this.timenow=new Date();
   },
   methods: {
     misdatos() {
@@ -755,12 +897,14 @@ export default {
         this.$q.loading.hide();
       });
     },
-    cargardatos() {
+    cargardatos1() {
       this.$api.get(process.env.API + "/visitantes").then((res) => {
         this.personas = res.data;
         //  console.log(this.personas);
         this.$q.loading.hide();
       });
+    },
+    cargardatos2(){
       this.$api.get(process.env.API + "/funcionarios").then((res) => {
         this.funcionarios = res.data;
         // console.log(this.funcionarios);
@@ -778,29 +922,42 @@ export default {
         .post(process.env.API + "/visitas", this.dato)
         .then((res) => {
           if (res.data.res === true) {
+               if(this.personasSelectos.length>0){
+                console.log("hay datos")
+               }
+
+
             this.$q.notify({
               color: "green-4",
               textColor: "white",
               icon: "cloud_done",
               message: "Creado Correctamente",
             });
-          }
-          this.$q.loading.hide();
+          }else{
+            this.$q.notify({
+              color: "red-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "Error al crear registro",
+            });
+
+
+
+            }
 
     //creado
-         console.log(this.data)
+        // console.log(this.data)
 
+            this.$q.loading.hide();
           this.alert = false;
           this.misdatos();
-          this.onReset();
+
         })
         .catch((e) => {
           this.$q.loading.hide();
         });
     },
-    onReset() {
 
-    },
     editRow(item) {
       this.dato2 = item.row;
        this.dialog_mod = true;
@@ -866,9 +1023,7 @@ export default {
         });
     },
 
-
     nuevo() {
-
       this.personasSelectos = []
       this.funcionariosSelectos = []
       this.dato = {};
@@ -904,22 +1059,21 @@ export default {
     addRow1(item) {
       this.dato2 = item.row;
       this.dialog_add1 = true;
+      this.personasSelectos=[];
+        this.filter1= ""
     },
     addRow2(item) {
       this.dato2 = item.row;
-      this.dialog_add2 = true;
       this.funcionariosSelectos=[]
+      this.filter2= ""
+         this.dialog_add2 = true;
     },
-      onAdd1() {
+    onAdd1() {
         let ans={}
       this.personasSelectos.forEach(it =>{
       this.$q.loading.show();
              ans=it
-              if(this.dialog_add1===true){
                     ans.tipo="visita"
-              }else{
-                   ans.tipo="funcionario"
-              }
              this.$api.put(process.env.API+"/personavisitas/"+this.dato2.id,ans).then((res) => {
                   if(res.data.res===true){
                   this.$q.notify({
@@ -943,9 +1097,118 @@ export default {
 
       })
        this.dialog_add1 = false;
-       this.dialog_add2 = false;
-
      },
+      onAdd2() {
+        let ans={}
+      this.funcionariosSelectos.forEach(it =>{
+      this.$q.loading.show();
+             ans=it
+                    ans.tipo="funcionario"
+             this.$api.put(process.env.API+"/personavisitas/"+this.dato2.id,ans).then((res) => {
+                  if(res.data.res===true){
+                  this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Agregado Correctamente",
+                        });
+                      this.$q.loading.hide();
+                        this.misdatos();
+                        }else{
+                            this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Error al agregar",
+                        });
+                             this.$q.loading.hide();
+                        }
+                       });
+
+      })
+       this.dialog_add2 = false;
+     },
+      verRow1(item) {
+      this.dato2=item.row;
+      console.log(this.dato2)
+      this.personas1=[]
+      item.row.personas.forEach(it=>{
+        if(it.pivot.tipo==="visita"){
+       this.personas1.push(it)
+        }
+      })
+       this.dialog_list = true;
+    },
+     verRow2(item) {
+      this.dato2=item.row;
+      this.personas1=[]
+      item.row.personas.forEach(it=>{
+        if(it.pivot.tipo==="funcionario"){
+       this.personas1.push(it)
+        }
+      })
+       this.dialog_list = true;
+
+    },
+    deletesub(item){
+        this.dato3 =item.row;
+        console.log(this.dato3);
+        this.dialog_del1 = true;
+    },
+     deletesub1() {
+      this.$q.loading.show();
+      this.$api.put(process.env.API + "/personavisitadetach/" + this.dato2.id,this.dato3)
+        .then((res) => {
+          if (res.data.res === true) {
+            this.$q.notify({
+              color: "green-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "desasociado correctamente",
+            });
+          }
+          this.dialog_del1 = false;
+          this.dialog_list=false;
+          this.misdatos();
+        });
+    },
+    nuevaPersona(){
+      this.dato1={}
+      this.alert123=true;
+
+    },
+     onSubmitPersona() {
+       this.dato1.datosp =(this.dato1.nombres).trim().toUpperCase()+" "+(this.dato1.paterno).trim().toUpperCase()+" "+(this.dato1.materno).trim().toUpperCase();
+       this.dato1.status="NATURAL";
+      this.$q.loading.show();
+      this.$api.post(process.env.API+"/consultor/", this.dato1).then((res) => {
+
+         if(res.data.res===true)
+          {
+            this.$q.notify({
+            color: "green-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Creado Correctamente",
+          });
+
+          }else{
+              this.$q.notify({
+            color: "red-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Error al crear verifique la existencia de la persona",
+          });
+            this.$q.loading.hide();
+          }
+         this.alert123= false;
+          this.misdatos();
+          this.cargardatos1();
+        }).catch((e)=>{
+          this.$q.loading.hide();
+        });
+    },
+
   },
 };
 </script>

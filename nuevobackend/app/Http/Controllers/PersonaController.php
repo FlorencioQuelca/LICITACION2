@@ -123,7 +123,7 @@ class PersonaController extends Controller
     public function funcionarios(){
         try{
        // return Persona::get();
-         $personas= Persona::where('observacion', '=','SERVIDOR PUBLICO')->get();
+         $personas= Persona::where('status', '=','SERVIDOR PUBLICO')->get();
           return \response()->json($personas,200);
         }
         catch(\Exception $e){
@@ -133,7 +133,7 @@ class PersonaController extends Controller
      public function visitantes(){
         try{
        // return Persona::get();
-         $personas= Persona::where('observacion', '=','NATURAL')->orderByDesc('id')->get();
+         $personas= Persona::where('status', '!=','SERVIDOR PUBLICO')->orderByDesc('id')->get();
           return \response()->json($personas,200);
         }
         catch(\Exception $e){

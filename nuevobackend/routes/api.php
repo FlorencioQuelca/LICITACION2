@@ -91,11 +91,11 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
 
   Route::apiResource('/Cars',\App\Http\Controllers\CarController::class);
 
-   Route::post('/upload',[\App\Http\Controllers\ContratoController::class,'upload']);
-   Route::post('/base64',[\App\Http\Controllers\ContratoController::class,'base64']);
-   Route::post('getContrato/{archivo}',[\App\Http\Controllers\ArchivoController::class,'getContrato']);
+  Route::post('/upload',[\App\Http\Controllers\ContratoController::class,'upload']);
+  Route::post('/base64',[\App\Http\Controllers\ContratoController::class,'base64']);
+  Route::post('getContrato/{archivo}',[\App\Http\Controllers\ArchivoController::class,'getContrato']);
 
-   Route::apiResource('/archivos',\App\Http\Controllers\ArchivoController::class);
+  Route::apiResource('/archivos',\App\Http\Controllers\ArchivoController::class);
 
    // contrato
    Route::put('personacontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'personacontratos']); //CRUD de SociedadAccidental;
@@ -110,13 +110,14 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
    Route::put('dependientecontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'dependientecontratos']); //CRUD de SociedadAccidental;
    Route::put('dependientecontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'dependientecontratosdetach']); //CRUD de SociedadAccidental;
 
-//visitas
+   //visitas
    Route::apiResource('/visitas',\App\Http\Controllers\VisitaController::class);
    Route::put('registrarSalida/{visita}',[\App\Http\Controllers\VisitaController::class,'registrarSalida'])->name('registrarSalida'); //CRUD de SociedadAccidental;
 
    Route::get('/funcionarios',[\App\Http\Controllers\PersonaController::class,'funcionarios'])->name('funcionarios');
    Route::get('/visitantes',[\App\Http\Controllers\PersonaController::class,'visitantes'])->name('visitantes');
    Route::put('personavisitas/{visita}',[\App\Http\Controllers\VisitaController::class,'personavisitas']);
+   Route::put('personavisitadetach/{visita}',[\App\Http\Controllers\VisitaController::class,'personavisitadetach']);
 
 });
 

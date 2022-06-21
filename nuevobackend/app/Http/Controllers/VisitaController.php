@@ -117,7 +117,10 @@ class VisitaController extends Controller
         $persona= Persona::find($request->id);
         $visita->personas()->attach($persona,['tipo'=>$request->tipo]);
         return \response()->json(['res'=> true, 'message'=>'adicionado correctamente'],200);
-
+     }
+     public function personavisitadetach(Request $request,Visita $visita){
+        $persona= Persona::find($request->id);
+        $visita->personas()->detach($persona->id);
 
      }
 
