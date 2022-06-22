@@ -693,7 +693,14 @@
                   v-model="dato1.fechaNacimiento"
                   hint="Ingresar Fecha de Nacimiento"
                 />
-
+           <q-select
+             outlined
+            v-model="dato1.grado"
+            :options="grados"
+            label="Grado Academico"
+            type="text"
+            hint="Seleccionar Grado Academico"
+           />
              <q-input
               outlined
               v-model="dato1.observacion"
@@ -881,6 +888,18 @@ export default {
       'HOMBRE',
       'MUJER'
        ],
+        grados: [
+        'LIC.',
+        'ING.',
+        'ARQ.',
+        'ABG.',
+        'DIPL.',
+        'PHD.',
+        'MSC.',
+        'MED.',
+        'ENF.',
+        'DIP.'
+      ],
     };
   },
   created() {
@@ -1180,7 +1199,18 @@ export default {
 
     },
      onSubmitPersona() {
-       this.dato1.datosp =(this.dato1.nombres).trim().toUpperCase()+" "+(this.dato1.paterno).trim().toUpperCase()+" "+(this.dato1.materno).trim().toUpperCase();
+
+       if(this.dato1.nombres){
+              this.dato1.datosp=(this.dato1.nombres).trim()+" "
+       }
+       if(this.dato1.paterno){
+              this.dato1.datosp=this.dato1.datosp+(this.dato1.paterno).trim()+" "
+       }
+       if(this.dato1.materno){
+              this.dato1.datosp=this.dato1.datosp+(this.dato1.materno).trim()
+       }
+
+       this.dato1.datosp =((this.dato1.datosp).toUpperCase()).trim();
        this.dato1.status="NATURAL";
       this.$q.loading.show();
       this.$api.post(process.env.API+"/consultor/", this.dato1).then((res) => {

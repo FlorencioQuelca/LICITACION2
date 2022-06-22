@@ -303,8 +303,7 @@
               type="text"
               label="Apellido Paterno"
               hint="Ingresar Apellido Paterno"
-              lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+
             />
             <q-input
               outlined
@@ -345,8 +344,7 @@
               type="number"
               label="Celular o Telefono 1"
               hint="Ingresar Numero de Telefono"
-              lazy-rules
-              :rules="[v => !!v || 'Telefono requerido']"
+
             />
             <q-input
               outlined
@@ -537,7 +535,6 @@ export default {
         'MSC.',
         'MED.',
         'ENF.',
-
       ],
     data:[],
     columns,
@@ -633,8 +630,19 @@ export default {
     },
      onSubmit() {
        this.errores =null;
+         if(this.dato.nombres){
+              this.dato.datosp=(this.dato.nombres).trim()+" "
+       }
+       if(this.dato.paterno){
+              this.dato.datosp=this.dato.datosp+(this.dato.paterno).trim()+" "
+       }
+       if(this.dato.materno){
+              this.dato.datosp=this.dato.datosp+(this.dato.materno).trim()
+       }
+
+       this.dato.datosp =((this.dato.datosp).toUpperCase()).trim();
        //this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
-       this.dato.datosp =(this.dato.nombres).trim().toUpperCase()+" "+(this.dato.paterno).trim().toUpperCase()+" "+(this.dato.materno).trim().toUpperCase();
+      // this.dato.datosp =(this.dato.nombres).trim().toUpperCase()+" "+(this.dato.paterno).trim().toUpperCase()+" "+(this.dato.materno).trim().toUpperCase();
       this.$q.loading.show();
       this.$api.post(process.env.API+"/consultor/", this.dato).then((res) => {
 
@@ -661,11 +669,23 @@ export default {
     },
     //modigicar
      onMod() {
+
+        if(this.dato2.nombres){
+              this.dato2.datosp=(this.dato2.nombres).trim()+" "
+       }
+       if(this.dato2.paterno){
+              this.dato2.datosp=this.dato2.datosp+(this.dato2.paterno).trim()+" "
+       }
+       if(this.dato2.materno){
+              this.dato2.datosp=this.dato2.datosp+(this.dato2.materno).trim()
+       }
+
+       this.dato2.datosp =((this.dato2.datosp).toUpperCase()).trim();
 //      this.dato2={ci:this.dato2.ci,paterno:this.dato2.paterno,materno:this.dato2.materno,nombres:this.dato2.nombres,fechaNacimiento:this.dato2.fechaNacimiento,fono1:this.dato2.fono1,fono2:this.dato2.fono2,grado:this.dato2.grado,datosp:this.dato2.nombres+" "+this.dato2.paterno+" "+this.dato2.materno,genero:this.dato2.genero,nit:this.dato2.nit,email:this.dato2.email,direccion:this.dato2.direccion}
       this.errores =null;
-      console.log(this.dato2)
+     // console.log(this.dato2)
        this.$q.loading.show();
-       this.dato2.datosp =(this.dato2.nombres).trim().toUpperCase()+" "+(this.dato2.paterno).trim().toUpperCase()+" "+(this.dato2.materno).trim().toUpperCase();
+    //   this.dato2.datosp =(this.dato2.nombres).trim().toUpperCase()+" "+(this.dato2.paterno).trim().toUpperCase()+" "+(this.dato2.materno).trim().toUpperCase();
       //  this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
       // console.log(this.dato2.id)
       this.$api.put(process.env.API+"/consultor/"+this.dato2.id,this.dato2).then((res) => {
