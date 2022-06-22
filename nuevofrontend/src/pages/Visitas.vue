@@ -145,6 +145,7 @@
               @click="editRow(props)"
               icon="edit"
             />
+            <!--
             <q-btn
               dense
               round
@@ -153,6 +154,7 @@
               @click="deleteRow(props)"
               icon="delete"
             ></q-btn>
+            -->
           </q-td>
         </q-tr>
       </template>
