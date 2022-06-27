@@ -25,6 +25,15 @@
                   lazy-rules
                   :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
                 />
+                  <q-input
+                  filled
+                  v-model="dato.tipo"
+                  type="text"
+                  label="Tipo "
+                  hint="Ingresar Categoria o Tipo"
+                  lazy-rules
+                  :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
+                />
 
                 <q-input
                   filled

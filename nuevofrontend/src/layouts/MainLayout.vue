@@ -122,7 +122,22 @@
           <q-item-section>Visitas</q-item-section>
         </q-item>
 
+      <q-item    v-if="$store.state.login.visitantes"
+         clickable   active-class="my-menu-link" to="/Visitantes" exact>
+          <q-item-section avatar>
+            <q-icon color="teal" name="badge" />
+          </q-item-section>
+          <q-item-section>Visitantes</q-item-section>
+        </q-item>
 
+
+         <q-item    v-if="$store.state.login.reportes"
+         clickable   active-class="my-menu-link" to="/Reportes" exact>
+          <q-item-section avatar>
+            <q-icon color="teal" name="summarize" />
+          </q-item-section>
+          <q-item-section>Reportes</q-item-section>
+        </q-item>
 
            <q-item   v-if="$store.state.login.usuarios"
            clickable   active-class="my-menu-link" to="/Usuarios" exact>
@@ -131,8 +146,6 @@
           </q-item-section>
           <q-item-section>Usuarios</q-item-section>
         </q-item>
-
-
 
 
         <q-item  v-if="$store.getters['login/isLoggedIn']"

@@ -8,13 +8,6 @@
       @click="alert = true"
       class="q-mb-xs"
     />
-    <q-btn
-      label="ir a Proyectos"
-      color="green"
-      icon="add_circle"
-      @click= "this.$router.push('Proyecto')"
-      class="q-mb-xs"
-    />
     </div>
       <!--          ADICIONAR REGISTRO -->
    <q-dialog v-model="alert">

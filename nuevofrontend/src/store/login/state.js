@@ -13,6 +13,8 @@ export default function () {
     vehiculos:false,
     trabajos:false,
     licitaciones:false,
+    visitantes:false,
+    reportes:false,
 
 
   }
