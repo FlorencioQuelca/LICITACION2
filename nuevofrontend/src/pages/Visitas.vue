@@ -18,8 +18,11 @@
       label=""
       flat
       class="q-mb-xs"
-    />
-    {{timenow}}
+    >
+    Reuniones en Curso: {{salidas}}
+
+    </q-btn>
+    fehca y dia: {{timenow}}
 
 
     <!--          tabla  PRINCIPAL -->
@@ -29,7 +32,7 @@
       :rows="data"
       :columns="columns"
       row-key="num"
-      :rows-per-page-options="[10, 20, 50, 100, 0]"
+      :rows-per-page-options="[15, 20, 50, 100, 0]"
       separator="cell"
       dense
     >
@@ -162,7 +165,7 @@
 
     <!--          ADICIONAR NUEVO INFORME  -->
     <q-dialog v-model="alert">
-      <q-card style="max-width: 95%; width: 95%">
+      <q-card style="max-width: 95%; width: 70%">
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6">
             <q-icon name="add_circle" /> Registrar Nueva Visita
@@ -290,6 +293,7 @@
               <div class="col-6">
                 <q-select
                   outlined
+                  dense
                   v-model="dato.motivo"
                   :options="motivos"
                   label="Motivo de visita"
@@ -301,6 +305,7 @@
 
                 <q-select
                   outlined
+                  dense
                   v-model="dato.empresa"
                   :options="instituciones"
                   label="Institucion o Empresa"
@@ -351,26 +356,45 @@
         <q-card-section class="q-pt-xs">
           <q-form @submit="onMod" class="q-gutter-md">
            <div class="row">
+
               <div class="col-6">
+
                 <q-select
                   outlined
+                  dense
                   v-model="dato2.motivo"
                   :options="motivos"
                   label="Motivo de visita"
                   type="text"
                   hint="Seleccione o Escriba El Motivo de la visita"
                 />
+                  <q-input
+              outlined
+              v-model="dato2.motivo"
+               label="Motivo de visita"
+                  type="text"
+                  hint="Seleccione o Escriba El Motivo de la visita"
+            />
               </div>
               <div class="col-6">
 
                 <q-select
                   outlined
+                  dense
                   v-model="dato2.empresa"
                   :options="instituciones"
                   label="Institucion o Empresa"
                   type="text"
                   hint="Seleccionar Institucion y/o Empresa"
                 />
+                  <q-input
+                  outlined
+                  v-model="dato2.empresa"
+                  abel="Institucion o Empresa"
+                  type="text"
+                  hint="Seleccionar Institucion y/o Empresa"
+                />
+
                 <q-input
                   outlined
                   type="text"
@@ -518,7 +542,7 @@
                   :rows="funcionarios"
                   :columns="subcol2"
                   row-key="ci"
-                  :rows-per-page-options="[5, 10, 20, 0]"
+                  :rows-per-page-options="[10, 15, 20, 0]"
                   separator="cell"
                   dense
                 >
@@ -645,7 +669,6 @@
               v-model="dato1.ci"
               type="text"
               label="C.I."
-              mask="####XXXXXXXXXXX"
               hint="Ingresar Cedula de Identidad"
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
@@ -853,8 +876,9 @@ const subcol2 = [
 ];
 import moment from 'moment';
 export default {
-  data() {
-    return {
+  name:"Visitas",
+  data:() =>({
+
       alert: false,
       alert123:false,
       dialog_mod: false,
@@ -882,7 +906,7 @@ export default {
       funcionariosSelectos: [],
       subcol1,
       subcol2,
-      motivos: ["CONSULTA", "VISITA", "SEGUIMIENTO DE TRAMITE","PERSONAL","SEGUIMIENTO",,"PLANILLADO", "FIRMA DE CONTRATO","REUNION", "COORDINACION","APERTURA DE SOBRES"],
+      motivos: ["CONSULTA", "PERSONAL","VISITA", "SEGUIMIENTO","SEGUIMIENTO DE TRAMITE","PLANILLADO","REUNION", "COORDINACION","APERTURA DE SOBRES", "FIRMA DE CONTRATO", "PROTOCOLIZACION DE CONTRATO","CONTRAPARTE","PLANILLAS DE PAGO"],
       instituciones: ["EMPRESA ","SUPERVISION","COMUNIDAD", "MINISTERIO","CONSULTOR","PROVINCIA","FPS CENTRAL","PERSONAL"],
        generos:[
       'HOMBRE',
@@ -900,23 +924,39 @@ export default {
         'ENF.',
         'DIP.'
       ],
-    };
+      salidas:0,
+    }),
+ computed:{
+
   },
   created() {
     this.misdatos();
     this.cargardatos1();
     this.cargardatos2();
+
     this.timenow=new Date();
   },
+
   methods: {
+
+
+    //  return this.salidas;
+
     misdatos() {
       this.$q.loading.show();
-
+      this.salidas=0;
       this.$api.get(process.env.API + "/visitas").then((res) => {
-       console.log(res.data)
+      // console.log(res.data)
         this.data = res.data;
+        res.data.forEach(it =>{
+         if(it.horaout==null){
+           this.salidas++
+         }
+      })
         this.$q.loading.hide();
       });
+
+
     },
     cargardatos1() {
       this.$api.get(process.env.API + "/visitantes").then((res) => {
@@ -977,6 +1017,7 @@ export default {
         .catch((e) => {
           this.$q.loading.hide();
         });
+      //  this.salidas++
     },
 
     editRow(item) {
@@ -1042,6 +1083,7 @@ export default {
           this.misdatos();
           this.$q.loading.hide();
         });
+       // this.salidas--
     },
 
     nuevo() {

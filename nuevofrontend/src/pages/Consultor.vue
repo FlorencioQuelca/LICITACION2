@@ -32,7 +32,7 @@
               v-model="dato.ci"
               type="text"
               label="C.I."
-              mask="####XXXXXXXXXXX"
+
               hint="Ingresar Cedula de Identidad"
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
