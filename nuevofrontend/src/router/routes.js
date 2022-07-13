@@ -13,7 +13,7 @@ import Solicitud from "pages/Solicitud";
 import Visitas from "pages/Visitas";
 import Trabajos from "pages/Trabajos";
 import Actividades from "pages/Actividades";
-import Visitantes from "pages/visitantes";
+import Visitantes from "pages/Visitantes";
 import Reportes from "pages/Reporte_visitas";
 
 
