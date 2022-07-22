@@ -1,8 +1,8 @@
 <template>
    <div class="q-pa-md">
-    <div v-if="$store.state.login.user.tipo==='admin'">
+    <div >
          <q-btn
-      label="Nuevo Consultor/Supervisor"
+      label="Nuevo Persona"
       color="red"
       icon="add_circle"
       @click="alert = true"
@@ -14,7 +14,7 @@
       <q-card style="max-width: 80%; width: 80%">
 
         <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6"><q-icon name="add_circle" /> Nuevo Consultor</div>
+          <div class="text-h6"><q-icon name="add_circle" /> Nuevo Persona</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
           <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
@@ -144,7 +144,7 @@
 
     <q-table
       :filter="filter"
-      title="CONSULTORES REGISTRADOS"
+      title="PERSONAS REGISTRADOS"
       :rows="data"
       :columns="columns"
       row-key="ci"
@@ -213,7 +213,7 @@
             {{props.row.status}}
           </q-td>
 
-          <q-td v-if="$store.state.login.user.tipo==='admin'" key="opcion" :props="props">
+          <q-td key="opcion" :props="props">
           <q-btn
               dense
               round
@@ -223,7 +223,7 @@
               icon="edit"
           />
 
-            <q-btn
+            <q-btn v-if="$store.state.login.user.tipo==='admin'"
               dense
               round
               flat
@@ -392,7 +392,7 @@
     <q-dialog v-model="dialog_list">
       <q-card style="max-width: 80%; width: 80%">
         <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6">CONSULTOR SE PRESENTO  Y/O TIENE CONTRATO CON LOS PROYECTOS :</div>
+          <div class="text-h6">LA VISITA VISITO A LAS PERSONAS :</div>
         </q-card-section>
 
          <div class="row">
