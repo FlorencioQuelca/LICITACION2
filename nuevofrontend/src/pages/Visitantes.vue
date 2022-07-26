@@ -210,7 +210,7 @@
             {{props.row.direccion}}
           </q-td>
           <q-td key="nit" :props="props">
-            {{props.row.status}}
+            {{props.row.nit}}
           </q-td>
 
           <q-td key="opcion" :props="props">
@@ -395,26 +395,16 @@
           <div class="text-h6">LA VISITA VISITO A LAS PERSONAS :</div>
         </q-card-section>
 
-         <div class="row">
-        <div class="col-12">
-          <q-option-group
-            v-model="group"
-            :options="opciones"
-            color="primary"
-            inline
-          />
-        </div>
-        </div>
-        <q-card-section v-if="group==='op1'" class="q-pt-xs">
+        <q-card-section class="q-pt-xs">
                 <q-table
-                    :rows="dato3.proyectos"
-                    :columns="subcol"
+                    :rows="dato3.visitas"
+                    :columns="subcol1"
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
 
             <q-td key="departamento" :props="props">
-            {{ props.row.departamento.nombre}}
+            {{ props.row.motivo}}
           </q-td>
           <q-td key="nombre" :props="props">
             {{ props.row.nombre }}
@@ -422,46 +412,16 @@
             <q-td key="fecha" :props="props">
             {{ props.row.fecha }}
           </q-td>
-           <q-td key="cuce" :props="props">
-            {{ props.row.cuce }}
-          </q-td>
-
-          </q-tr>
-          </template>
-          </q-table>
-        </q-card-section>
-
-          <q-card-section v-if="group==='op2'" class="q-pt-xs">
-                <q-table
-                    :rows="dato3.contratos"
-                    :columns="subcol1"
-
-                    >
-      <template v-slot:body="props">
-          <q-tr :props="props">
-
-            <q-td key="departamento" :props="props">
-            {{ props.row.departamento}}
-          </q-td>
-          <q-td key="nombre" :props="props">
-            {{ props.row.nombre }}
-          </q-td>
-            <q-td key="fecha" :props="props">
-            {{ props.row.fechaini }}
-          </q-td>
            <q-td key="fecha1" :props="props">
-            {{ props.row.fechafin}}
+            {{ props.row.horain }}
           </q-td>
-            <q-td key="descripcion" :props="props">
-            {{ props.row.fechaini}}
+           <q-td key="cuce" :props="props">
+            {{ props.row.horaout}}
           </q-td>
-         <q-td key="status" :props="props">
-            {{ props.row.status}}
-          </q-td>
+
           </q-tr>
           </template>
           </q-table>
-
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -571,7 +531,7 @@ export default {
   methods:{
     verRow(item) {
       this.dato3 = item.row;
-      console.log(item.row);
+     console.log(item.row);
       this.dialog_list = true;
 
     },
@@ -595,9 +555,9 @@ export default {
     misdatos(){
     this.$q.loading.show();
        this.$api.get(process.env.API+"/consultor").then((res)=>{
-      //  console.log(res.data)
+      // console.log(res.data)
          this.data =res.data;
-    this.$q.loading.hide();
+       this.$q.loading.hide();
        });
     },
     editRow(item) {

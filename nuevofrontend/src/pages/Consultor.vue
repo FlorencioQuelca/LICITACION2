@@ -218,7 +218,7 @@
             {{props.row.direccion}}
           </q-td>
           <q-td key="nit" :props="props">
-            {{props.row.status}}
+            {{props.row.nit}}
           </q-td>
 
           <q-td v-if="$store.state.login.user.tipo==='admin'" key="opcion" :props="props">
