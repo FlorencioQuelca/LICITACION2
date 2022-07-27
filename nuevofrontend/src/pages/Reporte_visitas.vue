@@ -1,14 +1,14 @@
 <template>
    <div class="q-pa-md">
 
-  <div style="max-width: 300px" dense>
+  <div style="max-width: 300px" >
      <q-input filled v-model="date" mask="date" :rules="['date']">
       <template v-slot:append>
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
             <q-date v-model="date">
               <div class="row items-center justify-end">
-                <q-btn v-close-popup label="aceptar" color="primary" flat />
+                <q-btn v-close-popup label="aceptar" @click="misdatos" color="primary" flat />
               </div>
             </q-date>
           </q-popup-proxy>
@@ -17,10 +17,31 @@
     </q-input>
     </div>
 
-    <!--          tabla  PRINCIPAL -->
+
+    <q-card>
+
+            <div class="q-pa-md">
+               <q-btn
+                color="black"
+                flat
+                class="q-mb-xs"
+              >
+              Fecha de reporte:  {{date2}}
+               </q-btn>
+          <q-btn
+                label="imprimir reporte"
+                color="red"
+                icon="print"
+                class="q-mb-xs"
+                @click="imprimir"
+                 />
+            </div>
+
+
+    </q-card>
+ <!--          tabla  PRINCIPAL -->
     <q-table
       :filter="filter"
-      title="LISTA DE VISITAS  de:  "
       :rows="data"
       :columns="columns"
       row-key="num"
@@ -57,37 +78,16 @@
               </span>
              </ul>
           </q-td>
-           <q-td key="opcion1" :props="props">
-                      <q-btn
-                        dense
-                        round
-                        flat
-                        color="green"
-                        @click="addRow1(props)"
-                        icon="playlist_add"
-                      ></q-btn>
-                        <q-btn
-                        dense
-                        round
-                        flat
-                        color="green"
-                        @click="verRow1(props)"
-                        icon="list"
-                      ></q-btn>
-            </q-td>
+
           <q-td key="horain" :props="props">
             {{ props.row.horain }}
           </q-td>
-
-
-
           <q-td key="motivo" :props="props">
             {{ props.row.motivo }}
           </q-td>
            <q-td key="empresa" :props="props">
             {{ props.row.empresa }}
           </q-td>
-
            <q-td key="funcionarios" :props="props">
               <ul>
               <span v-for="(persona,index) in props.row.personas" :key="index">
@@ -97,59 +97,15 @@
               </span>
              </ul>
           </q-td>
-          <q-td key="opcion2" :props="props">
-                      <q-btn
-                        dense
-                        round
-                        flat
-                        color="green"
-                        @click="addRow2(props)"
-                        icon="playlist_add"
-                      ></q-btn>
-                        <q-btn
-                        dense
-                        round
-                        flat
-                        color="green"
-                        @click="verRow2(props)"
-                        icon="list"
-                      ></q-btn>
-            </q-td>
 
            <q-td key="horaout" :props="props">
             {{ props.row.horaout }}
-             <q-btn
-              dense
-              round
-              flat
-              color="green"
-              @click="editRow1(props)"
-              icon="logout"
-            />
           </q-td>
           <q-td key="observacion" :props="props">
             {{ props.row.observacion }} -  {{ props.row.mochil }}
           </q-td>
-
-          <q-td key="opcion" :props="props">
-            <q-btn
-              dense
-              round
-              flat
-              color="yellow"
-              @click="editRow(props)"
-              icon="edit"
-            />
-            <!--
-            <q-btn
-              dense
-              round
-              flat
-              color="red"
-              @click="deleteRow(props)"
-              icon="delete"
-            ></q-btn>
-            -->
+           <q-td key="registro" :props="props">
+            {{ props.row.user.name}}
           </q-td>
         </q-tr>
       </template>
@@ -175,13 +131,6 @@ const columns = [
     sortable: true,
   },
   {
-    name: "opcion1",
-    label: "+ Visita",
-    align: "center",
-    field: "action1",
-    sortable: false,
-  },
-  {
     name: "horain",
     align: "center",
     label: "Hora Ingreso",
@@ -205,18 +154,12 @@ const columns = [
 
   {
     name: "funcionarios",
-    align: "left",
-    label: "Funcionario(s)",
+    align: "center",
+    label: "Visito a Funcionario(s)",
     field: "funcionarios",
     sortable: true,
   },
-   {
-    name: "opcion2",
-    label: "+ funcionario",
-    align: "center",
-    field: "action2",
-    sortable: false,
-  },
+
   {
     name: "horaout",
     align: "center",
@@ -231,11 +174,11 @@ const columns = [
     field: "observacion",
     sortable: true,
   },
-  {
-    name: "opcion",
-    label: "Opcion",
-    align: "center",
-    field: "action",
+{
+    name: "registro",
+    label: "Registrado Por:",
+    align: "left",
+    field: "registro",
     sortable: false,
   },
 ];
@@ -243,10 +186,43 @@ const columns = [
 export default {
   name:"Visitas",
   data:() =>({
-    date:'2022/07/22',
+    date:'2022-07-27',
+    date1:"2022-07-27",
+    date2:"2022-07-27",
     filter:'',
     data:[],
     columns,
-  })
+  }),
+  created() {
+    this.misdatos();
+    this.date=Date.now();
+  //  console.log(this.date);
+  },
+
+  methods: {
+    misdatos() {
+
+      //console.log(this.date)
+      this.date1 = this.date.replace("/", "-","gi");
+      this.date2 = this.date1.replace("/", "-","gi");
+     // console.log(this.date2)
+      this.$q.loading.show();
+      this.$api.get(process.env.API + "/visitafecha/"+this.date2).then((res) => {
+      console.log(res.data)
+        this.data = res.data;
+       this.$q.loading.hide();
+      });
+
+
+    },
+    imprimir(){
+       this.$q.notify({
+              color: "green-4",
+              textColor: "red",
+              icon: "edit",
+              message: "en construccion",
+            });
+    }
+}
 }
 </script>

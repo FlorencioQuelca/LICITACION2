@@ -20,7 +20,9 @@ class VisitaController extends Controller
         //   return $visitas= Visita::whereDate('fecha',now())->get();
 
     }
-
+    public function visitafecha($id){
+        return Visita::with(['personas','user'])->whereDate('fecha',$id)->get();
+    }
     /**
      * Show the form for creating a new resource.
      *
