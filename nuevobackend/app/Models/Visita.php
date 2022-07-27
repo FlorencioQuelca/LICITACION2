@@ -30,5 +30,11 @@ class Visita extends Model
     public function personas(){
         return $this->BelongsToMany(Persona::class,'persona_visita')->withPivot(['tipo','mochila','observacion']);
     }
+    public function departamento(){
+        return $this->belongsTo(Departamento::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
 }

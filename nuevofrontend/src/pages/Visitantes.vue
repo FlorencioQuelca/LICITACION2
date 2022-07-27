@@ -392,31 +392,50 @@
     <q-dialog v-model="dialog_list">
       <q-card style="max-width: 80%; width: 80%">
         <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6">LA VISITA VISITO A LAS PERSONAS :</div>
+          <div class="text-h6">VISITAS REALIZADAS: :</div>
         </q-card-section>
 
         <q-card-section class="q-pt-xs">
                 <q-table
                     :rows="dato3.visitas"
                     :columns="subcol1"
+                     row-key="fecha"
+                    :rows-per-page-options="[0]"
+                    separator="cell"
+                    dense
                     >
       <template v-slot:body="props">
           <q-tr :props="props">
 
             <q-td key="departamento" :props="props">
-            {{ props.row.motivo}}
+            {{ props.row.departamento.nombre}}
           </q-td>
-          <q-td key="nombre" :props="props">
-            {{ props.row.nombre }}
+          <q-td key="motivo" :props="props">
+            {{ props.row.motivo }}
+          </q-td>
+          <q-td key="institucion" :props="props">
+            {{ props.row.empresa }}
           </q-td>
             <q-td key="fecha" :props="props">
             {{ props.row.fecha }}
           </q-td>
-           <q-td key="fecha1" :props="props">
+           <q-td key="horain" :props="props">
             {{ props.row.horain }}
           </q-td>
-           <q-td key="cuce" :props="props">
+           <q-td key="horaout" :props="props">
             {{ props.row.horaout}}
+          </q-td>
+           <q-td key="funcionario" :props="props">
+            {{ props.row.funcionario}}
+          </q-td>
+           <q-td key="observacion" :props="props">
+            {{ props.row.observacion}}
+          </q-td>
+           <q-td key="mochila" :props="props">
+            {{ props.row.mochila}}
+          </q-td>
+          <q-td key="user" :props="props">
+            {{ props.row.user.name}}
           </q-td>
 
           </q-tr>
@@ -471,6 +490,7 @@ export default {
    filter:'',
    errores: null,
    consultores:[],
+   funcionarios:[],
    contratos:[],
    props:[],
    generos:[
@@ -489,6 +509,7 @@ export default {
         'ENF.',
       ],
     data:[],
+    visitas:[],
     columns,
     dato:{},
     dato2:{},
@@ -501,11 +522,15 @@ export default {
       ],
      subcol1: [
          { name: "departamento",required: true, label: "Departamento", align: "left",field:  row => row.departamento,sortable: true,},
-         { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },
-         { name: "fecha",align: "center",label: "fecha de la Presentacion",field: "fecha",sortable: true},
-         { name: "fecha1",align: "center",label: "Fecha de Culminacion",field: "fecha1",sortable: true},
-         { name: "descripcion",align: "center",label: "Descripcion",field: "descripcion",sortable: true},
-          { name: "status",align: "left",label: "Estado",field: "status",sortable: true},
+         { name: "motivo",align: "left",label: "Motivo de la Visita",field: "motivo", sortable: true },
+         { name: "institucion",align: "left",label: "Institucion",field: "institucion", sortable: true },
+         { name: "fecha",align: "center",label: "Fecha",field: "fecha",sortable: true},
+         { name: "horain",align: "center",label: "Hora Ingreso",field: "horain",sortable: true},
+         { name: "horaout",align: "center",label: "Hora Salida",field: "horaout",sortable: true},
+         { name: "funcionario",align: "left",label: "Funcionario",field: "funcionario",sortable: true},
+         { name: "observacion",align: "left",label: "Observacion",field: "observacion",sortable: true},
+          { name: "mochila",align: "left",label: "Activos",field: "mochila",sortable: true},
+          { name: "user",align: "left",label: "Registrado Por",field: "user",sortable: true},
       ],
       opciones: [
         {
@@ -532,7 +557,20 @@ export default {
     verRow(item) {
       this.dato3 = item.row;
      console.log(item.row);
-      this.dialog_list = true;
+    //  this.$q.loading.show();
+      //this.funcionarios=[];
+     // this.$api.get(process.env.API + "/visitas/"+this.dato3.visitas[0].id).then((res) => {
+     // console.log(res.data)
+     //   this.visitas = res.data;
+     //   this.$q.loading.hide();
+     // });
+     // this.visitas.forEach(it =>{
+      //   if(it.pivot.tipo=="funcionario"){
+       //    this.funcionarios.push({name:it.personas.nombre})
+       //  }
+      //})
+       // console.log(this.funcionarios);
+        this.dialog_list = true;
 
     },
      onReset() {

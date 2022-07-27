@@ -71,7 +71,9 @@ class VisitaController extends Controller
      */
     public function show(Visita $visita)
     {
-        return $visita;
+        return $visita::with(['personas'])->get();
+
+        //return Visita::with(['personas'])->whereDate('fecha',now())->orderByDesc('id')->get();
     }
 
     /**
