@@ -194,14 +194,16 @@ export default {
     columns,
   }),
   created() {
-    this.misdatos();
-    this.date=Date.now();
+
+   // this.date=Date.now();
+     this.misdatos();
   //  console.log(this.date);
   },
 
   methods: {
     misdatos() {
-
+     // this.date =new Date()
+      console.log(new Date())
       //console.log(this.date)
       this.date1 = this.date.replace("/", "-","gi");
       this.date2 = this.date1.replace("/", "-","gi");
