@@ -15,6 +15,7 @@ export default function () {
     licitaciones:false,
     visitantes:false,
     reportes:false,
+    registro:false
 
 
   }

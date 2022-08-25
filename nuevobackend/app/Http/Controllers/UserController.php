@@ -21,7 +21,7 @@ class UserController extends Controller
     public function login(Request $request)
     {
 
-      
+
         if (!Auth::attempt($request->all())) {
             return response()->json(['res' => 'No existe el usuario'], 400);
         }
@@ -56,6 +56,12 @@ class UserController extends Controller
                 $user->email=$request->email;
                 $user->fechalimite=$request->fechalimite;
                 $user->password= Hash::make($request->password) ;
+              //adicionado
+                $user->status = $request->departamento;
+                $user->ci = $request ->departamento_id;
+                $user->tipo = $request ->tipo;
+
+
                 $user->save();
                 $permisos= array();
                 foreach ($request->permisos as $permiso){
@@ -65,7 +71,7 @@ class UserController extends Controller
                 }
                 $permiso = Permiso::find($permisos);
                 $user->permisos()->attach($permiso);
-        
+
             }
     public function update(Request $request, User $user)
     {

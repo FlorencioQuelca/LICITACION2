@@ -42,7 +42,7 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
    //proyecto
   Route::apiResource('proyectos',\App\Http\Controllers\ProyectoController::class); //CRUD de proyectos;
   Route::apiResource('programas',\App\Http\Controllers\ProgramaController::class); //CRUD de SociedadAccidental;
-  Route::apiResource('departamentos',\App\Http\Controllers\DepartamentoController::class); //CRUD de SociedadAccidental;
+  Route::apiResource('departamentos',\App\Http\Controllers\DepartamentoController::class); //CRUD de departamentos;
   Route::apiResource('tipos',\App\Http\Controllers\TipoController::class); //CRUD de SociedadAccidental;
   Route::apiResource('codigos',\App\Http\Controllers\CodigoController::class); //CRUD de SociedadAccidental;
   Route::get('/codigofound/{id}',[\App\Http\Controllers\CodigoController::class,'codigofound']); //CRUD de SociedadAccidental;
@@ -119,6 +119,10 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
    Route::get('/visitantes',[\App\Http\Controllers\PersonaController::class,'visitantes'])->name('visitantes');
    Route::put('personavisitas/{visita}',[\App\Http\Controllers\VisitaController::class,'personavisitas']);
    Route::put('personavisitadetach/{visita}',[\App\Http\Controllers\VisitaController::class,'personavisitadetach']);
+  // BOL34
+
+  Route::apiResource('municipios',\App\Http\Controllers\MunicipioController::class); //CRUD de Municipios;
+  Route::get('municipioid/{municipio}',[\App\Http\Controllers\MunicipioController::class,'municipioid'])->name('municipioid');
 
 });
 

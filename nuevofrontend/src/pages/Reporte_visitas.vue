@@ -16,10 +16,7 @@
       </template>
     </q-input>
     </div>
-
-
     <q-card>
-
             <div class="q-pa-md">
                <q-btn
                 color="black"
@@ -182,7 +179,6 @@ const columns = [
     sortable: false,
   },
 ];
-
 export default {
   name:"Visitas",
   data:() =>({

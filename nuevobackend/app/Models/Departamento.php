@@ -14,8 +14,11 @@ class Departamento extends Model
         "nombre",
     ];
     protected $hidden =['created_at','updated_at'];
-    //relacion uno a muchos 
+    //relacion uno a muchos
     public function proyectos(){
        return $this->hasMany(Proyecto::class);
     }
+    public function municipio(){
+        return $this->belongsTo(Municipio::class);
+     }
 }

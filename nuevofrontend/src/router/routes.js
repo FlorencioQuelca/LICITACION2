@@ -15,6 +15,7 @@ import Trabajos from "pages/Trabajos";
 import Actividades from "pages/Actividades";
 import Visitantes from "pages/Visitantes";
 import Reportes from "pages/Reporte_visitas";
+import RegistroBol34 from "pages/RegistroBol34";
 
 
 
@@ -43,8 +44,7 @@ const routes = [
       { path: '/actividades/:id/view',  name: 'actividades.view',component: Actividades,meta: { requiresAuth: true}},
       { path: 'Visitantes', component: Visitantes,meta: { requiresAuth: true }},
       { path: 'Reportes', component: Reportes,meta: { requiresAuth: true }},
-
-
+      { path: 'RegistroBol34', component: RegistroBol34,meta: { requiresAuth: true }},
     ]
   },
 

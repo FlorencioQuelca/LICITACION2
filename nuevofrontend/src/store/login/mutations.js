@@ -21,6 +21,8 @@ export function auth_request(state){
     state.trabajos=data.user.permisos.find(p=>p.id===10)!=undefined
     state.visitantes=data.user.permisos.find(p=>p.id===11)!=undefined
     state.reportes=data.user.permisos.find(p=>p.id===12)!=undefined
+    state.registro=data.user.permisos.find(p=>p.id===13)!=undefined
+
 
 
   }
@@ -44,5 +46,6 @@ export function auth_request(state){
     state.licitaciones=false
     state.visitantes=false
     state.reportes=false
+    state.registro=false
 
   }

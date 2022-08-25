@@ -7,6 +7,7 @@
       icon="add_circle"
       class="q-mb-xs"
     />
+       <!-- Nuevo usuario-->
     <q-dialog v-model="alert">
       <q-card style="max-width: 80%; width: 50%">
         <q-card-section class="bg-green-14 text-white">
@@ -25,21 +26,11 @@
                   lazy-rules
                   :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
                 />
-                  <q-input
-                  filled
-                  v-model="dato.tipo"
-                  type="text"
-                  label="Tipo "
-                  hint="Ingresar Categoria o Tipo"
-                  lazy-rules
-                  :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
-                />
-
                 <q-input
                   filled
                   v-model="dato.email"
                   type="email"
-                  label="Email"
+                  label="Email / usuario"
                   hint="Correo electronico"
                   lazy-rules
                   :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
@@ -59,6 +50,27 @@
                   label="Fecha limite"
                   type="date"
                   v-model="dato.fechalimite"
+                />
+
+                 <q-input
+                  filled
+                  v-model="dato.tipo"
+                  type="text"
+                  label="Tipo "
+                  hint="Ingresar Categoria o Tipo"
+                  lazy-rules
+                  :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
+                />
+                <!-- departamento-->
+                  <q-select
+                  filled
+                  v-model="dato.status"
+                  :options="departamentos"
+                  type="text"
+                  label="Departamento"
+                  hint="Ingresar departamento que corresponda"
+                  lazy-rules
+                  :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
                 />
               </div>
               <div class="col-6">
@@ -177,6 +189,26 @@
               type="date"
               v-model="dato2.fechalimite"
             />
+              <q-input
+                  filled
+                  v-model="dato2.tipo"
+                  type="text"
+                  label="Tipo "
+                  hint="Ingresar Categoria o Tipo"
+                  lazy-rules
+                  :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
+                />
+                <!-- departamento-->
+                  <q-select
+                  filled
+                  v-model="dato2.status"
+                  :options="departamentos"
+                  type="text"
+                  label="Departamento"
+                  hint="Ingresar departamento que corresponda"
+                  lazy-rules
+                  :rules="[(val) => (val && val.length > 0) || 'Por favor ingresa datos']"
+                />
             <div>
               <q-btn label="Modificar" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
@@ -246,6 +278,9 @@ export default {
       permisos:[],
       permisos2:[],
       modelpermiso:false,
+      departamentos:[],
+      departamentos_ids:[],
+      departamento_id:"",
       uni:{},
       columns: [
         {name: "name", align: "left", label: "Nombre ", field: "name", sortable: true,},
@@ -266,6 +301,7 @@ export default {
       // this.router.push('/')
     }
     this.misdatos();
+     this.misdepartamentos();
     this.$api.get(process.env.API+'/permisos').then(res=>{
       // console.log(res.data)
       // this.permisos=res.data
@@ -319,8 +355,20 @@ export default {
     misdatos() {
       this.$q.loading.show();
       this.$api.get(process.env.API + "/users").then((res) => {
-        // console.log(res.data)
+         console.log(res.data)
         this.data = res.data;
+        this.$q.loading.hide();
+      });
+    },
+     misdepartamentos() {
+      this.$q.loading.show();
+      this.departamentos=[]
+      this.$api.get(process.env.API + "/departamentos").then((res) => {
+     //  console.log(res.data)
+       res.data.forEach((it)=>{
+         this.departamentos.push(it.nombre)
+         this.departamentos_ids.push(it.id)
+       })
         this.$q.loading.hide();
       });
     },
@@ -337,13 +385,21 @@ export default {
 
     onSubmit() {
       this.$q.loading.show();
+         for(let i=0;i<11;i++){
+               if(this.dato.status ==this.departamentos[i]){
+                this.departamento_id=this.departamentos_ids[i].toString()
+               }
+         }
       // this.dato.unid_id=this.dato.unid_id.id;
       this.$api.post(process.env.API + "/users", {
         name:this.dato.name,
         password:this.dato.password,
         email:this.dato.email,
         fechalimite:this.dato.fechalimite,
-        permisos:this.permisos
+        permisos:this.permisos,
+        tipo:this.dato.tipo,
+        departamento:this.dato.status,
+        departamento_id:this.departamento_id
       }).then((res) => {
         this.$q.notify({
           color: "green-4",
@@ -366,10 +422,20 @@ export default {
     },
     onMod() {
       this.$q.loading.show();
+       for(let i=0;i<11;i++){
+               if(this.dato2.status==this.departamentos[i]){
+                this.departamento_id=(this.departamentos_ids[i]).toString()
+               // console.log(this.departamentos_ids[i]);
+               }
+         }
       this.$api.put(process.env.API + "/users/" + this.dato2.id, {name:this.dato2.name,
         password:this.dato2.password,
         email:this.dato2.email,
         fechalimite:this.dato2.fechalimite,
+        tipo:this.dato2.tipo,
+        status:this.dato2.status,
+        ci:this.departamento_id
+
       }).then((res) => {
           this.$q.notify({
             color: "green-4",

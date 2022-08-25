@@ -27,7 +27,7 @@ class User extends Authenticatable
         'fechalimite',
         'ci',
         'status'
-        
+
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -62,5 +62,5 @@ class User extends Authenticatable
      public function contratos(){
          return $this->hasMany(Contrato::class);
      }
-   
+
 }

@@ -19,8 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('tipo')->default('USUARIO');
             $table->date('fechalimite')->default('2022-12-31');
-            $table->string('status')->default('ACTIVO');
-            $table->string('ci')->nullable();
+            $table->string('status')->default('ACTIVO'); // departamento
+            $table->string('ci')->nullable(); // ide de departamento
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('api_token')->nullable();
