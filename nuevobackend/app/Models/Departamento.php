@@ -18,7 +18,10 @@ class Departamento extends Model
     public function proyectos(){
        return $this->hasMany(Proyecto::class);
     }
-    public function municipio(){
-        return $this->belongsTo(Municipio::class);
+    public function municipios(){
+        return $this->hasMany(Municipio::class);
+     }
+    public function registros(){
+        return $this->hasMany(Registro::class);
      }
 }

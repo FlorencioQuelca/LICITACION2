@@ -123,6 +123,8 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
 
   Route::apiResource('municipios',\App\Http\Controllers\MunicipioController::class); //CRUD de Municipios;
   Route::get('municipioid/{municipio}',[\App\Http\Controllers\MunicipioController::class,'municipioid'])->name('municipioid');
+  Route::apiResource('registros',\App\Http\Controllers\RegistroController::class); //CRUD de registros
+  Route::apiResource('evaluacions',\App\Http\Controllers\EvaluacionController::class); //CRUD de
 
 });
 

@@ -22,6 +22,6 @@ class Municipio extends Model
     protected $hidden =['created_at','updated_at'];
     //relacion uno a muchos
     public function departamentos(){
-       return $this->hasMany(Departamento::class);
+       return $this->belongsTo(Departamento::class);
     }
 }

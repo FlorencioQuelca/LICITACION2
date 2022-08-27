@@ -57,7 +57,7 @@ class CodigoController extends Controller
      */
     public function edit(Codigo $codigo)
     {
-        
+
     }
 
     /**
@@ -80,7 +80,7 @@ class CodigoController extends Controller
      */
     public function destroy(Codigo $codigo)
     {
-        $codigo->deete();
+        $codigo->delete();
     }
     public function codigofound($id){
         return Codigo::where('nombre',$id)->get();

@@ -14,7 +14,7 @@ class ComunidadController extends Controller
      */
     public function index()
     {
-        //
+        return Comunidad::all();
     }
 
     /**
@@ -35,7 +35,7 @@ class ComunidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Comunidad::create($request->all());
     }
 
     /**
@@ -46,7 +46,7 @@ class ComunidadController extends Controller
      */
     public function show(Comunidad $comunidad)
     {
-        //
+        return $comunidad;
     }
 
     /**
@@ -57,7 +57,7 @@ class ComunidadController extends Controller
      */
     public function edit(Comunidad $comunidad)
     {
-        //
+         return $comunidad;
     }
 
     /**
@@ -69,7 +69,8 @@ class ComunidadController extends Controller
      */
     public function update(Request $request, Comunidad $comunidad)
     {
-        //
+        $comunidad->update($request->all());
+
     }
 
     /**
@@ -80,6 +81,6 @@ class ComunidadController extends Controller
      */
     public function destroy(Comunidad $comunidad)
     {
-        //
+        $comunidad->delete();
     }
 }

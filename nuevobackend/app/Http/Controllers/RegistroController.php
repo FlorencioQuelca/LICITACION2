@@ -14,7 +14,9 @@ class RegistroController extends Controller
      */
     public function index()
     {
-        //
+        return Registro::with(['departamento'])->orderByDesc('nro')->get();
+      //  return Registro::all();
+
     }
 
     /**
@@ -35,7 +37,7 @@ class RegistroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Registro::create($request->all());
     }
 
     /**
@@ -46,7 +48,7 @@ class RegistroController extends Controller
      */
     public function show(Registro $registro)
     {
-        //
+    return $registro;
     }
 
     /**
@@ -69,7 +71,8 @@ class RegistroController extends Controller
      */
     public function update(Request $request, Registro $registro)
     {
-        //
+        return $registro->update($request->all());
+
     }
 
     /**
@@ -80,6 +83,6 @@ class RegistroController extends Controller
      */
     public function destroy(Registro $registro)
     {
-        //
+        return  $registro->delete();
     }
 }

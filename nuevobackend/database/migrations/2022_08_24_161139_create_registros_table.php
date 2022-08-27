@@ -16,10 +16,11 @@ class CreateRegistrosTable extends Migration
         Schema::create('registros', function (Blueprint $table) {
             $table->id();
                    //secretaria
-            $table->string("codigo")->unique();
+            $table->string("codigo")->nullable();
             $table->string("interno")->nullable();
-            $table->string("nombre");// nombre
-            $table->string("cite");// cite
+            $table->integer("nro")->nullable();
+            $table->string("nombre")->nullable();// nombre
+            $table->string("cite")->nullable();// cite
             $table->date('fecha')->nullable();
 
             // evaluacion
@@ -53,12 +54,9 @@ class CreateRegistrosTable extends Migration
             $table->string('adjunto')->nullable();
             $table->string('vinculo')->nullable();
                 ///asignado a
-            $table->unsignedBigInteger("user_id")->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
                ///  asignado al departamento de
             $table->unsignedBigInteger("departamento_id")->nullable();
             $table->foreign('departamento_id')->references('id')->on('departamentos')->onDelete('set null')->onUpdate('cascade');
-
 
             $table->timestamps();
         });

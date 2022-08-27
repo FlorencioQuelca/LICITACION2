@@ -14,7 +14,7 @@ class EvaluacionController extends Controller
      */
     public function index()
     {
-        //
+        return Evaluacion::all();
     }
 
     /**
@@ -35,7 +35,7 @@ class EvaluacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Evaluacion::create($request->all());
     }
 
     /**
@@ -46,7 +46,7 @@ class EvaluacionController extends Controller
      */
     public function show(Evaluacion $evaluacion)
     {
-        //
+        return $evaluacion;
     }
 
     /**
@@ -69,7 +69,7 @@ class EvaluacionController extends Controller
      */
     public function update(Request $request, Evaluacion $evaluacion)
     {
-        //
+        $evaluacion->update($request->all());
     }
 
     /**
@@ -80,6 +80,6 @@ class EvaluacionController extends Controller
      */
     public function destroy(Evaluacion $evaluacion)
     {
-        //
+        $evaluacion->delete();
     }
 }

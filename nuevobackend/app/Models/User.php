@@ -63,4 +63,8 @@ class User extends Authenticatable
          return $this->hasMany(Contrato::class);
      }
 
+     public function registros(){
+        return $this->belongsToMany(Registro::class);
+    }
+
 }
