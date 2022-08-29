@@ -15,6 +15,8 @@ class CreateComunidadRegistroTable extends Migration
     {
         Schema::create('comunidad_registro', function (Blueprint $table) {
             $table->id();
+
+            $table->string("provincia")->nullable();
             $table->unsignedBigInteger('comunidad_id')->nullable();
             $table->foreign('comunidad_id')->references('id')->on('comunidads')->onDelete('set null')->onUpdate('cascade');
 

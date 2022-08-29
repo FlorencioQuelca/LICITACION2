@@ -43,7 +43,7 @@
 
           </q-card-section>
           <q-separator dark />
-        
+
         </q-card>
       </div>
       <div class="col-12 col-md-2"></div>
@@ -66,11 +66,13 @@ export default {
        let email = this.email
         let password = this.password
         this.$store.dispatch('login/login', { email, password })
-       .then(() =>{
+       .then((res) =>{
+         // console.log(res.data);
+
           this.$q.loading.hide();
-        
+
         this.$router.push('/')
-        
+
         })
        .catch(err => {
         this.$q.loading.hide();

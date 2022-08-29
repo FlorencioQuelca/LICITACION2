@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::get('proyectoslibre',[\App\Http\Controllers\ProyectoController::class,'proyectoslibre'])->name('proyectoslibre'); //CRUD de proyectos;
-Route::get('/proyectoid/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'proyectoid'])->name('proyectoid');; //un solo proyecto
+Route::get('/proyectoid/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'proyectoid'])->name('proyectoid'); //un solo proyecto
 
 //login
 Route::post('/login',[\App\Http\Controllers\UserController::class,'login'])->name('login');
@@ -125,6 +125,11 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   Route::get('municipioid/{municipio}',[\App\Http\Controllers\MunicipioController::class,'municipioid'])->name('municipioid');
   Route::apiResource('registros',\App\Http\Controllers\RegistroController::class); //CRUD de registros
   Route::apiResource('evaluacions',\App\Http\Controllers\EvaluacionController::class); //CRUD de
+  Route::get('/registroid/{registro}',[\App\Http\Controllers\RegistroController::class,'registroid'])->name('registroid');
+  Route::get('userid/{user}',[\App\Http\Controllers\UserController::class,'userid'])->name('userid');
+  Route::put('registrouser/{registro}',[\App\Http\Controllers\RegistroController::class,'registrouser']);
+  Route::put('registrouserdetach/{registro}',[\App\Http\Controllers\RegistroController::class,'registrouserdetach']);
+
 
 });
 

@@ -29,7 +29,7 @@ class UserController extends Controller
            return response()->json(['res' => 'Su usuario sobre paso el limite de ingreso'], 200);
         }
 
-        $user = User::where('email', $request->email)->with('permisos')->firstOrFail();
+        $user = User::where('email', $request->email)->with(['permisos','registros'])->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json(['token' => $token, 'user' => $user], 200);
     }
@@ -44,6 +44,18 @@ class UserController extends Controller
         return User::
         with('permisos')->get();
     }
+
+    public function userid($id){
+        try{
+       // return Persona::get();
+         $personas= User::where('ci',$id)->get();
+          return \response()->json($personas,200);
+        }
+        catch(\Exception $e){
+         return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
+        }
+     }
+
     public function listuser(){
         return User::
 //            ->with('permisos')

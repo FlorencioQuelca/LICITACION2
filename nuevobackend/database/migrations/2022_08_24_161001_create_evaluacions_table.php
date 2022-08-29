@@ -18,7 +18,8 @@ class CreateEvaluacionsTable extends Migration
             $table->string('nombre')->nullable();
             $table->string('tipo')->nullable();
             $table->string('valor')->nullable();
-            $table->string('descripcion')->nullable();
+            $table->text('descripcion')->nullable();
+            $table->decimal('puntaje',10,2)->default(0);
             $table->string('observacion')->nullable();
             $table->string('status')->default("ACTIVO");
             $table->timestamps();

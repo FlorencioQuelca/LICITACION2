@@ -28,8 +28,14 @@ class CreateRegistrosTable extends Migration
             $table->decimal('monto2',10,2)->default(0);
             $table->decimal('monto3',10,2)->default(0);
             $table->decimal('total',10,2)->default(0);
+            $table->decimal('puntaje',10,2)->default(0);
+            $table->decimal('puntaje1',10,2)->default(0);
+            $table->decimal('puntaje2',10,2)->default(0);
+            $table->decimal('puntaje3',10,2)->default(0);
+            $table->decimal('puntaje4',10,2)->default(0);
 
             $table->string("municipio")->nullable();
+            $table->string("provincia")->nullable();
             $table->string("comunidades")->nullable();
             $table->string("presentado_por")->nullable();
             $table->string("firmado_por")->nullable();
