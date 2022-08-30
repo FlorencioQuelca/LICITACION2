@@ -360,6 +360,7 @@ export default {
       ingenierias:[],
       ingenieria:{},
       evaluaciones:[],
+      totalmunicipios:[],
       c1:"NO",
       titulo:"",
       op:"",
@@ -388,12 +389,10 @@ export default {
          this.$q.loading.show();
          this.municipios=[]
        this.$api.get(process.env.API+"/municipioid/"+this.$store.state.login.user.ci).then((res)=>{
-     //  console.log(res.data)
+      this.totalmunicipios=res.data
             res.data.forEach((it)=>{
               this.municipios.push({ label:(it.municipio).toUpperCase(),value:it.id})
-              if( (it.municipio).toUpperCase() ===this.$store.state.login.user.status){
-                      this.categoria_municipal=it.municipio_codigo
-              }
+
             })
              this.$q.loading.hide();
        });
