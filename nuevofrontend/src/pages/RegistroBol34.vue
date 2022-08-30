@@ -247,7 +247,7 @@
                 />
                  <q-input
               outlined
-              v-model="dato.interno"
+              v-model="dato2.interno"
               type="text"
               label="Hoja de ruta FPS"
                hint="Ingresar HOJA DE RUTA Del fps Nacional"
@@ -679,8 +679,9 @@ export default {
 
        },
         onMod() {
-        this.dato2.departamento_id=this.departamento.value;
+       this.dato2.departamento_id=this.departamento.value;
        this.dato2.municipio=this.municipio.label;
+       this.dato2.nombre=((this.dato2.nombre).toUpperCase()).trim()
 
       this.$q.loading.show();
       this.$api
