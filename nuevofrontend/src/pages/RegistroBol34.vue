@@ -649,6 +649,8 @@ export default {
       // console.log(new Date())
        this.dato.departamento_id=this.departamento.value;
        this.dato.municipio=this.municipio.label;
+       this.dato.nombre=((this.dato.nombre).toUpperCase()).trim()
+
 
 
      // this.dato.departamento_id=this.$store.state.login.user.ci
