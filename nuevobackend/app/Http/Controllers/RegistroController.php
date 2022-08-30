@@ -20,7 +20,7 @@ class RegistroController extends Controller
 
     }
     public function registroid(Registro $registro){
-        $registro =Registro::with(['departamento','users'])
+        $registro =Registro::with(['departamento','users','evaluacions'])
                             ->orWhere('id', '=', $registro->id)->get();
 
         return \response()->json($registro,200);

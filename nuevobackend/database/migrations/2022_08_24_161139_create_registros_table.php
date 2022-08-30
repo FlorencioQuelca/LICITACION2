@@ -16,8 +16,8 @@ class CreateRegistrosTable extends Migration
         Schema::create('registros', function (Blueprint $table) {
             $table->id();
                    //secretaria
-            $table->string("codigo")->nullable();
-            $table->string("interno")->nullable();
+            $table->string("codigo")->nullable(); //BOL 34
+            $table->string("interno")->nullable();  /// HR
             $table->integer("nro")->nullable();
             $table->string("nombre")->nullable();// nombre
             $table->string("cite")->nullable();// cite
@@ -28,7 +28,7 @@ class CreateRegistrosTable extends Migration
             $table->decimal('monto2',10,2)->default(0);
             $table->decimal('monto3',10,2)->default(0);
             $table->decimal('total',10,2)->default(0);
-            $table->decimal('puntaje',10,2)->default(0);
+            $table->decimal('puntaje',10,2)->default(0);//FAMILIAS BENEFICIARIAS
             $table->decimal('puntaje1',10,2)->default(0);
             $table->decimal('puntaje2',10,2)->default(0);
             $table->decimal('puntaje3',10,2)->default(0);
@@ -37,7 +37,7 @@ class CreateRegistrosTable extends Migration
             $table->string("municipio")->nullable();
             $table->string("provincia")->nullable();
             $table->string("comunidades")->nullable();
-            $table->string("presentado_por")->nullable();
+            $table->string("presentado_por")->nullable();// DISTRITOS
             $table->string("firmado_por")->nullable();
             $table->string("autoridad")->nullable();
             $table->string("url")->nullable();  //pdf

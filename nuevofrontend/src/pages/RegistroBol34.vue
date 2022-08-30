@@ -533,8 +533,10 @@ export default {
       dialog_list:false,
       dialog_del1:false,
       departamentos:[],
+      categoria_municipal:"",
       departamento:{},
       municipios:[],
+      totalmunicipios:[],
       municipio:{},
       funcionarios:[],
         options:{},
@@ -588,9 +590,9 @@ export default {
          this.municipios=[]
        this.$api.get(process.env.API+"/municipioid/"+this.$store.state.login.user.ci).then((res)=>{
        console.log(res.data)
+        this.totalmunicipios=res.data
             res.data.forEach((it)=>{
               this.municipios.push({ label:(it.municipio).toUpperCase(),value:it.id})
-
             })
              this.$q.loading.hide();
        });
@@ -639,17 +641,22 @@ export default {
 
 
        onSubmit(){
-      //  console.log(typeof this.$store.state.login.user.ci)
+      //
         this.$q.loading.show();
-    //   this.dato.departamento_id="2"
-     // this.dato.departamento_id=this.departamentos[this.$store.state.login.user.status] //funciona
-       // this.dato.codigo="bol34-0001"
-       // this.dato.cite="cite11"
+    //
       this.dato.fecha =moment().format('YYYY-MM-DD');
-      // console.log(new Date())
        this.dato.departamento_id=this.departamento.value;
        this.dato.municipio=this.municipio.label;
        this.dato.nombre=((this.dato.nombre).toUpperCase()).trim()
+
+         this.totalmunicipios.forEach(it => {
+            if((it.municipio).toUpperCase()===this.dato.municipio){
+              this.dato.autoridad =it.municipio_codigo
+             // console.log(this.dato.autoridad);
+            }
+         })
+
+
 
 
 
@@ -682,6 +689,15 @@ export default {
        this.dato2.departamento_id=this.departamento.value;
        this.dato2.municipio=this.municipio.label;
        this.dato2.nombre=((this.dato2.nombre).toUpperCase()).trim()
+          this.totalmunicipios.forEach(it => {
+            if((it.municipio).toUpperCase()===this.dato.municipio){
+              this.dato2.autoridad =it.municipio_codigo
+             // console.log(this.dato.autoridad);
+            }
+         })
+
+
+
 
       this.$q.loading.show();
       this.$api
