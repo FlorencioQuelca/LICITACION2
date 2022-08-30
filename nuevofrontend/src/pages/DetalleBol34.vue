@@ -250,7 +250,8 @@ export default {
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
           this.rows.push({titulo:"Comunidades : ", descripcion: res.data[0].comunidades})
-          this.rows.push({titulo:"Cite : ", descripcion: res.data[0].cite})
+          this.rows.push({titulo:"Cite VIFFE : ", descripcion: res.data[0].cite})
+          this.rows.push({titulo:"H.R. FPS: ", descripcion: res.data[0].interno})
           this.rows.push({titulo:"Codigo : ", descripcion: res.data[0].codigo});
           this.rows.push({titulo:"Infraestructura : ", descripcion: res.data[0].monto1})
           this.rows.push({titulo:"Supervision : ", descripcion: res.data[0].monto2})

@@ -49,7 +49,7 @@
           </q-td>
 
            <q-td key="archivo" :props="props">
-            {{props.row.url}}
+            {{props.row.interno}}
           </q-td>
            <q-td key="monto" :props="props">
             {{props.row.total}}
@@ -142,6 +142,8 @@
                   v-model="dato.codigo"
                     label="Codigo del proyecto "
                   hint="Codigo del Proyecto VIPFE"
+                   lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
                 />
             <q-input
               outlined
@@ -149,7 +151,17 @@
               type="text"
               label="CITE carta VIPFE"
                hint="Ingresar CITE carta VIPFE"
-
+               lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+              <q-input
+              outlined
+              v-model="dato.interno"
+              type="text"
+              label="Hoja de ruta FPS"
+              hint="Ingresar HOJA DE RUTA Del fps Nacional"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
             />
              </div>
              <div class="col-6">
@@ -233,6 +245,15 @@
                   hint="Ingresar Fecha de ingre del proyecto"
 
                 />
+                 <q-input
+              outlined
+              v-model="dato.interno"
+              type="text"
+              label="Hoja de ruta FPS"
+               hint="Ingresar HOJA DE RUTA Del fps Nacional"
+                lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
               <q-input
               outlined
               v-model="dato2.nro"
@@ -432,16 +453,15 @@
 import moment, { now } from 'moment';
 
 const columns = [
-
   { name: 'nro', align:"center", label: 'N°', field: 'nro', sortable: true },
   { name: 'codigo', align: "left",label: 'Codigo VIPFE', field: 'codigo',sortable:true },
   { name: 'nombre',required: true,align: "left", label: 'Nombre de la propuesta', field: 'nombre',sortable:true },
   { name: 'cite', align: "left",label: 'CITE', field: 'cite',sortable:true },
   { name: 'fecha', align: "center",label: 'Fecha', field: 'fecha',sortable:true },
-  { name: 'archivo', label: 'Archivo', field: 'archivo',sortable:true },
+  { name: 'archivo', label: 'H.R.', field: 'archivo',sortable:true },
   { name: 'monto', label: 'Monto', field: 'monto',sortable:true },
   { name: 'municipio', align: "left",label: 'Municipio', field: 'municipio',sortable:true},
-{
+  {
     name: "funcionarios",
     align: "left",
     label: "Funcionario(s)",
@@ -449,7 +469,7 @@ const columns = [
     sortable: true,
   },
   { name: 'opcion',align: "center", label: 'Opciones ', field: 'opcion', sortable: false }
-];
+  ];
 const subcol1 = [
   {
     name: "email",
@@ -528,8 +548,8 @@ export default {
     created(){
       this.misDepartamentos()
     this.misMunicipios()
-  //  this.misdatos()
-    this.misdatosDepa()
+   this.misdatos()
+   // this.misdatosDepa()
     this.cargarUsers()
   },
     methods: {
@@ -557,6 +577,8 @@ export default {
            if(this.$store.state.login.user.status==='CENTRAL'){
              this.misdatos()
            }else{
+
+
              this.data=this.$store.state.login.user.registros;
            }
        },
@@ -582,6 +604,7 @@ export default {
       });
     },
        verNuevo(){
+
       let  maxi=-99;
       this.dato.nro=1
       this.data.forEach(it=>{
@@ -606,8 +629,11 @@ export default {
       //  console.log(this.departamento)
         // console.log(this.municipios);
 
+      this.dato.nombre=""
       this.dato.codigo="BOL 34-000XX"
       this.dato.cite="MPD/VIPFE/DGPP-NE XXXX/2022"
+      this.dato.interno ="E/CN/2022-0XXXX"
+
         this.alert=true;
        },
 
