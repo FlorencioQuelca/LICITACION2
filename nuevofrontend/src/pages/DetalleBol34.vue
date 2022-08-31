@@ -1,5 +1,6 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md" style="padding:10px">
+    <div style="display:flex; justify-content:space-between">
     <q-btn
       label="Registro Bol34"
       color="secondary"
@@ -7,17 +8,42 @@
       @click="this.$router.push('/RegistroBol34')"
       class="q-mb-xs"
     />
+    <q-btn
+      label="Imprimir reporte"
+      color="red"
+      icon="print"
+      class="q-mb-xs"
+      @click="imprimir"
+    />
+    </div>
     <q-card
     class="my-card text-white"
-    style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%)"
+    style="background: radial-gradient(circle, #35a2ff 0%, #014a88 100%); padding:0px"
     square
     flat bordered
     >
          <q-card-section >
-          <div class="row ">
-              <div class="q-pa-md  col-8">
-                <div style="color:white; text-align:center; padding:0px; border:0px">
-                    <span>DATOS GENERALES DEL PROYECTO  </span>
+          <div class="row" style="padding:0px">
+              <div class="q-pa-md  col-8" style="padding:0px">
+                <div  class="row"  style="padding:0px; border:0px; display:flex;" >
+                      <div class=" q-pa-md  col-6" style="color:white; text-align:right; padding:0px; border:0px ">
+                          <span>DATOS GENERALES DEL PROYECTO  </span>
+                      </div>
+                      <div class=" q-pa-md  col-6" style="display:flex; justify-content:flex-end">
+                        <q-btn
+                        label="Comunidades/Distritos"
+                        color="red"
+                        icon="print"
+                        class="q-mb-xs"
+                      />
+                      <q-btn
+                        label="EDITAR"
+                        color="green"
+                        icon="editt"
+                        class="q-mb-xs"
+                      />
+                      </div>
+
                 </div>
                   <q-table
                     class="my-sticky-header-column-table"
@@ -201,7 +227,7 @@
              </div>
             <div>
               <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
-              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+              <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
             </div>
           </q-form>
         </q-card-section>
@@ -254,7 +280,7 @@
             />
             <div>
               <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
-              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+              <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
             </div>
           </q-form>
         </q-card-section>
@@ -262,10 +288,13 @@
     </q-dialog>
 
  <!--          formularios 2,3,4 de evaluacion   -->
-    <q-dialog v-model="dialog_form234">
+    <q-dialog v-model="dialog_form234" persistent>
       <q-card style="max-width: 80%; width: 80%">
         <q-card-section class="bg-green-14 text-white">
+          <div style="display: flex; justify-content:space-between ">
           <div class="text-h6"><q-icon name="edit" /> {{titulo}}</div>
+          <q-btn label="GUARDAR" @click="refrescar" color="blue" icon="edit" />
+          </div>
         </q-card-section>
 
         <q-card-section class="q-pt-xs">
@@ -285,7 +314,7 @@
                       <q-input
                         outlined
                         v-model="item.descripcion1"
-                        type="text"
+                        type="textarea"
                         label="Observacion"
                         hint="Ingrese la observacion"
                       />
@@ -304,7 +333,7 @@
                         dense
                         round
                         flat
-                        color="green"
+                        color="blue"
                         @click="editar(item)"
                         icon="save"
                       ></q-btn>
@@ -368,7 +397,7 @@ export default {
   created() {},
   mounted() {
     this.misdatos();
-       this.misDepartamentos()
+    this.misDepartamentos()
     this.misMunicipios()
      this.mis_evaluaciones()
   },
@@ -657,8 +686,7 @@ export default {
                             icon: "cloud_done",
                             message: "Guardado Correctamente",
                           });
-                          this.misdatos();
-                          // console.log(res.data)
+                       //   this.misdatos();
                           });
       }
     },
@@ -684,14 +712,28 @@ export default {
                           icon: "cloud_done",
                           message: "Modificado correctamente",
                         });
-                          this.misdatos();
+                         // this.misdatos();
 
                         });
 
                 }
          })
+      },
+      refrescar(){
+        this.misdatos();
+        this.misDepartamentos()
+    this.misMunicipios()
+     this.mis_evaluaciones()
+        this.dialog_form234=false;
+      },
+      imprimir(){
+        this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "trabajando en ello",
+                        });
       }
-
 
   },
 };
