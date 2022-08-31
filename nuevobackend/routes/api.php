@@ -22,40 +22,38 @@ use Illuminate\Support\Facades\Route;
 //   return \App\Models\Empresa::all();
 //});
 
-Route::get('proyectoslibre',[\App\Http\Controllers\ProyectoController::class,'proyectoslibre'])->name('proyectoslibre'); //CRUD de proyectos;
-Route::get('/proyectoid/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'proyectoid'])->name('proyectoid'); //un solo proyecto
 
 //login
 Route::post('/login',[\App\Http\Controllers\UserController::class,'login'])->name('login');
 Route::group(['middleware'=>"auth:sanctum"],function (){
-   Route::apiResource('/consultor',\App\Http\Controllers\PersonaController::class); //CRUD de Personas;
-   Route::get('/consultorci/{id}',[\App\Http\Controllers\PersonaController::class,'consultorci']); //CRUD de Personas;
-   Route::apiResource('/empresa',\App\Http\Controllers\EmpresaController::class); //CRUD de Empresa;
-   Route::get('/empresanit/{id}',[\App\Http\Controllers\EmpresaController::class,'empresanit']); //CRUD de Empresa;
-   Route::apiResource('/sociedad',\App\Http\Controllers\SociedadController::class); //CRUD de SociedadAccidental;
-   Route::get('/sociedadcodigo/{id}',[\App\Http\Controllers\SociedadController::class,'sociedadcodigo']); //CRUD de SociedadAccidental;
-   Route::get('/userci/{id}',[\App\Http\Controllers\UserController::class,'userci']); //CRUD de Personas;
+    Route::apiResource('/consultor',\App\Http\Controllers\PersonaController::class); //CRUD de Personas;
+    Route::get('/consultorci/{id}',[\App\Http\Controllers\PersonaController::class,'consultorci']); //CRUD de Personas;
+    Route::apiResource('/empresa',\App\Http\Controllers\EmpresaController::class); //CRUD de Empresa;
+    Route::get('/empresanit/{id}',[\App\Http\Controllers\EmpresaController::class,'empresanit']); //CRUD de Empresa;
+    Route::apiResource('/sociedad',\App\Http\Controllers\SociedadController::class); //CRUD de SociedadAccidental;
+    Route::get('/sociedadcodigo/{id}',[\App\Http\Controllers\SociedadController::class,'sociedadcodigo']); //CRUD de SociedadAccidental;
+    Route::get('/userci/{id}',[\App\Http\Controllers\UserController::class,'userci']); //CRUD de Personas;
 
-   Route::put('empresaSociedad/{sociedad}',[\App\Http\Controllers\SociedadController::class,'empresaSociedad']); //CRUD de SociedadAccidental;
-   Route::put('empresasociedaddetach/{sociedad}',[\App\Http\Controllers\SociedadController::class,'empresasociedaddetach']); //CRUD de SociedadAccidental;
+    Route::put('empresaSociedad/{sociedad}',[\App\Http\Controllers\SociedadController::class,'empresaSociedad']); //CRUD de SociedadAccidental;
+    Route::put('empresasociedaddetach/{sociedad}',[\App\Http\Controllers\SociedadController::class,'empresasociedaddetach']); //CRUD de SociedadAccidental;
 
-   //proyecto
-  Route::apiResource('proyectos',\App\Http\Controllers\ProyectoController::class); //CRUD de proyectos;
-  Route::apiResource('programas',\App\Http\Controllers\ProgramaController::class); //CRUD de SociedadAccidental;
-  Route::apiResource('departamentos',\App\Http\Controllers\DepartamentoController::class); //CRUD de departamentos;
-  Route::apiResource('tipos',\App\Http\Controllers\TipoController::class); //CRUD de SociedadAccidental;
-  Route::apiResource('codigos',\App\Http\Controllers\CodigoController::class); //CRUD de SociedadAccidental;
-  Route::get('/codigofound/{id}',[\App\Http\Controllers\CodigoController::class,'codigofound']); //CRUD de SociedadAccidental;
-  Route::put('codigoproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'codigoproyectos']); //CRUD de SociedadAccidental;
-  Route::put('codigoproyectos1/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'codigoproyectos1']); //CRUD de SociedadAccidental;
-  Route::put('personaproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'personaproyectos']); //CRUD de SociedadAccidental;
-  Route::put('personaproyectosdetach/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'personaproyectosdetach']); //CRUD de SociedadAccidental;
+    //proyecto
+    Route::apiResource('proyectos',\App\Http\Controllers\ProyectoController::class); //CRUD de proyectos;
+    Route::apiResource('programas',\App\Http\Controllers\ProgramaController::class); //CRUD de SociedadAccidental;
+    Route::apiResource('departamentos',\App\Http\Controllers\DepartamentoController::class); //CRUD de departamentos;
+    Route::apiResource('tipos',\App\Http\Controllers\TipoController::class); //CRUD de SociedadAccidental;
+    Route::apiResource('codigos',\App\Http\Controllers\CodigoController::class); //CRUD de SociedadAccidental;
+    Route::get('/codigofound/{id}',[\App\Http\Controllers\CodigoController::class,'codigofound']); //CRUD de SociedadAccidental;
+    Route::put('codigoproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'codigoproyectos']); //CRUD de SociedadAccidental;
+    Route::put('codigoproyectos1/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'codigoproyectos1']); //CRUD de SociedadAccidental;
+    Route::put('personaproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'personaproyectos']); //CRUD de SociedadAccidental;
+    Route::put('personaproyectosdetach/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'personaproyectosdetach']); //CRUD de SociedadAccidental;
 
-  Route::put('empresaproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'empresaproyectos']); //CRUD de SociedadAccidental;
-  Route::put('empresaproyectosdetach/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'empresaproyectosdetach']); //CRUD de SociedadAccidental;
+    Route::put('empresaproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'empresaproyectos']); //CRUD de SociedadAccidental;
+    Route::put('empresaproyectosdetach/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'empresaproyectosdetach']); //CRUD de SociedadAccidental;
 
-  Route::put('sociedadproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'sociedadproyectos']); //CRUD de SociedadAccidental;
-  Route::put('sociedadproyectosdetach/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'sociedadproyectosdetach']); //CRUD de SociedadAccidental;
+    Route::put('sociedadproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'sociedadproyectos']); //CRUD de SociedadAccidental;
+    Route::put('sociedadproyectosdetach/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'sociedadproyectosdetach']); //CRUD de SociedadAccidental;
   //funcionario
   Route::put('funcionarioproyectos/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'funcionarioproyectos']); //CRUD de SociedadAccidental;
   Route::put('funcionarioproyectosdetach/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'funcionarioproyectosdetach']); //CRUD de SociedadAccidental;
@@ -96,17 +94,19 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   Route::post('getContrato/{archivo}',[\App\Http\Controllers\ArchivoController::class,'getContrato']);
 
   Route::apiResource('/archivos',\App\Http\Controllers\ArchivoController::class);
+  Route::get('proyectoslibre',[\App\Http\Controllers\ProyectoController::class,'proyectoslibre'])->name('proyectoslibre'); //CRUD de proyectos;
+  Route::get('/proyectoid/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'proyectoid'])->name('proyectoid'); //un solo proyecto
 
-   // contrato
-   Route::put('personacontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'personacontratos']); //CRUD de SociedadAccidental;
-   Route::put('personacontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'personacontratosdetach']); //CRUD de SociedadAccidental;
+  // contrato
+  Route::put('personacontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'personacontratos']); //CRUD de SociedadAccidental;
+  Route::put('personacontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'personacontratosdetach']); //CRUD de SociedadAccidental;
 
-   Route::put('empresacontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'empresacontratos']); //CRUD de SociedadAccidental;
-   Route::put('empresacontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'empresacontratosdetach']); //CRUD de SociedadAccidental;
+  Route::put('empresacontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'empresacontratos']); //CRUD de SociedadAccidental;
+  Route::put('empresacontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'empresacontratosdetach']); //CRUD de SociedadAccidental;
 
-   Route::put('sociedadcontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'sociedadcontratos']); //CRUD de SociedadAccidental;
-   Route::put('sociedadcontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'sociedadcontratosdetach']); //CRUD de SociedadAccidental;
-   //dependiente  con categoria
+  Route::put('sociedadcontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'sociedadcontratos']); //CRUD de SociedadAccidental;
+  Route::put('sociedadcontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'sociedadcontratosdetach']); //CRUD de SociedadAccidental;
+  //dependiente  con categoria
    Route::put('dependientecontratos/{contrato}',[\App\Http\Controllers\ContratoController::class,'dependientecontratos']); //CRUD de SociedadAccidental;
    Route::put('dependientecontratosdetach/{contrato}',[\App\Http\Controllers\ContratoController::class,'dependientecontratosdetach']); //CRUD de SociedadAccidental;
 
@@ -130,6 +130,12 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   Route::put('registrouser/{registro}',[\App\Http\Controllers\RegistroController::class,'registrouser']);
   Route::put('registrouserdetach/{registro}',[\App\Http\Controllers\RegistroController::class,'registrouserdetach']);
 
+  Route::put('registroevaluacion/{registro}',[\App\Http\Controllers\RegistroController::class,'registroevaluacion']);
+  Route::put('registroevaluaciondetach/{registro}',[\App\Http\Controllers\RegistroController::class,'registroevaluaciondetach']);
+
+  Route::put('registrocomunidad/{registro}',[\App\Http\Controllers\RegistroController::class,'registrocomunidad']);
+  Route::put('registrocomunidaddetach/{registro}',[\App\Http\Controllers\RegistroController::class,'registrocomunidaddetach']);
+  Route::apiResource('registroevaluacion',\App\Http\Controllers\RegistroevaluacionController::class);
 
 });
 

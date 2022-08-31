@@ -589,7 +589,7 @@ export default {
          this.$q.loading.show();
          this.municipios=[]
        this.$api.get(process.env.API+"/municipioid/"+this.$store.state.login.user.ci).then((res)=>{
-       console.log(res.data)
+      // console.log(res.data)
         this.totalmunicipios=res.data
             res.data.forEach((it)=>{
               this.municipios.push({ label:(it.municipio).toUpperCase(),value:it.id})

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Registro;
 use App\Models\User;
+use App\Models\Evaluacion;
+use App\Models\Comunidad;
 use Illuminate\Http\Request;
 
 class RegistroController extends Controller
@@ -102,6 +104,25 @@ class RegistroController extends Controller
      public function registrouserdetach(Request $request,Registro $registro){
         $user= User::find($request->id);
         $registro->users()->detach($user->id);
+     }
+     public function registroevaluacion(Request $request,Registro $registro){
+        $evaluacion= Evaluacion::find($request->id);
+        $registro->evaluacions()->attach($evaluacion,['descripcion'=>$request->descripcion,'presenta'=>$request->presenta,'nombre'=>$request->nombre,'puntaje'=>$request->puntaje]);
+        return \response()->json(['res'=> true, 'message'=>'adicionado correctamente'],200);
+     }
+     public function registroevaluaciondetach(Request $request,Registro $registro){
+        $evaluacion= Evaluacion::find($request->id);
+        $registro->evaluacions()->detach($evaluacion->id);
+
+     }
+     public function registrocomunidad(Request $request,Registro $registro){
+        $comunidad= Comunidad::find($request->id);
+        $registro->comunidads()->attach($comunidad);
+        return \response()->json(['res'=> true, 'message'=>'adicionado correctamente'],200);
+     }
+     public function registrocomunidaddetach(Request $request,Registro $registro){
+        $comunidad= Comunidad::find($request->id);
+        $registro->comunidads()->detach($comunidad->id);
 
      }
 }

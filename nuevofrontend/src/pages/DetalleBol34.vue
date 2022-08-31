@@ -200,7 +200,7 @@
             </div>
              </div>
             <div>
-              <q-btn label="Crear" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
             </div>
           </q-form>
@@ -216,46 +216,44 @@
         </q-card-section>
 
         <q-card-section class="q-pt-xs">
-          <q-form @submit="onMod1" class="q-gutter-md">
-
-
-
+          <q-form @submit="onMod5" class="q-gutter-md">
+            <q-input
+              outlined
+              v-model="dato.carta_cite"
+              type="text"
+               label="Nombre del CITE DEL INFORME"
+              hint="Ingresar el CITE DEL INFORME (sacar del SIGEC)"
+            />
              <q-input
               outlined
-              v-model="dato.nombre"
+              v-model="dato.carta_a"
               type="text"
-              label="Nombre del proyecto"
-              hint="Ingresar Nombre del Proyecto"
-              lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+              label="Nombre del GERENTE DE PROGRAMAS Y PROYECTOS"
+              hint="Ingresar Nombre del GERENTE DE PROGRAMAS Y PROYECTOS"
             />
              <q-input
                   outlined
                   type="text"
-                  v-model="dato.codigo"
-                    label="Codigo del proyecto "
-                  hint="Codigo del Proyecto VIPFE"
+                  v-model="dato.carta_via"
+                     label="Nombre del GERENTE DEPARTAMENTAL"
+              hint="Ingresar Nombre del GERENTE DEPARTAMENTAL FPS "
                 />
             <q-input
               outlined
-              v-model="dato.cite"
+              v-model="dato.carta_cite"
               type="text"
-              label="CITE carta VIPFE"
-               hint="Ingresar CITE carta VIPFE"
+               label="Nombre del CITE DEL INFORME"
+              hint="Ingresar el CITE DEL INFORME (sacar del SIGEC)"
             />
              <q-input
               outlined
-              v-model="dato.interno"
+              v-model="dato.carta_ref"
               type="text"
-              label="Hoja de ruta FPS"
-              hint="Ingresar HOJA DE RUTA Del fps Nacional"
-              lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+              label="Referencia"
+              hint="Ingresar de REFERENCIA"
             />
-
-
             <div>
-              <q-btn label="Crear" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
             </div>
           </q-form>
@@ -271,31 +269,29 @@
         </q-card-section>
 
         <q-card-section class="q-pt-xs">
-               <div class="row" v-for="item in evaluaciones" :key="item.id">
+               <div class="row" v-for="item in evaluaciones" :key="item.id"  style="margin:0;padding:0 ">
                      <div class="col-6"  v-if="item.tipo===op">
-                          <q-card-section>
+                          <q-card-section style="background-color:#F2F3F4">
                           <div class="text-subtitle2">{{item.nombre}} : {{item.descripcion}}</div>
                         </q-card-section>
                      </div>
-                     <div class="col-1" v-if="item.tipo===op">
+                     <div class="col-1" v-if="item.tipo===op"   >
                       <div class="q-gutter-sm" dense>
-                            <q-radio  dense v-model="c1" val="SI" label="Cumple" />
-                            <q-radio dense v-model="c1" val="NO" label="NO Cumple" />
+                            <q-radio dense v-model="item.valor" val="SI" label="Cumple" />
+                            <q-radio dense v-model="item.valor" val="NO" label="NO Cumple" />
                       </div>
                      </div>
                      <div class="col-4"  v-if="item.tipo===op">
                       <q-input
                         outlined
-                        v-model="dato.total"
+                        v-model="item.descripcion1"
                         type="text"
                         label="Observacion"
-                        hint="Ingrese la observacion "
+                        hint="Ingrese la observacion"
                       />
-
-
                      </div>
                         <div class="col-1"  v-if="item.tipo===op">
-                          <q-btn
+                          <q-btn v-if="item.puntaje==='1.00'"
                         dense
                         round
                         flat
@@ -303,10 +299,18 @@
                         @click="guardar(item)"
                         icon="save"
                       ></q-btn>
+
+                          <q-btn v-else
+                        dense
+                        round
+                        flat
+                        color="green"
+                        @click="editar(item)"
+                        icon="save"
+                      ></q-btn>
+
                         </div>
                </div>
-
-
         </q-card-section>
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6"> No olvide llenar cada uno de los del Proyecto </div>
@@ -318,9 +322,6 @@
 </template>
 
 <script>
-import LoginVue from './Login.vue';
-
-
 const columna = [
   {
     name: 'titulo',
@@ -332,8 +333,6 @@ const columna = [
   { name: 'descripcion',   align:'lefth', label: 'Descripcion', field: 'descripcion' },
 
 ];
-
-
 export default {
   data: () => ({
     id: 145,
@@ -348,7 +347,6 @@ export default {
     dialog_form1:false,
     dialog_form234:false,
     dialog_form5:false,
-    categoria_municipal:"",
      departamentos:[],
       departamento:{},
       municipios:[],
@@ -361,9 +359,10 @@ export default {
       ingenieria:{},
       evaluaciones:[],
       totalmunicipios:[],
-      c1:"NO",
+      resultado:{},
       titulo:"",
       op:"",
+
 
   }),
   created() {},
@@ -401,25 +400,19 @@ export default {
          this.$q.loading.show();
 
        this.$api.get(process.env.API+"/evaluacions").then((res)=>{
-          console.log(res.data);
+       //  console.log(res.data);
           this.evaluaciones=res.data
-
-
-
-             this.$q.loading.hide();
+          this.$q.loading.hide();
        });
        },
-
     misdatos() {
       this.$q.loading.show();
       this.rows=[]
       this.$api
         .get(process.env.API + "/registroid/" + this.$route.params.id)
         .then((res) => {
-
           this.dato=res.data[0]
           console.log(res.data);
-
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
@@ -453,20 +446,137 @@ export default {
      this.dialog_form1=true;
     },
     view_form2(){
- this.titulo="CRITERIOS DE ELEGIBILIDAD"
- this.op="CRITERIO"
-     this.dialog_form234=true;
+              this.titulo="CRITERIOS DE ELEGIBILIDAD"
+              this.op="CRITERIO"
 
+                 this.dato.evaluacions.forEach(it => {
+                         if(it.nombre==="C-1"){
+                           this.evaluaciones[0].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[0].valor=it.pivot.presenta
+                           this.evaluaciones[0].puntaje=it.pivot.puntaje
+                         }
+                          if(it.nombre==="C-2"){
+                           this.evaluaciones[1].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[1].valor=it.pivot.presenta
+                           this.evaluaciones[1].puntaje=it.pivot.puntaje
+                         }
+                          if(it.nombre==="C-3"){
+                           this.evaluaciones[2].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[2].valor=it.pivot.presenta
+                           this.evaluaciones[2].puntaje=it.pivot.puntaje
+                         }
+                 })
+
+       this.dialog_form234=true;
     },
      view_form3(){
-this.titulo="REQUISITOS DEL PROYECTO"
-this.op="REQUISITO"
+          this.titulo="REQUISITOS DEL PROYECTO"
+          this.op="REQUISITO"
+           this.dato.evaluacions.forEach(it => {
+                         if(it.nombre==="R-1"){
+                           this.evaluaciones[3].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[3].valor=it.pivot.presenta
+                           this.evaluaciones[3].puntaje=it.pivot.puntaje
+
+                         }
+
+                          if(it.nombre==="R-2"){
+                           this.evaluaciones[4].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[4].valor=it.pivot.presenta
+                           this.evaluaciones[4].puntaje=it.pivot.puntaje
+                         }
+                          if(it.nombre==="R-3"){
+                           this.evaluaciones[5].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[5].valor=it.pivot.presenta
+                           this.evaluaciones[5].puntaje=it.pivot.puntaje
+                         }
+                          if(it.nombre==="R-4"){
+                           this.evaluaciones[6].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[6].valor=it.pivot.presenta
+                           this.evaluaciones[6].puntaje=it.pivot.puntaje
+                         }
+                          if(it.nombre==="R-5"){
+                           this.evaluaciones[7].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[7].valor=it.pivot.presenta
+                           this.evaluaciones[7].puntaje=it.pivot.puntaje
+                         }
+                          if(it.nombre==="R-6"){
+                           this.evaluaciones[8].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[8].valor=it.pivot.presenta
+                           this.evaluaciones[8].puntaje=it.pivot.puntaje
+                         }
+                          if(it.nombre==="R-7"){
+                           this.evaluaciones[9].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[9].valor=it.pivot.presenta
+                           this.evaluaciones[9].puntaje=it.pivot.puntaje
+                         }
+
+                 })
      this.dialog_form234=true;
-    },view_form4(){
-this.titulo="INGENIERIA DEL PROYECTO"
-this.op="INGENIERIA"
-     this.dialog_form234=true;
-    },view_form5(){
+    },
+    view_form4(){
+            this.titulo="INGENIERIA DEL PROYECTO"
+            this.op="INGENIERIA"
+              this.dato.evaluacions.forEach(it => {
+                         if(it.nombre==="I-1"){
+                           this.evaluaciones[10].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[10].valor=it.pivot.presenta
+                           this.evaluaciones[10].puntaje=it.pivot.puntaje
+                         }
+
+                          if(it.nombre==="I-2"){
+                           this.evaluaciones[11].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[11].valor=it.pivot.presenta
+                           this.evaluaciones[11].puntaje=it.pivot.puntaje
+                         }
+                          if(it.nombre==="I-3"){
+                           this.evaluaciones[12].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[12].valor=it.pivot.presenta
+                           this.evaluaciones[12].puntaje=it.pivot.puntaje
+                         }
+                         if(it.nombre==="I-4"){
+                           this.evaluaciones[13].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[13].valor=it.pivot.presenta
+                           this.evaluaciones[12].puntaje=it.pivot.puntaje
+                         }
+
+                          if(it.nombre==="I-5"){
+                           this.evaluaciones[14].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[14].valor=it.pivot.presenta
+                           this.evaluaciones[14].puntaje=it.pivot.puntaje
+                         }
+                          if(it.nombre==="I-6"){
+                           this.evaluaciones[15].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[15].valor=it.pivot.presenta
+                           this.evaluaciones[15].puntaje=it.pivot.puntaje
+                         }
+                         if(it.nombre==="I-7"){
+                           this.evaluaciones[16].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[16].valor=it.pivot.presenta
+                           this.evaluaciones[16].puntaje=it.pivot.puntaje
+                         }
+
+                          if(it.nombre==="I-8"){
+                           this.evaluaciones[17].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[17].valor=it.pivot.presenta
+                           this.evaluaciones[17].puntaje=it.pivot.puntaje
+                         }
+                          if(it.nombre==="I-9"){
+                           this.evaluaciones[18].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[18].valor=it.pivot.presenta
+                           this.evaluaciones[18].puntaje=it.pivot.puntaje
+                         }
+                          if(it.nombre==="I-10"){
+                           this.evaluaciones[19].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[19].valor=it.pivot.presenta
+                           this.evaluaciones[19].puntaje=it.pivot.puntaje
+                         }
+                 })
+
+
+            this.dialog_form234=true;
+    },
+    view_form5(){
       this.titulo="RESULTADOS DE EVALUACION"
       this.dialog_form5=true;
     },
@@ -478,10 +588,8 @@ this.op="INGENIERIA"
         this.totalmunicipios.forEach(it => {
             if((it.municipio).toUpperCase()===this.dato.municipio){
               this.dato.autoridad =it.municipio_codigo
-             // console.log(this.dato.autoridad);
             }
          })
-
       this.$q.loading.show();
       this.$api
         .put(process.env.API + "/registros/" + this.dato.id, this.dato)
@@ -499,9 +607,66 @@ this.op="INGENIERIA"
           this.$q.loading.hide();
         });
     },
+     onMod5() {
+      this.$q.loading.show();
+      this.$api
+        .put(process.env.API + "/registros/" + this.dato.id, this.dato)
+        .then((res) => {
+          if (res.data.res === true) {
+            this.$q.notify({
+              color: "green-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "Modificado correctamente",
+            });
+          }
+          this.dialog_form5 = false;
+          this.misdatos();
+          this.$q.loading.hide();
+        });
+    },
     guardar(item){
-      console.log(item);
-    }
+      console.log("esta guardando");
+      console.log(item)
+      if(item.valor==null){
+                this.$q.notify({
+                            color: "red-4",
+                            textColor: "white",
+                            icon: "cloud_done",
+                            message: "debe seleccionar SI 'CUMPLE' O 'NO CUMPLE'",
+                          });
+      }else if(item.descripcion1==null){
+                this.$q.notify({
+                            color: "red-4",
+                            textColor: "white",
+                            icon: "cloud_done",
+                            message: "debe colocar una descripcion'",
+                          });
+      }else {
+        this.resultado.presenta=item.valor;
+        this.resultado.descripcion=item.descripcion1;
+        this.resultado.id=item.id
+        this.resultado.tipo=item.tipo;
+        this.resultado.nombre=item.nombre;
+        this.resultado.puntaje=2
+        item.puntaje="2.00"
+        this.$api.put(process.env.API + "/registroevaluacion/"+this.dato.id,this.resultado).then((res) => {
+                    this.$q.notify({
+                            color: "green-4",
+                            textColor: "white",
+                            icon: "cloud_done",
+                            message: "Guardado Correctamente",
+                          });
+
+                          this.misdatos();
+                          // console.log(res.data)
+                          });
+      }
+    },
+      editar(item){
+        console.log("esta editando");
+       console.log(item);
+      },
 
 
   },

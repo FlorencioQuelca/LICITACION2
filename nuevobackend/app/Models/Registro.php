@@ -41,18 +41,17 @@ class Registro extends Model
         "vinculo",
         "departamento_id"
     ];
-
-
     protected $hidden =['created_at','updated_at'];
     //relacion uno a muchos inversa
     public function users(){
         return $this->belongsToMany(User::class);
     }
     public function evaluacions(){
-        return $this->belongsToMany(Evaluacion::class);
+        return $this->belongsToMany(Evaluacion::class)->withPivot(['nombre','descripcion','presenta','puntaje','id']);
+
     }
     public function comunidads(){
-        return $this->belongsToMany(Comunidad::class);
+        return $this->belongsToMany(Comunidad::class)->withPivot(['provincia']);
     }
     public function departamento(){
         return $this->belongsTo(Departamento::class);
