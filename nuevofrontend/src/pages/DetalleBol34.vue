@@ -657,7 +657,6 @@ export default {
                             icon: "cloud_done",
                             message: "Guardado Correctamente",
                           });
-
                           this.misdatos();
                           // console.log(res.data)
                           });
@@ -666,7 +665,32 @@ export default {
       editar(item){
         console.log("esta editando");
        console.log(item);
-      },
+         this.dato.evaluacions.forEach(it => {
+                if(it.nombre===item.nombre){
+                  console.log(it)
+                    this.resultado.nombre=item.nombre;
+                    item.puntaje="3.00"
+                    this.resultado.evaluacion_id=item.id
+                    this.resultado.registro_id=it.pivot.registro_id
+                    this.resultado.puntaje="3.00"
+                     this.resultado.descripcion=item.descripcion1
+                       this.resultado.presenta=item.valor
+                    this.resultado.tipo=it.tipo;
+
+                      this.$api.put(process.env.API+"/registroevaluacion1/"+it.pivot.id,this.resultado).then((res) => {
+                          this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Modificado correctamente",
+                        });
+                          this.misdatos();
+
+                        });
+
+                }
+         })
+      }
 
 
   },

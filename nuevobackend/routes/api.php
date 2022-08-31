@@ -135,7 +135,7 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
 
   Route::put('registrocomunidad/{registro}',[\App\Http\Controllers\RegistroController::class,'registrocomunidad']);
   Route::put('registrocomunidaddetach/{registro}',[\App\Http\Controllers\RegistroController::class,'registrocomunidaddetach']);
-  Route::apiResource('registroevaluacion',\App\Http\Controllers\RegistroevaluacionController::class);
+  Route::apiResource('registroevaluacion1',\App\Http\Controllers\RegistroevaluacionController::class);
 
 });
 

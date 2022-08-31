@@ -14,7 +14,9 @@ class Registroevaluacion extends Model
         "nombre",
         "descripcion",
         "presenta",
-        "calificacion"
+        "calificacion",
+        "tipo",
+        "puntaje",
 
     ];
     protected $hidden =['created_at','updated_at'];

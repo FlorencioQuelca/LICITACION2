@@ -47,7 +47,7 @@ class Registro extends Model
         return $this->belongsToMany(User::class);
     }
     public function evaluacions(){
-        return $this->belongsToMany(Evaluacion::class)->withPivot(['nombre','descripcion','presenta','puntaje','id']);
+        return $this->belongsToMany(Evaluacion::class)->withPivot(['nombre','descripcion','presenta','puntaje','id','tipo']);
 
     }
     public function comunidads(){

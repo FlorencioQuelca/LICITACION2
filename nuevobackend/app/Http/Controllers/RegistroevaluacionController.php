@@ -47,9 +47,17 @@ class RegistroevaluacionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Registroevaluacion $registroevaluacion)
+    public function update(Request $request, $id)
     {
-        $registroevaluacion->update($request->all());
+        // return true;
+
+
+       $registroevaluacion = Registroevaluacion::find($id);
+
+       $registroevaluacion->update($request->all());
+
+       return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
+
     }
 
     /**

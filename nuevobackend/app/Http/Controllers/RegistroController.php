@@ -107,7 +107,7 @@ class RegistroController extends Controller
      }
      public function registroevaluacion(Request $request,Registro $registro){
         $evaluacion= Evaluacion::find($request->id);
-        $registro->evaluacions()->attach($evaluacion,['descripcion'=>$request->descripcion,'presenta'=>$request->presenta,'nombre'=>$request->nombre,'puntaje'=>$request->puntaje]);
+        $registro->evaluacions()->attach($evaluacion,['descripcion'=>$request->descripcion,'presenta'=>$request->presenta,'nombre'=>$request->nombre,'puntaje'=>$request->puntaje, 'tipo'=>$request->tipo]);
         return \response()->json(['res'=> true, 'message'=>'adicionado correctamente'],200);
      }
      public function registroevaluaciondetach(Request $request,Registro $registro){
