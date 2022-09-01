@@ -272,9 +272,9 @@
              <q-input
                   outlined
                   type="text"
-                  v-model="dato.mosca"
-                     label="Iniciales de su nombre"
-              hint="Ingresar Iniciales de su nombre"
+                  v-model="dato.vinculo"
+                     label="Realizo la inspeccion SI/NO"
+              hint="Ingresar SI/NO realizado la inspeccion"
                 />
             <q-input
               outlined
@@ -846,13 +846,13 @@ export default {
 
         let con1="De la revisión de la documentación concerniente a la solicitud de enlosetado del proyecto "+this.dato.nombre+" del Departamento de"+this.dato.departamento.nombre+" Chuquisaca y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se concluye:"
         let con2="1 De la solicitud del proyecto presentado por el GAM "+this.dato.nombre+" del municipio de "+this.dato.municipio+" del departamento de Chuquisaca es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles)"
-        let con3="2	El proyecto "+this.dato.nombre+" del departamento de "+this.dato.departamento.nombre+" "+this.dato.cumple+" con los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
+        let con3="2 El proyecto "+this.dato.nombre+" del departamento de "+this.dato.departamento.nombre+" "+this.dato.cumple+" con los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
         let rec1="De la verificación y evaluación realizada, se determina que el proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.dato.municipio+" del Departamento de "+this.dato.departamento.nombre+" presentado "+this.dato.cumple+" con los requisitos establecidos para su ejecución en el marco del ROP del programa BOL34/2021."
         let rec2="Por lo expuesto anteriormente se recomienda a Dirección General Ejecutiva del FPS poner a consideración del Ministerio de Planificación del Desarrollo (MPD) el presente informe de acuerdo al resultado de la verificación y evaluación del proyecto presentado del Departamento de "+this.dato.departamento.nombre+"."
         let rec3="Es todo cuanto podemos informar para los fines consiguientes."
-        let mosca="SJV/"+this.mosca
+        let mosca="SJV/"+this.dato.mosca
         let copia="C.c. Archivo Programa Bol-34/2021"
-        let adjunto="Se adjunta :"+this.dato.adjunto
+        let adjunto="Se adjunta : "+this.dato.adjunto
         let vinculo ="VINCULO H.R. Nº "+this.dato.interno
         let informe=this.dato.carta_cite+"."
         let fecha_informe=this.dato.carta_fecha+"."
@@ -907,9 +907,9 @@ export default {
              doc.line(30,134,190,134)
 
              doc.text("1. ANTECEDENTES", 35,140).setFontSize(12).setFont(undefined, 'normal');
-             doc.text(text1, 30,153,{maxWidth: 160,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
+             doc.text(text1, 30,148,{maxWidth: 160,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
 
-             doc.text("2. DESARROLLO", 35,182).setFontSize(12).setFont(undefined, 'normal');
+             doc.text("2. DESARROLLO", 35,187).setFontSize(12).setFont(undefined, 'normal');
              doc.text(text2, 30,193,{maxWidth: 160,align: "justify"})
              doc.text(text3, 40,205,{maxWidth: 150,align: "justify"})
              doc.text(text4, 40,225,{maxWidth: 150,align: "justify"})

@@ -17,7 +17,7 @@ class RegistroController extends Controller
      */
     public function index()
     {
-        return Registro::with(['departamento','users'])->orderByDesc('nro')->get();
+        return Registro::with(['departamento','users','evaluacions'])->orderByDesc('nro')->get();
       //  return Registro::all();
 
     }
@@ -26,6 +26,12 @@ class RegistroController extends Controller
                             ->orWhere('id', '=', $registro->id)->get();
 
         return \response()->json($registro,200);
+    }
+    public function registrados()
+    {
+        return Registro::with(['departamento','users','evaluacions'])->orderBy('nro')->get();
+      //  return Registro::all();
+
     }
 
 

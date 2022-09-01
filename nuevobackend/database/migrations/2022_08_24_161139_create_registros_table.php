@@ -56,9 +56,9 @@ class CreateRegistrosTable extends Migration
 
             //pie de pagina
             $table->string('mosca')->nullable();
-            $table->string('copia')->nullable();
+            $table->string('copia')->nullable();//  sin asignar
             $table->string('adjunto')->nullable();
-            $table->string('vinculo')->nullable();
+            $table->string('vinculo')->nullable();//  INSPECION?
                 ///asignado a
                ///  asignado al departamento de
             $table->unsignedBigInteger("departamento_id")->nullable();

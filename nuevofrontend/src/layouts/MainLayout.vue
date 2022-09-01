@@ -155,6 +155,14 @@
           <q-item-section>RegistroBol34</q-item-section>
         </q-item>
 
+          <q-item  v-if="$store.state.login.reportebol34"
+           clickable   active-class="my-menu-link" to="/ReporteBol34" exact>
+          <q-item-section avatar>
+            <q-icon color="teal" name="summarize" />
+          </q-item-section>
+          <q-item-section>ReporteBol34</q-item-section>
+        </q-item>
+
 
         <q-item  v-if="$store.getters['login/isLoggedIn']"
          clickable  @click="logout">

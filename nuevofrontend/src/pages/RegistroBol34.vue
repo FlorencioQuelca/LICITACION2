@@ -287,6 +287,7 @@
               outlined
               v-model="dato2.total"
               type="number"
+              step="0.01"
               label="Monto del proyecto"
               hint="Ingrese el Monto del Proyecto "
             />

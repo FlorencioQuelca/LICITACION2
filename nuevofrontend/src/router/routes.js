@@ -17,6 +17,7 @@ import Visitantes from "pages/Visitantes";
 import Reportes from "pages/Reporte_visitas";
 import RegistroBol34 from "pages/RegistroBol34";
 import DetalleBol34 from "pages/DetalleBol34";
+import ReporteBol34 from "pages/ReporteBol34";
 
 
 const routes = [
@@ -43,6 +44,7 @@ const routes = [
       { path: 'Visitantes', component: Visitantes,meta: { requiresAuth: true }},
       { path: 'Reportes', component: Reportes,meta: { requiresAuth: true }},
       { path: 'RegistroBol34', component: RegistroBol34,meta: { requiresAuth: true }},
+      { path: 'ReporteBol34', component: ReporteBol34,meta: { requiresAuth: true }},
       { path: '/DetalleBol34/:id/view',  name: 'DetalleBol34.view',component: DetalleBol34,meta: { requiresAuth: true}},
     ]
   },
