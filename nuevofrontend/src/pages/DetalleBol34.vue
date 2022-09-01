@@ -898,12 +898,12 @@ export default {
              doc.text(referencia, 65,105,{maxWidth: 125,align: "justify"})
              doc.text("FECHA", 35,130)
              doc.text("La Paz, "+fecha_informe, 65,130)
-             doc.line(30,140,190,140)
+             doc.line(30,136,190,136)
 
              doc.text("1. ANTECEDENTES", 35,145).setFontSize(12).setFont(undefined, 'normal');
              doc.text(text1, 30,153,{maxWidth: 160,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
 
-             doc.text("2. DESARROLLO", 35,185).setFontSize(12).setFont(undefined, 'normal');
+             doc.text("2. DESARROLLO", 35,187).setFontSize(12).setFont(undefined, 'normal');
              doc.text(text2, 30,193,{maxWidth: 160,align: "justify"})
              doc.text(text3, 40,205,{maxWidth: 150,align: "justify"})
              doc.text(text4, 40,225,{maxWidth: 150,align: "justify"})
@@ -947,9 +947,9 @@ export default {
              doc.text(c22presenta, 112,105,{maxWidth: 30,align: "justify"})
              doc.text(c33presenta, 112,120,{maxWidth: 30,align: "justify"})
 
-             doc.text(c11, 142,85,{maxWidth: 35,align: "justify"})
-             doc.text(c22, 142,105,{maxWidth: 35,align: "justify"})
-             doc.text(c33, 142,120,{maxWidth: 35,align: "justify"})
+             doc.text(c11, 142,85,{maxWidth: 44,align: "justify"})
+             doc.text(c22, 142,105,{maxWidth: 44,align: "justify"})
+             doc.text(c33, 142,120,{maxWidth: 44,align: "justify"})
 
              //CUADRO 2 HOJA 2
               doc.rect(30,145, 160,5)
@@ -966,7 +966,7 @@ export default {
             doc.text(r3, 32,226,{maxWidth: 75,align: "justify"})
 
             doc.text(r11, 112,157,{maxWidth: 75,align: "justify"})
-            doc.text(r22, 112,190,{maxWidth: 75,align: "justify"})
+            doc.text(r22, 112,180,{maxWidth: 75,align: "justify"})
             doc.text(r33, 112,226,{maxWidth: 75,align: "justify"})
    //hoja 3
             doc.addPage();
@@ -1070,7 +1070,7 @@ export default {
             doc.text('Web: www.fps.gob.bo – La Paz - Bolivia',85, 270)
              doc.setFontSize(12, 'bold').setFontSize(12).setFont(undefined, 'bold');
 
-             doc.text("3. CONCLUSIONES", 35,40).setFontSize(12).setFont(undefined, 'normal');
+             doc.text("3. CONCLUSIONES", 35,38).setFontSize(12).setFont(undefined, 'normal');
              doc.text(con1, 30,45,{maxWidth: 160,align: "justify"})
              doc.text(con2, 40,70,{maxWidth: 150,align: "justify"})
              doc.text(con3, 40,95,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
