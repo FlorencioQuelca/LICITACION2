@@ -655,8 +655,6 @@ export default {
         });
     },
     guardar(item){
-      console.log("esta guardando");
-      console.log(item)
       if(item.valor==null){
                 this.$q.notify({
                             color: "red-4",
@@ -691,11 +689,8 @@ export default {
       }
     },
       editar(item){
-        console.log("esta editando");
-       console.log(item);
          this.dato.evaluacions.forEach(it => {
                 if(it.nombre===item.nombre){
-                  console.log(it)
                     this.resultado.nombre=item.nombre;
                     item.puntaje="3.00"
                     this.resultado.evaluacion_id=item.id
@@ -753,13 +748,102 @@ export default {
         let i8="Planos Constructivos (planos de planta, detalles constructivos de las obras de arte, perfil longitudinal y transversal )"
         let i9="Especificaciones Técnicas."
         let i10="Informe Fotográfico (Que muestre las actividades a ser implementadas)"
+        let c11=""
+        let c11presenta=""
+        let c22=""
+        let c22presenta=""
+        let c33=""
+        let c33presenta=""
+        let r11=""
+        let r22=""
+        let r33=""
+        let r44=""
+        let r55=""
+        let r66=""
+        let r77=""
+        let i11=""
+        let i22=""
+        let i33=""
+        let i44=""
+        let i55=""
+        let i66=""
+        let i77=""
+        let i88=""
+        let i99=""
+        let i100=""
+        this.dato.evaluacions.forEach(it =>{
+                if(it.nombre==="C-1"){
+                  c11=it.pivot.descripcion
+                  c11presenta=it.pivot.presenta + " CUMPLE"
+                }
+                if(it.nombre==="C-2"){
+                  c22=it.pivot.descripcion
+                  c22presenta=it.pivot.presenta + " CUMPLE"
+                }
+                if(it.nombre==="C-3"){
+                  c33=it.pivot.descripcion
+                  c33presenta=it.pivot.presenta + " CUMPLE"
+                }
+                if(it.nombre==="R-1"){
+                  r11=it.pivot.descripcion
+                }
+                if(it.nombre==="R-2"){
+                  r22=it.pivot.descripcion
+                }
+                if(it.nombre==="R-3"){
+                  r33=it.pivot.descripcion
+                }
+                if(it.nombre==="R-4"){
+                  r44=it.pivot.descripcion
+                }
+                if(it.nombre==="R-5"){
+                  r55=it.pivot.descripcion
+                }
+                if(it.nombre==="R-6"){
+                  r66=it.pivot.descripcion
+                }
+                if(it.nombre==="R-7"){
+                  r77=it.pivot.descripcion
+                }
+
+                if(it.nombre==="I-1"){
+                  i11=it.pivot.descripcion
+                }
+                if(it.nombre==="I-2"){
+                  i22=it.pivot.descripcion
+                }
+                if(it.nombre==="I-3"){
+                  i33=it.pivot.descripcion
+                }
+                if(it.nombre==="I-4"){
+                  i44=it.pivot.descripcion
+                }
+                if(it.nombre==="I-5"){
+                  i55=it.pivot.descripcion
+                }
+                if(it.nombre==="I-6"){
+                  i66=it.pivot.descripcion
+                }
+                if(it.nombre==="I-7"){
+                  i77=it.pivot.descripcion
+                }
+                if(it.nombre==="I-8"){
+                  i88=it.pivot.descripcion
+                }
+                if(it.nombre==="I-9"){
+                  i99=it.pivot.descripcion
+                }
+                if(it.nombre==="I-10"){
+                  i100=it.pivot.descripcion
+                }
+        })
+
         let con1="De la revisión de la documentación concerniente a la solicitud de enlosetado del proyecto "+this.dato.nombre+" del Departamento de"+this.dato.departamento.nombre+" Chuquisaca y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se concluye:"
         let con2="1.	De la solicitud del proyecto presentado por el GAM "+this.dato.nombre+" del municipio de "+this.dato.municipio+"San Lucas del departamento de Chuquisaca es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles)"
         let con3="2.	El proyecto "+this.dato.nombre+" del departamento de "+this.dato.departamento.nombre+" "+this.dato.cumple+" con los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
         let rec1="De la verificación y evaluación realizada, se determina que el proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.dato.municipio+" del Departamento de "+this.dato.departamento.nombre+" presentado "+this.dato.cumple+" con los requisitos establecidos para su ejecución en el marco del ROP del programa BOL34/2021."
         let rec2="Por lo expuesto anteriormente se recomienda a Dirección General Ejecutiva del FPS poner a consideración del Ministerio de Planificación del Desarrollo (MPD) el presente informe de acuerdo al resultado de la verificación y evaluación del proyecto presentado del Departamento de "+this.dato.departamento.nombre+"."
         let rec3="Es todo cuanto podemos informar para los fines consiguientes."
-
         let mosca="SJV/VQ/CHP"
         let copia="C.c. Archivo Programa Bol-34/2021"
         let adjunto="Se adjunta 1 Carpeta (Fojas 269 y 1CD)"
@@ -767,6 +851,7 @@ export default {
         let informe=this.dato.carta_cite+"."
         let fecha_informe=this.dato.carta_fecha+"."
         let referencia="RESPUESTA A LA SOLICITUD DE EVALUACION Y VERIFICACION DE CONTENIDO PROYECTO: "+this.dato.nombre
+        let profesional="Ing. "+this.$store.state.login.user.name
 
 
         let doc = new jsPDF('portrait' ,null, 'letter');
@@ -790,7 +875,7 @@ export default {
              doc.text("Ing.Sergio Janco Vargas", 65,55)
              doc.text("Ing. Rosmery Santalla Acarapi", 65,68)
              doc.text("Ing.Rosmery Santalla Acarapi", 65,80)
-             doc.text("Ing. ", 65,93)
+             doc.text(profesional, 65,93)
              //PIE DE PAGINA
              doc.setFontSize(8, 'normal')
               doc.text('La Paz - Bolivia Oficina Departamental La Paz Av. Camacho esq. C. Colón Edif. Krsul Piso 8',60, 262)
@@ -810,33 +895,18 @@ export default {
              doc.text("DE:", 35,93)
              doc.text("REF:", 35,105)
 
-             doc.text(referencia, 65,105,{
-               maxWidth: 125,
-                      align: "justify"
-                    })
+             doc.text(referencia, 65,105,{maxWidth: 125,align: "justify"})
              doc.text("FECHA", 35,130)
              doc.text("La Paz, "+fecha_informe, 65,130)
              doc.line(30,140,190,140)
 
              doc.text("1. ANTECEDENTES", 35,145).setFontSize(12).setFont(undefined, 'normal');
-             doc.text(text1, 30,153,{
-               maxWidth: 160,
-                      align: "justify"
-                    }).setFontSize(12).setFont(undefined, 'bold');
+             doc.text(text1, 30,153,{maxWidth: 160,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
 
              doc.text("2. DESARROLLO", 35,185).setFontSize(12).setFont(undefined, 'normal');
-             doc.text(text2, 30,193,{
-               maxWidth: 160,
-                      align: "justify"
-                    })
-             doc.text(text3, 40,205,{
-                           maxWidth: 150,
-                      align: "justify"
-                    })
-             doc.text(text4, 40,225,{
-                       maxWidth: 150,
-                      align: "justify"
-                    })
+             doc.text(text2, 30,193,{maxWidth: 160,align: "justify"})
+             doc.text(text3, 40,205,{maxWidth: 150,align: "justify"})
+             doc.text(text4, 40,225,{maxWidth: 150,align: "justify"})
                     //hoja 2
             doc.addPage();
             doc.addImage(chacana, 'PNG', 25, 10, 20, 20);
@@ -854,11 +924,7 @@ export default {
             doc.setFontSize(9, 'bold')
             doc.text('Web: www.fps.gob.bo – La Paz - Bolivia',85, 270)
             doc.setFontSize(12, 'bold')
-              doc.text(text5, 30,40,{
-               maxWidth: 160,
-                      align: "justify"
-                    })
-
+              doc.text(text5, 30,40,{maxWidth: 160,align: "justify"})
                    //CUDARO  1 HOJA 2
              // doc.rect(30,75, 160,70)///70 corregir segun aldo de los datos
               doc.rect(30,75, 160,5)
@@ -871,21 +937,21 @@ export default {
               doc.rect(140,75, 50,25)
               doc.rect(140,75, 50,40)
               doc.rect(140,75, 50,65)
-            doc.setFontSize(10, 'bold')
-            doc.text('         CRITERIOS DE ELIGIBILIDAD                       Cumple/No cumple      OBSERVACIONES', 35, 79)
-             doc.text(c1, 32,85,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(c2, 32,105,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(c3, 32,120,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-              //CUADRO 2 HOJA 2
+             doc.setFontSize(10, 'bold')
+             doc.text('         CRITERIOS DE ELIGIBILIDAD                       Cumple/No cumple      OBSERVACIONES', 35, 79)
+             doc.text(c1, 32,85,{maxWidth: 75,align: "justify"})
+             doc.text(c2, 32,105,{maxWidth: 75,align: "justify"})
+             doc.text(c3, 32,120,{maxWidth: 75,align: "justify"})
+
+             doc.text(c11presenta, 112,85,{maxWidth: 30,align: "justify"})
+             doc.text(c22presenta, 112,105,{maxWidth: 30,align: "justify"})
+             doc.text(c33presenta, 112,120,{maxWidth: 30,align: "justify"})
+
+             doc.text(c11, 142,85,{maxWidth: 35,align: "justify"})
+             doc.text(c22, 142,105,{maxWidth: 35,align: "justify"})
+             doc.text(c33, 142,120,{maxWidth: 35,align: "justify"})
+
+             //CUADRO 2 HOJA 2
               doc.rect(30,145, 160,5)
               doc.rect(30,145, 80,30) // corregir 25
               doc.rect(30,145, 80,75)  //corregir 40
@@ -895,18 +961,13 @@ export default {
               doc.rect(110,145, 80,100)
             doc.setFontSize(10, 'bold')
             doc.text('         REQUISITOS DEL PROYECTO                                             OBSERVACION', 35, 149)
-             doc.text(r1, 32,157,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(r2, 32,190,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(r3, 32,226,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
+            doc.text(r1, 32,157,{maxWidth: 75,align: "justify"})
+            doc.text(r2, 32,190,{maxWidth: 75,align: "justify"})
+            doc.text(r3, 32,226,{maxWidth: 75,align: "justify"})
+
+            doc.text(r11, 112,157,{maxWidth: 75,align: "justify"})
+            doc.text(r22, 112,190,{maxWidth: 75,align: "justify"})
+            doc.text(r33, 112,226,{maxWidth: 75,align: "justify"})
    //hoja 3
             doc.addPage();
             doc.addImage(chacana, 'PNG', 25, 10, 20, 20);
@@ -933,23 +994,16 @@ export default {
               doc.rect(110,35, 80,40)
               doc.rect(110,35, 80,65)
               doc.rect(110,35, 80,85)
-            doc.setFontSize(10, 'bold')
-              doc.text(r4, 32,38,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(r5, 32,53,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(r6, 32,78,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(r7, 32,103,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
+              doc.setFontSize(10, 'bold')
+              doc.text(r4, 32,38,{maxWidth: 75,align: "justify"})
+              doc.text(r5, 32,53,{maxWidth: 75,align: "justify"})
+              doc.text(r6, 32,78,{maxWidth: 75,align: "justify"})
+              doc.text(r7, 32,103,{maxWidth: 75,align: "justify"})
+
+              doc.text(r44, 112,38,{maxWidth: 75,align: "justify"})
+              doc.text(r55, 112,53,{maxWidth: 75,align: "justify"})
+              doc.text(r66, 112,78,{maxWidth: 75,align: "justify"})
+              doc.text(r77, 112,103,{maxWidth: 75,align: "justify"})
 
                     //CUADRO 2 HOJA 3
               doc.rect(30,125, 160,5)  //corregir 40
@@ -976,46 +1030,27 @@ export default {
               doc.rect(110,125, 80,125)
             doc.setFontSize(10, 'bold')
               doc.text('         INGENIERIA DEL PROYECTO                                            OBSERVACION', 40, 129)
-             doc.text(i1, 32,133,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(i2, 32,148,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(i3, 32,178,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(i4, 32,188,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(i5, 32,193,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(i6, 32,203,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(i7, 32,213,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(i8, 32,223,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(i9, 32,238,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
-                      doc.text(i10, 32,243,{
-               maxWidth: 75,
-                      align: "justify"
-                    })
+             doc.text(i1, 32,133,{maxWidth: 75,align: "justify"})
+             doc.text(i2, 32,148,{maxWidth: 75,align: "justify"})
+             doc.text(i3, 32,178,{maxWidth: 75,align: "justify"})
+             doc.text(i4, 32,188,{maxWidth: 75,align: "justify"})
+             doc.text(i5, 32,193,{maxWidth: 75,align: "justify"})
+             doc.text(i6, 32,203,{maxWidth: 75,align: "justify"})
+             doc.text(i7, 32,213,{maxWidth: 75,align: "justify"})
+             doc.text(i8, 32,223,{maxWidth: 75,align: "justify"})
+             doc.text(i9, 32,238,{maxWidth: 75,align: "justify"})
+             doc.text(i10,32,243,{maxWidth: 75,align: "justify"})
+
+             doc.text(i11, 112,133,{maxWidth: 75,align: "justify"})
+             doc.text(i22, 112,148,{maxWidth: 75,align: "justify"})
+             doc.text(i33, 112,178,{maxWidth: 75,align: "justify"})
+             doc.text(i44, 112,188,{maxWidth: 75,align: "justify"})
+             doc.text(i55, 112,193,{maxWidth: 75,align: "justify"})
+             doc.text(i66, 112,203,{maxWidth: 75,align: "justify"})
+             doc.text(i77, 112,213,{maxWidth: 75,align: "justify"})
+             doc.text(i88, 112,223,{maxWidth: 75,align: "justify"})
+             doc.text(i99, 112,238,{maxWidth: 75,align: "justify"})
+             doc.text(i100,112,243,{maxWidth: 75,align: "justify"})
 
                     //hoja 4
             doc.addPage();
@@ -1036,32 +1071,14 @@ export default {
              doc.setFontSize(12, 'bold').setFontSize(12).setFont(undefined, 'bold');
 
              doc.text("3. CONCLUSIONES", 35,40).setFontSize(12).setFont(undefined, 'normal');
-             doc.text(con1, 30,45,{
-               maxWidth: 160,
-                      align: "justify"
-                    })
-             doc.text(con2, 40,70,{
-               maxWidth: 150,
-                      align: "justify"
-                    })
-             doc.text(con3, 40,95,{
-               maxWidth: 150,
-                      align: "justify"
-                    }).setFontSize(12).setFont(undefined, 'bold');
+             doc.text(con1, 30,45,{maxWidth: 160,align: "justify"})
+             doc.text(con2, 40,70,{maxWidth: 150,align: "justify"})
+             doc.text(con3, 40,95,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
 
              doc.text("4. RECOMENDACIONES", 35,120).setFontSize(12).setFont(undefined, 'normal');
-             doc.text(rec1, 30,130,{
-               maxWidth: 160,
-                      align: "justify"
-                    })
-             doc.text(rec2, 30,155,{
-               maxWidth: 160,
-                      align: "justify"
-                    })
-             doc.text(rec3, 30,180,{
-               maxWidth: 160,
-                      align: "justify"
-                    }).setFontSize(8).setFont(undefined, 'normal');
+             doc.text(rec1, 30,130,{maxWidth: 160,align: "justify"})
+             doc.text(rec2, 30,155,{maxWidth: 160,align: "justify"})
+             doc.text(rec3, 30,180,{maxWidth: 160,align: "justify"}).setFontSize(8).setFont(undefined, 'normal');
 
 
                doc.text(mosca, 30,220)
