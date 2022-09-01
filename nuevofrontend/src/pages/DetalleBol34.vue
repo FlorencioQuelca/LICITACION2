@@ -52,13 +52,14 @@
                 separator="cell"
                 :rows-per-page-options="[0]"
                 hide-bottom
+                dense
               >
               </q-table>
 
           </div>
 
               <div class=" q-pa-md  col-4"  style=" display: flex; flex-direction:column;  justify-content:center">
-                 <div class="row">
+                 <div class="row" >
                       <div class="col" >
                        <q-btn icon="looks_one" label="Datos Generales" stack glossy @click="view_form1" color="purple" style="width:200px" />
                         </div>
@@ -109,9 +110,33 @@
                      </div>
                    </div>
 
-        <div class="row">
+                  <div class="row">
                       <div class="col">
-                       <q-btn icon="looks_5" label="RESULTADOS DE EVALUACION" stack glossy @click="view_form5" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
+                       <q-btn icon="looks_5" label="VARIACION POSITIVA O NEGATIVA" stack glossy @click="view_form5" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
+                        </div>
+                        <div class="col">
+                         <q-linear-progress size="50px" :value="progress2" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
+                        <div class="absolute-full flex flex-center">
+                          <q-badge color="white" text-color="accent" :label="progressLabel2" />
+                        </div>
+                        </q-linear-progress>
+                     </div>
+                   </div>
+                  <div class="row">
+                      <div class="col">
+                       <q-btn icon="looks_6" label="RESULTADOS DE EVALUACION" stack glossy @click="view_form6" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
+                        </div>
+                        <div class="col">
+                         <q-linear-progress size="50px" :value="progress2" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
+                        <div class="absolute-full flex flex-center">
+                          <q-badge color="white" text-color="accent" :label="progressLabel2" />
+                        </div>
+                        </q-linear-progress>
+                     </div>
+                   </div>
+                     <div class="row">
+                      <div class="col">
+                       <q-btn icon="brightness_7" label="EVALUACION EN CAMPO" stack glossy @click="view_form7" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
                         </div>
                         <div class="col">
                          <q-linear-progress size="50px" :value="progress2" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
@@ -233,15 +258,22 @@
       </q-card>
     </q-dialog>
 
-      <!--          formulario 5   -->
-    <q-dialog v-model="dialog_form5">
+      <!--          formulario 6   -->
+    <q-dialog v-model="dialog_form6">
       <q-card style="max-width: 80%; width: 80%">
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6"><q-icon name="edit" /> {{titulo}}</div>
         </q-card-section>
 
         <q-card-section class="q-pt-xs">
-          <q-form @submit="onMod5" class="q-gutter-md">
+          <q-form @submit="onMod6" class="q-gutter-md">
+             <q-input
+              outlined
+              v-model="dato.copia"
+              type="text"
+               label="Nombre del CITE DEL INFORME"
+              hint="Importante!!! CASO EXCEPCIONAL "
+            />
             <q-input
               outlined
               v-model="dato.carta_cite"
@@ -249,14 +281,7 @@
                label="Nombre del CITE DEL INFORME"
               hint="Ingresar el CITE DEL INFORME (sacar del SIGEC)"
             />
-             <q-input
-              outlined
-              v-model="dato.carta_ref"
-              type="text"
-              label="Referencia"
-              hint="Ingresar de REFERENCIA"
-            />
-              <q-input
+                  <q-input
                   outlined
                   type="date"
                   v-model="dato.carta_fecha"
@@ -269,13 +294,6 @@
                label="Escriba CUMPLE/NO CUMPLE"
               hint="Ingresar la palabra Cumple/NO Cumple"
             />
-             <q-input
-                  outlined
-                  type="text"
-                  v-model="dato.vinculo"
-                     label="Realizo la inspeccion SI/NO"
-              hint="Ingresar SI/NO realizado la inspeccion"
-                />
             <q-input
               outlined
               v-model="dato.adjunto"
@@ -293,12 +311,12 @@
     </q-dialog>
 
  <!--          formularios 2,3,4 de evaluacion   -->
-    <q-dialog v-model="dialog_form234" persistent>
+    <q-dialog v-model="dialog_form2345" persistent>
       <q-card style="max-width: 80%; width: 80%">
         <q-card-section class="bg-green-14 text-white">
           <div style="display: flex; justify-content:space-between ">
           <div class="text-h6"><q-icon name="edit" /> {{titulo}}</div>
-          <q-btn label="GUARDAR" @click="refrescar" color="blue" icon="edit" />
+          <q-btn label="SALIR" @click="refrescar" color="blue" icon="close" />
           </div>
         </q-card-section>
 
@@ -311,8 +329,10 @@
                      </div>
                      <div class="col-1" v-if="item.tipo===op"   >
                       <div class="q-gutter-sm" dense>
-                            <q-radio dense v-model="item.valor" val="SI" label="Cumple" />
-                            <q-radio dense v-model="item.valor" val="NO" label="NO Cumple" />
+                            <q-radio v-if="item.tipo!='VARIACION'" dense v-model="item.valor" val="SI" label="Cumple" />
+                            <q-radio v-if="item.tipo!='VARIACION'" dense v-model="item.valor" val="NO" label="NO Cumple" />
+                            <q-radio  v-if="item.tipo==='VARIACION'" dense v-model="item.valor" val="SI" label="SI" />
+                            <q-radio  v-if="item.tipo==='VARIACION'" dense v-model="item.valor" val="NO" label="NO" />
                       </div>
                      </div>
                      <div class="col-4"  v-if="item.tipo===op">
@@ -352,11 +372,46 @@
       </q-card>
     </q-dialog>
 
+     <!--          formulario 7  -->
+    <q-dialog v-model="dialog_form7">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6"><q-icon name="edit" /> {{titulo}}</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onMod7" class="q-gutter-md">
+
+
+             <q-input
+                  outlined
+                  type="text"
+                  v-model="dato.vinculo"
+                     label="Realizo la inspeccion SI/NO"
+              hint="Ingresar SI/NO realizado la inspeccion"
+                />
+            <q-input
+              outlined
+              v-model="dato.observacion"
+              type="text"
+               label="Describir alguna observacion"
+              hint="Ingresar observaciones"
+            />
+            <div>
+              <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
   </div>
 </template>
 
 <script>
 import {jsPDF} from "jspdf";
+import moment, { now } from 'moment';
 const columna = [
   {
     name: 'titulo',
@@ -380,8 +435,9 @@ export default {
    // progressLabel2:(progress2*100).toFixed(2)+'%'
     progressLabel2:'0.3 %',
     dialog_form1:false,
-    dialog_form234:false,
-    dialog_form5:false,
+    dialog_form2345:false,
+    dialog_form6:false,
+    dialog_form7:false,
      departamentos:[],
       departamento:{},
       municipios:[],
@@ -502,7 +558,7 @@ export default {
                          }
                  })
 
-       this.dialog_form234=true;
+       this.dialog_form2345=true;
     },
      view_form3(){
           this.titulo="REQUISITOS DEL PROYECTO"
@@ -547,7 +603,7 @@ export default {
                          }
 
                  })
-     this.dialog_form234=true;
+     this.dialog_form2345=true;
     },
     view_form4(){
             this.titulo="INGENIERIA DEL PROYECTO"
@@ -609,11 +665,12 @@ export default {
                  })
 
 
-            this.dialog_form234=true;
+            this.dialog_form2345=true;
     },
     view_form5(){
-      this.titulo="RESULTADOS DE EVALUACION"
-      this.dialog_form5=true;
+      this.titulo="VARIACION POSITIVA O NEGATIVA "
+       this.op="VARIACION"
+      this.dialog_form2345=true;
     },
 
       onMod1() {
@@ -642,7 +699,7 @@ export default {
           this.$q.loading.hide();
         });
     },
-     onMod5() {
+     onMod6() {
       this.$q.loading.show();
       this.$api
         .put(process.env.API + "/registros/" + this.dato.id, this.dato)
@@ -655,7 +712,25 @@ export default {
               message: "Modificado correctamente",
             });
           }
-          this.dialog_form5 = false;
+          this.dialog_form6 = false;
+          this.misdatos();
+          this.$q.loading.hide();
+        });
+    },
+    onMod7() {
+      this.$q.loading.show();
+      this.$api
+        .put(process.env.API + "/registros/" + this.dato.id, this.dato)
+        .then((res) => {
+          if (res.data.res === true) {
+            this.$q.notify({
+              color: "green-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "Modificado correctamente",
+            });
+          }
+          this.dialog_form7 = false;
           this.misdatos();
           this.$q.loading.hide();
         });
@@ -725,7 +800,7 @@ export default {
         this.misDepartamentos()
     this.misMunicipios()
      this.mis_evaluaciones()
-        this.dialog_form234=false;
+        this.dialog_form2345=false;
       },
       imprimir(){
 
@@ -844,18 +919,21 @@ export default {
                 }
         })
 
-        let con1="De la revisión de la documentación concerniente a la solicitud de enlosetado del proyecto "+this.dato.nombre+" del Departamento de"+this.dato.departamento.nombre+" Chuquisaca y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se concluye:"
-        let con2="1 De la solicitud del proyecto presentado por el GAM "+this.dato.nombre+" del municipio de "+this.dato.municipio+" del departamento de Chuquisaca es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles)"
+        let con1="De la revisión de la documentación concerniente a la solicitud de enlosetado del proyecto "+this.dato.nombre+" del Departamento de "+this.dato.departamento.nombre+" y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se concluye:"
+        let con2="1 De la solicitud del proyecto presentado por el GAM "+this.dato.nombre+" del municipio de "+this.dato.municipio+" del departamento de "+this.dato.departamento.nombre+" es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles)"
         let con3="2 El proyecto "+this.dato.nombre+" del departamento de "+this.dato.departamento.nombre+" "+this.dato.cumple+" con los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
         let rec1="De la verificación y evaluación realizada, se determina que el proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.dato.municipio+" del Departamento de "+this.dato.departamento.nombre+" presentado "+this.dato.cumple+" con los requisitos establecidos para su ejecución en el marco del ROP del programa BOL34/2021."
         let rec2="Por lo expuesto anteriormente se recomienda a Dirección General Ejecutiva del FPS poner a consideración del Ministerio de Planificación del Desarrollo (MPD) el presente informe de acuerdo al resultado de la verificación y evaluación del proyecto presentado del Departamento de "+this.dato.departamento.nombre+"."
         let rec3="Es todo cuanto podemos informar para los fines consiguientes."
-        let mosca="SJV/"+this.dato.mosca
+        let gerente="Sergio Janco Vargas"
+        let gerente1="Rosmery Julia Santalla Acarapi"
+        let gerente2="Rosmery Julia Santalla Acarapi"
+        let mosca= this.mosca(gerente)+"/"+this.mosca(gerente1)+"/"+this.mosca(this.$store.state.login.user.name)
         let copia="C.c. Archivo Programa Bol-34/2021"
         let adjunto="Se adjunta : "+this.dato.adjunto
         let vinculo ="VINCULO H.R. Nº "+this.dato.interno
         let informe=this.dato.carta_cite+"."
-        let fecha_informe=this.dato.carta_fecha+"."
+
         let referencia="RESPUESTA A LA SOLICITUD DE EVALUACION Y VERIFICACION DE CONTENIDO PROYECTO: "+this.dato.nombre
         let profesional="Ing. "+this.$store.state.login.user.name
 
@@ -878,9 +956,9 @@ export default {
              doc.line(80,30,135,30)
              doc.setFontSize(12, 'normal')
              doc.text(informe, 78,45)
-             doc.text("Ing.Sergio Janco Vargas", 65,55)
-             doc.text("Ing. Rosmery Santalla Acarapi", 65,68)
-             doc.text("Ing.Rosmery Santalla Acarapi", 65,80)
+             doc.text("Ing. "+gerente, 65,55)
+             doc.text("Ing. "+gerente1, 65,68)
+             doc.text("Ing. "+gerente2, 65,80)
              doc.text(profesional, 65,93)
              //PIE DE PAGINA
              doc.setFontSize(8, 'normal')
@@ -903,7 +981,10 @@ export default {
 
              doc.text(referencia, 65,105,{maxWidth: 125,align: "justify"})
              doc.text("FECHA", 35,130)
-             doc.text("La Paz, "+fecha_informe, 65,130)
+            let fecha_informe=this.dato.carta_fecha==null ?  moment().format('YYYY-MM-DD') : this.dato.carta_fecha
+            let departamento=this.$store.state.login.user.status
+             const fechaDeCarta= this.fechalarga(fecha_informe,departamento)
+             doc.text(fechaDeCarta, 65,130)
              doc.line(30,134,190,134)
 
              doc.text("1. ANTECEDENTES", 35,140).setFontSize(12).setFont(undefined, 'normal');
@@ -972,7 +1053,16 @@ export default {
             doc.text(r3, 32,226,{maxWidth: 75,align: "justify"})
 
             doc.text(r11, 112,157,{maxWidth: 75,align: "justify"})
-            doc.text(r22, 112,180,{maxWidth: 75,align: "justify"})
+            let infraestructura="Infraestructura Bs. "+this.dato.monto1
+            let supervision ="Supervision Bs. "+this.dato.monto2
+            let total = "Total, Proyecto Bs. "+this.dato.monto3
+
+            doc.text("Presupuesto y Estructura de Financiamiento", 112,180,{maxWidth: 75,align: "left"})
+            doc.text(infraestructura, 120,185,{maxWidth: 75,align: "justify"})
+            doc.text(supervision, 120,190,{maxWidth: 75,align: "justify"})
+            doc.text(total, 120,195,{maxWidth: 75,align: "justify"})
+            doc.text(r22, 112,195,{maxWidth: 75,align: "justify"})
+
             doc.text(r33, 112,226,{maxWidth: 75,align: "justify"})
    //hoja 3
             doc.addPage();
@@ -1035,7 +1125,7 @@ export default {
               doc.rect(110,125, 80,115)
               doc.rect(110,125, 80,125)
             doc.setFontSize(10, 'bold')
-              doc.text('         INGENIERIA DEL PROYECTO                                            OBSERVACION', 40, 129)
+              doc.text('         INGENIERIA DEL PROYECTO(*)                                           OBSERVACION', 40, 129)
              doc.text(i1, 32,133,{maxWidth: 75,align: "justify"})
              doc.text(i2, 32,148,{maxWidth: 75,align: "justify"})
              doc.text(i3, 32,178,{maxWidth: 75,align: "justify"})
@@ -1083,6 +1173,10 @@ export default {
 
              doc.text("4. RECOMENDACIONES", 35,120).setFontSize(12).setFont(undefined, 'normal');
              doc.text(rec1, 30,130,{maxWidth: 160,align: "justify"})
+            //CASO EXCEPCIONAL
+
+
+             doc.text(rec2, 30,155,{maxWidth: 160,align: "justify"})
              doc.text(rec2, 30,155,{maxWidth: 160,align: "justify"})
              doc.text(rec3, 30,180,{maxWidth: 160,align: "justify"}).setFontSize(8).setFont(undefined, 'normal');
 
@@ -1094,7 +1188,51 @@ export default {
 
             doc.text('*', 214, 280) //milimetros
             doc.save("a4.pdf");
-      }
+      },
+      mosca(cadena){
+          let text=cadena.split(" ")
+          let ans=""
+          for(let i=0;i<text.length;i++){
+               ans+=text[i][0]
+          }
+          return ans
+      },
+      fechalarga(fecha, depa1){
+         let fecha1=fecha.split("-")
+         let depa=depa1.split(" ")
+         let ans=""
+          for(let i=0;i<depa.length;i++){
+               ans+=depa[i][0]
+               ans+=(depa[i].slice(1,depa[i].length)).toLowerCase()
+               ans+=" "
+          }
+         let meses={
+            1:"enero",
+            2:"febrero",
+            3:"marzo",
+            4:"abril",
+            5:"mayo",
+            6:"junio",
+            7:"julio",
+            8:"agosto",
+            9:"septiembre",
+            10:"octubre",
+            11:"noviembre",
+            12:"diciembre",
+         }
+
+         let answer=ans.trim()+", "+Number(fecha1[2])+" de "+meses[Number(fecha1[1])]+" de "+fecha1[0]
+    return answer
+      },
+        view_form6(){
+           this.titulo="RESULTADOS DE EVALUACION"
+      this.dialog_form6=true
+    },
+        view_form7(){
+      this.titulo="EVALUACION EN CAMPO"
+      this.dialog_form7=true;
+    },
+
   },
 };
 </script>

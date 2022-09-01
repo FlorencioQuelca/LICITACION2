@@ -73,7 +73,7 @@ const columns = [
   { name: 'nombre',required: true,align: "left", label: 'Nombre de la propuesta', field: 'nombre',sortable:true },
   { name: 'cite', align: "left",label: 'CITE', field: 'cite',sortable:true },
   { name: 'fecha', align: "center",label: 'Fecha', field: 'fecha',sortable:true },
-  { name: 'archivo', label: 'H.R.', field: 'archivo',sortable:true },
+  { name: 'archivo', label: 'N° Hoja de Ruta', field: 'archivo',sortable:true },
   { name: 'monto1', align:"right",label: 'Infraestructura', field: 'monto1',sortable:true },
   { name: 'monto2', align:"right",label: 'Supervision', field: 'monto2',sortable:true },
   { name: 'monto3', align:"right",label: 'Monto Total', field: 'monto3',sortable:true },
