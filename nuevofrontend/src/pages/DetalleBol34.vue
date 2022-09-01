@@ -43,7 +43,6 @@
                         class="q-mb-xs"
                       />
                       </div>
-
                 </div>
                   <q-table
                     class="my-sticky-header-column-table"
@@ -351,6 +350,7 @@
 </template>
 
 <script>
+import {jsPDF} from "jspdf";
 const columna = [
   {
     name: 'titulo',
@@ -727,14 +727,351 @@ export default {
         this.dialog_form234=false;
       },
       imprimir(){
-        this.$q.notify({
-                          color: "red-4",
-                          textColor: "white",
-                          icon: "cloud_done",
-                          message: "trabajando en ello",
-                        });
-      }
 
+        let text1="En atencíon a nota CITE: "+this.dato.cite+", mediante la cual se solicita realizar la verificacíon y avaluación de requisitos exigidos del proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.dato.municipio+" del departamento de "+this.dato.departamento.nombre+", mediante el Programa Nacional de Emergencia para la Generación de Empleo BOL34/2021; al respecto, tengo a bien informar el resultado de la evaluación y verificación del contenido del proyecto presentado.";
+        let text2="Según lo establecido en el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se menciona:";
+        let text3="•    Punto 1.2. Objetivos del Programa – componente I: Infraestructura y Supervisión de Obras, mediante el cual se financiará la ejecución de Obras de Infraestructura urbana – rural y la Supervisión de las obras de las siguientes tipologías: (i) Vial (enlosetado de vías vehiculares y peatonales) …"
+        let text4="•    Punto 2.3 Funciones y Responsabilidades de los Actores – inciso a.  – Ministerio de Planificación del Desarrollo (MPD); punto vi. Prioriza la ejecución de proyectos; comunicando al FPS mediante nota de atención, y envía copia de la misma a FONPLATA para su conocimiento.  y vii. Garantiza la gestión de los recursos para la ejecución de los Proyectos."
+        let text5="De la revisión a la documentación concerniente a la solicitud de enlosetado y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021. El proyecto "+this.dato.nombre+" del departamento de"+this.dato.departamento.nombre+" es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles), en este sentido el mismo se desarrolla de acuerdo al siguiente detalle:"
+        let c1="Debe beneficiar a la mayor cantidad de familias/juntas vecinales involucradas."
+        let c2="Proyecto que atienda a infraestructuras públicas de salud, educación y/o que se complementen con otras intervenciones realizadas con anterioridad."
+        let c3="El proyecto no debe encontrarse en áreas y/o zonas de riesgos naturales y geológicos que puedan comprometer a la infraestructura."
+        let r1="Solicitud de financiamiento del proyecto por las Juntas Vecinales y/o GAMs y/o GAIOCs u otras organizaciones sociales debidamente constituidas y reconocidas en el ordenamiento vigente (Personería Jurídica para J.V. y/o OTBs)"
+        let r2="Monto máximo por proyecto a ser financiado no podrá ser mayor a Bs 3.000.000.- (Tres Millones 00/100 bolivianos.) (De acuerdo a la convocatoria MPD)"
+        let r3="Certificación escrita de existencia de servicios (agua potable, alcantarillado sanitario, etc) por las empresas proveedoras o administradoras de estos servicios. A excepción de los Municipios con categoría “A” (según ROP numeral 2.5. punto vii)."
+        let r4="Acta de Consenso Social de las Organizaciones Sociales o Juntas Vecinales, para la ejecución del proyecto (De acuerdo a Usos y Costumbres)."
+        let r5="Acta de compromiso para la ejecución de cordones de acera por los beneficiarios y/o municipio. Los cordones de acera deberán estar concluidos previamente al inicio del proceso de contratación del proyecto. (según ROP numeral 2.5. punto v)."
+        let r6="Planimetría Aprobada por el GAM correspondiente de los lugares de intervención que permita la ejecución del proyecto donde se muestre ancho de vía y si corresponde ubicación de áreas verdes. A excepción de los municipios de categoría A. (según ROP numeral 2.5. punto iv)."
+        let r7="Acta de Compromiso para firmar el Convenio CTF /CFP por las Juntas Vecinales y/o GAMs y/o GAIOCs u otras organizaciones sociales."
+        let i1="Resumen Ejecutivo (Antecedentes, Justificación, Objetivos, Costo de Inversión, Ubicación Geográfica y tiempo de ejecución)"
+        let i2="Diagnóstico del proyecto /Estudio Socioeconómico (Considerando el alcance del proyecto, el mismo deberá contener un diagnóstico de situación actual, área de influencia del proyecto; características físicas, condiciones socioeconómicas de los beneficiarios)"
+        let i3="Localización (Croquis de Ubicación)"
+        let i4="Presupuesto General"
+        let i5="Precios Unitarios (Verificación de precios de los materiales acorde al lugar de intervención)"
+        let i6="Cómputos Métricos"
+        let i7="Cronograma de Ejecución."
+        let i8="Planos Constructivos (planos de planta, detalles constructivos de las obras de arte, perfil longitudinal y transversal )"
+        let i9="Especificaciones Técnicas."
+        let i10="Informe Fotográfico (Que muestre las actividades a ser implementadas)"
+        let con1="De la revisión de la documentación concerniente a la solicitud de enlosetado del proyecto "+this.dato.nombre+" del Departamento de"+this.dato.departamento.nombre+" Chuquisaca y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se concluye:"
+        let con2="1.	De la solicitud del proyecto presentado por el GAM "+this.dato.nombre+" del municipio de "+this.dato.municipio+"San Lucas del departamento de Chuquisaca es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles)"
+        let con3="2.	El proyecto "+this.dato.nombre+" del departamento de "+this.dato.departamento.nombre+" "+this.dato.cumple+" con los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
+        let rec1="De la verificación y evaluación realizada, se determina que el proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.dato.municipio+" del Departamento de "+this.dato.departamento.nombre+" presentado "+this.dato.cumple+" con los requisitos establecidos para su ejecución en el marco del ROP del programa BOL34/2021."
+        let rec2="Por lo expuesto anteriormente se recomienda a Dirección General Ejecutiva del FPS poner a consideración del Ministerio de Planificación del Desarrollo (MPD) el presente informe de acuerdo al resultado de la verificación y evaluación del proyecto presentado del Departamento de "+this.dato.departamento.nombre+"."
+        let rec3="Es todo cuanto podemos informar para los fines consiguientes."
+
+        let mosca="SJV/VQ/CHP"
+        let copia="C.c. Archivo Programa Bol-34/2021"
+        let adjunto="Se adjunta 1 Carpeta (Fojas 269 y 1CD)"
+        let vinculo ="VINCULO H.R. Nº "+this.dato.interno
+        let informe=this.dato.carta_cite+"."
+        let fecha_informe=this.dato.carta_fecha+"."
+        let referencia="RESPUESTA A LA SOLICITUD DE EVALUACION Y VERIFICACION DE CONTENIDO PROYECTO: "+this.dato.nombre
+
+
+        let doc = new jsPDF('portrait' ,null, 'letter');
+          let logofps = new Image();
+           logofps.src = 'logofps.png';
+          let chacanapiso = new Image();
+           chacanapiso.src = 'chacanapiso.png';
+          let chacana = new Image();
+           chacana.src = 'chacana.png';
+            doc.addImage(chacana, 'PNG', 25, 10, 20, 20);
+            doc.addImage(logofps, 'PNG', 175, 10, 28, 20);
+            doc.addImage(chacanapiso, 'PNG', 0, 184, 215, 96);
+               doc.setFont('times')
+             doc.setFontSize(10, 'normal')
+             doc.text('ESTADO PLURINACIONAL DE BOLIVIA', 75, 20)
+             doc.setFontSize(10, 'normal')
+             doc.text('FONDO NACIONAL DE INVERSION PRODUCTIVA Y SOCIAL', 63, 25)
+             doc.line(80,30,135,30)
+             doc.setFontSize(12, 'normal')
+             doc.text(informe, 78,45)
+             doc.text("Ing.Sergio Janco Vargas", 65,55)
+             doc.text("Ing. Rosmery Santalla Acarapi", 65,68)
+             doc.text("Ing.Rosmery Santalla Acarapi", 65,80)
+             doc.text("Ing. ", 65,93)
+             //PIE DE PAGINA
+             doc.setFontSize(8, 'normal')
+              doc.text('La Paz - Bolivia Oficina Departamental La Paz Av. Camacho esq. C. Colón Edif. Krsul Piso 8',60, 262)
+            doc.text('Of. 810 Telf. 2125454 - 2125482 Fax. 2110623',85, 266)
+            doc.setFontSize(9, 'bold')
+            doc.text('Web: www.fps.gob.bo – La Paz - Bolivia',85, 270)
+
+             doc.setFontSize(12,"bold")
+             doc.text('INFORME', 100,40)
+             doc.text("INFORME", 100,40,).setFontSize(12).setFont(undefined, 'bold');
+             doc.text("GERENTE DE PROGRAMAS Y PROYECTOS", 65,60)
+             doc.text("GERENTE DEPARTAMENTAL DE FPS LA PAZ", 65,73)
+             doc.text("JEFE DE UNIDAD TECNICA LA PAZ", 65,85)
+             doc.text("PROFESIONAL TECNICO FPS", 65,98)
+             doc.text("A:", 35,55)
+             doc.text("Vía:", 35,68)
+             doc.text("DE:", 35,93)
+             doc.text("REF:", 35,105)
+
+             doc.text(referencia, 65,105,{
+               maxWidth: 125,
+                      align: "justify"
+                    })
+             doc.text("FECHA", 35,130)
+             doc.text("La Paz, "+fecha_informe, 65,130)
+             doc.line(30,140,190,140)
+
+             doc.text("1. ANTECEDENTES", 35,145).setFontSize(12).setFont(undefined, 'normal');
+             doc.text(text1, 30,153,{
+               maxWidth: 160,
+                      align: "justify"
+                    }).setFontSize(12).setFont(undefined, 'bold');
+
+             doc.text("2. DESARROLLO", 35,185).setFontSize(12).setFont(undefined, 'normal');
+             doc.text(text2, 30,193,{
+               maxWidth: 160,
+                      align: "justify"
+                    })
+             doc.text(text3, 40,205,{
+                           maxWidth: 150,
+                      align: "justify"
+                    })
+             doc.text(text4, 40,225,{
+                       maxWidth: 150,
+                      align: "justify"
+                    })
+                    //hoja 2
+            doc.addPage();
+            doc.addImage(chacana, 'PNG', 25, 10, 20, 20);
+            doc.addImage(logofps, 'PNG', 175, 10, 28, 20);
+            doc.addImage(chacanapiso, 'PNG', 0, 184, 215, 96);
+            doc.setFont('times')
+            doc.setFontSize(10, 'normal')
+            doc.text('ESTADO PLURINACIONAL DE BOLIVIA', 75, 20)
+            doc.setFontSize(10, 'normal')
+            doc.text('FONDO NACIONAL DE INVERSION PRODUCTIVA Y SOCIAL', 63, 25)
+            doc.line(80,30,135,30)
+            doc.setFontSize(8, 'normal')
+            doc.text('La Paz - Bolivia Oficina Departamental La Paz Av. Camacho esq. C. Colón Edif. Krsul Piso 8',60, 262)
+            doc.text('Of. 810 Telf. 2125454 - 2125482 Fax. 2110623',85, 266)
+            doc.setFontSize(9, 'bold')
+            doc.text('Web: www.fps.gob.bo – La Paz - Bolivia',85, 270)
+            doc.setFontSize(12, 'bold')
+              doc.text(text5, 30,40,{
+               maxWidth: 160,
+                      align: "justify"
+                    })
+
+                   //CUDARO  1 HOJA 2
+             // doc.rect(30,75, 160,70)///70 corregir segun aldo de los datos
+              doc.rect(30,75, 160,5)
+              doc.rect(30,75, 80,25) // corregir 25
+              doc.rect(30,75, 80,40)  //corregir 40
+              doc.rect(30,75, 80,65)  //corregir 70
+              doc.rect(110,75, 30,25)
+              doc.rect(110,75, 30,40)
+              doc.rect(110,75, 30,65)
+              doc.rect(140,75, 50,25)
+              doc.rect(140,75, 50,40)
+              doc.rect(140,75, 50,65)
+            doc.setFontSize(10, 'bold')
+            doc.text('         CRITERIOS DE ELIGIBILIDAD                       Cumple/No cumple      OBSERVACIONES', 35, 79)
+             doc.text(c1, 32,85,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(c2, 32,105,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(c3, 32,120,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+              //CUADRO 2 HOJA 2
+              doc.rect(30,145, 160,5)
+              doc.rect(30,145, 80,30) // corregir 25
+              doc.rect(30,145, 80,75)  //corregir 40
+              doc.rect(30,145, 80,100)  //corregir 70
+              doc.rect(110,145, 80,30)
+              doc.rect(110,145, 80,75)
+              doc.rect(110,145, 80,100)
+            doc.setFontSize(10, 'bold')
+            doc.text('         REQUISITOS DEL PROYECTO                                             OBSERVACION', 35, 149)
+             doc.text(r1, 32,157,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(r2, 32,190,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(r3, 32,226,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+   //hoja 3
+            doc.addPage();
+            doc.addImage(chacana, 'PNG', 25, 10, 20, 20);
+            doc.addImage(logofps, 'PNG', 175, 10, 28, 20);
+            doc.addImage(chacanapiso, 'PNG', 0, 184, 215, 96);
+            doc.setFont('times')
+            doc.setFontSize(10, 'normal')
+            doc.text('ESTADO PLURINACIONAL DE BOLIVIA', 75, 20)
+            doc.setFontSize(10, 'normal')
+            doc.text('FONDO NACIONAL DE INVERSION PRODUCTIVA Y SOCIAL', 63, 25)
+            doc.line(80,30,135,30)
+            doc.setFontSize(8, 'normal')
+            doc.text('La Paz - Bolivia Oficina Departamental La Paz Av. Camacho esq. C. Colón Edif. Krsul Piso 8',60, 262)
+            doc.text('Of. 810 Telf. 2125454 - 2125482 Fax. 2110623',85, 266)
+            doc.setFontSize(9, 'bold')
+            doc.text('Web: www.fps.gob.bo – La Paz - Bolivia',85, 270)
+             //CUADRO 1 HOJA 3
+              doc.rect(30,35, 80,15) // corregir 25
+              doc.rect(30,35, 80,40)  //corregir 40
+              doc.rect(30,35, 80,65)  //corregir 70
+              doc.rect(30,35, 80,85)  //corregir 70
+
+              doc.rect(110,35, 80,15)
+              doc.rect(110,35, 80,40)
+              doc.rect(110,35, 80,65)
+              doc.rect(110,35, 80,85)
+            doc.setFontSize(10, 'bold')
+              doc.text(r4, 32,38,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(r5, 32,53,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(r6, 32,78,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(r7, 32,103,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+
+                    //CUADRO 2 HOJA 3
+              doc.rect(30,125, 160,5)  //corregir 40
+              doc.rect(30,125, 80,20) // corregir 25
+              doc.rect(30,125, 80,50)  //corregir 70
+              doc.rect(30,125, 80,60)
+              doc.rect(30,125, 80,65)
+              doc.rect(30,125, 80,75)
+              doc.rect(30,125, 80,85)
+              doc.rect(30,125, 80,95)
+              doc.rect(30,125, 80,110)
+              doc.rect(30,125, 80,115)
+              doc.rect(30,125, 80,125)
+
+              doc.rect(110,125, 80,20)
+              doc.rect(110,125, 80,50)
+              doc.rect(110,125, 80,60)
+              doc.rect(110,125, 80,65)
+              doc.rect(110,125, 80,75)
+              doc.rect(110,125, 80,85)
+              doc.rect(110,125, 80,95)
+              doc.rect(110,125, 80,110)
+              doc.rect(110,125, 80,115)
+              doc.rect(110,125, 80,125)
+            doc.setFontSize(10, 'bold')
+              doc.text('         INGENIERIA DEL PROYECTO                                            OBSERVACION', 40, 129)
+             doc.text(i1, 32,133,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(i2, 32,148,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(i3, 32,178,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(i4, 32,188,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(i5, 32,193,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(i6, 32,203,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(i7, 32,213,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(i8, 32,223,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(i9, 32,238,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+                      doc.text(i10, 32,243,{
+               maxWidth: 75,
+                      align: "justify"
+                    })
+
+                    //hoja 4
+            doc.addPage();
+            doc.addImage(chacana, 'PNG', 25, 10, 20, 20);
+            doc.addImage(logofps, 'PNG', 175, 10, 28, 20);
+            doc.addImage(chacanapiso, 'PNG', 0, 184, 215, 96);
+            doc.setFont('times')
+            doc.setFontSize(10, 'normal')
+            doc.text('ESTADO PLURINACIONAL DE BOLIVIA', 75, 20)
+            doc.setFontSize(10, 'normal')
+            doc.text('FONDO NACIONAL DE INVERSION PRODUCTIVA Y SOCIAL', 63, 25)
+            doc.line(80,30,135,30)
+            doc.setFontSize(8, 'normal')
+             doc.text('La Paz - Bolivia Oficina Departamental La Paz Av. Camacho esq. C. Colón Edif. Krsul Piso 8',60, 262)
+            doc.text('Of. 810 Telf. 2125454 - 2125482 Fax. 2110623',85, 266)
+            doc.setFontSize(9, 'bold')
+            doc.text('Web: www.fps.gob.bo – La Paz - Bolivia',85, 270)
+             doc.setFontSize(12, 'bold').setFontSize(12).setFont(undefined, 'bold');
+
+             doc.text("3. CONCLUSIONES", 35,40).setFontSize(12).setFont(undefined, 'normal');
+             doc.text(con1, 30,45,{
+               maxWidth: 160,
+                      align: "justify"
+                    })
+             doc.text(con2, 40,70,{
+               maxWidth: 150,
+                      align: "justify"
+                    })
+             doc.text(con3, 40,95,{
+               maxWidth: 150,
+                      align: "justify"
+                    }).setFontSize(12).setFont(undefined, 'bold');
+
+             doc.text("4. RECOMENDACIONES", 35,120).setFontSize(12).setFont(undefined, 'normal');
+             doc.text(rec1, 30,130,{
+               maxWidth: 160,
+                      align: "justify"
+                    })
+             doc.text(rec2, 30,155,{
+               maxWidth: 160,
+                      align: "justify"
+                    })
+             doc.text(rec3, 30,180,{
+               maxWidth: 160,
+                      align: "justify"
+                    }).setFontSize(8).setFont(undefined, 'normal');
+
+
+               doc.text(mosca, 30,220)
+               doc.text(copia, 30,224)
+               doc.text(adjunto, 30,228)
+               doc.text(vinculo, 30,232)
+
+            doc.text('*', 214, 280) //milimetros
+            doc.save("a4.pdf");
+      }
   },
 };
 </script>
