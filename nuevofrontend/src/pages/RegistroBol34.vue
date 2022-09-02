@@ -290,7 +290,7 @@
             </div>
              </div>
             <div>
-              <q-btn label="Crear" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Modificar" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
             </div>
           </q-form>
@@ -334,7 +334,7 @@
                   dense
                 >
                   <template v-slot:body="props">
-                    <q-tr :props="props">
+                    <q-tr  :props="props">
                       <q-td key="email" :props="props">
                         {{ props.row.email }}
                       </q-td>
@@ -559,6 +559,7 @@ export default {
        },
         misdatos(){
          this.$q.loading.show();
+           this.data=[]
            this.$api.get(process.env.API+"/registros").then((res)=>{
               res.data.forEach(it=>{
                        if(this.$store.state.login.user.status===it.departamento.nombre){
@@ -567,7 +568,7 @@ export default {
               })
 
           // this.data=res.data
-          console.log(this.data)
+     //     console.log(this.data)
           this.$q.loading.hide();
        });
        },

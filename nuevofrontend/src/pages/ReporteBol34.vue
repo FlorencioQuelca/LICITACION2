@@ -108,6 +108,7 @@ export default {
        //    this.data=res.data
 
       //    this.$q.loading.hide();
+        this.data=[]
        this.$api.get(process.env.API+"/registrados").then((res)=>{
         res.data.forEach(it=>{
                        if(this.$store.state.login.user.status===it.departamento.nombre){

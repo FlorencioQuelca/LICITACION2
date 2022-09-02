@@ -514,11 +514,11 @@ export default {
         .then((res) => {
           this.dato=res.data[0]
          //this.datocopia=this.dato.evaluacions
-          //console.log(this.datocopia);
+        //  console.log(this.dato);
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
-         // this.rows.push({titulo:"Comunidades : ", descripcion: res.data[0].comunidades})
+         this.rows.push({titulo:"Comunidades  o Distritos: ", descripcion: res.data[0].comunidades})
           this.rows.push({titulo:"Cite VIFFE : ", descripcion: res.data[0].cite})
           this.rows.push({titulo:"H.R. FPS: ", descripcion: res.data[0].interno})
           this.rows.push({titulo:"Codigo : ", descripcion: res.data[0].codigo})
@@ -528,7 +528,7 @@ export default {
           this.rows.push({titulo:"Total : ", descripcion: res.data[0].total})
           this.rows.push({titulo:"Fecha de Ingreso : ", descripcion: res.data[0].fecha})
           //this.rows.push({titulo:"Puntaje de Evaluacion : ", descripcion: res.data[0].total})
-          this.rows.push({titulo:"Proyecto Cumple/ Es elegible : ", descripcion: res.data[0].cumple})
+          this.rows.push({titulo:"Proyecto Cumple/ Es elegible? : ", descripcion: res.data[0].cumple})
           this.rows.push({titulo:"Se realizo la Inspecion : ", descripcion: res.data[0].vinculo})
           this.rows.push({titulo:"fecha de inspeccion : ", descripcion: res.data[0].copia})
           this.rows.push({titulo:"Fecha de Envio de Informe : ", descripcion: res.data[0].carta_fecha})
@@ -544,8 +544,8 @@ export default {
              if(it.nombre==="C-3"){cr++}
              if(it.nombre==="R-1"){req++}
              if(it.nombre==="R-2"){req++}
+             if(it.nombre==="R-3"){req++}
              if(it.nombre==="R-4"){req++}
-             if(it.nombre==="R-5"){req++}
              if(it.nombre==="R-5"){req++}
              if(it.nombre==="R-6"){req++}
              if(it.nombre==="R-7"){req++}
@@ -571,7 +571,7 @@ export default {
          this.progressLabel5=(this.progress5*100).toFixed(2)+"%"
 
 
-         if(this.dato.vinculo!=="NO"){
+         if(this.dato.vinculo!=="NO" && this.dato.vinculo!=null){
            this.progress7=1
             this.progressLabel7=(this.progress7*100).toFixed(2)+"%"
           }else{
@@ -579,14 +579,14 @@ export default {
                 this.progressLabel7=(this.progress7*100).toFixed(2)+"%"
           }
 
-        if (this.dato.total!='0.0' && this.dato.monto1!='0.0') {
+        if (this.dato.total!='0.00' && this.dato.monto1!='0.00') {
                this.progress1=1
                this.progressLabel1=(this.progress1*100).toFixed(2)+"%"
          }else{
             this.progress1=0.5
             this.progressLabel1=(this.progress1*100).toFixed(2)+"%"
          }
-       if(this.dato.status!=="RECIBIDO"){
+       if(this.dato.status!=="RECIBIDO" && this.dato.status!=null){
             this.progress6=1
            this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
         }else {
