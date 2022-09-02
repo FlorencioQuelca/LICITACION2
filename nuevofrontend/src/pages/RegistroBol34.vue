@@ -37,15 +37,14 @@
            <q-td key="codigo" :props="props">
             {{props.row.codigo}}
           </q-td>
+           <q-td key="municipio" :props="props">
+            {{props.row.municipio}}
+          </q-td>
            <q-td key="nombre" :props="props">
             {{props.row.nombre}}
           </q-td>
            <q-td key="cite" :props="props">
             {{props.row.cite}}
-          </q-td>
-
-           <q-td key="fecha" :props="props">
-            {{props.row.fecha}}
           </q-td>
 
            <q-td key="archivo" :props="props">
@@ -54,8 +53,9 @@
            <q-td key="monto" :props="props">
             {{props.row.adjunto}}
           </q-td>
-           <q-td key="municipio" :props="props">
-            {{props.row.municipio}}
+
+           <q-td key="fecha" :props="props">
+            {{props.row.fecha}}
           </q-td>
          <q-td key="funcionarios" :props="props">
               <ul>
@@ -66,9 +66,6 @@
               </span>
              </ul>
           </q-td>
-
-
-
             <q-td  key="opcion" :props="props">
                       <q-btn
                         dense
@@ -454,19 +451,13 @@ import moment, { now } from 'moment';
 const columns = [
   { name: 'nro', align:"center", label: 'N°', field: 'nro', sortable: true },
   { name: 'codigo', align: "left",label: 'Codigo VIPFE', field: 'codigo',sortable:true },
+  { name: 'municipio', align: "left",label: 'Municipio', field: 'municipio',sortable:true},
   { name: 'nombre',required: true,align: "left", label: 'Nombre de la propuesta', field: 'nombre',sortable:true },
   { name: 'cite', align: "left",label: 'CITE', field: 'cite',sortable:true },
-  { name: 'fecha', align: "center",label: 'Fecha', field: 'fecha',sortable:true },
-  { name: 'archivo', label: 'H.R.', field: 'archivo',sortable:true },
+  { name: 'archivo', label: 'Hoja de Ruta', field: 'archivo',sortable:true },
   { name: 'monto', label: 'Ajunto', field: 'monto',sortable:true },
-  { name: 'municipio', align: "left",label: 'Municipio', field: 'municipio',sortable:true},
-  {
-    name: "funcionarios",
-    align: "left",
-    label: "Funcionario(s)",
-    field: "funcionarios",
-    sortable: true,
-  },
+  { name: 'fecha', align: "center",label: 'Fecha', field: 'fecha',sortable:true },
+  { name: "funcionarios",align: "left",label: "Funcionario(s)",field: "funcionarios",sortable: true,},
   { name: 'opcion',align: "center", label: 'Opciones ', field: 'opcion', sortable: false }
   ];
 const subcol1 = [

@@ -26,18 +26,26 @@
            <q-td key="codigo" :props="props">
             {{props.row.codigo}}
           </q-td>
+           <q-td key="municipio" :props="props">
+            {{props.row.municipio}}
+
+          </q-td>
            <q-td key="nombre" :props="props">
             {{props.row.nombre}}
           </q-td>
            <q-td key="cite" :props="props">
             {{props.row.cite}}
           </q-td>
-           <q-td key="fecha" :props="props">
-            {{props.row.fecha}}
-          </q-td>
            <q-td key="archivo" :props="props">
             {{props.row.interno}}
           </q-td>
+           <q-td key="fecha" :props="props">
+            {{props.row.fecha}}
+          </q-td>
+         <q-td  v-if="props.row.users.length"
+                key="funcionario" :props="props">
+               {{props.row.users[0].name}}
+         </q-td>
            <q-td key="monto1" :props="props">
             {{props.row.monto1}}
           </q-td>
@@ -47,13 +55,6 @@
            <q-td key="monto3" :props="props">
             {{props.row.total}}
           </q-td>
-           <q-td key="municipio" :props="props">
-            {{props.row.municipio}}
-          </q-td>
-         <q-td  v-if="props.row.users.length"
-                key="funcionario" :props="props">
-               {{props.row.users[0].name}}
-         </q-td>
          <q-td key="inspeccion" :props="props">
                {{props.row.vinculo}}
          </q-td>
@@ -75,15 +76,15 @@
 const columns = [
   { name: 'nro', align:"center", label: 'N°', field: 'nro', sortable: true },
   { name: 'codigo', align: "left",label: 'Codigo VIPFE', field: 'codigo',sortable:true },
+  { name: 'municipio', align: "left",label: 'Municipio', field: 'municipio',sortable:true},
   { name: 'nombre',required: true,align: "left", label: 'Nombre de la propuesta', field: 'nombre',sortable:true },
-  { name: 'cite', align: "left",label: 'CITE', field: 'cite',sortable:true },
-  { name: 'fecha', align: "center",label: 'Fecha', field: 'fecha',sortable:true },
+  { name: 'cite', align: "left",label: 'CITE MPD/VIPFE', field: 'cite',sortable:true },
   { name: 'archivo', label: 'N° Hoja de Ruta', field: 'archivo',sortable:true },
+  { name: 'fecha', align: "center",label: 'Fecha', field: 'fecha',sortable:true },
+  { name: "funcionario",align: "left",label: "Evaluado Por:",field: "funcionario",sortable: true},
   { name: 'monto1', align:"right",label: 'Infraestructura', field: 'monto1',sortable:true },
   { name: 'monto2', align:"right",label: 'Supervision', field: 'monto2',sortable:true },
   { name: 'monto3', align:"right",label: 'Monto Total', field: 'monto3',sortable:true },
-  { name: 'municipio', align: "left",label: 'Municipio', field: 'municipio',sortable:true},
-  { name: "funcionario",align: "left",label: "Evaluado Por:",field: "funcionario",sortable: true},
   { name: 'inspeccion',align: "center", label: 'Inspeccionado ', field: 'inspeccion', sortable: false },
   { name: 'fechainspeccion',align: "center", label: 'Fecha de Inspeccion', field: 'fechainspeccion', sortable: false },
   { name: 'fechaenvio',align: "center", label: 'Fecha de Envio', field: 'fechaenvio', sortable: false },

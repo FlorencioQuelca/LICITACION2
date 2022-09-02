@@ -964,9 +964,8 @@ export default {
         let adjunto="Se adjunta : "+this.dato.adjunto
         let vinculo ="VINCULO H.R. Nº "+this.dato.interno
         let informe=this.dato.carta_cite+"."
-
-        let referencia="RESPUESTA A LA SOLICITUD DE EVALUACION Y VERIFICACION DE CONTENIDO PROYECTO: "+this.dato.nombre
-        let profesional="Ing. "+this.$store.state.login.user.name
+        let referencia="RESPUESTA A LA SOLICITUD DE EVALUACION Y VERIFICACION DE CONTENIDO PROYECTO "+this.dato.nombre
+        let profesional="Ing. "+this.cambiarminiscula(this.$store.state.login.user.name)
 
 
         let doc = new jsPDF('portrait' ,null, 'letter');
@@ -1011,14 +1010,14 @@ export default {
              doc.text("REF:", 35,105)
 
              doc.text(referencia, 65,105,{maxWidth: 125,align: "justify"})
-             doc.text("FECHA", 35,130)
+             doc.text("FECHA:", 35,133)
             let fecha_informe=this.dato.carta_fecha==null ?  moment().format('YYYY-MM-DD') : this.dato.carta_fecha
             let departamento=this.$store.state.login.user.status
              const fechaDeCarta= this.fechalarga(fecha_informe,departamento)
-             doc.text(fechaDeCarta, 65,130)
-             doc.line(30,134,190,134)
+             doc.text(fechaDeCarta, 65,133)
+             doc.line(30,135,190,135)
 
-             doc.text("1. ANTECEDENTES", 35,140).setFontSize(12).setFont(undefined, 'normal');
+             doc.text("1. ANTECEDENTES", 35,142).setFontSize(12).setFont(undefined, 'normal');
              doc.text(text1, 30,148,{maxWidth: 160,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
 
              doc.text("2. DESARROLLO", 35,187).setFontSize(12).setFont(undefined, 'normal');
@@ -1200,6 +1199,7 @@ export default {
              doc.text("3. CONCLUSIONES", 35,38).setFontSize(12).setFont(undefined, 'normal');
              doc.text(con1, 30,45,{maxWidth: 160,align: "justify"})
              doc.text(con2, 40,70,{maxWidth: 150,align: "justify"})
+
              doc.text(con3, 40,95,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
 
              doc.text("4. RECOMENDACIONES", 35,120).setFontSize(12).setFont(undefined, 'normal');
@@ -1217,8 +1217,13 @@ export default {
                doc.text(adjunto, 30,228)
                doc.text(vinculo, 30,232)
 
-            doc.text('*', 214, 280) //milimetros
-            let descargarnombre=this.dato.codigo+".pdf"
+             doc.text('fqm', 214, 280) //milimetros
+             let descargarnombre=""
+               if(this.dato.cumple==="SI"){
+                      descargarnombre=this.dato.codigo+"_CUMPLE"+".pdf"
+               }else{
+                     descargarnombre=this.dato.codigo+"_NO_CUMPLE"+".pdf"
+               }
             doc.save(descargarnombre);
       },
       mosca(cadena){
