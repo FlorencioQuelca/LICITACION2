@@ -24,6 +24,17 @@ class RegistroController extends Controller
     public function registroid(Registro $registro){
         $registro =Registro::with(['departamento','users','evaluacions'])
                             ->orWhere('id', '=', $registro->id)->get();
+        return \response()->json($registro,200);
+    }
+    public function registrodepa(Registro $registro){
+        $registro =Registro::with(['departamento','users','evaluacions'])
+                            ->orWhere('departamento_id', '=', $registro->id)->orderByDesc('nro')->get();
+
+        return \response()->json($registro,200);
+    }
+    public function registrodepaorder(Registro $registro){
+        $registro =Registro::with(['departamento','users','evaluacions'])
+                            ->orWhere('departamento_id', '=', $registro->id)->orderBy('nro')->get();
 
         return \response()->json($registro,200);
     }

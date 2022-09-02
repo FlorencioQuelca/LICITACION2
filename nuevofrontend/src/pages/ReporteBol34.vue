@@ -50,7 +50,8 @@
            <q-td key="municipio" :props="props">
             {{props.row.municipio}}
           </q-td>
-         <q-td key="funcionario" :props="props">
+         <q-td  v-if="props.row.users.length"
+                key="funcionario" :props="props">
                {{props.row.users[0].name}}
          </q-td>
          <q-td key="inspeccion" :props="props">
@@ -102,9 +103,9 @@ export default {
     methods: {
         misdatos(){
          this.$q.loading.show();
-       this.$api.get(process.env.API+"/registrados").then((res)=>{
+            this.$api.get(process.env.API+"/registrodepaorder/"+this.$store.state.login.user.ci).then((res)=>{
            this.data=res.data
-         // console.log(res.data)
+        //  console.log(res.data)
           this.$q.loading.hide();
        });
        },

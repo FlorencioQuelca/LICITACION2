@@ -15,8 +15,8 @@
                 class="q-mt-xl"
                 color="primary"
                 text-color="white"
-                to="/Licitaciones"
-                label=" Ver proyectos Licitados "
+                to="/Login"
+                label=" Tengo Una cuenta de Usuario "
                 no-caps
               />
           </div>

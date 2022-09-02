@@ -497,7 +497,7 @@ export default {
         .get(process.env.API + "/registroid/" + this.$route.params.id)
         .then((res) => {
           this.dato=res.data[0]
-          console.log(res.data);
+     //     console.log(res.data);
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
@@ -725,11 +725,11 @@ export default {
     onMod7() {
       this.$q.loading.show();
          if(this.dato.vinculo=="SI"){
-           console.log("correcto")
+          // console.log("correcto")
               this.dato.puntaje1=50.00
          }
          if(this.fecha_inspeccion!=null){
-           console.log("correcto2")
+       //    console.log("correcto2")
                  this.dato.copia=this.fecha_inspeccion
          }
 
@@ -815,7 +815,7 @@ export default {
         this.misMunicipios()
         this.mis_evaluaciones()
         this.dato.puntaje3=Number(this.dato.puntaje3)+1
-        console.log(this.dato.puntaje3)
+     //  console.log(this.dato.puntaje3)
         this.$api
         .put(process.env.API + "/registros/" + this.dato.id, this.dato)
         .then((res) => {

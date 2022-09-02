@@ -52,7 +52,7 @@
             {{props.row.interno}}
           </q-td>
            <q-td key="monto" :props="props">
-            {{props.row.total}}
+            {{props.row.adjunto}}
           </q-td>
            <q-td key="municipio" :props="props">
             {{props.row.municipio}}
@@ -285,7 +285,7 @@
             />
             <q-input
               outlined
-              v-model="dato.adjunto"
+              v-model="dato2.adjunto"
               type="text"
               label="Ingresar adjunto copiar carta MPD "
               hint="Ingrese documnetos adjuntos EJEMPLO '1 CARPETA (FOJAS XX Y 1 CD)' "
@@ -458,7 +458,7 @@ const columns = [
   { name: 'cite', align: "left",label: 'CITE', field: 'cite',sortable:true },
   { name: 'fecha', align: "center",label: 'Fecha', field: 'fecha',sortable:true },
   { name: 'archivo', label: 'H.R.', field: 'archivo',sortable:true },
-  { name: 'monto', label: 'Monto', field: 'monto',sortable:true },
+  { name: 'monto', label: 'Ajunto', field: 'monto',sortable:true },
   { name: 'municipio', align: "left",label: 'Municipio', field: 'municipio',sortable:true},
   {
     name: "funcionarios",
@@ -568,9 +568,9 @@ export default {
        },
         misdatos(){
          this.$q.loading.show();
-       this.$api.get(process.env.API+"/registros").then((res)=>{
+           this.$api.get(process.env.API+"/registrodepa/"+this.$store.state.login.user.ci).then((res)=>{
            this.data=res.data
-         // console.log(res.data)
+        //  console.log(res.data)
           this.$q.loading.hide();
        });
        },
