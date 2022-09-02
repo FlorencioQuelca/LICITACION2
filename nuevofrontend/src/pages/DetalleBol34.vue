@@ -30,16 +30,16 @@
                           <span>DATOS GENERALES DEL PROYECTO  </span>
                       </div>
                       <div class=" q-pa-md  col-6" style="display:flex; justify-content:flex-end">
-                        <q-btn
+                        <q-btn  v-if="false"
                         label="Comunidades/Distritos"
                         color="red"
-                        icon="print"
+                        icon="add"
                         class="q-mb-xs"
                       />
-                      <q-btn
+                      <q-btn v-if="false"
                         label="EDITAR"
                         color="green"
-                        icon="editt"
+                        icon="edit"
                         class="q-mb-xs"
                       />
                       </div>
@@ -64,9 +64,9 @@
                        <q-btn icon="looks_one" label="Datos Generales" stack glossy @click="view_form1" color="purple" style="width:200px" />
                         </div>
                         <div class="col">
-                         <q-linear-progress size="50px" :value="progress2" color="accent" class="q-mt-sm">
+                         <q-linear-progress size="50px" :value="progress1" color="accent" class="q-mt-sm">
                         <div class="absolute-full flex flex-center">
-                          <q-badge color="white" text-color="accent" :label="progressLabel2" />
+                          <q-badge color="white" text-color="accent" :label="progressLabel1" />
                         </div>
                         </q-linear-progress>
                      </div>
@@ -89,9 +89,9 @@
                        <q-btn icon="looks_3" label="Requisitos Del proyecto" stack glossy @click="view_form3" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
                         </div>
                         <div class="col">
-                         <q-linear-progress size="50px" :value="progress2" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
+                         <q-linear-progress size="50px" :value="progress3" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
                         <div class="absolute-full flex flex-center">
-                          <q-badge color="white" text-color="accent" :label="progressLabel2" />
+                          <q-badge color="white" text-color="accent" :label="progressLabel3" />
                         </div>
                         </q-linear-progress>
                      </div>
@@ -102,9 +102,9 @@
                        <q-btn icon="looks_4" label="INGENIERIA DEL PROYECTO" stack glossy @click="view_form4" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
                         </div>
                         <div class="col">
-                         <q-linear-progress size="50px" :value="progress2" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
+                         <q-linear-progress size="50px" :value="progress4" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
                         <div class="absolute-full flex flex-center">
-                          <q-badge color="white" text-color="accent" :label="progressLabel2" />
+                          <q-badge color="white" text-color="accent" :label="progressLabel4" />
                         </div>
                         </q-linear-progress>
                      </div>
@@ -115,9 +115,9 @@
                        <q-btn icon="looks_5" label="VARIACION POSITIVA O NEGATIVA" stack glossy @click="view_form5" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
                         </div>
                         <div class="col">
-                         <q-linear-progress size="50px" :value="progress2" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
+                         <q-linear-progress size="50px" :value="progress5" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
                         <div class="absolute-full flex flex-center">
-                          <q-badge color="white" text-color="accent" :label="progressLabel2" />
+                          <q-badge color="white" text-color="accent" :label="progressLabel5" />
                         </div>
                         </q-linear-progress>
                      </div>
@@ -127,9 +127,9 @@
                        <q-btn icon="looks_6" label="RESULTADOS DE EVALUACION" stack glossy @click="view_form6" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
                         </div>
                         <div class="col">
-                         <q-linear-progress size="50px" :value="progress2" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
+                         <q-linear-progress size="50px" :value="progress6" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
                         <div class="absolute-full flex flex-center">
-                          <q-badge color="white" text-color="accent" :label="progressLabel2" />
+                          <q-badge color="white" text-color="accent" :label="progressLabel6" />
                         </div>
                         </q-linear-progress>
                      </div>
@@ -139,9 +139,9 @@
                        <q-btn icon="brightness_7" label="EVALUACION EN CAMPO" stack glossy @click="view_form7" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
                         </div>
                         <div class="col">
-                         <q-linear-progress size="50px" :value="progress2" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
+                         <q-linear-progress size="50px" :value="progress7" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
                         <div class="absolute-full flex flex-center">
-                          <q-badge color="white" text-color="accent" :label="progressLabel2" />
+                          <q-badge color="white" text-color="accent" :label="progressLabel7" />
                         </div>
                         </q-linear-progress>
                      </div>
@@ -294,9 +294,9 @@
               hint="Ingresar datos adjuntos"
             />
              <div class="q-gutter-sm">
-             <span> Dese cambiar el estado del Proyecto a ENVIADO  ?</span>
+             <span> Desea cambiar el estado del Proyecto a ENVIADO  ?</span>
               <q-radio v-model="dato.status" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="ENVIADO" label="SI" />
-              <q-radio v-model="dato.status" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO ENVIADO" label="NO" />
+              <q-radio v-model="dato.status" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="RECIBIDO" label="NO" />
              </div>
             <div>
               <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
@@ -350,7 +350,6 @@
                         @click="guardar(item)"
                         icon="save"
                       ></q-btn>
-
                           <q-btn v-else
                         dense
                         round
@@ -359,12 +358,11 @@
                         @click="editar(item)"
                         icon="save"
                       ></q-btn>
-
                         </div>
                </div>
         </q-card-section>
         <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6"> No olvide llenar cada uno de los del Proyecto </div>
+          <div class="text-h6"> No olvide llenar cada uno de los DATOS del Proyecto </div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -383,7 +381,7 @@
               <q-radio v-model="dato.vinculo" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
               <q-radio v-model="dato.vinculo" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
              </div>
-            <q-input
+            <q-input v-if="dato.vinculo==='SI'"
               outlined
               v-model="fecha_inspeccion"
               type="date"
@@ -422,11 +420,24 @@ export default {
     data: {},
     dato2:{},
     dato:{},
+    datocopia:{},
     columna,
     rows:[],
-    progress2:0.3,
+    progress1:0.2,
+    progress2:0.0,
+    progress3:0.2,
+    progress4:0.0,
+    progress5:0.0,
+    progress6:0.2,
+    progress7:0.0,
+    progressLabel1:'20.0 %',
+    progressLabel2:'0.0 %',
+    progressLabel3:'20.0 %',
+    progressLabel4:'0.0 %',
+    progressLabel5:'0.0 %',
+    progressLabel6:'20.0 %',
+    progressLabel7:'0.0 %',
    // progressLabel2:(progress2*100).toFixed(2)+'%'
-    progressLabel2:'0.3 %',
     dialog_form1:false,
     dialog_form2345:false,
     dialog_form6:false,
@@ -453,9 +464,12 @@ export default {
   created() {},
   mounted() {
     this.misdatos();
-    this.misDepartamentos()
-    this.misMunicipios()
-     this.mis_evaluaciones()
+    this.misDepartamentos();
+    this.misMunicipios();
+     this.mis_evaluaciones();
+
+     // this.barrido();
+
   },
   methods: {
     misDepartamentos(){
@@ -468,6 +482,9 @@ export default {
             })
           this.$q.loading.hide();
        });
+       },
+       barrido(){
+
        },
        misMunicipios(){
          this.$q.loading.show();
@@ -493,15 +510,15 @@ export default {
     misdatos() {
       this.$q.loading.show();
       this.rows=[]
-      this.$api
-        .get(process.env.API + "/registroid/" + this.$route.params.id)
+      this.$api.get(process.env.API + "/registroid/" + this.$route.params.id)
         .then((res) => {
           this.dato=res.data[0]
-     //     console.log(res.data);
+         //this.datocopia=this.dato.evaluacions
+          //console.log(this.datocopia);
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
-          this.rows.push({titulo:"Comunidades : ", descripcion: res.data[0].comunidades})
+         // this.rows.push({titulo:"Comunidades : ", descripcion: res.data[0].comunidades})
           this.rows.push({titulo:"Cite VIFFE : ", descripcion: res.data[0].cite})
           this.rows.push({titulo:"H.R. FPS: ", descripcion: res.data[0].interno})
           this.rows.push({titulo:"Codigo : ", descripcion: res.data[0].codigo})
@@ -517,8 +534,68 @@ export default {
           this.rows.push({titulo:"Fecha de Envio de Informe : ", descripcion: res.data[0].carta_fecha})
           this.rows.push({titulo:"Proyecto Contempla: ", descripcion: res.data[0].adjunto})
           this.rows.push({titulo:"Estado del Proyecto : ", descripcion: res.data[0].status})
-          this.$q.loading.hide();
-        });
+             let cr=0
+            let ing=0
+            let req=0
+            let var1=0
+         res.data[0].evaluacions.forEach(it=>{
+             if(it.nombre==="C-1"){cr++}
+             if(it.nombre==="C-2"){cr++}
+             if(it.nombre==="C-3"){cr++}
+             if(it.nombre==="R-1"){req++}
+             if(it.nombre==="R-2"){req++}
+             if(it.nombre==="R-4"){req++}
+             if(it.nombre==="R-5"){req++}
+             if(it.nombre==="R-5"){req++}
+             if(it.nombre==="R-6"){req++}
+             if(it.nombre==="R-7"){req++}
+             if(it.nombre==="I-1"){ing++}
+             if(it.nombre==="I-2"){ing++}
+             if(it.nombre==="I-3"){ing++}
+             if(it.nombre==="I-4"){ing++}
+             if(it.nombre==="I-5"){ing++}
+             if(it.nombre==="I-6"){ing++}
+             if(it.nombre==="I-7"){ing++}
+             if(it.nombre==="I-8"){ing++}
+             if(it.nombre==="I-9"){ing++}
+             if(it.nombre==="I-10"){ing++}
+             if(it.nombre==="V-1"){var1++}
+         });
+         this.progress2=cr/3
+         this.progressLabel2=(this.progress2*100).toFixed(2)+"%"
+         this.progress3=req/7
+         this.progressLabel3=(this.progress3*100).toFixed(2)+"%"
+         this.progress4=ing/10
+         this.progressLabel4=(this.progress4*100).toFixed(2)+"%"
+         this.progress5=var1/1
+         this.progressLabel5=(this.progress5*100).toFixed(2)+"%"
+
+
+         if(this.dato.vinculo!=="NO"){
+           this.progress7=1
+            this.progressLabel7=(this.progress7*100).toFixed(2)+"%"
+          }else{
+               this.progress7=0.0
+                this.progressLabel7=(this.progress7*100).toFixed(2)+"%"
+          }
+
+        if (this.dato.total!='0.0' && this.dato.monto1!='0.0') {
+               this.progress1=1
+               this.progressLabel1=(this.progress1*100).toFixed(2)+"%"
+         }else{
+            this.progress1=0.5
+            this.progressLabel1=(this.progress1*100).toFixed(2)+"%"
+         }
+       if(this.dato.status!=="RECIBIDO"){
+            this.progress6=1
+           this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
+        }else {
+              this.progress6=0.6
+              this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
+        }
+         this.$q.loading.hide();
+          });
+
     },
     view_form1(){
          this.municipio={}
@@ -556,7 +633,6 @@ export default {
                            this.evaluaciones[2].puntaje=it.pivot.puntaje
                          }
                  })
-
        this.dialog_form2345=true;
     },
      view_form3(){
@@ -669,6 +745,16 @@ export default {
     view_form5(){
       this.titulo="VARIACION POSITIVA O NEGATIVA "
        this.op="VARIACION"
+        this.dato.evaluacions.forEach(it => {
+                         if(it.nombre==="V-1"){
+                           this.evaluaciones[20].descripcion1=it.pivot.descripcion
+                           this.evaluaciones[20].valor=it.pivot.presenta
+                           this.evaluaciones[20].puntaje=it.pivot.puntaje
+                         }
+        })
+
+
+
       this.dialog_form2345=true;
     },
 
@@ -681,8 +767,13 @@ export default {
               this.dato.autoridad =it.municipio_codigo
             }
          })
-        if (this.dato.total>0) {
+        if (this.dato.total>0 && this.dato.monto1>0) {
               this.dato.puntaje2=10
+              this.progress1=1
+              this.progressLabel1=(this.progress1*100).toFixed(2)+"%"
+        }else{
+           this.progress1=0.5
+           this.progressLabel1=(this.progress1*100).toFixed(2)+"%"
         }
       this.$q.loading.show();
       this.$api
@@ -702,8 +793,14 @@ export default {
         });
     },
      onMod6() {
-        if(this.dato.carta_fecha!=null){
+        if(this.dato.status==='ENVIADO'){
           this.dato.puntaje4=10
+           this.progress6=1
+           this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
+        }else{
+              this.progress6=0.6
+              this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
+
         }
       this.$q.loading.show();
       this.$api
@@ -727,12 +824,13 @@ export default {
          if(this.dato.vinculo=="SI"){
           // console.log("correcto")
               this.dato.puntaje1=50.00
+              this.dato.copia=this.fecha_inspeccion
+           this.progress7=1
+            this.progressLabel7=(this.progress7*100).toFixed(2)+"%"
+         }else{
+            this.progress7=0
+            this.progressLabel7=(this.progress7*100).toFixed(2)+"%"
          }
-         if(this.fecha_inspeccion!=null){
-       //    console.log("correcto2")
-                 this.dato.copia=this.fecha_inspeccion
-         }
-
       this.$api
         .put(process.env.API + "/registros/" + this.dato.id, this.dato)
         .then((res) => {
@@ -811,19 +909,49 @@ export default {
       },
       refrescar(){
         this.misdatos();
-        this.misDepartamentos()
-        this.misMunicipios()
-        this.mis_evaluaciones()
+         let cr=0
+            let ing=0
+            let req=0
+            let var1=0
+         this.dato.evaluacions.forEach(it=>{
+             if(it.nombre==="C-1"){cr++}
+             if(it.nombre==="C-2"){cr++}
+             if(it.nombre==="C-3"){cr++}
+             if(it.nombre==="R-1"){req++}
+             if(it.nombre==="R-2"){req++}
+             if(it.nombre==="R-4"){req++}
+             if(it.nombre==="R-5"){req++}
+             if(it.nombre==="R-5"){req++}
+             if(it.nombre==="R-6"){req++}
+             if(it.nombre==="R-7"){req++}
+             if(it.nombre==="I-1"){ing++}
+             if(it.nombre==="I-2"){ing++}
+             if(it.nombre==="I-3"){ing++}
+             if(it.nombre==="I-4"){ing++}
+             if(it.nombre==="I-5"){ing++}
+             if(it.nombre==="I-6"){ing++}
+             if(it.nombre==="I-7"){ing++}
+             if(it.nombre==="I-8"){ing++}
+             if(it.nombre==="I-9"){ing++}
+             if(it.nombre==="I-10"){ing++}
+             if(it.nombre==="V-1"){var1++}
+         })
+         this.progress2=cr/3
+         this.progressLabel2=(this.progress2*100).toFixed(2)+"%"
+         this.progress3=req/7
+         this.progressLabel3=(this.progress3*100).toFixed(2)+"%"
+         this.progress4=ing/10
+         this.progressLabel4=(this.progress4*100).toFixed(2)+"%"
+         this.progress5=var1/1
+         this.progressLabel5=(this.progress5*100).toFixed(2)+"%"
+
         this.dato.puntaje3=Number(this.dato.puntaje3)+1
-     //  console.log(this.dato.puntaje3)
-        this.$api
-        .put(process.env.API + "/registros/" + this.dato.id, this.dato)
-        .then((res) => {
-        });
-
-
+        this.$api.put(process.env.API + "/registros/" + this.dato.id, this.dato)
+        .then((res) => {});
         this.dialog_form2345=false;
-      },
+
+
+       },
       imprimir(){
 
         let text1="En atencíon a nota CITE: "+this.dato.cite+", mediante la cual se solicita realizar la verificacíon y avaluación de requisitos exigidos del proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.cambiarminiscula(this.dato.municipio)+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+", mediante el Programa Nacional de Emergencia para la Generación de Empleo BOL34/2021; al respecto, tengo a bien informar el resultado de la evaluación y verificación del contenido del proyecto presentado.";
@@ -940,7 +1068,6 @@ export default {
                   i100=it.pivot.descripcion
                 }
         })
-
         let con1="De la revisión de la documentación concerniente a la solicitud de enlosetado del proyecto "+this.dato.nombre+" del Departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se concluye:"
         let con2="1 De la solicitud del proyecto presentado por el GAM "+this.dato.nombre+" del municipio de "+this.cambiarminiscula(this.dato.municipio)+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles)"
         let con3=""

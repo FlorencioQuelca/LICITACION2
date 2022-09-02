@@ -109,7 +109,12 @@ export default {
 
       //    this.$q.loading.hide();
        this.$api.get(process.env.API+"/registrados").then((res)=>{
-           this.data=res.data
+        res.data.forEach(it=>{
+                       if(this.$store.state.login.user.status===it.departamento.nombre){
+                        this.data.push(it)
+                       }
+              })
+          // this.data=res.data
          // console.log(res.data)
           this.$q.loading.hide();
        });
