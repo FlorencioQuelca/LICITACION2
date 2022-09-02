@@ -102,10 +102,14 @@ export default {
   },
     methods: {
         misdatos(){
-         this.$q.loading.show();
-            this.$api.get(process.env.API+"/registrodepaorder/"+this.$store.state.login.user.ci).then((res)=>{
+        // this.$q.loading.show();
+         //   this.$api.get(process.env.API+"/registrodepa/"+this.$store.state.login.user.ci).then((res)=>{
+       //    this.data=res.data
+
+      //    this.$q.loading.hide();
+       this.$api.get(process.env.API+"/registrados").then((res)=>{
            this.data=res.data
-        //  console.log(res.data)
+         // console.log(res.data)
           this.$q.loading.hide();
        });
        },

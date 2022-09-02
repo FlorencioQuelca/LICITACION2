@@ -568,7 +568,7 @@ export default {
        },
         misdatos(){
          this.$q.loading.show();
-           this.$api.get(process.env.API+"/registrodepa/"+this.$store.state.login.user.ci).then((res)=>{
+           this.$api.get(process.env.API+"/registros").then((res)=>{
            this.data=res.data
         //  console.log(res.data)
           this.$q.loading.hide();
