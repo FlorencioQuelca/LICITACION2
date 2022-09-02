@@ -826,11 +826,11 @@ export default {
       },
       imprimir(){
 
-        let text1="En atencíon a nota CITE: "+this.dato.cite+", mediante la cual se solicita realizar la verificacíon y avaluación de requisitos exigidos del proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.dato.municipio+" del departamento de "+this.dato.departamento.nombre+", mediante el Programa Nacional de Emergencia para la Generación de Empleo BOL34/2021; al respecto, tengo a bien informar el resultado de la evaluación y verificación del contenido del proyecto presentado.";
+        let text1="En atencíon a nota CITE: "+this.dato.cite+", mediante la cual se solicita realizar la verificacíon y avaluación de requisitos exigidos del proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.cambiarminiscula(this.dato.municipio)+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+", mediante el Programa Nacional de Emergencia para la Generación de Empleo BOL34/2021; al respecto, tengo a bien informar el resultado de la evaluación y verificación del contenido del proyecto presentado.";
         let text2="Según lo establecido en el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se menciona:";
         let text3="•    Punto 1.2. Objetivos del Programa – componente I: Infraestructura y Supervisión de Obras, mediante el cual se financiará la ejecución de Obras de Infraestructura urbana – rural y la Supervisión de las obras de las siguientes tipologías: (i) Vial (enlosetado de vías vehiculares y peatonales) …"
         let text4="•    Punto 2.3 Funciones y Responsabilidades de los Actores – inciso a.  – Ministerio de Planificación del Desarrollo (MPD); punto vi. Prioriza la ejecución de proyectos; comunicando al FPS mediante nota de atención, y envía copia de la misma a FONPLATA para su conocimiento.  y vii. Garantiza la gestión de los recursos para la ejecución de los Proyectos."
-        let text5="De la revisión a la documentación concerniente a la solicitud de enlosetado y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021. El proyecto "+this.dato.nombre+" del departamento de "+this.dato.departamento.nombre+" es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles), en este sentido el mismo se desarrolla de acuerdo al siguiente detalle:"
+        let text5="De la revisión a la documentación concerniente a la solicitud de enlosetado y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021. El proyecto "+this.dato.nombre+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles), en este sentido el mismo se desarrolla de acuerdo al siguiente detalle:"
         let c1="Debe beneficiar a la mayor cantidad de familias/juntas vecinales involucradas."
         let c2="Proyecto que atienda a infraestructuras públicas de salud, educación y/o que se complementen con otras intervenciones realizadas con anterioridad."
         let c3="El proyecto no debe encontrarse en áreas y/o zonas de riesgos naturales y geológicos que puedan comprometer a la infraestructura."
@@ -941,11 +941,20 @@ export default {
                 }
         })
 
-        let con1="De la revisión de la documentación concerniente a la solicitud de enlosetado del proyecto "+this.dato.nombre+" del Departamento de "+this.dato.departamento.nombre+" y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se concluye:"
-        let con2="1 De la solicitud del proyecto presentado por el GAM "+this.dato.nombre+" del municipio de "+this.dato.municipio+" del departamento de "+this.dato.departamento.nombre+" es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles)"
-        let con3="2 El proyecto "+this.dato.nombre+" del departamento de "+this.dato.departamento.nombre+" "+this.dato.cumple+" con los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
-        let rec1="De la verificación y evaluación realizada, se determina que el proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.dato.municipio+" del Departamento de "+this.dato.departamento.nombre+" presentado "+this.dato.cumple+" con los requisitos establecidos para su ejecución en el marco del ROP del programa BOL34/2021."
-        let rec2="Por lo expuesto anteriormente se recomienda a Dirección General Ejecutiva del FPS poner a consideración del Ministerio de Planificación del Desarrollo (MPD) el presente informe de acuerdo al resultado de la verificación y evaluación del proyecto presentado del Departamento de "+this.dato.departamento.nombre+"."
+        let con1="De la revisión de la documentación concerniente a la solicitud de enlosetado del proyecto "+this.dato.nombre+" del Departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se concluye:"
+        let con2="1 De la solicitud del proyecto presentado por el GAM "+this.dato.nombre+" del municipio de "+this.cambiarminiscula(this.dato.municipio)+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles)"
+        let con3=""
+        let rec1=""
+        if(this.dato.cumple==="SI"){
+          con3="2 El proyecto "+this.dato.nombre+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" CUMPLE con los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
+          rec1="De la verificación y evaluación realizada, se determina que el proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.cambiarminiscula(this.dato.municipio)+" del Departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" presentado CUMPLE con los requisitos establecidos para su ejecución en el marco del ROP del programa BOL34/2021."
+        }else{
+          con3="2 El proyecto "+this.dato.nombre+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" debe ser COMPLEMENTADO Y/O AJUSTADO  de acuerdo a los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
+          rec1="De la verificación y evaluación realizada, se determina que el proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.cambiarminiscula(this.dato.municipio)+" del Departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" debe ser COMPLEMENTADO Y/O AJUSTADO de acuerdo a los requisitos establecidos en el marco del ROP del programa BOL34/2021."
+
+        }
+
+        let rec2="Por lo expuesto anteriormente se recomienda a Dirección General Ejecutiva del FPS poner a consideración del Ministerio de Planificación del Desarrollo (MPD) el presente informe de acuerdo al resultado de la verificación y evaluación del proyecto presentado del Departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+"."
         let rec3="Es todo cuanto podemos informar para los fines consiguientes."
         let gerente="Sergio Janco Vargas"
         let gerente1="Rosmery Julia Santalla Acarapi"
@@ -1246,6 +1255,17 @@ export default {
 
          let answer=ans.trim()+", "+Number(fecha1[2])+" de "+meses[Number(fecha1[1])]+" de "+fecha1[0]
     return answer
+      },
+      cambiarminiscula(depa1){
+         let depa=depa1.split(" ")
+         let ans=""
+          for(let i=0;i<depa.length;i++){
+               ans+=depa[i][0]
+               ans+=(depa[i].slice(1,depa[i].length)).toLowerCase()
+               ans+=" "
+          }
+         let answer=ans.trim()
+        return answer
       },
         view_form6(){
      this.titulo="RESULTADOS DE EVALUACION"
