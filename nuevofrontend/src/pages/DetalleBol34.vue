@@ -267,12 +267,12 @@
 
         <q-card-section class="q-pt-xs">
           <q-form @submit="onMod6" class="q-gutter-md">
-             <q-input
+              <q-input
               outlined
-              v-model="dato.copia"
+              v-model="dato.cumple"
               type="text"
-               label="Nombre del CITE DEL INFORME"
-              hint="Importante!!! CASO EXCEPCIONAL "
+               label="Escriba CUMPLE/NO CUMPLE"
+              hint="Ingresar la palabra Cumple/NO Cumple"
             />
             <q-input
               outlined
@@ -287,13 +287,7 @@
                   v-model="dato.carta_fecha"
                   hint="Ingresar Fecha de envio"
                 />
-                <q-input
-              outlined
-              v-model="dato.cumple"
-              type="text"
-               label="Escriba CUMPLE/NO CUMPLE"
-              hint="Ingresar la palabra Cumple/NO Cumple"
-            />
+
             <q-input
               outlined
               v-model="dato.adjunto"
@@ -387,14 +381,14 @@
                   outlined
                   type="text"
                   v-model="dato.vinculo"
-                     label="Realizo la inspeccion SI/NO"
-              hint="Ingresar SI/NO realizado la inspeccion"
+                  label="Realizo la inspeccion SI/NO"
+                  hint="Ingresar SI/NO realizado la inspeccion"
                 />
             <q-input
               outlined
-              v-model="dato.observacion"
+              v-model="dato.copia"
               type="text"
-               label="Describir alguna observacion"
+               label="Describir la fecha de inspeccion"
               hint="Ingresar observaciones"
             />
             <div>
@@ -516,8 +510,13 @@ export default {
           this.rows.push({titulo:"Supervision : ", descripcion: res.data[0].monto2})
           this.rows.push({titulo:"Total : ", descripcion: res.data[0].total})
           this.rows.push({titulo:"Fecha de Ingreso : ", descripcion: res.data[0].fecha})
-          this.rows.push({titulo:"Puntaje de Evaluacion : ", descripcion: res.data[0].total})
-          this.rows.push({titulo:"Cumple : ", descripcion: res.data[0].cumple})
+          //this.rows.push({titulo:"Puntaje de Evaluacion : ", descripcion: res.data[0].total})
+          this.rows.push({titulo:"Proyecto Cumple/ Es elegible : ", descripcion: res.data[0].cumple})
+          this.rows.push({titulo:"Se realizo la Inspecion : ", descripcion: res.data[0].vinculo})
+          this.rows.push({titulo:"fecha de inspeccion : ", descripcion: res.data[0].copia})
+          this.rows.push({titulo:"Fecha de Envio de Informe : ", descripcion: res.data[0].carta_fecha})
+          this.rows.push({titulo:"Proyecto Contempla: ", descripcion: res.data[0].adjunto})
+          this.rows.push({titulo:"Estado del Proyecto : ", descripcion: res.data[0].copia})
           this.$q.loading.hide();
         });
     },
@@ -1055,13 +1054,13 @@ export default {
             doc.text(r11, 112,157,{maxWidth: 75,align: "justify"})
             let infraestructura="Infraestructura Bs. "+this.dato.monto1
             let supervision ="Supervision Bs. "+this.dato.monto2
-            let total = "Total, Proyecto Bs. "+this.dato.monto3
+            let total = "Total, Proyecto Bs. "+this.dato.total
 
             doc.text("Presupuesto y Estructura de Financiamiento", 112,180,{maxWidth: 75,align: "left"})
             doc.text(infraestructura, 120,185,{maxWidth: 75,align: "justify"})
             doc.text(supervision, 120,190,{maxWidth: 75,align: "justify"})
             doc.text(total, 120,195,{maxWidth: 75,align: "justify"})
-            doc.text(r22, 112,195,{maxWidth: 75,align: "justify"})
+            doc.text(r22, 112,200,{maxWidth: 75,align: "justify"})
 
             doc.text(r33, 112,226,{maxWidth: 75,align: "justify"})
    //hoja 3
@@ -1225,11 +1224,32 @@ export default {
     return answer
       },
         view_form6(){
-           this.titulo="RESULTADOS DE EVALUACION"
+     this.titulo="RESULTADOS DE EVALUACION"
+
+          if(this.dato.carta_cite==null){
+            this.dato.carta_cite="INF/FPS/GDLP"
+          }
+          if(this.dato.cumple==null){
+            this.dato.cumple="CUMPLE"
+          }
+          if(this.dato.carta_fecha==null){
+            this.dato.carta_fecha =moment().format('YYYY-MM-DD');
+          }
+          if(this.dato.adjunto==null){
+            this.dato.adjunto=" 1 Carpeta (fojas XXX y 1 CD)"
+          }
+
       this.dialog_form6=true
+
     },
-        view_form7(){
+    view_form7(){
       this.titulo="EVALUACION EN CAMPO"
+        if(this.dato.vinculo==null){
+          this.dato.vinculo="NO"
+        }
+        if(this.dato.copia==null){
+          this.dato.copia="01/08/2022"
+        }
       this.dialog_form7=true;
     },
 
