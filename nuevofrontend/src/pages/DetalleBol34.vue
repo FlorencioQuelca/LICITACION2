@@ -160,7 +160,7 @@
     <q-dialog v-model="dialog_form1">
       <q-card style="max-width: 80%; width: 80%">
         <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6"><q-icon name="edit" /> DATOS GENERALES</div>
+          <div class="text-h6"><q-icon name="edit" /> DATOS GENERALES de PROYECTO</div>
         </q-card-section>
 
         <q-card-section class="q-pt-xs">
@@ -267,13 +267,11 @@
 
         <q-card-section class="q-pt-xs">
           <q-form @submit="onMod6" class="q-gutter-md">
-              <q-input
-              outlined
-              v-model="dato.cumple"
-              type="text"
-               label="Escriba CUMPLE/NO CUMPLE"
-              hint="Ingresar la palabra Cumple/NO Cumple"
-            />
+           <div class="q-gutter-sm">
+               <span> El proyecto Cumple con la Evaluacion ?</span>
+              <q-radio v-model="dato.cumple" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
+              <q-radio v-model="dato.cumple" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
+             </div>
             <q-input
               outlined
               v-model="dato.carta_cite"
@@ -295,6 +293,11 @@
                label="Describir que se adjunta"
               hint="Ingresar datos adjuntos"
             />
+             <div class="q-gutter-sm">
+             <span> Dese cambiar el estado del Proyecto a ENVIADO  ?</span>
+              <q-radio v-model="dato.status" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="ENVIADO" label="SI" />
+              <q-radio v-model="dato.status" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO ENVIADO" label="NO" />
+             </div>
             <div>
               <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
               <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
@@ -375,20 +378,16 @@
 
         <q-card-section class="q-pt-xs">
           <q-form @submit="onMod7" class="q-gutter-md">
-
-
-             <q-input
-                  outlined
-                  type="text"
-                  v-model="dato.vinculo"
-                  label="Realizo la inspeccion SI/NO"
-                  hint="Ingresar SI/NO realizado la inspeccion"
-                />
+               <div class="q-gutter-sm">
+               <span> Realizo la Inspeccion ?</span>
+              <q-radio v-model="dato.vinculo" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
+              <q-radio v-model="dato.vinculo" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
+             </div>
             <q-input
               outlined
-              v-model="dato.copia"
-              type="text"
-               label="Describir la fecha de inspeccion"
+              v-model="fecha_inspeccion"
+              type="date"
+              label="Describir la fecha de inspeccion"
               hint="Ingresar observaciones"
             />
             <div>
@@ -432,6 +431,7 @@ export default {
     dialog_form2345:false,
     dialog_form6:false,
     dialog_form7:false,
+    fecha_inspeccion:moment().format('YYYY-MM-DD'),
      departamentos:[],
       departamento:{},
       municipios:[],
@@ -516,7 +516,7 @@ export default {
           this.rows.push({titulo:"fecha de inspeccion : ", descripcion: res.data[0].copia})
           this.rows.push({titulo:"Fecha de Envio de Informe : ", descripcion: res.data[0].carta_fecha})
           this.rows.push({titulo:"Proyecto Contempla: ", descripcion: res.data[0].adjunto})
-          this.rows.push({titulo:"Estado del Proyecto : ", descripcion: res.data[0].copia})
+          this.rows.push({titulo:"Estado del Proyecto : ", descripcion: res.data[0].status})
           this.$q.loading.hide();
         });
     },
@@ -681,6 +681,9 @@ export default {
               this.dato.autoridad =it.municipio_codigo
             }
          })
+        if (this.dato.total>0) {
+              this.dato.puntaje2=10
+        }
       this.$q.loading.show();
       this.$api
         .put(process.env.API + "/registros/" + this.dato.id, this.dato)
@@ -699,6 +702,9 @@ export default {
         });
     },
      onMod6() {
+        if(this.dato.carta_fecha!=null){
+          this.dato.puntaje4=10
+        }
       this.$q.loading.show();
       this.$api
         .put(process.env.API + "/registros/" + this.dato.id, this.dato)
@@ -718,6 +724,15 @@ export default {
     },
     onMod7() {
       this.$q.loading.show();
+         if(this.dato.vinculo=="SI"){
+           console.log("correcto")
+              this.dato.puntaje1=50.00
+         }
+         if(this.fecha_inspeccion!=null){
+           console.log("correcto2")
+                 this.dato.copia=this.fecha_inspeccion
+         }
+
       this.$api
         .put(process.env.API + "/registros/" + this.dato.id, this.dato)
         .then((res) => {
@@ -797,8 +812,16 @@ export default {
       refrescar(){
         this.misdatos();
         this.misDepartamentos()
-    this.misMunicipios()
-     this.mis_evaluaciones()
+        this.misMunicipios()
+        this.mis_evaluaciones()
+        this.dato.puntaje3=Number(this.dato.puntaje3)+1
+        console.log(this.dato.puntaje3)
+        this.$api
+        .put(process.env.API + "/registros/" + this.dato.id, this.dato)
+        .then((res) => {
+        });
+
+
         this.dialog_form2345=false;
       },
       imprimir(){
@@ -1176,7 +1199,7 @@ export default {
 
 
              doc.text(rec2, 30,155,{maxWidth: 160,align: "justify"})
-             doc.text(rec2, 30,155,{maxWidth: 160,align: "justify"})
+            // doc.text(rec2, 30,155,{maxWidth: 160,align: "justify"})
              doc.text(rec3, 30,180,{maxWidth: 160,align: "justify"}).setFontSize(8).setFont(undefined, 'normal');
 
 
@@ -1186,7 +1209,8 @@ export default {
                doc.text(vinculo, 30,232)
 
             doc.text('*', 214, 280) //milimetros
-            doc.save("a4.pdf");
+            let descargarnombre=this.dato.codigo+".pdf"
+            doc.save(descargarnombre);
       },
       mosca(cadena){
           let text=cadena.split(" ")
@@ -1230,7 +1254,7 @@ export default {
             this.dato.carta_cite="INF/FPS/GDLP"
           }
           if(this.dato.cumple==null){
-            this.dato.cumple="CUMPLE"
+              this.dato.cumple="NO"
           }
           if(this.dato.carta_fecha==null){
             this.dato.carta_fecha =moment().format('YYYY-MM-DD');
@@ -1248,7 +1272,7 @@ export default {
           this.dato.vinculo="NO"
         }
         if(this.dato.copia==null){
-          this.dato.copia="01/08/2022"
+          this.fecha_inspeccion=moment().format('YYYY-MM-DD');
         }
       this.dialog_form7=true;
     },

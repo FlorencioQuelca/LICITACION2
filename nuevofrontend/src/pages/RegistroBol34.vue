@@ -187,10 +187,10 @@
             />
              <q-input
               outlined
-              v-model="dato.total"
-              type="number"
-              label="Monto del proyecto"
-              hint="Ingrese el Monto del Proyecto "
+              v-model="dato.adjunto"
+              type="text"
+              label="Ingresar adjunto copiar carta MPD "
+              hint="Ingrese documnetos adjuntos EJEMPLO '1 CARPETA (FOJAS XX Y 1 CD)' "
             />
              </div>
              </div>
@@ -283,15 +283,13 @@
               type="text"
                 hint="Ingresar Municipio que corresponde"
             />
-             <q-input
+            <q-input
               outlined
-              v-model="dato2.total"
-              type="number"
-              step="0.01"
-              label="Monto del proyecto"
-              hint="Ingrese el Monto del Proyecto "
+              v-model="dato.adjunto"
+              type="text"
+              label="Ingresar adjunto copiar carta MPD "
+              hint="Ingrese documnetos adjuntos EJEMPLO '1 CARPETA (FOJAS XX Y 1 CD)' "
             />
-
             </div>
              </div>
             <div>
@@ -636,6 +634,8 @@ export default {
       this.dato.codigo="BOL 34-000XX"
       this.dato.cite="MPD/VIPFE/DGPP-NE XXXX/2022"
       this.dato.interno ="E/CN/2022-0XXXX"
+      this.dato.adjunto =" 1 Carpeta (fojas XX y CD)"
+
 
         this.alert=true;
        },

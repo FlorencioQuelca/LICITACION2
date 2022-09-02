@@ -56,16 +56,20 @@
          <q-td key="inspeccion" :props="props">
                {{props.row.vinculo}}
          </q-td>
+         <q-td key="fechainspeccion" :props="props">
+               {{props.row.copia}}
+         </q-td>
+         <q-td key="inspeccion" :props="props">
+               {{props.row.vinculo}}
+         </q-td>
          <q-td key="avance" :props="props">
-               {{props.row.puntaje}}
+               {{props.row.puntaje1}}
          </q-td>
        </q-tr>
       </template>
     </q-table>
-
     </div>
 </template>
-
 <script >  //vue 2
 const columns = [
   { name: 'nro', align:"center", label: 'N°', field: 'nro', sortable: true },
@@ -80,6 +84,8 @@ const columns = [
   { name: 'municipio', align: "left",label: 'Municipio', field: 'municipio',sortable:true},
   { name: "funcionario",align: "left",label: "Evaluado Por:",field: "funcionario",sortable: true},
   { name: 'inspeccion',align: "center", label: 'Inspeccionado ', field: 'inspeccion', sortable: false },
+  { name: 'fechainspeccion',align: "center", label: 'Fecha de Inspeccion', field: 'fechainspeccion', sortable: false },
+  { name: 'fechaenvio',align: "center", label: 'Fecha de Envio', field: 'fechaenvio', sortable: false },
   { name: 'avance',align: "center", label: '% avance ', field: 'avance', sortable: false }
   ];
 export default {
@@ -88,7 +94,6 @@ export default {
       columns,
       filter:'',
       data:[],
-
     };
     },
     created(){
@@ -106,7 +111,5 @@ export default {
     }
 }
 </script>
-
 <style>
-
 </style>

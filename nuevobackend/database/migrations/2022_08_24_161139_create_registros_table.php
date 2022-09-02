@@ -29,7 +29,7 @@ class CreateRegistrosTable extends Migration
             $table->decimal('monto3',10,2)->default(0);
             $table->decimal('total',10,2)->default(0);
             $table->decimal('puntaje',10,2)->default(0);//FAMILIAS BENEFICIARIAS
-            $table->decimal('puntaje1',10,2)->default(0);
+            $table->decimal('puntaje1',10,2)->default(0); //inspeccion en campo 50%
             $table->decimal('puntaje2',10,2)->default(0);
             $table->decimal('puntaje3',10,2)->default(0);
             $table->decimal('puntaje4',10,2)->default(0);
@@ -55,7 +55,7 @@ class CreateRegistrosTable extends Migration
 
 
             //pie de pagina
-            $table->string('mosca')->nullable();  ///sin asignar
+            $table->string('mosca')->nullable();  ///SIN ASIGNAR
             $table->string('copia')->nullable();// fecha deisnpeccion
             $table->string('adjunto')->nullable();
             $table->string('vinculo')->nullable();//  INSPECION si/no

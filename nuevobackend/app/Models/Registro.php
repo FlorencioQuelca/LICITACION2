@@ -39,7 +39,12 @@ class Registro extends Model
         "copia",
         "adjunto",
         "vinculo",
-        "departamento_id"
+        "departamento_id",
+        "puntaje",
+        "puntaje1",
+        "puntaje2",
+        "puntaje3",
+        "puntaje4"
     ];
     protected $hidden =['created_at','updated_at'];
     //relacion uno a muchos inversa
