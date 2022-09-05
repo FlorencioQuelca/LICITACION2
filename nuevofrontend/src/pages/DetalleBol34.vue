@@ -1081,14 +1081,14 @@ export default {
                 }
         })
         let con1="De la revisión de la documentación concerniente a la solicitud de enlosetado del proyecto "+this.dato.nombre+" del Departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se concluye:"
-        let con2="1 De la solicitud del proyecto presentado por el GAM "+this.dato.nombre+" del municipio de "+this.cambiarminiscula(this.dato.municipio)+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles)"
+        let con2="De la solicitud del proyecto presentado por el GAM "+this.dato.nombre+" del municipio de "+this.cambiarminiscula(this.dato.municipio)+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" es elegible de acuerdo a la tipología de proyectos establecida en el ROP del Programa punto 2.4 (cuadro N°3- Proyectos Elegibles)"
         let con3=""
         let rec1=""
         if(this.dato.cumple==="SI"){
-          con3="2 El proyecto "+this.dato.nombre+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" CUMPLE con los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
+          con3="El proyecto "+this.dato.nombre+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" CUMPLE con los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
           rec1="De la verificación y evaluación realizada, se determina que el proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.cambiarminiscula(this.dato.municipio)+" del Departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" presentado CUMPLE con los requisitos establecidos para su ejecución en el marco del ROP del programa BOL34/2021."
         }else{
-          con3="2 El proyecto "+this.dato.nombre+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" debe ser COMPLEMENTADO Y/O AJUSTADO  de acuerdo a los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
+          con3="El proyecto "+this.dato.nombre+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" debe ser COMPLEMENTADO Y/O AJUSTADO  de acuerdo a los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
           rec1="De la verificación y evaluación realizada, se determina que el proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.cambiarminiscula(this.dato.municipio)+" del Departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" debe ser COMPLEMENTADO Y/O AJUSTADO de acuerdo a los requisitos establecidos en el marco del ROP del programa BOL34/2021."
 
         }
@@ -1342,15 +1342,16 @@ export default {
              doc.text("3. CONCLUSIONES", 35,38).setFontSize(12).setFont(undefined, 'normal');
              doc.text(con1, 30,45,{maxWidth: 160,align: "justify"})
              doc.text(con2, 40,70,{maxWidth: 150,align: "justify"})
+             doc.text("1. ", 35,70,{maxWidth: 150,align: "justify"})
+             doc.text("2. ", 35,99,{maxWidth: 150,align: "justify"})
+             doc.text(con3, 40,99,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
 
-             doc.text(con3, 40,95,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
-
-             doc.text("4. RECOMENDACIONES", 35,120).setFontSize(12).setFont(undefined, 'normal');
+             doc.text("4. RECOMENDACIONES", 35,123).setFontSize(12).setFont(undefined, 'normal');
              doc.text(rec1, 30,130,{maxWidth: 160,align: "justify"})
             //CASO EXCEPCIONAL
 
 
-             doc.text(rec2, 30,155,{maxWidth: 160,align: "justify"})
+             doc.text(rec2, 30,159,{maxWidth: 160,align: "justify"})
             // doc.text(rec2, 30,155,{maxWidth: 160,align: "justify"})
              doc.text(rec3, 30,180,{maxWidth: 160,align: "justify"}).setFontSize(8).setFont(undefined, 'normal');
 
