@@ -2,18 +2,24 @@
   <div class="q-pa-md" style="padding:10px">
     <div style="display:flex; justify-content:space-between">
     <q-btn
-      label="Registro Bol34"
+      label=" ATRAS"
       color="secondary"
       icon="account_tree"
       @click="this.$router.push('/RegistroBol34')"
       class="q-mb-xs"
     />
-    <q-btn
-      label="Imprimir reporte"
+     <q-btn
+      label="Imprimir INFORME"
       color="red"
       icon="print"
       class="q-mb-xs"
       @click="imprimir"
+    />
+    <q-btn
+      label="Imprimir FICHA TECNICA"
+      color="green"
+      icon="print"
+      class="q-mb-xs"
     />
     </div>
     <q-card
