@@ -147,6 +147,19 @@
                      </div>
                    </div>
 
+                     <div class="row">
+                      <div class="col">
+                       <q-btn icon="summarize" label="FICHA TECNICA" stack glossy @click="view_form8" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
+                        </div>
+                        <div class="col">
+                         <q-linear-progress size="50px" :value="progress8" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
+                        <div class="absolute-full flex flex-center">
+                          <q-badge color="white" text-color="accent" :label="progressLabel8" />
+                        </div>
+                        </q-linear-progress>
+                     </div>
+                   </div>
+
 
 
                </div>
@@ -407,6 +420,26 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+     <!--          formulario 8  -->
+    <q-dialog v-model="dialog_form8">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6"><q-icon name="edit" /> {{titulo}}</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onMod8" class="q-gutter-md">
+
+
+
+            <div>
+              <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
 
   </div>
 </template>
@@ -441,6 +474,7 @@ export default {
     progress5:0.0,
     progress6:0.2,
     progress7:0.0,
+    progress8:0.0,
     progressLabel1:'20.0 %',
     progressLabel2:'0.0 %',
     progressLabel3:'20.0 %',
@@ -448,11 +482,13 @@ export default {
     progressLabel5:'0.0 %',
     progressLabel6:'20.0 %',
     progressLabel7:'0.0 %',
+    progressLabel8:'0.0 %',
    // progressLabel2:(progress2*100).toFixed(2)+'%'
     dialog_form1:false,
     dialog_form2345:false,
     dialog_form6:false,
     dialog_form7:false,
+    dialog_form8:false,
     fecha_inspeccion:moment().format('YYYY-MM-DD'),
      departamentos:[],
       departamento:{},
@@ -1512,7 +1548,13 @@ export default {
         }
       this.dialog_form7=true;
     },
+    view_form8(){
+      this.titulo="FICHA TECNICA DE INSPECCION DE CAMPO"
 
-  },
+      this.dialog_form8=true;
+    },
+    onMod8() {
+    },
+  }
 };
 </script>

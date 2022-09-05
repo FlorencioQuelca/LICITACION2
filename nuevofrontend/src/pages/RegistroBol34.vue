@@ -67,7 +67,7 @@
              </ul>
           </q-td>
             <q-td  key="opcion" :props="props">
-                      <q-btn
+                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA'"
                         dense
                         round
                         flat
@@ -75,7 +75,7 @@
                         @click="addRow2(props)"
                         icon="playlist_add"
                       ></q-btn>
-                        <q-btn
+                        <q-btn v-if="$store.state.login.user.name==='SECRETARIA'"
                         dense
                         round
                         flat
@@ -92,7 +92,7 @@
                         icon="groups"
                       ></q-btn>
 
-                       <q-btn
+                       <q-btn v-if="$store.state.login.user.name==='SECRETARIA'"
                             dense
                             round
                             flat
@@ -319,7 +319,7 @@
       <q-dialog v-model="dialog_add2">
       <q-card style="max-width: 80%; width: 80%">
         <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6">Agregar Funcionario</div>
+          <div class="text-h6">Asignar a Funcionario</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
            <q-form @submit="onAdd2" class="q-gutter-md">
@@ -512,8 +512,8 @@ export default {
     return {
       columns,
       filter:'',filter2:'',
-
       data:[],
+      data2:[],
       dato:{},
       dato2:{},
       alert:false,
@@ -561,16 +561,39 @@ export default {
          this.$q.loading.show();
            this.data=[]
            this.$api.get(process.env.API+"/registros").then((res)=>{
+             console.log(res.data)
               res.data.forEach(it=>{
                        if(this.$store.state.login.user.status===it.departamento.nombre){
+                                        //  this.data.push(it)
+                                          if(it.users.length>0){
+                                            for (let index = 0; index < it.users.length; index++) {
 
-                                          this.data.push(it)
+                                                 if(this.$store.state.login.user.id===it.users[index].id){
+                                                           this.data.push(it)
+                                                 }else{
+                                                  if(this.$store.state.login.user.name==="SECRETARIA" || this.$store.state.login.user.name==="ADMINISTRADOR"){
+                                                         this.data.push(it)
+                                                         break;
+                                                         }
 
+                                                 }
+
+                                           }
+                                          }else{
+                                             if(this.$store.state.login.user.name==="SECRETARIA" || this.$store.state.login.user.name==="ADMINISTRADOR" ){
+                                                this.data.push(it)
+                                             }
+
+                                          }
+
+                                       // console.log();
+                                       //  console.log(it.users[0].id);
                        }
               })
 
+
           // this.data=res.data
-          console.log(this.data)
+         // console.log(this.data)
           this.$q.loading.hide();
        });
        },
