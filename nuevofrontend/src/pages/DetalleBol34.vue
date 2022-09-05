@@ -97,7 +97,7 @@
                      </div>
                    </div>
 
-<div class="row">
+                      <div class="row">
                       <div class="col">
                        <q-btn icon="looks_4" label="INGENIERIA DEL PROYECTO" stack glossy @click="view_form4" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
                         </div>
@@ -422,13 +422,275 @@
     </q-dialog>
      <!--          formulario 8  -->
     <q-dialog v-model="dialog_form8">
-      <q-card style="max-width: 80%; width: 80%">
+      <q-card style="max-width: 100%; width: 100%">
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6"><q-icon name="edit" /> {{titulo}}</div>
         </q-card-section>
 
         <q-card-section class="q-pt-xs">
           <q-form @submit="onMod8" class="q-gutter-md">
+
+             <div class="row">
+                <div class="col-4">
+                  <q-input
+                    outlined
+                    v-model="dato2.ubicacion"
+                    type="text"
+                    label="UBICACION"
+                    hint="Ingresar Ubicacion"
+                  />
+                  <q-input
+                    outlined
+                    v-model="dato2.zona"
+                    type="text"
+                    label="ZONA"
+                    hint="Ingresar Zona"
+                  />
+                  <q-input
+                    outlined
+                    v-model="dato2.circunscripcion"
+                    type="text"
+                    label="Circunscripcion"
+                    hint="Ingresar circunscripcion"
+                  />
+                  <q-input
+                    outlined
+                    v-model="dato2.distrito"
+                    type="text"
+                    label="Distritos"
+                    hint="Ingresar Distrito"
+                  />
+                  <q-input
+                    outlined
+                    v-model="dato2.direccion"
+                    type="text"
+                    label="DIreccion/Ubicacion General"
+                    hint="Ingresar Direccion/Ubicacion General"
+                  />
+                  <q-input
+                    outlined
+                    v-model="dato2.coordenadas"
+                    type="text"
+                    label="Coordenadas Geograficas"
+                    hint="Ingresar Coordenadas Geograficas"
+                  />
+                  <div class="q-gutter-sm">
+                        <span> Proyecto fue Priorizado  GAM/GAIOC /jUNTAS vecinales ?</span>
+                        <q-radio v-model="dato2.priorizado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
+                        <q-radio v-model="dato2.priorizado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
+                      </div>
+                       <q-input
+                    outlined
+                    v-model="dato2.observacion4"
+                    type="text"
+                    label="Observacion"
+                    hint="Ingresar alguna Observacion"
+                  />
+                </div>
+                <div class="col-4">
+                  <div class="q-gutter-sm">
+                        <span> Cuenta con Planimetria Aprobada  mencione  una de las opciones ?</span>
+                        <q-radio v-model="dato2.priorizado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="Documento Oficial GAM" />
+                        <q-radio v-model="dato2.priorizado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="Documento en tramite" />
+                      </div>
+                       <q-input
+                    outlined
+                    v-model="dato2.observacion5a"
+                    type="text"
+                    label="Observacion"
+                    hint="Ingresar alguna Observacion"
+                  />
+                   <div class="row">
+                    <div class="col-3">
+                       <q-input
+                    outlined
+                    v-model="dato2.agua"
+                    type="text"
+                    label="% Agua Potable"
+                    hint="Ingresar % agua Potable en la zona"
+                  />
+                    </div>
+                    <div class="col-3">
+                       <q-input
+                    outlined
+                    v-model="dato2.alcantarillado"
+                    type="text"
+                    label="% Alcantarillado"
+                    hint="Ingresar % Alcantarrillado en la zona"
+                  />
+                    </div>
+                      <div class="col-3">
+                       <q-input
+                    outlined
+                    v-model="dato2.energia"
+                    type="text"
+                    label="% Energia Electrica"
+                    hint="Ingresar % Energia Electrica ene la zona en la zona"
+                  />
+                    </div>
+                    <div class="col-3">
+                       <q-input
+                    outlined
+                    v-model="dato2.gasnatural"
+                    type="text"
+                    label="% Gas Natural"
+                    hint="Ingresar % Gas Natural en la zona en la zona"
+                  />
+                    </div>
+                    </div>
+                     <q-input
+                    outlined
+                    v-model="dato2.observacion5b"
+                    type="text"
+                    label="Observacion"
+                    hint="Ingresar alguna Observacion"
+                  />
+                     <div class="row">
+                    <div class="col-4">
+                       <q-input
+                    outlined
+                    v-model="dato2.tierra"
+                    type="text"
+                    label="% Tierra"
+                    hint="Ingresar % Tierra en la zona"
+                  />
+                    </div>
+                    <div class="col-4">
+                       <q-input
+                    outlined
+                    v-model="dato2.empedrado"
+                    type="text"
+                    label="% Empedrado"
+                    hint="Ingresar % Empedrado en la zona"
+                  />
+                    </div>
+                      <div class="col-4">
+                       <q-input
+                    outlined
+                    v-model="dato2.otro"
+                    type="text"
+                    label="% Otro Electrica"
+                    hint="Ingresar % Otro en la zona en la zona"
+                  />
+                    </div>
+                    </div>
+                     <q-input
+                    outlined
+                    v-model="dato2.observacion5c"
+                    type="text"
+                    label="Observacion"
+                    hint="Ingresar alguna Observacion"
+                  />
+                  <div class="row">
+                    <div class="col-4">
+                       <q-input
+                    outlined
+                    v-model="dato2.ejecutado"
+                    type="text"
+                    label="% Ejecutado"
+                    hint="Ingresar % Ejecutado"
+                  />
+                    </div>
+                    <div class="col-4">
+                       <q-input
+                    outlined
+                    v-model="dato2.porejecutar"
+                    type="text"
+                    label="% Ejecutar"
+                    hint="Ingresar % Por ejecutar"
+                  />
+                    </div>
+                      <div class="col-4">
+                       <q-input
+                    outlined
+                    v-model="dato2.longitudporejecutar"
+                    type="text"
+                    label="% Longitud por Ejecutar"
+                    hint="Ingresar % Longitud por ejecutar"
+                  />
+                    </div>
+                    </div>
+                     <q-input
+                    outlined
+                    v-model="dato2.observacion5d"
+                    type="text"
+                    label="Observacion"
+                    hint="Ingresar alguna Observacion"
+                  />
+
+                </div>
+                <div class="col-4">
+                 <div class="row">
+                    <div class="col-4">
+                       <q-input
+                    outlined
+                    v-model="dato2.longitud"
+                    type="text"
+                    label="Longitud"
+                    hint="IngresarLongitud"
+                  />
+                    </div>
+                    <div class="col-4">
+                       <q-input
+                    outlined
+                    v-model="dato2.ancho"
+                    type="text"
+                    label="ANCHO"
+                    hint="Ingresar ANCHO"
+                  />
+                    </div>
+                      <div class="col-4">
+                       <q-input
+                    outlined
+                    v-model="dato2.area"
+                    type="text"
+                    label="AREA"
+                    hint="Ingresar AREA"
+                  />
+                    </div>
+                    </div>
+                     <q-input
+                    outlined
+                    v-model="dato2.observacion6"
+                    type="text"
+                    label="Observacion"
+                    hint="Ingresar alguna Observacion"
+                  />
+
+                   <div class="q-gutter-sm">
+                        <span>  CONCLUSIONES: Usted recomienda Rechazar o Aprobar el proyecto ?</span>
+                        <q-radio v-model="dato2.aprobar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="APROBAR" />
+                        <q-radio v-model="dato2.aprobar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="RECHAZAR" />
+                      </div>
+                      <div class="q-gutter-sm">
+                        <span>  CONCLUSIONES: Usted recomienda Recomienda inpeccionar nuevamente el Proyecto ?</span>
+                        <q-radio v-model="dato2.inspeccionar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
+                        <q-radio v-model="dato2.inspeccionar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
+                      </div>
+                            <q-input
+                          outlined
+                          v-model="dato2.dias"
+                          type="Number"
+                          label="dias"
+                          hint="Ingresar en cuantos dias"
+                        />
+                         <q-uploader
+                        class="full-width"
+                        label="Subir FOTOGRAFIA Nº1(IZQUIERDA) "
+                        :factory="uploadFile1"
+                      />
+                       <q-uploader
+                        class="full-width"
+                        label="Subir FOTOGRAFIA Nº2(DERECHA) "
+                        :factory="uploadFile2"
+                      />
+                       <q-uploader
+                        class="full-width"
+                        label="Subir FOTOGRAFIA (PLANO DE UBICACION) "
+                        :factory="uploadFile3"
+                      />
+                </div>
+             </div>
 
 
 

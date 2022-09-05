@@ -61,6 +61,12 @@ class Registro extends Model
     public function departamento(){
         return $this->belongsTo(Departamento::class);
     }
+    //relacion uno a uno
+    public function ficha(){
+        // $ficha = Ficha::where("registro_id", $this->id)->first();
+        // return $ficha;
+        return $this->hasOne(Ficha::class);
+     }
 
 
 }
