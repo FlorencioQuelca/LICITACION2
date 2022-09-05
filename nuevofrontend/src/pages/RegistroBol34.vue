@@ -563,12 +563,14 @@ export default {
            this.$api.get(process.env.API+"/registros").then((res)=>{
               res.data.forEach(it=>{
                        if(this.$store.state.login.user.status===it.departamento.nombre){
-                        this.data.push(it)
+
+                                          this.data.push(it)
+
                        }
               })
 
           // this.data=res.data
-     //     console.log(this.data)
+          console.log(this.data)
           this.$q.loading.hide();
        });
        },

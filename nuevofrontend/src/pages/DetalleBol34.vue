@@ -326,14 +326,25 @@
                      </div>
                      <div class="col-1" v-if="item.tipo===op"   >
                       <div class="q-gutter-sm" dense>
-                            <q-radio v-if="item.tipo!='VARIACION'" dense v-model="item.valor" val="SI" label="Cumple" />
-                            <q-radio v-if="item.tipo!='VARIACION'" dense v-model="item.valor" val="NO" label="NO Cumple" />
                             <q-radio  v-if="item.tipo==='VARIACION'" dense v-model="item.valor" val="SI" label="SI" />
                             <q-radio  v-if="item.tipo==='VARIACION'" dense v-model="item.valor" val="NO" label="NO" />
+                            <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="Presenta." label="Presenta" />
+                            <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="Debe ser presentado." label="No Presenta" />
+                            <q-radio v-if="item.tipo==='CRITERIO'" dense v-model="item.valor" val="SI" label="Cumple" />
+                            <q-radio v-if="item.tipo==='CRITERIO'" dense v-model="item.valor" val="NO" label="No Cumple" />
+                            <q-radio v-if="item.tipo==='INGENIERIA'" dense v-model="item.valor" val="SI" label="Presenta" />
+                            <q-radio v-if="item.tipo==='INGENIERIA'" dense v-model="item.valor" val="NO" label="No presenta" />
                       </div>
                      </div>
                      <div class="col-4"  v-if="item.tipo===op">
-                      <q-input
+                      <q-input  v-if="item.tipo!=='REQUISITO'"
+                        outlined
+                        v-model="item.descripcion1"
+                        type="textarea"
+                        label="Observacion"
+                        hint="Ingrese la observacion"
+                      />
+                      <q-input  v-if="item.nombre==='R-2'"
                         outlined
                         v-model="item.descripcion1"
                         type="textarea"
@@ -848,6 +859,42 @@ export default {
         });
     },
     guardar(item){
+
+         if(item.tipo==="REQUISITO"){
+                 if(item.valor==null){
+                this.$q.notify({
+                            color: "red-4",
+                            textColor: "white",
+                            icon: "cloud_done",
+                            message: "debe seleccionar SI 'Presenta' O 'No Presenta'",
+                          });
+                }else{
+              this.resultado.presenta=item.valor;
+               if(item.tipo==="REQUISITO" && item.nombre!="R-2"){
+                       this.resultado.descripcion=item.valor
+                     }else
+                     {
+                       this.resultado.descripcion=item.descripcion1
+                     }
+              this.resultado.id=item.id
+              this.resultado.tipo=item.tipo;
+              this.resultado.nombre=item.nombre;
+              this.resultado.puntaje=2
+              item.puntaje="2.00"
+              this.$api.put(process.env.API + "/registroevaluacion/"+this.dato.id,this.resultado).then((res) => {
+                          this.$q.notify({
+                                  color: "green-4",
+                                  textColor: "white",
+                                  icon: "cloud_done",
+                                  message: "Guardado Correctamente",
+                                });
+                            //   this.misdatos();
+                                });
+            }
+
+
+
+         }else{
       if(item.valor==null){
                 this.$q.notify({
                             color: "red-4",
@@ -880,6 +927,7 @@ export default {
                        //   this.misdatos();
                           });
       }
+         }
     },
       editar(item){
          this.dato.evaluacions.forEach(it => {
@@ -889,7 +937,12 @@ export default {
                     this.resultado.evaluacion_id=item.id
                     this.resultado.registro_id=it.pivot.registro_id
                     this.resultado.puntaje="3.00"
-                     this.resultado.descripcion=item.descripcion1
+                   if(item.tipo==="REQUISITO" && item.nombre!="R-2"){
+                       this.resultado.descripcion=item.valor
+                     }else
+                     {
+                       this.resultado.descripcion=item.descripcion1
+                     }
                        this.resultado.presenta=item.valor
                     this.resultado.tipo=it.tipo;
 
@@ -963,11 +1016,11 @@ export default {
         let c2="Proyecto que atienda a infraestructuras públicas de salud, educación y/o que se complementen con otras intervenciones realizadas con anterioridad."
         let c3="El proyecto no debe encontrarse en áreas y/o zonas de riesgos naturales y geológicos que puedan comprometer a la infraestructura."
         let r1="Solicitud de financiamiento del proyecto por las Juntas Vecinales y/o GAMs y/o GAIOCs u otras organizaciones sociales debidamente constituidas y reconocidas en el ordenamiento vigente (Personería Jurídica para J.V. y/o OTBs)"
-        let r2="Monto máximo por proyecto a ser financiado no podrá ser mayor a Bs 3.000.000.- (Tres Millones 00/100 bolivianos.) (De acuerdo a la convocatoria MPD)"
-        let r3="Certificación escrita de existencia de servicios (agua potable, alcantarillado sanitario, etc) por las empresas proveedoras o administradoras de estos servicios. A excepción de los Municipios con categoría “A” (según ROP numeral 2.5. punto vii)."
+        let r2="Monto máximo por proyecto a ser financiado no podrá ser mayor a Bs 3.000.000.- (Tres Millones 00/100 bolivianos.)"
+        let r3="Certificación escrita de existencia de servicios (agua potable, alcantarillado sanitario, etc) por las empresas proveedoras o administradoras de estos servicios. A excepción de los Municipios con categoría “A” "
         let r4="Acta de Consenso Social de las Organizaciones Sociales o Juntas Vecinales, para la ejecución del proyecto (De acuerdo a Usos y Costumbres)."
-        let r5="Acta de compromiso para la ejecución de cordones de acera por los beneficiarios y/o municipio. Los cordones de acera deberán estar concluidos previamente al inicio del proceso de contratación del proyecto. (según ROP numeral 2.5. punto v)."
-        let r6="Planimetría Aprobada por el GAM correspondiente de los lugares de intervención que permita la ejecución del proyecto donde se muestre ancho de vía y si corresponde ubicación de áreas verdes. A excepción de los municipios de categoría A. (según ROP numeral 2.5. punto iv)."
+        let r5="Acta de compromiso para la ejecución de cordones de acera por los beneficiarios y/o municipio."
+        let r6="Planimetría Aprobada por el GAM correspondiente de los lugares de intervención que permita la ejecución del proyecto donde se muestre ancho de vía y si corresponde ubicación de áreas verdes. A excepción de los municipios de categoría A."
         let r7="Acta de Compromiso para firmar el Convenio CTF /CFP por las Juntas Vecinales y/o GAMs y/o GAIOCs u otras organizaciones sociales."
         let i1="Resumen Ejecutivo (Antecedentes, Justificación, Objetivos, Costo de Inversión, Ubicación Geográfica y tiempo de ejecución)"
         let i2="Diagnóstico del proyecto /Estudio Socioeconómico (Considerando el alcance del proyecto, el mismo deberá contener un diagnóstico de situación actual, área de influencia del proyecto; características físicas, condiciones socioeconómicas de los beneficiarios)"
@@ -1159,9 +1212,9 @@ export default {
              doc.text(text1, 30,148,{maxWidth: 160,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
 
              doc.text("2. DESARROLLO", 35,187).setFontSize(12).setFont(undefined, 'normal');
-             doc.text(text2, 30,193,{maxWidth: 160,align: "justify"})
+             doc.text(text2, 30,193,{maxWidth: 160,align: "justify"}).setFontSize(12).setFont(undefined, 'italic');
              doc.text(text3, 40,205,{maxWidth: 150,align: "justify"})
-             doc.text(text4, 40,225,{maxWidth: 150,align: "justify"})
+             doc.text(text4, 40,225,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'normal');
                     //hoja 2
             doc.addPage();
             doc.addImage(chacana, 'PNG', 25, 10, 20, 20);
@@ -1195,16 +1248,16 @@ export default {
               doc.rect(130,75, 60,30)
               doc.rect(130,75, 60,55)
               doc.rect(130,75, 60,80)
-             doc.setFontSize(10, 'bold')
+             doc.setFontSize(10, 'bold').setFontSize(10).setFont(undefined, 'bold');
              doc.text('         CRITERIOS DE ELIGIBILIDAD                        Cumple/                   OBSERVACIONES', 35, 79)
-             doc.text('No Cumple', 112, 83)
+             doc.text('No Cumple', 112, 83).setFontSize(10).setFont(undefined, 'normal');
              doc.text(c1, 32,90,{maxWidth: 75,align: "justify"})
              doc.text(c2, 32,110,{maxWidth: 75,align: "justify"})
-             doc.text(c3, 32,135,{maxWidth: 75,align: "justify"})
+             doc.text(c3, 32,135,{maxWidth: 75,align: "justify"}).setFontSize(10).setFont(undefined, 'bold');
 
              doc.text(c11presenta, 112,92,{maxWidth: 15,align: "justify"})
              doc.text(c22presenta, 112,112,{maxWidth: 15,align: "justify"})
-             doc.text(c33presenta, 112,137,{maxWidth: 15,align: "justify"})
+             doc.text(c33presenta, 112,137,{maxWidth: 15,align: "justify"}).setFontSize(10).setFont(undefined, 'normal');
 
              doc.text(c11, 131,87,{maxWidth: 58,align: "justify"})
              doc.text(c22, 131,108,{maxWidth: 58,align: "justify"})
@@ -1218,11 +1271,13 @@ export default {
               doc.rect(110,157, 80,30)
               doc.rect(110,157, 80,70)
               doc.rect(110,157, 80,95)
-            doc.setFontSize(10, 'bold')
-            doc.text('         REQUISITOS DEL PROYECTO                                                OBSERVACION', 35, 161)
+            doc.setFontSize(10, 'bold').setFontSize(10).setFont(undefined, 'bold');
+            doc.text('         REQUISITOS DEL PROYECTO                                                OBSERVACION', 35, 161).setFontSize(10).setFont(undefined, 'normal');
             doc.text(r1, 32,167,{maxWidth: 75,align: "justify"})
-            doc.text(r2, 32,195,{maxWidth: 75,align: "justify"})
-            doc.text(r3, 32,231,{maxWidth: 75,align: "justify"})
+            doc.text(r2, 32,195,{maxWidth: 75,align: "justify"}).setFontSize(10).setFont(undefined, 'italic');
+            doc.text("(De acuerdo a la convocatoria MPD)", 32,208,{maxWidth: 75,align: "justify"})
+            doc.text("(según ROP numeral 2.5. punto vii).", 32,248,{maxWidth: 75,align: "justify"}).setFontSize(10).setFont(undefined, 'normal');
+            doc.text(r3, 32,231,{maxWidth: 77,align: "justify"})
 
             doc.text(r11, 112,167,{maxWidth: 77,align: "justify"})
             let infraestructura="Infraestructura Bs. "+this.dato.monto1
@@ -1265,7 +1320,9 @@ export default {
               doc.setFontSize(10, 'bold')
               doc.text(r4, 32,38,{maxWidth: 75,align: "justify"})
               doc.text(r5, 32,50,{maxWidth: 75,align: "justify"})
-              doc.text(r6, 32,71,{maxWidth: 75,align: "justify"})
+              doc.text(r6, 32,71,{maxWidth: 75,align: "justify"}).setFontSize(10).setFont(undefined, 'italic');
+              doc.text("Los cordones de acera deberán estar concluidos previamente al inicio del proceso de contratación del proyecto. (según ROP numeral 2.5. punto v).", 32,58,{maxWidth: 75,align: "justify"})
+              doc.text("(según ROP numeral 2.5. punto iv).", 32,91,{maxWidth: 90,align: "justify"}).setFontSize(10).setFont(undefined, 'normal');
               doc.text(r7, 32,95,{maxWidth: 75,align: "justify"})
 
               doc.text(r44, 112,38,{maxWidth: 77,align: "justify"})
@@ -1297,8 +1354,8 @@ export default {
               doc.rect(110,108, 80,130)
               doc.rect(110,108, 80,135)
               doc.rect(110,108, 80,145)
-            doc.setFontSize(10, 'bold')
-              doc.text('         INGENIERIA DEL PROYECTO(*)                                           OBSERVACION', 40, 112)
+            doc.setFontSize(10, 'bold').setFontSize(10).setFont(undefined, 'bold');
+              doc.text('         INGENIERIA DEL PROYECTO(*)                                           OBSERVACION', 40, 112).setFontSize(10).setFont(undefined, 'normal');
              doc.text(i1, 32,116,{maxWidth: 77,align: "justify"})
              doc.text(i2, 32,128,{maxWidth: 77,align: "justify"})
              doc.text(i3, 32,150,{maxWidth: 77,align: "justify"})
@@ -1343,8 +1400,11 @@ export default {
              doc.text(con1, 30,45,{maxWidth: 160,align: "justify"})
              doc.text(con2, 40,70,{maxWidth: 150,align: "justify"})
              doc.text("1. ", 35,70,{maxWidth: 150,align: "justify"})
-             doc.text("2. ", 35,99,{maxWidth: 150,align: "justify"})
-             doc.text(con3, 40,99,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
+             doc.text("2. ", 35,97,{maxWidth: 150,align: "justify"})
+
+
+
+             doc.text(con3, 40,97,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
 
              doc.text("4. RECOMENDACIONES", 35,123).setFontSize(12).setFont(undefined, 'normal');
              doc.text(rec1, 30,130,{maxWidth: 160,align: "justify"})
@@ -1361,7 +1421,8 @@ export default {
                doc.text(adjunto, 30,228)
                doc.text(vinculo, 30,232)
 
-             doc.text('fqm', 214, 280) //milimetros
+             doc.text('fqm', 212, 277) //milimetros
+             doc.text('*', 214, 280) //milimetros
              let descargarnombre=""
                if(this.dato.cumple==="SI"){
                       descargarnombre=this.dato.codigo+"_CUMPLE"+".pdf"
@@ -1370,6 +1431,12 @@ export default {
                }
             doc.save(descargarnombre);
       },
+      isBoldOpen (arrayLength, valueBefore = false) {
+    const isEven = arrayLength % 2 === 0;
+    const result = valueBefore !== isEven;
+    return result;
+},
+
       mosca(cadena){
           let text=cadena.split(" ")
           let ans=""
