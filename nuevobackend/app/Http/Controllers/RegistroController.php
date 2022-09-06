@@ -17,30 +17,30 @@ class RegistroController extends Controller
      */
     public function index()
     {
-        return Registro::with(['departamento','users','evaluacions'])->orderByDesc('nro')->get();
+        return Registro::with(['departamento','users','evaluacions','ficha'])->orderByDesc('nro')->get();
       //  return Registro::all();
 
     }
     public function registroid(Registro $registro){
-        $registro =Registro::with(['departamento','users','evaluacions'])
+        $registro =Registro::with(['departamento','users','evaluacions','ficha'])
                             ->orWhere('id', '=', $registro->id)->get();
         return \response()->json($registro,200);
     }
     public function registrodepa(Registro $registro){
-        $registro =Registro::with(['departamento','users','evaluacions'])
+        $registro =Registro::with(['departamento','users','evaluacions','ficha'])
                             ->orWhere('departamento_id', '=', $registro->id)->orderByDesc('nro')->get();
 
         return \response()->json($registro,200);
     }
     public function registrodepaorder(Registro $registro){
-        $registro =Registro::with(['departamento','users','evaluacions'])
+        $registro =Registro::with(['departamento','users','evaluacions','ficha'])
                             ->orWhere('departamento_id', '=', $registro->id)->orderBy('nro')->get();
 
         return \response()->json($registro,200);
     }
     public function registrados()
     {
-        return Registro::with(['departamento','users','evaluacions'])->orderBy('nro')->get();
+        return Registro::with(['departamento','users','evaluacions','ficha'])->orderBy('nro')->get();
       //  return Registro::all();
 
     }

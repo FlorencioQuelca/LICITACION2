@@ -458,7 +458,7 @@
                     outlined
                     dense
                     v-model="dato2.circunscripcion"
-                    type="text"
+                    type="Number"
                     label="Circunscripcion"
                     hint="Ingresar circunscripcion"
                   />
@@ -481,10 +481,16 @@
                   <q-input
                     outlined
                     dense
-                    v-model="dato2.coordenadas"
+                    v-model="dato2.latitud"
                     type="text"
-                    label="Coordenadas Geograficas"
-
+                    label="Coordenadas LATUTUD"
+                  />
+                  <q-input
+                    outlined
+                    dense
+                    v-model="dato2.longitud"
+                    type="text"
+                    label="Coordenadas LONGITUD"
                   />
 
                   <div class="q-pa-md">
@@ -865,7 +871,7 @@ export default {
         .then((res) => {
           this.dato=res.data[0]
          //this.datocopia=this.dato.evaluacions
-        //  console.log(this.dato);
+          console.log(this.dato);
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
@@ -946,6 +952,15 @@ export default {
         }
          this.$q.loading.hide();
           });
+
+    },
+    misdatos2() {
+      this.$q.loading.show();
+      this.$api.get(process.env.API + "/registroid/" + this.$route.params.id).then((res) => {
+          this.dato=res.data[0]
+             this.$q.loading.hide();
+         });
+
 
     },
     view_form1(){
@@ -1978,10 +1993,55 @@ export default {
     },
     view_form8(){
       this.titulo="FICHA TECNICA DE INSPECCION DE CAMPO"
-      this.dato2={}
-      this.dialog_form8=true;
+        if(this.dato.ficha==null){ // esta vacion
+         this.dato2={}
+             this.dato2.registro_id = this.dato.id
+             this.$q.loading.show();
+              this.$api.post(process.env.API+"/ficha/", this.dato2).then((res) => {
+                  this.misdatos2();
+                     this.$q.loading.hide();
+
+                }).catch((e)=>{
+                  this.$q.loading.hide();
+                });
+                 console.log("creado correctamente");
+                  this.dialog_form8=true;
+        }else{   // es con contenido
+               this.dato2=this.dato.ficha
+              this.dialog_form8=true;
+
+        }
+
     },
     onMod8() {
+
+
+
+
+
+               this.$api.put(process.env.API+"/ficha/"+this.dato.ficha.id, this.dato2).then((res) => {
+                if(res.data.res===true){
+                    this.$q.notify({
+                    color: "green-4",
+                    textColor: "white",
+                    icon: "cloud_done",
+                    message: "Modificado Correctamente",
+                  });
+                  }else{
+                    this.$q.loading.hide();
+                  }
+                  this.alert= false;
+                  this.misdatos();
+
+                }).catch((e)=>{
+                  this.$q.loading.hide();
+                });
+               this.dialog_form8=false;
+
+
+
+
+
     },
     uploadFile1(){
 

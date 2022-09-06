@@ -14,7 +14,7 @@ class FichaController extends Controller
      */
     public function index()
     {
-        //
+        return Ficha::all();
     }
 
     /**
@@ -24,7 +24,7 @@ class FichaController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -35,7 +35,54 @@ class FichaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $ficha=new Ficha();
+        $ficha->registro_id =$request->registro_id;
+       // $ficha->nombre =$request->nombre;
+        //$ficha->ubicacion =$request->ubicacion;
+        //$ficha->zona =$request->zona;
+        //$ficha->circunscripcion =$request->circunscripcion;
+        //$ficha->distrito =$request->distrito;
+        //$ficha->direccion =$request->direccion;
+        //$ficha->coordenadas =$request->coordenadas;
+      //  $ficha->latitud =$request->latitud;
+       // $ficha->longitud =$request->longitud;
+       // $ficha->observacion=$request->observacion;
+       // $ficha->observacion4=$request->observacion4;
+       // $ficha->observacion5a=$request->observacion5a;
+       // $ficha->observacion5b=$request->observacion5b;
+       // $ficha->observacion5c=$request->observacion5c;
+       // $ficha->observacion5d=$request->observacion5d;
+        //$ficha->observacion6=$request->observacion6;
+        //$ficha->priorizado=$request->priorizado;
+        //$ficha->planimetria=$request->planimetria;
+        //$ficha->status=$request->status;
+       // $ficha->inspeccionado=$request->inspeccionado;
+       // $ficha->aprobado=$request->aprobado;
+       // $ficha->foto1=$request->foto1;
+      //  $ficha->foto2=$request->foto2;
+       // $ficha->foto3=$request->foto3;
+        //$ficha->foto4=$request->foto4;
+       // $ficha->fecha=$request->fecha;
+        //$ficha->dias=$request->dias;
+       // $ficha->agua=$request->agua;
+       // $ficha->alcantarillado=$request->alcantarillado;
+       // $ficha->electricidad=$request->electricidad;
+        //$ficha->gasnatural=$request->gasnatural;
+        //$ficha->tierra=$request->tierra;
+        //$ficha->empedrado=$request->empedrado;
+        //$ficha->otro=$request->otro;
+       // $ficha->ejecutado=$request->ejecutado;
+        //$ficha->porejecutar=$request->porejecutar;
+       // $ficha->longitudporejecutar=$request->longitudporejecutar;
+        //$ficha->longitud=$request->longitud;
+        //$ficha->ancho=$request->ancho;
+        //$ficha->area=$request->area;
+
+
+        $ficha->save();
+        return \response()->json(['res'=> true, 'message'=>'insertado correctamente'],200);
+      //  return Ficha::create($request->all());
     }
 
     /**
@@ -46,7 +93,7 @@ class FichaController extends Controller
      */
     public function show(Ficha $ficha)
     {
-        //
+        return $ficha;
     }
 
     /**
@@ -69,7 +116,8 @@ class FichaController extends Controller
      */
     public function update(Request $request, Ficha $ficha)
     {
-        //
+        $ficha->update($request->all());
+        return \response()->json(['res'=> true, 'message'=>'Modificado correctamente'],200);
     }
 
     /**
@@ -80,6 +128,6 @@ class FichaController extends Controller
      */
     public function destroy(Ficha $ficha)
     {
-        //
+        return  $ficha->delete();
     }
 }

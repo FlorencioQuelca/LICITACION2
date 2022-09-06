@@ -48,7 +48,7 @@ class Ficha extends Model
         "longitud",
         "ancho",
         "area",
-        "latutud",
+        "latitud",
         "longitud",
 
     ];
