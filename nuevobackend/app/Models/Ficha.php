@@ -48,6 +48,8 @@ class Ficha extends Model
         "longitud",
         "ancho",
         "area",
+        "latutud",
+        "longitud",
 
     ];
     protected $hidden =['created_at','updated_at'];

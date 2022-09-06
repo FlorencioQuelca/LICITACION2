@@ -436,10 +436,11 @@
         <q-card-section class="q-pt-xs">
           <q-form @submit="onMod8" class="q-gutter-md">
 
-             <div class="row">
+             <div class="row" >
                 <div class="col-4">
                   <q-input
                     outlined
+                    dense
                     v-model="dato2.ubicacion"
                     type="text"
                     label="UBICACION"
@@ -447,6 +448,7 @@
                   />
                   <q-input
                     outlined
+                    dense
                     v-model="dato2.zona"
                     type="text"
                     label="ZONA"
@@ -454,6 +456,7 @@
                   />
                   <q-input
                     outlined
+                    dense
                     v-model="dato2.circunscripcion"
                     type="text"
                     label="Circunscripcion"
@@ -461,6 +464,7 @@
                   />
                   <q-input
                     outlined
+                    dense
                     v-model="dato2.distrito"
                     type="text"
                     label="Distritos"
@@ -468,6 +472,7 @@
                   />
                   <q-input
                     outlined
+                    dense
                     v-model="dato2.direccion"
                     type="text"
                     label="DIreccion/Ubicacion General"
@@ -475,77 +480,93 @@
                   />
                   <q-input
                     outlined
+                    dense
                     v-model="dato2.coordenadas"
                     type="text"
                     label="Coordenadas Geograficas"
-                    hint="Ingresar Coordenadas Geograficas"
+
                   />
-                  <div class="q-gutter-sm">
-                        <span> Proyecto fue Priorizado  GAM/GAIOC /jUNTAS vecinales ?</span>
+
+                  <div class="q-pa-md">
+                        <span> Proyecto fue Priorizado por la GAM/GAIOC/JUNTAS vecinales ?</span>
                         <q-radio v-model="dato2.priorizado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
                         <q-radio v-model="dato2.priorizado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
                       </div>
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.observacion4"
                     type="text"
                     label="Observacion"
                     hint="Ingresar alguna Observacion"
                   />
+                  <q-uploader
+                        class="full-width"
+                        label="Subir FOTOGRAFIA Nº1(IZQUIERDA) "
+                        :factory="uploadFile1"
+                      />
+
                 </div>
                 <div class="col-4">
-                  <div class="q-gutter-sm">
-                        <span> Cuenta con Planimetria Aprobada  mencione  una de las opciones ?</span>
-                        <q-radio v-model="dato2.priorizado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="Documento Oficial GAM" />
-                        <q-radio v-model="dato2.priorizado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="Documento en tramite" />
+
+                  <div class="q-pa-md">
+                        <span> Cuenta con Planimetria Aprobada?  mencione una de las opciones :</span>
+                        <q-radio v-model="dato2.planimetria" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="Documento Oficial GAM" />
+                        <q-radio v-model="dato2.planimetria" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="Documento en tramite" />
                       </div>
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.observacion5a"
                     type="text"
                     label="Observacion"
                     hint="Ingresar alguna Observacion"
                   />
-                   <div class="row">
+                   <div class="row" style="padding:1px">
                     <div class="col-3">
                        <q-input
+                       dense
                     outlined
                     v-model="dato2.agua"
-                    type="text"
+                   type="Number"
+                    step="0.01"
                     label="% Agua Potable"
-                    hint="Ingresar % agua Potable en la zona"
                   />
                     </div>
                     <div class="col-3">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.alcantarillado"
-                    type="text"
+                   type="Number"
+                    step="0.01"
                     label="% Alcantarillado"
-                    hint="Ingresar % Alcantarrillado en la zona"
                   />
                     </div>
                       <div class="col-3">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.energia"
-                    type="text"
+                    type="Number"
+                    step="0.01"
                     label="% Energia Electrica"
-                    hint="Ingresar % Energia Electrica ene la zona en la zona"
                   />
                     </div>
                     <div class="col-3">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.gasnatural"
-                    type="text"
+                   type="Number"
+                    step="0.01"
                     label="% Gas Natural"
-                    hint="Ingresar % Gas Natural en la zona en la zona"
                   />
                     </div>
                     </div>
                      <q-input
                     outlined
+                    dense
                     v-model="dato2.observacion5b"
                     type="text"
                     label="Observacion"
@@ -555,33 +576,37 @@
                     <div class="col-4">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.tierra"
-                    type="text"
+                    type="Number"
+                    step="0.01"
                     label="% Tierra"
-                    hint="Ingresar % Tierra en la zona"
-                  />
+                   />
                     </div>
                     <div class="col-4">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.empedrado"
-                    type="text"
+                    type="Number"
+                    step="0.01"
                     label="% Empedrado"
-                    hint="Ingresar % Empedrado en la zona"
                   />
                     </div>
                       <div class="col-4">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.otro"
-                    type="text"
-                    label="% Otro Electrica"
-                    hint="Ingresar % Otro en la zona en la zona"
+                   type="Number"
+                    step="0.01"
+                    label="% Otro"
                   />
                     </div>
                     </div>
                      <q-input
                     outlined
+                    dense
                     v-model="dato2.observacion5c"
                     type="text"
                     label="Observacion"
@@ -591,38 +616,48 @@
                     <div class="col-4">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.ejecutado"
-                    type="text"
+                   type="Number"
+                    step="0.01"
                     label="% Ejecutado"
-                    hint="Ingresar % Ejecutado"
                   />
                     </div>
                     <div class="col-4">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.porejecutar"
-                    type="text"
+                  type="Number"
+                    step="0.01"
                     label="% Ejecutar"
-                    hint="Ingresar % Por ejecutar"
-                  />
+                    />
                     </div>
                       <div class="col-4">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.longitudporejecutar"
-                    type="text"
+                  type="Number"
+                    step="0.01"
                     label="% Longitud por Ejecutar"
-                    hint="Ingresar % Longitud por ejecutar"
                   />
                     </div>
                     </div>
                      <q-input
                     outlined
+                    dense
                     v-model="dato2.observacion5d"
                     type="text"
                     label="Observacion"
                     hint="Ingresar alguna Observacion"
                   />
+                   <q-uploader
+                        class="full-width"
+                        label="Subir FOTOGRAFIA Nº2(DERECHA) "
+                        :factory="uploadFile2"
+                      />
+
 
                 </div>
                 <div class="col-4">
@@ -630,67 +665,68 @@
                     <div class="col-4">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.longitud"
-                    type="text"
+                   type="Number"
+                    step="0.01"
                     label="Longitud"
-                    hint="IngresarLongitud"
+                    hint="Longitud"
                   />
                     </div>
                     <div class="col-4">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.ancho"
-                    type="text"
+                   type="Number"
+                    step="0.01"
                     label="ANCHO"
-                    hint="Ingresar ANCHO"
+                    hint="Ancho Av/Calle"
                   />
                     </div>
                       <div class="col-4">
                        <q-input
                     outlined
+                    dense
                     v-model="dato2.area"
-                    type="text"
+                    type="Number"
+                    step="0.01"
                     label="AREA"
-                    hint="Ingresar AREA"
+                    hint="Area Total"
                   />
                     </div>
                     </div>
                      <q-input
                     outlined
+                    dense
                     v-model="dato2.observacion6"
                     type="text"
                     label="Observacion"
                     hint="Ingresar alguna Observacion"
                   />
 
-                   <div class="q-gutter-sm">
+
+                   <div class="q-pa-md">
                         <span>  CONCLUSIONES: Usted recomienda Rechazar o Aprobar el proyecto ?</span>
                         <q-radio v-model="dato2.aprobar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="APROBAR" />
                         <q-radio v-model="dato2.aprobar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="RECHAZAR" />
                       </div>
-                      <div class="q-gutter-sm">
+                      <div class="q-pa-md">
                         <span>  CONCLUSIONES: Usted recomienda Recomienda inpeccionar nuevamente el Proyecto ?</span>
                         <q-radio v-model="dato2.inspeccionar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
                         <q-radio v-model="dato2.inspeccionar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
                       </div>
                             <q-input
                           outlined
+                          dense
                           v-model="dato2.dias"
                           type="Number"
                           label="dias"
                           hint="Ingresar en cuantos dias"
                         />
-                         <q-uploader
-                        class="full-width"
-                        label="Subir FOTOGRAFIA Nº1(IZQUIERDA) "
-                        :factory="uploadFile1"
-                      />
+
                        <q-uploader
-                        class="full-width"
-                        label="Subir FOTOGRAFIA Nº2(DERECHA) "
-                        :factory="uploadFile2"
-                      />
-                       <q-uploader
+
                         class="full-width"
                         label="Subir FOTOGRAFIA (PLANO DE UBICACION) "
                         :factory="uploadFile3"
@@ -1447,21 +1483,133 @@ export default {
         }else{
           con3="El proyecto "+this.dato.nombre+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" debe ser COMPLEMENTADO Y/O AJUSTADO  de acuerdo a los criterios de elegibilidad y requisitos establecidos en el marco del ROP del programa BOL34/2021 desarrollados en el presente informe."
           rec1="De la verificación y evaluación realizada, se determina que el proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.cambiarminiscula(this.dato.municipio)+" del Departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" debe ser COMPLEMENTADO Y/O AJUSTADO de acuerdo a los requisitos establecidos en el marco del ROP del programa BOL34/2021."
-
         }
+         let gerentedepartamental="Rosmery Julia Santalla Acarapi"
+        let jefetecnico="Rosmery Julia Santalla Acarapi"
+        let piso1='La Paz - Bolivia Oficina Departamental La Paz Av. Camacho esq. C. Colón Edif. Krsul Piso 8'
+        let piso2='Of. 810 Telf. 2125454 - 2125482 Fax. 2110623'
+        let piso3='Web: www.fps.gob.bo – '+this.cambiarminiscula(this.$store.state.login.user.status)+' - Bolivia'
+        let xpiso1=60
+        let xpiso2=80
+        let xpiso3=85
+        switch(this.$store.state.login.user.ci){
+          case "1":
+               gerentedepartamental="Ing. Jose Luis Carvajal Mendoza"
+               jefetecnico="Ing. Esteban Cayo Correa"
+               piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
+               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
+               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
+               xpiso1=65
+               xpiso2=80
+               xpiso3=88
+               break;
+          case "2":
+               gerentedepartamental="Ing. Rosmery Julia Santalla Acarapi"
+               jefetecnico="Ing. Rosmery Julia Santalla Acarapi"
+               piso1='La Paz - Bolivia Oficina Departamental La Paz Av. Camacho esq. C. Colón Edif. Krsul Piso 8'
+               piso2='Of. 810 Telf. 2125454 - 2125482 Fax. 2110623'
+               piso3='Web: www.fps.gob.bo – '+this.cambiarminiscula(this.$store.state.login.user.status)+' - Bolivia'
+               xpiso1=60
+               xpiso2=84
+               xpiso3=85
+                break;
+          case "3":
+               gerentedepartamental="Ing. Miguel Angel Balboa Hinojosa"
+               jefetecnico="Ing. Silvia Mariela Ramirez Rios"
+               piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
+               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
+               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
+               xpiso1=65
+               xpiso2=80
+               xpiso3=88
+
+               break;
+          case "4":
+               gerentedepartamental="Ing. Moises Ciprian Choque"
+               jefetecnico="Ing. Roger Juaquin Copa Condori"
+                piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
+               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
+               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
+               xpiso1=65
+               xpiso2=80
+               xpiso3=88
+               break;
+          case "5":
+               gerentedepartamental="Ing. Mario Mamani Humacacho"
+               piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
+               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
+               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
+               xpiso1=65
+               xpiso2=80
+               xpiso3=88
+               break;
+          case "6":
+               gerentedepartamental="Ing. Edzon Alvaro Plata Prado"
+               jefetecnico="Ing. Cesilia Vanessa Flores Amador"
+               piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
+               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
+               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
+               xpiso1=65
+               xpiso2=80
+               xpiso3=88
+               break;
+          case "7":
+               gerentedepartamental="Ing. Dargel Camacho Justiniano"
+               jefetecnico="Ing. Jose Miguel Sanchez Andia"
+               piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
+               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
+               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
+               xpiso1=65
+               xpiso2=80
+               xpiso3=88
+                break;
+          case "8":
+               gerentedepartamental="Ing. Jorge Luis Tellez Gutierrez"
+               jefetecnico="Ing. Carlos Oscar Rivero Villavicencio"
+                piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
+               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
+               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
+               xpiso1=65
+               xpiso2=80
+               xpiso3=88
+           break;
+          case "9":
+               gerentedepartamental="Ing. Oscar Julio Teran Ayala"
+               jefetecnico="Ing. Erick David Mollinedo Romero"
+               piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
+               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
+               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
+               xpiso1=65
+               xpiso2=80
+               xpiso3=88
+               break;
+          default:
+               gerentedepartamental="Ing. solo departamentales"
+               jefetecnico="Ing. solo departamentales"
+                piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
+               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
+               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
+               xpiso1=65
+               xpiso2=80
+               xpiso3=88
+               break;
+         }
 
         let rec2="Por lo expuesto anteriormente se recomienda a Dirección General Ejecutiva del FPS poner a consideración del Ministerio de Planificación del Desarrollo (MPD) el presente informe de acuerdo al resultado de la verificación y evaluación del proyecto presentado del Departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+"."
         let rec3="Es todo cuanto podemos informar para los fines consiguientes."
-        let gerente="Sergio Janco Vargas"
-        let gerente1="Rosmery Julia Santalla Acarapi"
-        let gerente2="Rosmery Julia Santalla Acarapi"
-        let mosca= this.mosca(gerente)+"/"+this.mosca(gerente1)+"/"+this.mosca(this.$store.state.login.user.name)
+        let gerentenacional="Ing. Sergio Janco Vargas"
+        let mosca= this.mosca(gerentenacional)+"/"+this.mosca(gerentedepartamental)+"/"+this.mosca(this.$store.state.login.user.name)
+         if(this.mosca(gerentedepartamental)===this.mosca(jefetecnico)){
+            mosca= this.mosca(gerentenacional)+"/"+this.mosca(gerentedepartamental)+"/"+this.mosca(this.$store.state.login.user.name)
+         }else{
+           mosca= this.mosca(gerentenacional)+"/"+this.mosca(gerentedepartamental)+"/"+this.mosca(jefetecnico)+"/"+this.mosca(this.$store.state.login.user.name)
+         }
         let copia="C.c. Archivo Programa Bol-34/2021"
         let adjunto="Se adjunta : "+this.dato.adjunto
         let vinculo ="VINCULO H.R. Nº "+this.dato.interno
         let informe=this.dato.carta_cite+"."
         let referencia="RESPUESTA A LA SOLICITUD DE EVALUACION Y VERIFICACION DE CONTENIDO PROYECTO "+this.dato.nombre
-        let profesional="Ing. "+this.cambiarminiscula(this.$store.state.login.user.name)
+        let profesional=this.cambiarminiscula(this.$store.state.login.user.name)
 
 
         let doc = new jsPDF('portrait' ,null, 'letter');
@@ -1482,16 +1630,16 @@ export default {
              doc.line(80,30,135,30)
              doc.setFontSize(12, 'normal')
              doc.text(informe, 78,45)
-             doc.text("Ing. "+gerente, 65,55)
-             doc.text("Ing. "+gerente1, 65,68)
-             doc.text("Ing. "+gerente2, 65,80)
+             doc.text(gerentenacional, 65,55)
+             doc.text(gerentedepartamental, 65,68)
+             doc.text(jefetecnico, 65,80)
              doc.text(profesional, 65,93)
              //PIE DE PAGINA
              doc.setFontSize(8, 'normal')
-              doc.text('La Paz - Bolivia Oficina Departamental La Paz Av. Camacho esq. C. Colón Edif. Krsul Piso 8',60, 262)
-            doc.text('Of. 810 Telf. 2125454 - 2125482 Fax. 2110623',85, 266)
+            doc.text(piso1,xpiso1, 262)
+            doc.text(piso2,xpiso2 ,266)
             doc.setFontSize(9, 'bold')
-            doc.text('Web: www.fps.gob.bo – La Paz - Bolivia',85, 270).setFontSize(12).setFont(undefined, 'bold');
+            doc.text(piso3,xpiso3, 270).setFontSize(12).setFont(undefined, 'bold');
 
              doc.setFontSize(12,"bold")
              doc.text('INFORME', 100,40)
@@ -1531,15 +1679,15 @@ export default {
             doc.text('FONDO NACIONAL DE INVERSION PRODUCTIVA Y SOCIAL', 63, 25)
             doc.line(80,30,135,30)
             doc.setFontSize(8, 'normal')
-            doc.text('La Paz - Bolivia Oficina Departamental La Paz Av. Camacho esq. C. Colón Edif. Krsul Piso 8',60, 262)
-            doc.text('Of. 810 Telf. 2125454 - 2125482 Fax. 2110623',85, 266)
+            doc.text(piso1,xpiso1, 262)
+            doc.text(piso2,xpiso2, 266)
             doc.setFontSize(9, 'bold')
-            doc.text('Web: www.fps.gob.bo – La Paz - Bolivia',85, 270)
+            doc.text(piso3,xpiso3, 270)
             doc.setFontSize(12, 'bold')
               doc.text(text5, 30,40,{maxWidth: 160,align: "justify"})
                    //CUDARO  1 HOJA 2
              // doc.rect(30,75, 160,70)///70 corregir segun aldo de los datos
-              doc.rect(30,75, 160,9)
+              doc.rect(30,75, 160,9, 'DF')
 
               doc.rect(30,75, 80,30) // corregir 25
               doc.rect(30,75, 80,55)  //corregir 40
@@ -1552,9 +1700,9 @@ export default {
               doc.rect(130,75, 60,30)
               doc.rect(130,75, 60,55)
               doc.rect(130,75, 60,80)
-             doc.setFontSize(10, 'bold').setFontSize(10).setFont(undefined, 'bold');
-             doc.text('         CRITERIOS DE ELIGIBILIDAD                        Cumple/                   OBSERVACIONES', 35, 79)
-             doc.text('No Cumple', 112, 83).setFontSize(10).setFont(undefined, 'normal');
+             doc.setFontSize(10, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF');
+             doc.text('         CRITERIOS DE ELIGIBILIDAD                       Cumple/                    OBSERVACIONES', 35, 79)
+             doc.text('No Cumple', 112, 83).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000');;
              doc.text(c1, 32,90,{maxWidth: 75,align: "justify"})
              doc.text(c2, 32,110,{maxWidth: 75,align: "justify"})
              doc.text(c3, 32,135,{maxWidth: 75,align: "justify"}).setFontSize(10).setFont(undefined, 'bold');
@@ -1568,15 +1716,15 @@ export default {
              doc.text(c33, 131,133,{maxWidth: 58,align: "justify"})
 
              //CUADRO 2 HOJA 2
-              doc.rect(30,157, 160,5)
+              doc.rect(30,157, 160,5,'DF')
               doc.rect(30,157, 80,30) // corregir 25
               doc.rect(30,157, 80,70)  //corregir 40
               doc.rect(30,157, 80,95)  //corregir 70
               doc.rect(110,157, 80,30)
               doc.rect(110,157, 80,70)
               doc.rect(110,157, 80,95)
-            doc.setFontSize(10, 'bold').setFontSize(10).setFont(undefined, 'bold');
-            doc.text('         REQUISITOS DEL PROYECTO                                                OBSERVACION', 35, 161).setFontSize(10).setFont(undefined, 'normal');
+            doc.setFontSize(10, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF');;
+            doc.text('         REQUISITOS DEL PROYECTO                                                OBSERVACION', 35, 161).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000');
             doc.text(r1, 32,167,{maxWidth: 75,align: "justify"})
             doc.text(r2, 32,195,{maxWidth: 75,align: "justify"}).setFontSize(10).setFont(undefined, 'italic');
             doc.text("(De acuerdo a la convocatoria MPD)", 32,208,{maxWidth: 75,align: "justify"})
@@ -1607,10 +1755,10 @@ export default {
             doc.text('FONDO NACIONAL DE INVERSION PRODUCTIVA Y SOCIAL', 63, 25)
             doc.line(80,30,135,30)
             doc.setFontSize(8, 'normal')
-            doc.text('La Paz - Bolivia Oficina Departamental La Paz Av. Camacho esq. C. Colón Edif. Krsul Piso 8',60, 262)
-            doc.text('Of. 810 Telf. 2125454 - 2125482 Fax. 2110623',85, 266)
+            doc.text(piso1,xpiso1, 262)
+            doc.text(piso2,xpiso2, 266)
             doc.setFontSize(9, 'bold')
-            doc.text('Web: www.fps.gob.bo – La Paz - Bolivia',85, 270)
+            doc.text(piso3,xpiso3, 270)
              //CUADRO 1 HOJA 3
               doc.rect(30,35, 80,12) // corregir 25
               doc.rect(30,35, 80,33)  //corregir 40
@@ -1635,7 +1783,7 @@ export default {
               doc.text(r77, 112,95,{maxWidth: 77,align: "justify"})
 
                     //CUADRO 2 HOJA 3
-              doc.rect(30,108, 160,5)  //corregir 40
+              doc.rect(30,108, 160,5,'DF')  //corregir 40
 
               doc.rect(30,108, 80,17) // corregir
               doc.rect(30,108, 80,38)  //corregir 70
@@ -1658,8 +1806,8 @@ export default {
               doc.rect(110,108, 80,130)
               doc.rect(110,108, 80,135)
               doc.rect(110,108, 80,145)
-            doc.setFontSize(10, 'bold').setFontSize(10).setFont(undefined, 'bold');
-              doc.text('         INGENIERIA DEL PROYECTO(*)                                           OBSERVACION', 40, 112).setFontSize(10).setFont(undefined, 'normal');
+            doc.setFontSize(10, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF');
+              doc.text('         INGENIERIA DEL PROYECTO(*)                                           OBSERVACION', 40, 112).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000');;;
              doc.text(i1, 32,116,{maxWidth: 77,align: "justify"})
              doc.text(i2, 32,128,{maxWidth: 77,align: "justify"})
              doc.text(i3, 32,150,{maxWidth: 77,align: "justify"})
@@ -1694,11 +1842,11 @@ export default {
             doc.text('FONDO NACIONAL DE INVERSION PRODUCTIVA Y SOCIAL', 63, 25)
             doc.line(80,30,135,30)
             doc.setFontSize(8, 'normal')
-             doc.text('La Paz - Bolivia Oficina Departamental La Paz Av. Camacho esq. C. Colón Edif. Krsul Piso 8',60, 262)
-            doc.text('Of. 810 Telf. 2125454 - 2125482 Fax. 2110623',85, 266)
+            doc.text(piso1,xpiso1, 262)
+            doc.text(piso2,xpiso2, 266)
             doc.setFontSize(9, 'bold')
-            doc.text('Web: www.fps.gob.bo – La Paz - Bolivia',85, 270)
-             doc.setFontSize(12, 'bold').setFontSize(12).setFont(undefined, 'bold');
+            doc.text(piso3,xpiso3, 270)
+            doc.setFontSize(12, 'bold').setFontSize(12).setFont(undefined, 'bold');
 
              doc.text("3. CONCLUSIONES", 35,38).setFontSize(12).setFont(undefined, 'normal');
              doc.text(con1, 30,45,{maxWidth: 160,align: "justify"})
@@ -1706,14 +1854,26 @@ export default {
              doc.text("1. ", 35,70,{maxWidth: 150,align: "justify"})
              doc.text("2. ", 35,97,{maxWidth: 150,align: "justify"})
 
+          //  let con3result=con3.split('**')
+            let xx=40.0
+            let yy=97.0
+          //   let fontSize=12
+          //  console.log(con3result)
+            doc.text(con3, xx,yy,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
+           //  console.log(doc.getStringUnitWidth(con3result[0],{maxWidth: 150,align: "justify"}));
+            // xx=xx+doc.getStringUnitWidth(con3result[0])*12/20
+           //  yy=yy+10;
+            // doc.text(con3result[1], xx,yy,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
+            // xx+=doc.getStringUnitWidth(con3result[1])*12/20;
+            // yy=yy+10;
+           // doc.text(con3result[2], xx,yy,{maxWidth: 150,align: "justify"})
 
 
-             doc.text(con3, 40,97,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'bold');
+            //console.log(doc.getStringUnitWidth(con3))
 
              doc.text("4. RECOMENDACIONES", 35,123).setFontSize(12).setFont(undefined, 'normal');
              doc.text(rec1, 30,130,{maxWidth: 160,align: "justify"})
             //CASO EXCEPCIONAL
-
 
              doc.text(rec2, 30,159,{maxWidth: 160,align: "justify"})
             // doc.text(rec2, 30,155,{maxWidth: 160,align: "justify"})
@@ -1725,26 +1885,26 @@ export default {
                doc.text(adjunto, 30,228)
                doc.text(vinculo, 30,232)
 
-             doc.text('fqm', 212, 277) //milimetros
-             doc.text('*', 214, 280) //milimetros
+             doc.text('fqm', 210, 278) //milimetros
+            // doc.text('*', 214, 280) //milimetros
              let descargarnombre=""
                if(this.dato.cumple==="SI"){
                       descargarnombre=this.dato.codigo+"_CUMPLE"+".pdf"
                }else{
                      descargarnombre=this.dato.codigo+"_NO_CUMPLE"+".pdf"
                }
-            doc.save(descargarnombre);
+            //doc.save(descargarnombre);
+             window.open(doc.output('bloburl',{filename:descargarnombre}), '_blank');
       },
       isBoldOpen (arrayLength, valueBefore = false) {
     const isEven = arrayLength % 2 === 0;
     const result = valueBefore !== isEven;
     return result;
 },
-
       mosca(cadena){
           let text=cadena.split(" ")
           let ans=""
-          for(let i=0;i<text.length;i++){
+          for(let i=1;i<text.length;i++){
                ans+=text[i][0]
           }
           return ans
@@ -1818,11 +1978,21 @@ export default {
     },
     view_form8(){
       this.titulo="FICHA TECNICA DE INSPECCION DE CAMPO"
-
+      this.dato2={}
       this.dialog_form8=true;
     },
     onMod8() {
     },
+    uploadFile1(){
+
+    },
+    uploadFile2(){
+
+    },
+    uploadFile3(){
+
+    },
+
   }
 };
 </script>

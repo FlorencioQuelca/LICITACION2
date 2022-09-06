@@ -31,6 +31,8 @@ class CreateFichasTable extends Migration
             $table->string("priorizado")->nullable();
             $table->string("planimetria")->nullable();
             $table->string("status")->nullable();
+            $table->string("latitud")->nullable();
+            $table->string("longitud")->nullable();
             $table->string("observacion")->nullable();
             $table->string("inspeccionado")->nullable();
             $table->string("aprobado")->nullable();
