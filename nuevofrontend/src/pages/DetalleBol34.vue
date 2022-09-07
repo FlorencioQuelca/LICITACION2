@@ -673,7 +673,7 @@
                        <q-input
                     outlined
                     dense
-                    v-model="dato2.longitud"
+                    v-model="dato2.longituddecimal"
                    type="Number"
                     step="0.01"
                     label="Longitud"
@@ -715,15 +715,16 @@
 
                    <div class="q-pa-md">
                         <span>  CONCLUSIONES: Usted recomienda Rechazar o Aprobar el proyecto ?</span>
-                        <q-radio v-model="dato2.aprobar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="APROBAR" />
-                        <q-radio v-model="dato2.aprobar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="RECHAZAR" />
+                        <q-radio v-model="dato2.aprobado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="APROBAR" />
+                        <q-radio v-model="dato2.aprobado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="RECHAZAR" />
+                        <q-radio v-model="dato2.aprobado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="PENDIENTE" label="PENDIENTE" />
                       </div>
-                      <div class="q-pa-md">
-                        <span>  CONCLUSIONES: Usted recomienda Recomienda inpeccionar nuevamente el Proyecto ?</span>
-                        <q-radio v-model="dato2.inspeccionar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
-                        <q-radio v-model="dato2.inspeccionar" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
+                      <div class="q-pa-md"  v-if="dato2.aprobado=='PENDIENTE'">
+                        <span>  CONCLUSIONES: Usted Recomienda inpeccionar nuevamente el Proyecto ?</span>
+                        <q-radio v-model="dato2.inspeccionado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
+                        <q-radio v-model="dato2.inspeccionado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
                       </div>
-                            <q-input
+                            <q-input  v-if="dato2.inspeccionado==='SI' && dato2.aprobado==='PENDIENTE'"
                           outlined
                           dense
                           v-model="dato2.dias"
@@ -951,6 +952,22 @@ export default {
               this.progress6=0.6
               this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
         }
+        if(this.dato.ficha.aprobado!=null && this.dato.ficha.foto1!=null && this.dato.ficha.foto2!=null&& this.dato.ficha.foto3!=null){
+            this.progress8=1
+           this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
+        }else  if(this.dato.ficha.aprobado!=null){
+              this.progress8=0.7
+              this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
+        }else if(this.dato.ficha.distrito!=null){
+          this.progress8=0.6
+              this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
+        }else{
+           this.progress8=0.5
+              this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
+        }
+
+
+
          this.$q.loading.hide();
           });
 
@@ -2018,11 +2035,15 @@ export default {
 
     },
     onMod8() {
+         if(this.dato.ficha.foto1!=null && this.dato.ficha.foto2!=null&& this.dato.ficha.foto3!=null){
+           this.progress8=1
+            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
+         }else {
+            this.progress8=0.7
+            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
+         }
 
-
-
-
-
+           this.$q.loading.show();
                this.$api.put(process.env.API+"/ficha/"+this.dato.ficha.id, this.dato2).then((res) => {
                 if(res.data.res===true){
                     this.$q.notify({
@@ -2041,9 +2062,6 @@ export default {
                   this.$q.loading.hide();
                 });
                this.dialog_form8=false;
-
-
-
 
 
     },
@@ -2154,6 +2172,7 @@ export default {
              doc.text("Programa nacional de Emergencia para la Generacion de Empleo", 72,49,{maxWidth: 100,align: "justify"})
              doc.text("CATEGORIA:", 157,64,{maxWidth: 100,align: "justify"})
              doc.text("(marcar con una X)", 21,121,{maxWidth: 100,align: "justify"})
+             doc.text("DOCUMENTO ES ?", 50,121,{maxWidth: 100,align: "justify"})
              doc.text("Tipo de servicio", 21,136,{maxWidth: 100,align: "justify"})
              doc.text("Cordones de Acera:", 21,153,{maxWidth: 100,align: "justify"})
              doc.text("Dimensiones y/o Area del enlosetado (M2)", 21,176,{maxWidth: 100,align: "justify"})
@@ -2162,17 +2181,56 @@ export default {
              doc.setFontSize(6,"normal").setFont(undefined, 'normal');
              doc.text(this.dato.nombre, 71,52,{maxWidth: 126,align: "justify"})
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
-             doc.text(this.dato.ficha.ubicacion, 71,58,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.ficha.ubicacion+".", 71,58,{maxWidth: 126,align: "justify"})
              doc.text(this.dato.municipio, 71,63,{maxWidth: 126,align: "justify"})
              doc.text("' "+this.dato.autoridad+" '", 184,64,{maxWidth: 126,align: "justify"})
-             doc.text("this.dato.fecha.zona", 71,68,{maxWidth: 126,align: "justify"})
-             doc.text("cicunscripcion", 71,73,{maxWidth: 126,align: "justify"})
-             doc.text("DISTRITOS", 71,78,{maxWidth: 126,align: "justify"})
-             doc.text("direccion/ubiacacion", 71,83,{maxWidth: 126,align: "justify"})
-             doc.text("coordenadas", 71,88,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.ficha.zona+".", 71,68,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.ficha.circunscripcion+".", 71,73,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.ficha.distrito+".", 71,78,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.ficha.direccion+".", 71,83,{maxWidth: 126,align: "justify"})
+             doc.text("Latitud: "+this.dato.ficha.latitud, 71,88,{maxWidth: 126,align: "justify"})
+             doc.text("Longitud: "+this.dato.ficha.longitud, 135,88,{maxWidth: 126,align: "justify"})
+                doc.setFontSize(7,"normal").setFont(undefined, 'normal');
+             doc.text("        SI                         NO                                           Observacion", 80,98,{maxWidth: 126,align: "justify"})
+             doc.text("   OFICIAL GAM        EN TRAMITE                                  Observacion", 75,118,{maxWidth: 126,align: "justify"})
+             doc.text("% A. Potable       % Alcantarillado     % Energia Electr.      % Gas Natural          Observacion", 79,134,{maxWidth: 126,align: "justify"})
+             doc.text("Tierra (%)          Empedrado (%)            Otro(%)                   Observacion", 80,149,{maxWidth: 126,align: "justify"})
+             doc.text("Ejecutado(%)      Por Ejecutar(%)    Long. por Ejecutar        Observacion", 80,159,{maxWidth: 126,align: "justify"})
+             doc.text("      Longitud                  Ancho                          Area                   Observacion", 76,174,{maxWidth: 126,align: "justify"})
+              if(this.dato.ficha.priorizado==="SI"){
+                doc.text( "X", 86,104,{maxWidth: 20,align: "center"})
+              }else{
+                doc.text( "X", 105,104,{maxWidth: 20,align: "center"})
+              }
+              doc.text( this.dato.ficha.observacion4+".", 120,104,{maxWidth: 70,align: "justify"})
 
+              if(this.dato.ficha.planimetria==="SI"){
+                doc.text( "X", 86,124,{maxWidth: 20,align: "center"})
+              }else{
+                doc.text( "X", 105,124,{maxWidth: 20,align: "center"})
+              }
+              doc.text( this.dato.ficha.observacion5a+".", 120,124,{maxWidth: 70,align: "justify"})
+
+              doc.text( this.dato.ficha.agua+" %", 85,139,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.alcantarillado+" %", 105,139,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.electricidad+" %", 125,139,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.gasnatural+" %", 145,139,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.observacion5b+".", 160,139,{maxWidth: 70,align: "justify"})
+              doc.text( this.dato.ficha.tierra+" %", 85,154,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.empedrado+" %", 105,154,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.otro+" %", 125,154,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.observacion5c+".", 140,154,{maxWidth: 70,align: "justify"})
+              doc.text( this.dato.ficha.ejecutado+" %", 85,164,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.porejecutar+" %", 105,164,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.longitudporejecutar+" %", 125,164,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.observacion5d+".", 140,164,{maxWidth: 70,align: "justify"})
+              doc.text( this.dato.ficha.longituddecimal+" m", 85,179,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.ancho+" m", 105,179,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.area+" m2", 125,179,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.observacion6+".", 140,179,{maxWidth: 70,align: "justify"})
 
              doc.setFontSize(8, 'normal')
+             doc.text("Página 1 de 2",180, 262)
              doc.text('ESTADO PLURINACIONAL DE BOLIVIA', 80, 39)
              doc.setFont(undefined, 'bold');
              doc.setFontSize(12,"bold")
@@ -2196,13 +2254,32 @@ export default {
               doc.rect(140,180, 60,15)
               doc.setFontSize(8,"bold").setFont(undefined, 'normal');
              doc.text("SE RECOMIENDA RECHAZAR EL PROYECTO", 21,183,{maxWidth: 100,align: "justify"})
-             doc.text("SE RECOMIENDA INSPECCIONAR NUEVAMENTE EÑ PROYECTO EN    DIAS", 21,188,{maxWidth: 100,align: "justify"})
+             doc.text("SE RECOMIENDA INSPECCIONAR NUEVAMENTE EL PROYECTO : ", 21,188,{maxWidth: 100,align: "justify"})
              doc.text("SE RECOMIENDA APROBAR EL PROYECTO", 21,193,{maxWidth: 100,align: "justify"})
+                doc.setFontSize(10,"bold").setFont(undefined, 'bold');
+              if(this.dato.ficha.aprobado==="SI"){
+                doc.text("SI", 145,193,{maxWidth: 100,align: "justify"})
+                doc.text("NO", 145,183,{maxWidth: 100,align: "justify"})
+              } else if(this.dato.ficha.aprobado==="NO"){
+                doc.text("SI", 145,183,{maxWidth: 100,align: "justify"})
+                doc.text("NO", 145,193,{maxWidth: 100,align: "justify"})
+              }else{
+                doc.text("NO", 145,183,{maxWidth: 100,align: "justify"})
+                doc.text("NO", 145,193,{maxWidth: 100,align: "justify"})
+              }
+               if(this.dato.ficha.inspeccionado==="SI"){
+                 doc.text("SI en : "+this.dato.ficha.dias+" dias ", 145,188,{maxWidth: 100,align: "justify"})
 
+              }else{
+                doc.text("NO ", 145,188,{maxWidth: 100,align: "justify"})
+              }
 
-              doc.line(90,220, 130,220)
+              doc.line(90,220, 130,220,'F')
              // doc.line(80,30,135,30)
+              doc.setFontSize(8,"bold").setFont(undefined, 'normal');
+              doc.text("Página 2 de 2",180, 262)
               doc.text("Nombre y Firma del Técnico", 93,225,{maxWidth: 150,align: "justify"}).setFontSize(8,"bold").setFont(undefined, 'bold');
+
               doc.text("EVALUADOR", 103,230,{maxWidth: 150,align: "justify"})
 
                //doc.save(descargarnombre);

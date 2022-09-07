@@ -23,6 +23,7 @@ class Ficha extends Model
         "observacion5a",
         "observacion5b",
         "observacion5c",
+        "observacion5d",
         "observacion6",
         "priorizado",
         "planimetria",
@@ -49,7 +50,7 @@ class Ficha extends Model
         "ancho",
         "area",
         "latitud",
-        "longitud",
+        "longituddecimal",
 
     ];
     protected $hidden =['created_at','updated_at'];
