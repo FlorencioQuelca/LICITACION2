@@ -53,7 +53,7 @@ class CreateFichasTable extends Migration
             $table->decimal('ejecutado',10,2)->default(0);
             $table->decimal('porejecutar',10,2)->default(0);
             $table->decimal('longitudporejecutar',10,2)->default(0);
-            $table->decimal('longitud',10,2)->default(0);
+            $table->decimal('longituddecimal',10,2)->default(0);
             $table->decimal('ancho',10,2)->default(0);
             $table->decimal('area',10,2)->default(0);
 
