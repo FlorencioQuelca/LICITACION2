@@ -20,6 +20,7 @@
       color="green"
       icon="print"
       class="q-mb-xs"
+        @click="imprimirFicha"
     />
     </div>
     <q-card
@@ -871,7 +872,7 @@ export default {
         .then((res) => {
           this.dato=res.data[0]
          //this.datocopia=this.dato.evaluacions
-          console.log(this.dato);
+        //  console.log(this.dato);
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
@@ -1525,7 +1526,7 @@ export default {
                piso2='Of. 810 Telf. 2125454 - 2125482 Fax. 2110623'
                piso3='Web: www.fps.gob.bo – '+this.cambiarminiscula(this.$store.state.login.user.status)+' - Bolivia'
                xpiso1=60
-               xpiso2=84
+               xpiso2=86
                xpiso3=85
                 break;
           case "3":
@@ -1627,7 +1628,7 @@ export default {
         let profesional=this.cambiarminiscula(this.$store.state.login.user.name)
 
 
-        let doc = new jsPDF('portrait' ,null, 'letter');
+          let doc = new jsPDF('portrait' ,null, 'letter');
           let logofps = new Image();
            logofps.src = 'logofps.png';
           let chacanapiso = new Image();
@@ -1637,7 +1638,7 @@ export default {
             doc.addImage(chacana, 'PNG', 25, 10, 20, 20);
             doc.addImage(logofps, 'PNG', 175, 10, 28, 20);
             doc.addImage(chacanapiso, 'PNG', 0, 184, 215, 96);
-               doc.setFont('times')
+             doc.setFont('times')
              doc.setFontSize(10, 'normal')
              doc.text('ESTADO PLURINACIONAL DE BOLIVIA', 75, 20)
              doc.setFontSize(10, 'normal')
@@ -1652,8 +1653,9 @@ export default {
              //PIE DE PAGINA
              doc.setFontSize(8, 'normal')
             doc.text(piso1,xpiso1, 262)
+            doc.text("Página 1 de 4",190, 262)
             doc.text(piso2,xpiso2 ,266)
-            doc.setFontSize(9, 'bold')
+            doc.setFontSize(9).setFont(undefined, 'bold');
             doc.text(piso3,xpiso3, 270).setFontSize(12).setFont(undefined, 'bold');
 
              doc.setFontSize(12,"bold")
@@ -1695,8 +1697,9 @@ export default {
             doc.line(80,30,135,30)
             doc.setFontSize(8, 'normal')
             doc.text(piso1,xpiso1, 262)
+            doc.text("Página 2 de 4",190, 262)
             doc.text(piso2,xpiso2, 266)
-            doc.setFontSize(9, 'bold')
+            doc.setFontSize(9).setFont(undefined, 'bold')
             doc.text(piso3,xpiso3, 270)
             doc.setFontSize(12, 'bold')
               doc.text(text5, 30,40,{maxWidth: 160,align: "justify"})
@@ -1771,8 +1774,9 @@ export default {
             doc.line(80,30,135,30)
             doc.setFontSize(8, 'normal')
             doc.text(piso1,xpiso1, 262)
+            doc.text("Página 3 de 4",190, 262)
             doc.text(piso2,xpiso2, 266)
-            doc.setFontSize(9, 'bold')
+            doc.setFontSize(9).setFont(undefined, 'bold');
             doc.text(piso3,xpiso3, 270)
              //CUADRO 1 HOJA 3
               doc.rect(30,35, 80,12) // corregir 25
@@ -1836,7 +1840,7 @@ export default {
 
              doc.text(i11, 112,116,{maxWidth: 77,align: "justify"})
              doc.text(i22, 112,128,{maxWidth: 77,align: "justify"})
-             doc.text(i33, 112,150,{maxWidth: 77,align: "justify"})
+             doc.text(i33, 112,149,{maxWidth: 77,align: "justify"})
              doc.text(i44, 112,157,{maxWidth: 77,align: "justify"})
              doc.text(i55, 112,192,{maxWidth: 77,align: "justify"})
              doc.text(i66, 112,207,{maxWidth: 77,align: "justify"})
@@ -1858,8 +1862,9 @@ export default {
             doc.line(80,30,135,30)
             doc.setFontSize(8, 'normal')
             doc.text(piso1,xpiso1, 262)
+            doc.text("Página 4 de 4",190, 262)
             doc.text(piso2,xpiso2, 266)
-            doc.setFontSize(9, 'bold')
+            doc.setFontSize(9).setFont(undefined, 'bold')
             doc.text(piso3,xpiso3, 270)
             doc.setFontSize(12, 'bold').setFontSize(12).setFont(undefined, 'bold');
 
@@ -1947,7 +1952,6 @@ export default {
             11:"noviembre",
             12:"diciembre",
          }
-
          let answer=ans.trim()+", "+Number(fecha1[2])+" de "+meses[Number(fecha1[1])]+" de "+fecha1[0]
     return answer
       },
@@ -2004,7 +2008,7 @@ export default {
                 }).catch((e)=>{
                   this.$q.loading.hide();
                 });
-                 console.log("creado correctamente");
+           //      console.log("creado correctamente");
                   this.dialog_form8=true;
         }else{   // es con contenido
                this.dato2=this.dato.ficha
@@ -2052,6 +2056,161 @@ export default {
     uploadFile3(){
 
     },
+    imprimirFicha(){
+        let doc = new jsPDF('portrait' ,null, 'letter');
+          let logofps = new Image();
+           logofps.src = 'logofps.png';
+          let escudo = new Image();
+           escudo.src = 'escudo.png';
+          let mpd = new Image();
+           mpd.src = 'mpd.png';
+             doc.addImage(mpd, 'PNG', 25, 22, 20, 20);
+             doc.addImage(logofps, 'PNG', 170, 21, 25, 20);
+             doc.addImage(escudo, 'PNG', 95, 21, 20, 15);
+             doc.setFont('times')
+             doc.rect(20,20, 180,235)
+             doc.rect(20,45, 50,45)
+             doc.rect(155,60, 45,5)
+             doc.rect(20,20, 180,25)
+             doc.rect(20,20, 180,30)
+             doc.rect(20,20, 180,35)
+             doc.rect(20,20, 180,40)
+             doc.rect(20,20, 180,45)
+             doc.rect(20,20, 180,50)
+             doc.rect(20,20, 180,55)
+             doc.rect(20,20, 180,60)
+             doc.rect(20,20, 180,65)
+             doc.rect(20,20, 180,70)
+             doc.rect(20,20, 180,75)
+             doc.rect(20,20, 180,85)
+             doc.rect(20,20, 180,90)
+             doc.rect(20,20, 180,95)
+             doc.rect(20,20, 180,105)
+             doc.rect(20,20, 180,110)
+             doc.rect(20,20, 180,120)
+             doc.rect(20,20, 180,125)
+             doc.rect(20,20, 180,135)
+             doc.rect(20,20, 180,145)
+             doc.rect(20,20, 180,150)
+             doc.rect(20,20, 180,150)
+             doc.rect(20,20, 180,160)
+             doc.rect(20,20, 180,161)
+
+
+             doc.rect(75,95, 125,10)
+             doc.rect(75,95, 125,5)
+              doc.rect(75,95, 20,10)
+             doc.rect(75,95, 40,10)
+
+             doc.rect(75,115, 125,10)
+             doc.rect(75,115, 125,5)
+              doc.rect(75,115, 20,10)
+             doc.rect(75,115, 40,10)
+
+             doc.rect(75,130, 125,10)
+             doc.rect(75,130, 125,5)
+             doc.rect(75,130, 20,10)
+             doc.rect(75,130, 40,10)
+             doc.rect(75,130, 60,10)
+             doc.rect(75,130, 80,10)
+             doc.rect(75,145, 125,10)
+             doc.rect(75,145, 125,5)
+             doc.rect(75,145, 20,10)
+             doc.rect(75,145, 40,10)
+             doc.rect(75,145, 60,10)
+             doc.rect(75,155, 125,10)
+             doc.rect(75,155, 125,5)
+             doc.rect(75,155, 20,10)
+             doc.rect(75,155, 40,10)
+             doc.rect(75,155, 60,10)
+             doc.rect(75,170, 125,10)
+             doc.rect(75,170, 125,5)
+             doc.rect(75,170, 20,10)
+             doc.rect(75,170, 40,10)
+             doc.rect(75,170, 60,10)
+
+
+             doc.rect(25,190, 170,60)
+
+
+             doc.setFontSize(8,"bold").setFont(undefined, 'bold');
+             doc.text("1. PROGRAMA", 21,49,{maxWidth: 75,align: "justify"})
+             doc.text("2. NOMBRE DEL PROYECTO", 21,54,{maxWidth: 75,align: "justify"})
+             doc.text("3. UBICACIÓN", 21,59,{maxWidth: 75,align: "justify"}).setFont(undefined, 'normal');
+             doc.text("MUNICIPIO:", 21,64,{maxWidth: 75,align: "justify"})
+             doc.text("ZONA:", 21,69,{maxWidth: 75,align: "justify"})
+             doc.text("CIRCUNSCRIPCION:", 21,74,{maxWidth: 75,align: "justify"})
+             doc.text("DISTRITO:", 21,79,{maxWidth: 75,align: "justify"})
+             doc.text("DIRECCION/UBICACION GENERAL:", 21,84,{maxWidth: 75,align: "justify"})
+             doc.text("CORRDENADAS GEOGRAFICAS:", 21,89,{maxWidth: 75,align: "justify"}).setFont(undefined, 'bold');
+             doc.text("4. PROYECTO PRIORIZADO POR LAS GAM/GAIOC/JUNTAS VECINALES U ORGANIZACIONES SOCIALES", 21,94,{maxWidth: 150,align: "justify"})
+             doc.text("5. CRITERIOS DE ELEGIBILIDAD Y COBERTURA (DESEABLE)", 21,109,{maxWidth: 150,align: "justify"})
+             doc.text("5.1 PLANIMETRIA", 21,114,{maxWidth: 150,align: "justify"})
+             doc.text("5.2 SERVICIOS BASICOS", 21,129,{maxWidth: 150,align: "justify"})
+             doc.text("5.3 ACTIVIDADES Y VOLUMENES PRELIMINARES", 21,144,{maxWidth: 150,align: "justify"})
+             doc.text("6.  DIMENSIONAMIENTO DE PROYECTO", 21,169,{maxWidth: 150,align: "justify"})
+             doc.text("7. REPORTE FOTOGRAFICO", 21,184,{maxWidth: 150,align: "justify"})
+             doc.setFontSize(8,"bold").setFont(undefined, 'normal');
+             doc.text("Programa nacional de Emergencia para la Generacion de Empleo", 72,49,{maxWidth: 100,align: "justify"})
+             doc.text("CATEGORIA:", 157,64,{maxWidth: 100,align: "justify"})
+             doc.text("(marcar con una X)", 21,121,{maxWidth: 100,align: "justify"})
+             doc.text("Tipo de servicio", 21,136,{maxWidth: 100,align: "justify"})
+             doc.text("Cordones de Acera:", 21,153,{maxWidth: 100,align: "justify"})
+             doc.text("Dimensiones y/o Area del enlosetado (M2)", 21,176,{maxWidth: 100,align: "justify"})
+
+                // doc.text('*', 214, 280) //milimetros
+             doc.setFontSize(6,"normal").setFont(undefined, 'normal');
+             doc.text(this.dato.nombre, 71,52,{maxWidth: 126,align: "justify"})
+             doc.setFontSize(9,"normal").setFont(undefined, 'normal');
+             doc.text(this.dato.ficha.ubicacion, 71,58,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.municipio, 71,63,{maxWidth: 126,align: "justify"})
+             doc.text("' "+this.dato.autoridad+" '", 184,64,{maxWidth: 126,align: "justify"})
+             doc.text("this.dato.fecha.zona", 71,68,{maxWidth: 126,align: "justify"})
+             doc.text("cicunscripcion", 71,73,{maxWidth: 126,align: "justify"})
+             doc.text("DISTRITOS", 71,78,{maxWidth: 126,align: "justify"})
+             doc.text("direccion/ubiacacion", 71,83,{maxWidth: 126,align: "justify"})
+             doc.text("coordenadas", 71,88,{maxWidth: 126,align: "justify"})
+
+
+             doc.setFontSize(8, 'normal')
+             doc.text('ESTADO PLURINACIONAL DE BOLIVIA', 80, 39)
+             doc.setFont(undefined, 'bold');
+             doc.setFontSize(12,"bold")
+             doc.text('FICHA TECNICA DE INSPECCION DE CAMPO',65,44)
+
+             //PAGINA 2
+              doc.addPage();
+              doc.rect(20,20, 180,235)
+              doc.rect(25,30, 170,100)
+
+               doc.setFontSize(8,"bold").setFont(undefined, 'bold');
+              doc.text("8. PLANO DE UBICACIÓN", 21,25,{maxWidth: 150,align: "justify"})
+              doc.text("9. CONCLUSIONES Y RECOMENDACIONES DE LA INSPECCION TECNICA (marcar con una X)", 21,178,{maxWidth: 150,align: "justify"})
+
+
+              doc.rect(20,180, 180,5)
+              doc.rect(140,180, 60,5)
+              doc.rect(20,180, 180,10)
+              doc.rect(140,180, 60,10)
+              doc.rect(20,180, 180,15)
+              doc.rect(140,180, 60,15)
+              doc.setFontSize(8,"bold").setFont(undefined, 'normal');
+             doc.text("SE RECOMIENDA RECHAZAR EL PROYECTO", 21,183,{maxWidth: 100,align: "justify"})
+             doc.text("SE RECOMIENDA INSPECCIONAR NUEVAMENTE EÑ PROYECTO EN    DIAS", 21,188,{maxWidth: 100,align: "justify"})
+             doc.text("SE RECOMIENDA APROBAR EL PROYECTO", 21,193,{maxWidth: 100,align: "justify"})
+
+
+              doc.line(90,220, 130,220)
+             // doc.line(80,30,135,30)
+              doc.text("Nombre y Firma del Técnico", 93,225,{maxWidth: 150,align: "justify"}).setFontSize(8,"bold").setFont(undefined, 'bold');
+              doc.text("EVALUADOR", 103,230,{maxWidth: 150,align: "justify"})
+
+               //doc.save(descargarnombre);
+             window.open(doc.output('bloburl',{filename:"FICHA.pdf"}), '_blank');
+
+
+
+    }
 
   }
 };

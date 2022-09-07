@@ -1,7 +1,7 @@
 <template>
  <div class="q-pa-md">
     <div >
-       <q-btn
+       <q-btn   v-if="this.$store.state.login.user.name==='SECRETARIA'"
       label="Nuevo Registro"
       color="red"
       icon="add_circle"
@@ -83,7 +83,7 @@
                         @click="verRow2(props)"
                         icon="list"
                       ></q-btn>
-                        <q-btn
+                        <q-btn v-if="this.$store.state.login.user.name!=='SECRETARIA'"
                         dense
                         round
                         flat
@@ -561,7 +561,7 @@ export default {
          this.$q.loading.show();
            this.data=[]
            this.$api.get(process.env.API+"/registros").then((res)=>{
-             console.log(res.data)
+           //  console.log(res.data)
               res.data.forEach(it=>{
                        if(this.$store.state.login.user.status===it.departamento.nombre){
                                         //  this.data.push(it)

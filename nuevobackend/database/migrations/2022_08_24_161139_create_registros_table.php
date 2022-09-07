@@ -39,7 +39,7 @@ class CreateRegistrosTable extends Migration
             $table->string("comunidades")->nullable();
             $table->string("presentado_por")->nullable();// DISTRITOS
             $table->string("firmado_por")->nullable();
-            $table->string("autoridad")->nullable();
+            $table->string("autoridad")->nullable(); //categoria municipal
             $table->string("url")->nullable();  //pdf
             $table->string("status")->nullable();  //activo
             $table->string("observacion")->nullable();
