@@ -18,7 +18,7 @@
       :rows="data"
       :columns="columns"
       row-key="nombre"
-      :rows-per-page-options="[20,50,100,200,0]"
+      :rows-per-page-options="[10,20,50,0]"
       separator="cell"
    >
        <template v-slot:top-right>

@@ -2067,6 +2067,7 @@ export default {
     },
     uploadFile1(){
 
+
     },
     uploadFile2(){
 
@@ -2113,18 +2114,14 @@ export default {
              doc.rect(20,20, 180,150)
              doc.rect(20,20, 180,160)
              doc.rect(20,20, 180,161)
-
-
              doc.rect(75,95, 125,10)
              doc.rect(75,95, 125,5)
               doc.rect(75,95, 20,10)
              doc.rect(75,95, 40,10)
-
              doc.rect(75,115, 125,10)
              doc.rect(75,115, 125,5)
               doc.rect(75,115, 20,10)
              doc.rect(75,115, 40,10)
-
              doc.rect(75,130, 125,10)
              doc.rect(75,130, 125,5)
              doc.rect(75,130, 20,10)
@@ -2146,11 +2143,7 @@ export default {
              doc.rect(75,170, 20,10)
              doc.rect(75,170, 40,10)
              doc.rect(75,170, 60,10)
-
-
              doc.rect(25,190, 170,60)
-
-
              doc.setFontSize(8,"bold").setFont(undefined, 'bold');
              doc.text("1. PROGRAMA", 21,49,{maxWidth: 75,align: "justify"})
              doc.text("2. NOMBRE DEL PROYECTO", 21,54,{maxWidth: 75,align: "justify"})
@@ -2222,11 +2215,11 @@ export default {
               doc.text( this.dato.ficha.observacion5c+".", 140,154,{maxWidth: 70,align: "justify"})
               doc.text( this.dato.ficha.ejecutado+" %", 85,164,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.porejecutar+" %", 105,164,{maxWidth: 20,align: "center"})
-              doc.text( this.dato.ficha.longitudporejecutar+" %", 125,164,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.longitudporejecutar+" m", 125,164,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.observacion5d+".", 140,164,{maxWidth: 70,align: "justify"})
               doc.text( this.dato.ficha.longituddecimal+" m", 85,179,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.ancho+" m", 105,179,{maxWidth: 20,align: "center"})
-              doc.text( this.dato.ficha.area+" m2", 125,179,{maxWidth: 20,align: "center"})
+              doc.text( this.dato.ficha.area+" m2", 125,179,{maxWidth: 25,align: "center"})
               doc.text( this.dato.ficha.observacion6+".", 140,179,{maxWidth: 70,align: "justify"})
 
              doc.setFontSize(8, 'normal')
@@ -2278,10 +2271,12 @@ export default {
              // doc.line(80,30,135,30)
               doc.setFontSize(8,"bold").setFont(undefined, 'normal');
               doc.text("Página 2 de 2",180, 262)
+              let fecha_informe=this.dato.ficha.fecha==null ?  moment().format('YYYY-MM-DD') : this.dato.ficha.fecha
+              let departamento=this.$store.state.login.user.status
+              const fechaDeCarta= this.fechalarga(fecha_informe,departamento)
+              doc.text("Fecha : "+fechaDeCarta,30, 252)
               doc.text("Nombre y Firma del Técnico", 93,225,{maxWidth: 150,align: "justify"}).setFontSize(8,"bold").setFont(undefined, 'bold');
-
               doc.text("EVALUADOR", 103,230,{maxWidth: 150,align: "justify"})
-
                //doc.save(descargarnombre);
              window.open(doc.output('bloburl',{filename:"FICHA.pdf"}), '_blank');
 

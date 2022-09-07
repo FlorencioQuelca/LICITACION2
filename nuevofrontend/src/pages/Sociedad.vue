@@ -118,7 +118,7 @@
       :rows="data"
       :columns="columns"
       row-key="nit"
-      :rows-per-page-options="[50,100]"
+      :rows-per-page-options="[10,20,50,100,0]"
        separator="cell"
        dense
    >

@@ -92,7 +92,7 @@
       :rows="data"
       :columns="columns"
       row-key="name"
-      :rows-per-page-options="[50,100]"
+      :rows-per-page-options="[50,100,0]"
        separator="cell"
        dense
        >
