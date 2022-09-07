@@ -1684,7 +1684,7 @@ export default {
              doc.text(text2, 30,193,{maxWidth: 160,align: "justify"}).setFontSize(12).setFont(undefined, 'italic');
              doc.text(text3, 40,205,{maxWidth: 150,align: "justify"})
              doc.text(text4, 40,225,{maxWidth: 150,align: "justify"}).setFontSize(12).setFont(undefined, 'normal');
-                    //hoja 2
+   //hoja 2
             doc.addPage();
             doc.addImage(chacana, 'PNG', 25, 10, 20, 20);
             doc.addImage(logofps, 'PNG', 175, 10, 28, 20);
@@ -1700,7 +1700,7 @@ export default {
             doc.text("Página 2 de 4",190, 262)
             doc.text(piso2,xpiso2, 266)
             doc.setFontSize(9).setFont(undefined, 'bold')
-            doc.text(piso3,xpiso3, 270)
+            doc.text(piso3,xpiso3, 270).setFontSize(9).setFont(undefined, 'normal')
             doc.setFontSize(12, 'bold')
               doc.text(text5, 30,40,{maxWidth: 160,align: "justify"})
                    //CUDARO  1 HOJA 2
@@ -1777,7 +1777,7 @@ export default {
             doc.text("Página 3 de 4",190, 262)
             doc.text(piso2,xpiso2, 266)
             doc.setFontSize(9).setFont(undefined, 'bold');
-            doc.text(piso3,xpiso3, 270)
+            doc.text(piso3,xpiso3, 270).setFontSize(9).setFont(undefined, 'normal')
              //CUADRO 1 HOJA 3
               doc.rect(30,35, 80,12) // corregir 25
               doc.rect(30,35, 80,33)  //corregir 40
