@@ -952,21 +952,24 @@ export default {
               this.progress6=0.6
               this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
         }
-        if(this.dato.ficha.aprobado!=null && this.dato.ficha.foto1!=null && this.dato.ficha.foto2!=null&& this.dato.ficha.foto3!=null){
-            this.progress8=1
-           this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
-        }else  if(this.dato.ficha.aprobado!=null){
-              this.progress8=0.7
-              this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
-        }else if(this.dato.ficha.distrito!=null){
-          this.progress8=0.6
-              this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
-        }else{
-           this.progress8=0.5
-              this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
-        }
-
-
+         if(this.dato.ficha!=null){
+              if(this.dato.ficha.aprobado!=null && this.dato.ficha.foto1!=null && this.dato.ficha.foto2!=null&& this.dato.ficha.foto3!=null){
+                          this.progress8=1
+                        this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
+                      }else  if(this.dato.ficha.aprobado!=null){
+                            this.progress8=0.7
+                            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
+                      }else if(this.dato.ficha.distrito!=null){
+                        this.progress8=0.6
+                            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
+                      }else{
+                        this.progress8=0.5
+                            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
+                      }
+         }else{
+            this.progress8=0
+            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
+         }
 
          this.$q.loading.hide();
           });
