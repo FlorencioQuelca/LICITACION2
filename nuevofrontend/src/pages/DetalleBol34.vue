@@ -1259,7 +1259,11 @@ export default {
                        this.resultado.descripcion=item.valor
                      }else
                      {
-                       this.resultado.descripcion=item.descripcion1
+                        if(item.descripcion1==null){
+                          this.resultado.descripcion="Cumple"
+                        }else{
+                          this.resultado.descripcion=item.descripcion1
+                        }
                      }
               this.resultado.id=item.id
               this.resultado.tipo=item.tipo;
@@ -1917,23 +1921,17 @@ export default {
             // yy=yy+10;
            // doc.text(con3result[2], xx,yy,{maxWidth: 150,align: "justify"})
 
-
             //console.log(doc.getStringUnitWidth(con3))
-
              doc.text("4. RECOMENDACIONES", 35,123).setFontSize(12).setFont(undefined, 'normal');
              doc.text(rec1, 30,130,{maxWidth: 160,align: "justify"})
             //CASO EXCEPCIONAL
-
              doc.text(rec2, 30,159,{maxWidth: 160,align: "justify"})
             // doc.text(rec2, 30,155,{maxWidth: 160,align: "justify"})
              doc.text(rec3, 30,180,{maxWidth: 160,align: "justify"}).setFontSize(8).setFont(undefined, 'normal');
-
-
                doc.text(mosca, 30,220)
                doc.text(copia, 30,224)
                doc.text(adjunto, 30,228)
                doc.text(vinculo, 30,232)
-
              doc.text('fqm', 210, 278) //milimetros
             // doc.text('*', 214, 280) //milimetros
              let descargarnombre=""
@@ -2012,7 +2010,6 @@ export default {
           }
 
       this.dialog_form6=true
-
     },
     view_form7(){
       this.titulo="EVALUACION EN CAMPO"
@@ -2042,9 +2039,7 @@ export default {
         }else{   // es con contenido
                this.dato2=this.dato.ficha
               this.dialog_form8=true;
-
         }
-
     },
     onMod8() {
          if(this.dato.ficha.foto1!=null && this.dato.ficha.foto2!=null&& this.dato.ficha.foto3!=null){
@@ -2074,8 +2069,6 @@ export default {
                   this.$q.loading.hide();
                 });
                this.dialog_form8=false;
-
-
     },
     uploadFile1(files){
           if(this.dato.ficha.foto1==null){
