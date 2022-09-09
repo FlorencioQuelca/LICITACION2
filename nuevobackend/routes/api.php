@@ -140,6 +140,8 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   Route::put('registrocomunidaddetach/{registro}',[\App\Http\Controllers\RegistroController::class,'registrocomunidaddetach']);
   Route::apiResource('registroevaluacion1',\App\Http\Controllers\RegistroevaluacionController::class);
   Route::get('registrados',[\App\Http\Controllers\RegistroController::class,'registrados'])->name('registrados');
+  Route::post('/uploadPhoto',[\App\Http\Controllers\FichaController::class,'uploadPhoto']);
+  Route::post('/base64ficha',[\App\Http\Controllers\FichaController::class,'base64ficha']);
 });
 
 

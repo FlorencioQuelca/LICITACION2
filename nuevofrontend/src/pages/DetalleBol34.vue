@@ -510,7 +510,9 @@
                   <q-uploader
                         class="full-width"
                         label="Subir FOTOGRAFIA Nº1(IZQUIERDA) "
+                        accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile1"
+
                       />
 
                 </div>
@@ -662,6 +664,7 @@
                    <q-uploader
                         class="full-width"
                         label="Subir FOTOGRAFIA Nº2(DERECHA) "
+                         accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile2"
                       />
 
@@ -737,6 +740,7 @@
 
                         class="full-width"
                         label="Subir FOTOGRAFIA (PLANO DE UBICACION) "
+                         accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile3"
                       />
                 </div>
@@ -758,7 +762,9 @@
 
 <script>
 import {jsPDF} from "jspdf";
+import { Dialog } from 'quasar';
 import moment, { now } from 'moment';
+import { useQuasar } from 'quasar'
 const columna = [
   {
     name: 'titulo',
@@ -771,7 +777,9 @@ const columna = [
 
 ];
 export default {
-  data: () => ({
+
+
+ data: () => ({
     id: 145,
     data: {},
     dato2:{},
@@ -817,6 +825,7 @@ export default {
       resultado:{},
       titulo:"",
       op:"",
+      confirm:false,
 
 
   }),
@@ -2068,15 +2077,161 @@ export default {
 
 
     },
-    uploadFile1(){
+    uploadFile1(files){
+          if(this.dato.ficha.foto1==null){
+            this.$q.loading.show()
+            const fileData= new FormData()
+            fileData.append('photo',files[0])
+            fileData.append('ficha_id',this.dato.ficha.id)
+            fileData.append('nombre',"foto1")
+             fileData.append('codigo',this.dato.codigo)
+            fileData.append('departamento',this.$store.state.login.user.ci)
+            this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
+               console.log(res.data)
+               this.$q.loading.hide()
+               this.$q.notify({
+                    color: "green-4",
+                    textColor: "white",
+                    icon: "cloud_done",
+                    message: "Insertado Correctamente",
+                  });
 
+             this.misdatos()
+            })
+          }else{
+                 this.$q.dialog({
+                  title: 'Existe una fotografia cargada!!!',
+                  message: 'Desea Reemplazar la foto anterior?',
+                  cancel: true,
+                  persistent: true
+                  // console.log('>>>> OK')
+                }).onOk(() => {
+                    this.$q.loading.show()
+                    const fileData= new FormData()
+                    fileData.append('photo',files[0])
+                    fileData.append('ficha_id',this.dato.ficha.id)
+                    fileData.append('nombre',"foto1")
+                    fileData.append('codigo',this.dato.codigo)
+                    fileData.append('departamento',this.$store.state.login.user.ci)
+                    this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
+                    console.log(res.data)
+                    this.$q.loading.hide()
+                      this.$q.notify({
+                    color: "green-4",
+                    textColor: "white",
+                    icon: "cloud_done",
+                    message: "Reemplazado Correctamente",
+                  });
+                  this.misdatos()
+                  })
+                }).onCancel(() => {
 
+                })
+          }
     },
-    uploadFile2(){
+    uploadFile2(files){
+          if(this.dato.ficha.foto2==null){
+            this.$q.loading.show()
+            const fileData= new FormData()
+            fileData.append('photo',files[0])
+            fileData.append('ficha_id',this.dato.ficha.id)
+            fileData.append('nombre',"foto2")
+             fileData.append('codigo',this.dato.codigo)
+            fileData.append('departamento',this.$store.state.login.user.ci)
+            this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
+               console.log(res.data)
+               this.$q.loading.hide()
+               this.$q.notify({
+                    color: "green-4",
+                    textColor: "white",
+                    icon: "cloud_done",
+                    message: "Insertado Correctamente",
+                  });
 
+             this.misdatos()
+            })
+          }else{
+                 this.$q.dialog({
+                  title: 'Existe una fotografia cargada!!!',
+                  message: 'Desea Reemplazar la foto anterior?',
+                  cancel: true,
+                  persistent: true
+                  // console.log('>>>> OK')
+                }).onOk(() => {
+                    this.$q.loading.show()
+                    const fileData= new FormData()
+                    fileData.append('photo',files[0])
+                    fileData.append('ficha_id',this.dato.ficha.id)
+                    fileData.append('nombre',"foto2")
+                     fileData.append('codigo',this.dato.codigo)
+                    fileData.append('departamento',this.$store.state.login.user.ci)
+                    this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
+                    console.log(res.data)
+                    this.$q.loading.hide()
+                      this.$q.notify({
+                    color: "green-4",
+                    textColor: "white",
+                    icon: "cloud_done",
+                    message: "Reemplazado Correctamente",
+                  });
+                  this.misdatos()
+                  })
+                }).onCancel(() => {
+
+                })
+          }
     },
-    uploadFile3(){
+    uploadFile3(files){
+          if(this.dato.ficha.foto3==null){
+            this.$q.loading.show()
+            const fileData= new FormData()
+            fileData.append('photo',files[0])
+            fileData.append('ficha_id',this.dato.ficha.id)
+            fileData.append('nombre',"foto3")
+             fileData.append('codigo',this.dato.codigo)
+            fileData.append('departamento',this.$store.state.login.user.ci)
+            this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
+               console.log(res.data)
+               this.$q.loading.hide()
+               this.$q.notify({
+                    color: "green-4",
+                    textColor: "white",
+                    icon: "cloud_done",
+                    message: "Insertado Correctamente",
+                  });
 
+             this.misdatos()
+            })
+          }else{
+                 this.$q.dialog({
+                  title: 'Existe una fotografia cargada!!!',
+                  message: 'Desea Reemplazar la foto anterior?',
+                  cancel: true,
+                  persistent: true
+                  // console.log('>>>> OK')
+                }).onOk(() => {
+                    this.$q.loading.show()
+                    const fileData= new FormData()
+                    fileData.append('photo',files[0])
+                    fileData.append('ficha_id',this.dato.ficha.id)
+                    fileData.append('nombre',"foto3")
+                     fileData.append('codigo',this.dato.codigo)
+                    fileData.append('departamento',this.$store.state.login.user.ci)
+                    this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
+                    console.log(res.data)
+                    this.$q.loading.hide()
+                      this.$q.notify({
+                    color: "green-4",
+                    textColor: "white",
+                    icon: "cloud_done",
+                    message: "Reemplazado Correctamente",
+                  });
+                  this.misdatos()
+                  })
+                }).onCancel(() => {
+
+                })
+          }
     },
     imprimirFicha(){
         let doc = new jsPDF('portrait' ,null, 'letter');
@@ -2236,10 +2391,25 @@ export default {
               doc.addPage();
               doc.rect(20,20, 180,235)
               doc.rect(25,30, 170,100)
+               this.$q.loading.show()
+               this.$api.post('base64ficha',{imagen:this.dato.ficha.foto3}).then(res=>{
+                console.log(res.data)
+                this.$q.loading.hide()
+                if (res.data!=''){
+                 let  imgData =res.data
+                  console.log("entro")
+                  doc.addImage(imgData, "jpeg", 25, 30, 100, 100, null, "FAST");
+                }
+
+
+
+
 
                doc.setFontSize(8,"bold").setFont(undefined, 'bold');
               doc.text("8. PLANO DE UBICACIÓN", 21,25,{maxWidth: 150,align: "justify"})
               doc.text("9. CONCLUSIONES Y RECOMENDACIONES DE LA INSPECCION TECNICA (marcar con una X)", 21,178,{maxWidth: 150,align: "justify"})
+
+
 
 
               doc.rect(20,180, 180,5)
@@ -2282,6 +2452,7 @@ export default {
               doc.text("EVALUADOR", 103,230,{maxWidth: 150,align: "justify"})
                //doc.save(descargarnombre);
              window.open(doc.output('bloburl',{filename:"FICHA.pdf"}), '_blank');
+             })
 
 
 

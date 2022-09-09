@@ -130,4 +130,38 @@ class FichaController extends Controller
     {
         return  $ficha->delete();
     }
+
+     //oficial
+     public function uploadPhoto(Request $request){
+
+        if ($request->hasFile('photo')){
+            $file=$request->file('photo');
+            //$size=$file->getSize();  //tamaño en bytes // hay que convertir
+            $url=$request->departamento."_".$request->codigo."_".$request->nombre."_".time().'.'.$file->getClientOriginalExtension();
+            $file->move(\public_path('fichasdeinspeccion'),$url);
+            $ficha = Ficha::find($request->ficha_id);
+              if($request->nombre==="foto1"){
+                  $ficha->foto1=$url;
+              }else if($request->nombre==="foto2"){
+                  $ficha->foto2=$url;
+              }else{
+                  $ficha->foto3=$url;
+              }
+            $ficha->save();
+            return $ficha;
+        }else{
+            return "no existe el Photo";
+        }
+    }
+    public function base64ficha(Request $request){
+        if ($request->imagen==''){
+            return '';
+        }
+        $path = 'fichasdeinspeccion/'.$request->imagen;
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $base64;
+
+    }
 }
