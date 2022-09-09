@@ -1942,8 +1942,8 @@ export default {
                }else{
                      descargarnombre=this.dato.codigo+"_NO_CUMPLE"+".pdf"
                }
-            //doc.save(descargarnombre);
-             window.open(doc.output('bloburl',{filename:descargarnombre}), '_blank');
+            doc.save(descargarnombre);
+           //  window.open(doc.output('bloburl',{filename:descargarnombre}), '_blank');
       },
       isBoldOpen (arrayLength, valueBefore = false) {
     const isEven = arrayLength % 2 === 0;
@@ -2451,6 +2451,7 @@ export default {
                 }
 
              window.open(doc.output('bloburl',{filename:"FICHA.pdf"}), '_blank');
+             this.$q.loading.hide()
              })
 
 
