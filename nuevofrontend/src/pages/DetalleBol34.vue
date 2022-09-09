@@ -1787,7 +1787,7 @@ export default {
             doc.text(infraestructura, 125,195,{maxWidth: 75,align: "justify"})
             doc.text(supervision, 125,200,{maxWidth: 75,align: "justify"})
             doc.text(total, 125,205,{maxWidth: 75,align: "justify"})
-            doc.text(r22, 111,210,{maxWidth: 77,align: "justify"})
+            doc.text(r22+".", 111,210,{maxWidth: 77,align: "justify"})
 
             doc.text(r33, 112,231,{maxWidth: 77,align: "justify"})
    //hoja 3
@@ -1942,8 +1942,8 @@ export default {
                }else{
                      descargarnombre=this.dato.codigo+"_NO_CUMPLE"+".pdf"
                }
-            doc.save(descargarnombre);
-           //  window.open(doc.output('bloburl',{filename:descargarnombre}), '_blank');
+           // doc.save(descargarnombre);
+           window.open(doc.output('bloburl',{filename:descargarnombre}), '_blank');
       },
       isBoldOpen (arrayLength, valueBefore = false) {
     const isEven = arrayLength % 2 === 0;
