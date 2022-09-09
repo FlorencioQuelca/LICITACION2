@@ -154,14 +154,78 @@ class FichaController extends Controller
         }
     }
     public function base64ficha(Request $request){
-        if ($request->imagen==''){
-            return '';
-        }
-        $path = 'fichasdeinspeccion/'.$request->imagen;
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        return $base64;
+        if ($request->imagen1!='') {
+             if($request->imagen2!=''){
+                 if( $request->imagen3!=''){
+                    $path1 = 'fichasdeinspeccion/'.$request->imagen1;
+                    $path2 = 'fichasdeinspeccion/'.$request->imagen2;
+                    $path3 = 'fichasdeinspeccion/'.$request->imagen3;
+                    $type1 = pathinfo($path1, PATHINFO_EXTENSION);
+                    $type2 = pathinfo($path1, PATHINFO_EXTENSION);
+                    $type3 = pathinfo($path1, PATHINFO_EXTENSION);
+                    $data1 = file_get_contents($path1);
+                    $data2 = file_get_contents($path2);
+                    $data3 = file_get_contents($path3);
+                    $base64a = 'data:image/' . $type1 . ';base64,' . base64_encode($data1);
+                    $base64b = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
+                    $base64c = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
+                    return [$base64a,$base64b,$base64c];
+                 }else{
+                    $path1 = 'fichasdeinspeccion/'.$request->imagen1;
+                    $path2 = 'fichasdeinspeccion/'.$request->imagen2;
+                    $type1 = pathinfo($path1, PATHINFO_EXTENSION);
+                    $type2 = pathinfo($path1, PATHINFO_EXTENSION);
+                    $data1 = file_get_contents($path1);
+                    $data2 = file_get_contents($path2);
+                    $base64a = 'data:image/' . $type1 . ';base64,' . base64_encode($data1);
+                    $base64b = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
+                    return [$base64a,$base64b,null];
+
+                 }
+             }else if($request->imagen3!=''){
+                    $path1 = 'fichasdeinspeccion/'.$request->imagen1;
+                    $path3 = 'fichasdeinspeccion/'.$request->imagen2;
+                    $type1 = pathinfo($path1, PATHINFO_EXTENSION);
+                    $type3 = pathinfo($path1, PATHINFO_EXTENSION);
+                    $data1 = file_get_contents($path1);
+                    $data3 = file_get_contents($path3);
+                    $base64a = 'data:image/' . $type1 . ';base64,' . base64_encode($data1);
+                    $base64c = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
+                    return [$base64a,null, $base64c];
+                }else{
+                    $path1 = 'fichasdeinspeccion/'.$request->imagen1;
+                    $type1 = pathinfo($path1, PATHINFO_EXTENSION);
+                    $data1 = file_get_contents($path1);
+                    $base64a = 'data:image/' . $type1 . ';base64,' . base64_encode($data1);
+                    return [$base64a,null,null];
+                }
+        }else if($request->imagen2!=''){
+                if($request->imagen3!=''){
+                    $path2 = 'fichasdeinspeccion/'.$request->imagen2;
+                    $path3 = 'fichasdeinspeccion/'.$request->imagen3;
+                    $type2 = pathinfo($path2, PATHINFO_EXTENSION);
+                    $type3 = pathinfo($path3, PATHINFO_EXTENSION);
+                    $data2 = file_get_contents($path2);
+                    $data3 = file_get_contents($path3);
+                    $base64b = 'data:image/' . $type2 . ';base64,' . base64_encode($data2);
+                    $base64c = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
+                    return [null,$base64b,$base64c];
+
+                    }else{
+                        return [null,null,null];
+                    }
+        }else if($request->imagen3!=''){
+                $path3 = 'fichasdeinspeccion/'.$request->imagen3;
+                $type3 = pathinfo($path3, PATHINFO_EXTENSION);
+                $data3 = file_get_contents($path3);
+                $base64c = 'data:image/' . $type3 . ';base64,' . base64_encode($data3);
+                return [null,null,$base64c];
+
+                }else{
+                    return [null,null,null];
+                }
+
+
 
     }
 }

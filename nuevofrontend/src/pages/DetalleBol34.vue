@@ -2387,31 +2387,27 @@ export default {
              doc.setFontSize(12,"bold")
              doc.text('FICHA TECNICA DE INSPECCION DE CAMPO',65,44)
 
+              this.$api.post('base64ficha',{imagen1:this.dato.ficha.foto1,imagen2:this.dato.ficha.foto2,imagen3:this.dato.ficha.foto3}).then(res=>{
+                console.log(res.data)
+                this.$q.loading.hide()
+                if (res.data[0]!=null){
+                   let  imgData1 =res.data[0]
+                      doc.rect(25,190, 170,60)
+                   doc.addImage(imgData1, "jpeg", 23, 185, 85, 67, null, "FAST");
+                }
+                if(res.data[1]!=null){
+                   let  imgData2 =res.data[1]
+                   doc.addImage(imgData2, "jpeg", 112, 185, 85, 67, null, "FAST");
+                }
+
              //PAGINA 2
               doc.addPage();
               doc.rect(20,20, 180,235)
               doc.rect(25,30, 170,100)
                this.$q.loading.show()
-               this.$api.post('base64ficha',{imagen:this.dato.ficha.foto3}).then(res=>{
-                console.log(res.data)
-                this.$q.loading.hide()
-                if (res.data!=''){
-                 let  imgData =res.data
-                  console.log("entro")
-                  doc.addImage(imgData, "jpeg", 25, 30, 100, 100, null, "FAST");
-                }
-
-
-
-
-
                doc.setFontSize(8,"bold").setFont(undefined, 'bold');
               doc.text("8. PLANO DE UBICACIÓN", 21,25,{maxWidth: 150,align: "justify"})
               doc.text("9. CONCLUSIONES Y RECOMENDACIONES DE LA INSPECCION TECNICA (marcar con una X)", 21,178,{maxWidth: 150,align: "justify"})
-
-
-
-
               doc.rect(20,180, 180,5)
               doc.rect(140,180, 60,5)
               doc.rect(20,180, 180,10)
@@ -2435,11 +2431,9 @@ export default {
               }
                if(this.dato.ficha.inspeccionado==="SI"){
                  doc.text("SI en : "+this.dato.ficha.dias+" dias ", 145,188,{maxWidth: 100,align: "justify"})
-
               }else{
                 doc.text("NO ", 145,188,{maxWidth: 100,align: "justify"})
               }
-
               doc.line(90,220, 130,220,'F')
              // doc.line(80,30,135,30)
               doc.setFontSize(8,"bold").setFont(undefined, 'normal');
@@ -2451,6 +2445,11 @@ export default {
               doc.text("Nombre y Firma del Técnico", 93,225,{maxWidth: 150,align: "justify"}).setFontSize(8,"bold").setFont(undefined, 'bold');
               doc.text("EVALUADOR", 103,230,{maxWidth: 150,align: "justify"})
                //doc.save(descargarnombre);
+                if(res.data[2]!=null){
+                   let  imgData3 =res.data[2]
+                   doc.addImage(imgData3, "jpeg", 25, 30, 170, 120, null, "FAST");
+                }
+
              window.open(doc.output('bloburl',{filename:"FICHA.pdf"}), '_blank');
              })
 
