@@ -53,7 +53,6 @@
            <q-td key="monto" :props="props">
             {{props.row.adjunto}}
           </q-td>
-
            <q-td key="fecha" :props="props">
             {{props.row.fecha}}
           </q-td>
@@ -65,6 +64,12 @@
                 </li>
               </span>
              </ul>
+          </q-td>
+           <q-td key="informe" :props="props">
+            {{props.row.informe}}
+          </q-td>
+           <q-td key="estado" :props="props">
+            {{props.row.status}}
           </q-td>
             <q-td  key="opcion" :props="props">
                       <q-btn v-if="$store.state.login.user.name==='SECRETARIA'"
@@ -99,6 +104,22 @@
                             color="yellow"
                             @click="editRow(props)"
                             icon="edit"
+                        ></q-btn>
+                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA'"
+                            dense
+                            round
+                            flat
+                            color="green"
+                            @click="sendeditRow(props)"
+                            icon="send"
+                        ></q-btn>
+                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA'"
+                            dense
+                            round
+                            flat
+                            color="red"
+                            @click="desarchivar(props)"
+                            icon="lock_open"
                         />
                     <q-btn v-if="$store.state.login.user.tipo==='admin'"
                       dense
@@ -458,6 +479,8 @@ const columns = [
   { name: 'monto', label: 'Ajunto', field: 'monto',sortable:true },
   { name: 'fecha', align: "center",label: 'Fecha', field: 'fecha',sortable:true },
   { name: "funcionarios",align: "left",label: "Funcionario(s)",field: "funcionarios",sortable: true,},
+  { name: "informe",align: "left",label: "Informe",field: "Informe",sortable: true,},
+  { name: "estado",align: "left",label: "Estado",field: "estado",sortable: true,},
   { name: 'opcion',align: "center", label: 'Opciones ', field: 'opcion', sortable: false }
   ];
 const subcol1 = [
@@ -672,21 +695,15 @@ export default {
        this.dato.departamento_id=this.departamento.value;
        this.dato.municipio=this.municipio.label;
        this.dato.nombre=((this.dato.nombre).toUpperCase()).trim()
-
+       this.dato.status="RECIBIDO"
          this.totalmunicipios.forEach(it => {
             if((it.municipio).toUpperCase()===this.dato.municipio){
               this.dato.autoridad =it.municipio_codigo
              // console.log(this.dato.autoridad);
             }
          })
-
-
-
-
-
      // this.dato.departamento_id=this.$store.state.login.user.ci
       this.$api.post(process.env.API+"/registros/", this.dato).then((res) => {
-
          if(res.data.res===true)
           {
             this.$q.notify({
@@ -706,8 +723,6 @@ export default {
           this.$q.loading.hide();
         });
 
-
-
        },
         onMod() {
        this.dato2.departamento_id=this.departamento.value;
@@ -719,10 +734,6 @@ export default {
              // console.log(this.dato.autoridad);
             }
          })
-
-
-
-
       this.$q.loading.show();
       this.$api
         .put(process.env.API + "/registros/" + this.dato2.id, this.dato2)
@@ -742,7 +753,6 @@ export default {
     },
       editRow(item) {
       this.dato2 = item.row;
-
          this.municipio={}
       this.municipios.forEach(it => {
            if(it.label===item.row.municipio){
@@ -756,9 +766,63 @@ export default {
            }
         });
        this.dialog_mod = true;
+    },
+      sendeditRow(item) {
+      this.dato2 = item.row;
 
+        this.$q.dialog({
+                  title: 'ENVIO DE INFORME A LA OFICINA CENTRAL',
+                  message: 'El informe se esta enviando a la oficina central, el tecnico no podra Modificarlo  esta de Acuerdo?',
+                  cancel: true,
+                  persistent: true
+                  // console.log('>>>> OK')
+                }).onOk(() => {
+                    this.$q.loading.show()
+                this.$api.put(process.env.API + "/registros/" + this.dato2.id, {status:"ENVIADO"} )
+                        .then((res) => {
+                          if (res.data.res === true) {
+                            this.$q.notify({
+                              color: "green-4",
+                              textColor: "white",
+                              icon: "cloud_done",
+                              message: "ENVIADO correctamente",
+                            });
+                          }
+                          this.misdatos();
+                          this.$q.loading.hide()
+                  })
+                }).onCancel(() => {
+                    this.$q.loading.hide()
+                })
+    },
+          desarchivar(item) {
+      this.dato2 = item.row;
 
+        this.$q.dialog({
+                  title: 'HABILITAR PARA EDICION',
+                  message: 'el Informe se esta HABILITANDO para su correccion o modificacion, esta seguro ?',
+                  cancel: true,
+                  persistent: true
+                  // console.log('>>>> OK')
+                }).onOk(() => {
+                    this.$q.loading.show()
+                this.$api.put(process.env.API + "/registros/" + this.dato2.id, {status:"RECIBIDO"} )
+                        .then((res) => {
+                          if (res.data.res === true) {
+                            this.$q.notify({
+                              color: "green-4",
+                              textColor: "white",
+                              icon: "cloud_done",
+                              message: "HABILITADO correctamente",
+                            });
+                          }
+                          this.misdatos();
+                          this.$q.loading.hide()
+                  })
+                }).onCancel(() => {
+                    this.$q.loading.hide()
 
+                })
     },
 
        deleteRow(item) {

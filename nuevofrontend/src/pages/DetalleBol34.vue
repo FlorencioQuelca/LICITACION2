@@ -313,11 +313,7 @@
                label="Describir que se adjunta"
               hint="Ingresar datos adjuntos"
             />
-             <div class="q-gutter-sm">
-             <span> Desea cambiar el estado del Proyecto a ENVIADO  ?</span>
-              <q-radio v-model="dato.status" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="ENVIADO" label="SI" />
-              <q-radio v-model="dato.status" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="RECIBIDO" label="NO" />
-             </div>
+
             <div>
               <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
               <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
@@ -1006,7 +1002,16 @@ export default {
                 this.departamento={label:it.label,value:it.value}
            }
         });
-     this.dialog_form1=true;
+         if(this.dato.status==="RECIBIDO" || this.dato.status==null){
+           this.dialog_form1=true;
+         }else{
+           this.$q.notify({
+              color: "red",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+            });
+         }
     },
     view_form2(){
               this.titulo="CRITERIOS DE ELEGIBILIDAD"
@@ -1029,7 +1034,17 @@ export default {
                            this.evaluaciones[2].puntaje=it.pivot.puntaje
                          }
                  })
-       this.dialog_form2345=true;
+       if(this.dato.status==="RECIBIDO" || this.dato.status==null){
+           this.dialog_form2345=true;
+         }else{
+           this.$q.notify({
+              color: "red",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+            });
+         }
+
     },
      view_form3(){
           this.titulo="REQUISITOS DEL PROYECTO"
@@ -1074,7 +1089,16 @@ export default {
                          }
 
                  })
-     this.dialog_form2345=true;
+        if(this.dato.status==="RECIBIDO" || this.dato.status==null){
+           this.dialog_form2345=true;
+         }else{
+           this.$q.notify({
+              color: "red",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+            });
+         }
     },
     view_form4(){
             this.titulo="INGENIERIA DEL PROYECTO"
@@ -1134,9 +1158,16 @@ export default {
                            this.evaluaciones[19].puntaje=it.pivot.puntaje
                          }
                  })
-
-
+        if(this.dato.status==="RECIBIDO" || this.dato.status==null){
             this.dialog_form2345=true;
+         }else{
+           this.$q.notify({
+              color: "red",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+            });
+         }
     },
     view_form5(){
       this.titulo="VARIACION POSITIVA O NEGATIVA "
@@ -1148,10 +1179,16 @@ export default {
                            this.evaluaciones[20].puntaje=it.pivot.puntaje
                          }
         })
-
-
-
-      this.dialog_form2345=true;
+if(this.dato.status==="RECIBIDO" || this.dato.status==null){
+           this.dialog_form2345=true;
+         }else{
+           this.$q.notify({
+              color: "red",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+            });
+         }
     },
 
       onMod1() {
@@ -2009,7 +2046,16 @@ export default {
             this.dato.adjunto=" 1 Carpeta (fojas XXX y 1 CD)"
           }
 
-      this.dialog_form6=true
+          if(this.dato.status==="RECIBIDO" || this.dato.status==null){
+           this.dialog_form6=true
+         }else{
+           this.$q.notify({
+              color: "red",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+            });
+         }
     },
     view_form7(){
       this.titulo="EVALUACION EN CAMPO"
@@ -2019,11 +2065,15 @@ export default {
         if(this.dato.copia==null){
           this.fecha_inspeccion=moment().format('YYYY-MM-DD');
         }
-      this.dialog_form7=true;
+
+           this.dialog_form7=true;
+
+
     },
     view_form8(){
       this.titulo="FICHA TECNICA DE INSPECCION DE CAMPO"
-        if(this.dato.ficha==null){ // esta vacion
+
+        if(this.dato.ficha==null){ // esta vacio
          this.dato2={}
              this.dato2.registro_id = this.dato.id
              this.$q.loading.show();
@@ -2077,10 +2127,12 @@ export default {
             fileData.append('photo',files[0])
             fileData.append('ficha_id',this.dato.ficha.id)
             fileData.append('nombre',"foto1")
-             fileData.append('codigo',this.dato.codigo)
+             let codigo=this.dato.codigo.split('-')
+             fileData.append('codigo',codigo[1])
             fileData.append('departamento',this.$store.state.login.user.ci)
             this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
-               console.log(res.data)
+
+               //console.log(res.data)
                this.$q.loading.hide()
                this.$q.notify({
                     color: "green-4",
@@ -2104,10 +2156,12 @@ export default {
                     fileData.append('photo',files[0])
                     fileData.append('ficha_id',this.dato.ficha.id)
                     fileData.append('nombre',"foto1")
-                    fileData.append('codigo',this.dato.codigo)
+                    let codigo=this.dato.codigo.split('-')
+                    fileData.append('codigo',codigo[1])
+
                     fileData.append('departamento',this.$store.state.login.user.ci)
                     this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
-                    console.log(res.data)
+                //    console.log(res.data)
                     this.$q.loading.hide()
                       this.$q.notify({
                     color: "green-4",
@@ -2129,10 +2183,11 @@ export default {
             fileData.append('photo',files[0])
             fileData.append('ficha_id',this.dato.ficha.id)
             fileData.append('nombre',"foto2")
-             fileData.append('codigo',this.dato.codigo)
+            let codigo=this.dato.codigo.split('-')
+            fileData.append('codigo',codigo[1])
             fileData.append('departamento',this.$store.state.login.user.ci)
             this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
-               console.log(res.data)
+              // console.log(res.data)
                this.$q.loading.hide()
                this.$q.notify({
                     color: "green-4",
@@ -2156,10 +2211,11 @@ export default {
                     fileData.append('photo',files[0])
                     fileData.append('ficha_id',this.dato.ficha.id)
                     fileData.append('nombre',"foto2")
-                     fileData.append('codigo',this.dato.codigo)
+                    let codigo=this.dato.codigo.split('-')
+                    fileData.append('codigo',codigo[1])
                     fileData.append('departamento',this.$store.state.login.user.ci)
                     this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
-                    console.log(res.data)
+              //      console.log(res.data)
                     this.$q.loading.hide()
                       this.$q.notify({
                     color: "green-4",
@@ -2181,10 +2237,11 @@ export default {
             fileData.append('photo',files[0])
             fileData.append('ficha_id',this.dato.ficha.id)
             fileData.append('nombre',"foto3")
-             fileData.append('codigo',this.dato.codigo)
+            let codigo=this.dato.codigo.split('-')
+                    fileData.append('codigo',codigo[1])
             fileData.append('departamento',this.$store.state.login.user.ci)
             this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
-               console.log(res.data)
+             //  console.log(res.data)
                this.$q.loading.hide()
                this.$q.notify({
                     color: "green-4",
@@ -2208,10 +2265,11 @@ export default {
                     fileData.append('photo',files[0])
                     fileData.append('ficha_id',this.dato.ficha.id)
                     fileData.append('nombre',"foto3")
-                     fileData.append('codigo',this.dato.codigo)
+                    let codigo=this.dato.codigo.split('-')
+                    fileData.append('codigo',codigo[1])
                     fileData.append('departamento',this.$store.state.login.user.ci)
                     this.$api.post(process.env.API+'/uploadPhoto',fileData).then(res=>{
-                    console.log(res.data)
+                   // console.log(res.data)
                     this.$q.loading.hide()
                       this.$q.notify({
                     color: "green-4",
@@ -2227,6 +2285,17 @@ export default {
           }
     },
     imprimirFicha(){
+       if(this.dato.ficha==null){
+                  this.$q.notify({
+                    color: "red",
+                    textColor: "white",
+                    icon: "cloud_done",
+                    message: "Cargue datos requeridos en la ficha tecnica ",
+                  });
+             return
+       }
+
+
         let doc = new jsPDF('portrait' ,null, 'letter');
           let logofps = new Image();
            logofps.src = 'logofps.png';
@@ -2294,7 +2363,7 @@ export default {
              doc.rect(75,170, 20,10)
              doc.rect(75,170, 40,10)
              doc.rect(75,170, 60,10)
-             doc.rect(25,190, 170,60)
+            //  doc.rect(25,190, 170,60)
              doc.setFontSize(8,"bold").setFont(undefined, 'bold');
              doc.text("1. PROGRAMA", 21,49,{maxWidth: 75,align: "justify"})
              doc.text("2. NOMBRE DEL PROYECTO", 21,54,{maxWidth: 75,align: "justify"})
@@ -2379,9 +2448,20 @@ export default {
              doc.setFont(undefined, 'bold');
              doc.setFontSize(12,"bold")
              doc.text('FICHA TECNICA DE INSPECCION DE CAMPO',65,44)
-
-              this.$api.post('base64ficha',{imagen1:this.dato.ficha.foto1,imagen2:this.dato.ficha.foto2,imagen3:this.dato.ficha.foto3}).then(res=>{
-                console.log(res.data)
+                     let fotografia1=this.dato.ficha.foto1
+                     let fotografia2=this.dato.ficha.foto2
+                     let fotografia3=this.dato.ficha.foto3
+                     if(this.dato.ficha.foto1==null){
+                        fotografia1=''
+                     }
+                     if(this.dato.ficha.foto2==null){
+                        fotografia2=''
+                     }
+                     if(this.dato.ficha.foto3==null){
+                        fotografia3=''
+                     }
+             this.$api.post('base64ficha',{imagen1:fotografia1,imagen2:fotografia2,imagen3:fotografia3}).then(res=>{
+                //console.log(res.data)
                 this.$q.loading.hide()
                 if (res.data[0]!=null){
                    let  imgData1 =res.data[0]
