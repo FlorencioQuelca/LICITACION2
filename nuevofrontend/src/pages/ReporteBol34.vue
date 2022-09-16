@@ -49,6 +49,10 @@
                 key="funcionario" :props="props">
                {{props.row.users[0].name}}
          </q-td>
+          <q-td   v-if="props.row.users.length===0"
+                key="funcionario" :props="props">
+               {{props.row.user}}
+         </q-td>
            <q-td key="monto1" :props="props">
             {{props.row.monto1}}
           </q-td>
@@ -77,7 +81,7 @@
                {{props.row.status}}
          </q-td>
          <q-td key="avance" :props="props">
-               {{props.row.puntaje1}} %
+               {{props.row.puntaje}} %
          </q-td>
        </q-tr>
       </template>
@@ -145,10 +149,39 @@ export default {
       //    this.$q.loading.hide();
         this.data=[]
        this.$api.get(process.env.API+"/registrados").then((res)=>{
+           console.log(res.data);
+            let puntaje=0
         res.data.forEach(it=>{
                        if(this.$store.state.login.user.status===it.departamento.nombre){
+                              if(it.status==="ENVIADO"){
+                                 it.puntaje=100.00
+                              }else{
+                                   puntaje=0
+                                if(it.vinculo==="SI"){
+                                   puntaje+=50
+                                 }
+                                if(it.puntaje1!="0.00"){
+                                     puntaje+=10
+                                 }
+                                  if(it.puntaje2!='0.00'){
+                                    puntaje+=10
+                                 }
+                                  if(it.puntaje3!='0.00'){
+                                   puntaje+=10
+                                 }
+                                  if(it.puntaje4!='0.00'){
+                                   puntaje+=10
+                                 }
+
+                                 if(it.ficha && it.ficha.ubicacion){
+                                   puntaje+=10
+                                 }
+
+                                  it.puntaje=puntaje
+                              }
 
                             this.data.push(it)
+
                        }
               })
           this.$q.loading.hide();
@@ -188,7 +221,6 @@ export default {
                         delete this.data[i].comunidades
                         delete this.data[i].provincia
                         delete this.data[i].monto3
-                        delete this.data[i].puntaje
                         delete this.data[i].puntaje1
                         delete this.data[i].puntaje2
                         delete this.data[i].puntaje3
@@ -222,6 +254,7 @@ export default {
                             evaluador:this.data[i].evaluador,
                             aprobado:this.data[i].cumple,
                             status:this.data[i].status,
+                            evaluacion:this.data[i].puntaje+" %",
 
                           ...this.data[i]
                         }
@@ -237,6 +270,7 @@ export default {
                           delete this.data[i].carta_fecha
                           delete this.data[i].carta_cite
                           delete this.data[i].cumple
+                          delete this.data[i].puntaje
 
                          datos.push(this.data[i])
                  }
