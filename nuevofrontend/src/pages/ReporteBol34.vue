@@ -85,8 +85,7 @@
         <template v-slot:top-left>
            <q-toolbar flat>
               <q-toolbar-title>REGISTRO BOL 34</q-toolbar-title>
-              <q-divider  class='mx-4' inset vertical></q-divider>
-              <q-spacer></q-spacer>
+
               <q-btn
                   color="primary"
                   icon-right="archive"
@@ -148,18 +147,105 @@ export default {
        this.$api.get(process.env.API+"/registrados").then((res)=>{
         res.data.forEach(it=>{
                        if(this.$store.state.login.user.status===it.departamento.nombre){
-                        this.data.push(it)
+
+                            this.data.push(it)
                        }
               })
           this.$q.loading.hide();
        });
        },
           exportTable () {
-            console.log(this.data)
-             const datos=this.data
-             const fileName="BOL34"
+              const datos=[]
+                 for(let i=0;i<this.data.length;i++){
+
+                       if(this.data[i].users==null){
+                         let user=" "
+                         this.data[i].evaluador=user
+                       }else{
+                            if(this.data[i].users.length>0){
+                              let user=this.data[i].users[0].name
+                               this.data[i].evaluador=user
+                            }else{
+                                let user=" "
+                         this.data[i].evaluador=user
+                            }
+                       }
+                     //   if(this.data[i].users!=null){
+                        delete this.data[i].evaluacions
+                         this.data[i].departamento=this.$store.state.login.user.status
+                       delete  this.data[i].ficha
+                       delete  this.data[i].departamento_id
+
+                        delete this.data[i].mosca
+                        delete this.data[i].carta_ref
+                        delete this.data[i].carta_de
+                        delete this.data[i].carta_via
+                        delete this.data[i].carta_a
+                        delete this.data[i].observacion
+                        delete this.data[i].url
+                        delete this.data[i].firmado_por
+                        delete this.data[i].presentado_por
+                        delete this.data[i].comunidades
+                        delete this.data[i].provincia
+                        delete this.data[i].monto3
+                        delete this.data[i].puntaje
+                        delete this.data[i].puntaje1
+                        delete this.data[i].puntaje2
+                        delete this.data[i].puntaje3
+                        delete this.data[i].puntaje4
+                        delete this.data[i].id
+                        delete this.data[i].users
+                     //}
+                     let fecha_inspeccion=" "
+                      if(this.data[i].vinculo==="SI"){
+                        fecha_inspeccion=this.data[i].copia
+                      }
+
+                        this.data[i]={
+                            nro:this.data[i].nro,
+                            departamento:this.data[i].departamento,
+                            municipio:this.data[i].municipio,
+                            categoria:this.data[i].autoridad,
+                            codigo_vipfe:this.data[i].codigo,
+                            nombre:this.data[i].nombre,
+                            cite_vipfe:this.data[i].cite,
+                            cite_fps:this.data[i].interno,
+                            fecha_reg:this.data[i].fecha,
+                            infraestructura:this.data[i].monto1,
+                            supervision:this.data[i].monto2,
+                            total:this.data[i].total,
+                            nro_informe:this.data[i].carta_cite,
+                            fecha_informe:this.data[i].carta_fecha,
+                            adjunto:this.data[i].adjunto,
+                            inspeccion:this.data[i].vinculo,
+                            fecha_inspeccion:fecha_inspeccion,
+                            evaluador:this.data[i].evaluador,
+                            aprobado:this.data[i].cumple,
+                            status:this.data[i].status,
+
+                          ...this.data[i]
+                        }
+                          delete this.data[i].cite
+                          delete this.data[i].interno
+                          delete this.data[i].fecha
+                          delete this.data[i].autoridad
+                          delete this.data[i].monto1
+                          delete this.data[i].monto2
+                          delete this.data[i].codigo
+                          delete this.data[i].vinculo
+                          delete this.data[i].copia
+                          delete this.data[i].carta_fecha
+                          delete this.data[i].carta_cite
+                          delete this.data[i].cumple
+
+                         datos.push(this.data[i])
+                 }
+
+           //  const datos=this.data
+             const fileName="REPORTE_BOL34_"+this.$store.state.login.user.status
              const extension=exportFromJSON.types.xls
-            exportFromJSON({datos, fileName,extension})
+            exportFromJSON({data:datos, fileName:fileName, exportType:extension})
+            this.misdatos();
 
       }
     }
