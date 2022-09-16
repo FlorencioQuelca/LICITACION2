@@ -3099,6 +3099,11 @@ exit-on-epipe@~1.0.1:
   resolved "https://registry.npmjs.org/exit-on-epipe/-/exit-on-epipe-1.0.1.tgz"
   integrity sha512-h2z5mrROTxce56S+pnvAV890uu7ls7f1kEvVGJbw1OlFH3/mlJ5bkXu0KRyW94v37zzHPiUd55iLn3DA7TjWpw==
 
+export-from-json@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/export-from-json/-/export-from-json-1.7.0.tgz#2b13e259ae76df4a055d6336a2c4035ab000d94f"
+  integrity sha512-BE7MUOuSZy3uNwBt4mHxDgcknCC9yQWPvXHx1rrxWGKiQ9EYBZlxHWwMuOqQfo5TWkZ0+bSWJLEsWQ0wxrPA1Q==
+
 express@4.17.1, express@^4.17.1:
   version "4.17.1"
   resolved "https://registry.npmjs.org/express/-/express-4.17.1.tgz"

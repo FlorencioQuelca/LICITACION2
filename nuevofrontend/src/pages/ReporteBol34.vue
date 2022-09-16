@@ -28,7 +28,9 @@
           </q-td>
            <q-td key="municipio" :props="props">
             {{props.row.municipio}}
-
+          </q-td>
+           <q-td key="categoria" :props="props">
+              {{props.row.autoridad}}
           </q-td>
            <q-td key="nombre" :props="props">
             {{props.row.nombre}}
@@ -36,12 +38,13 @@
            <q-td key="cite" :props="props">
             {{props.row.cite}}
           </q-td>
-           <q-td key="archivo" :props="props">
+           <q-td key="hojaderuta" :props="props">
             {{props.row.interno}}
           </q-td>
-           <q-td key="fecha" :props="props">
-            {{props.row.fecha}}
+           <q-td key="adjunto" :props="props">
+            {{props.row.adjunto}}
           </q-td>
+
          <q-td  v-if="props.row.users.length"
                 key="funcionario" :props="props">
                {{props.row.users[0].name}}
@@ -61,26 +64,55 @@
          <q-td key="fechainspeccion" :props="props">
                {{props.row.copia}}
          </q-td>
-         <q-td key="inspeccion" :props="props">
-               {{props.row.vinculo}}
+         <q-td key="fechaenvio" :props="props">
+               {{props.row.carta_fecha}}
+         </q-td>
+         <q-td key="informe" :props="props">
+               {{props.row.carta_cite}}
+         </q-td>
+         <q-td key="elegible" :props="props">
+               {{props.row.cumple}}
+         </q-td>
+         <q-td key="estado" :props="props">
+               {{props.row.status}}
          </q-td>
          <q-td key="avance" :props="props">
-               {{props.row.puntaje1}}
+               {{props.row.puntaje1}} %
          </q-td>
        </q-tr>
+      </template>
+
+        <template v-slot:top-left>
+           <q-toolbar flat>
+              <q-toolbar-title>REGISTRO BOL 34</q-toolbar-title>
+              <q-divider  class='mx-4' inset vertical></q-divider>
+              <q-spacer></q-spacer>
+              <q-btn
+                  color="primary"
+                  icon-right="archive"
+                  label="Descargar en excel"
+                  no-caps
+                  @click="exportTable"
+                />
+           </q-toolbar>
+
       </template>
     </q-table>
     </div>
 </template>
 <script >  //vue 2
+
+
 const columns = [
   { name: 'nro', align:"center", label: 'N°', field: 'nro', sortable: true },
   { name: 'codigo', align: "left",label: 'Codigo VIPFE', field: 'codigo',sortable:true },
   { name: 'municipio', align: "left",label: 'Municipio', field: 'municipio',sortable:true},
+  { name: 'categoria', align: "left",label: 'Categoria', field: 'categoria',sortable:true},
   { name: 'nombre',required: true,align: "left", label: 'Nombre de la propuesta', field: 'nombre',sortable:true },
   { name: 'cite', align: "left",label: 'CITE MPD/VIPFE', field: 'cite',sortable:true },
-  { name: 'archivo', label: 'N° Hoja de Ruta', field: 'archivo',sortable:true },
-  { name: 'fecha', align: "center",label: 'Fecha', field: 'fecha',sortable:true },
+  { name: 'hojaderuta', label: 'N° Hoja de Ruta', field: 'hojaderuta',sortable:true },
+  { name: 'adjunto', label: 'Adjunto', field: 'adjunto',sortable:true },
+  //{ name: 'fecha', align: "center",label: 'Fecha', field: 'fecha',sortable:true },
   { name: "funcionario",align: "left",label: "Evaluado Por:",field: "funcionario",sortable: true},
   { name: 'monto1', align:"right",label: 'Infraestructura', field: 'monto1',sortable:true },
   { name: 'monto2', align:"right",label: 'Supervision', field: 'monto2',sortable:true },
@@ -88,8 +120,12 @@ const columns = [
   { name: 'inspeccion',align: "center", label: 'Inspeccionado ', field: 'inspeccion', sortable: false },
   { name: 'fechainspeccion',align: "center", label: 'Fecha de Inspeccion', field: 'fechainspeccion', sortable: false },
   { name: 'fechaenvio',align: "center", label: 'Fecha de Envio', field: 'fechaenvio', sortable: false },
-  { name: 'avance',align: "center", label: '% avance ', field: 'avance', sortable: false }
+  { name: 'informe',align: "center", label: 'Informe', field: 'informe', sortable: false },
+  { name: 'elegible',align: "center", label: 'Elegible', field: 'elegible', sortable: false },
+  { name: 'estado',align: "center", label: 'Estado', field: 'estado', sortable: false },
+  { name: 'avance',align: "center", label: '% Evaluacion ', field: 'avance', sortable: false }
   ];
+  import exportFromJSON from 'export-from-json'
 export default {
   data() {
     return {
@@ -115,11 +151,17 @@ export default {
                         this.data.push(it)
                        }
               })
-          // this.data=res.data
-         // console.log(res.data)
           this.$q.loading.hide();
        });
        },
+          exportTable () {
+            console.log(this.data)
+             const datos=this.data
+             const fileName="BOL34"
+             const extension=exportFromJSON.types.xls
+            exportFromJSON({datos, fileName,extension})
+
+      }
     }
 }
 </script>

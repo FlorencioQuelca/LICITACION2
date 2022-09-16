@@ -882,22 +882,35 @@ export default {
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
-         this.rows.push({titulo:"Comunidades  o Distritos: ", descripcion: res.data[0].comunidades})
+         //this.rows.push({titulo:"Comunidades  o Distritos: ", descripcion: res.data[0].comunidades})
           this.rows.push({titulo:"Cite VIFFE : ", descripcion: res.data[0].cite})
           this.rows.push({titulo:"H.R. FPS: ", descripcion: res.data[0].interno})
           this.rows.push({titulo:"Codigo : ", descripcion: res.data[0].codigo})
+          this.rows.push({titulo:"Proyecto Contempla: ", descripcion: res.data[0].adjunto})
           this.rows.push({titulo:"Categoria Municpal : ", descripcion: res.data[0].autoridad})
           this.rows.push({titulo:"Infraestructura : ", descripcion: res.data[0].monto1})
           this.rows.push({titulo:"Supervision : ", descripcion: res.data[0].monto2})
           this.rows.push({titulo:"Total : ", descripcion: res.data[0].total})
-          this.rows.push({titulo:"Fecha de Ingreso : ", descripcion: res.data[0].fecha})
+        //  this.rows.push({titulo:"Fecha de Ingreso (registro) : ", descripcion: res.data[0].fecha})
           //this.rows.push({titulo:"Puntaje de Evaluacion : ", descripcion: res.data[0].total})
-          this.rows.push({titulo:"Proyecto Cumple/ Es elegible? : ", descripcion: res.data[0].cumple})
-          this.rows.push({titulo:"Se realizo la Inspecion : ", descripcion: res.data[0].vinculo})
-          this.rows.push({titulo:"fecha de inspeccion : ", descripcion: res.data[0].copia})
+          this.rows.push({titulo:"Proyecto Cumple/ Es elegible ? : ", descripcion: res.data[0].cumple})
+          this.rows.push({titulo:"Se realizo la Inspecion de campo ? : ", descripcion: res.data[0].vinculo})
+            if(res.data[0].vinculo==='SI'){
+              this.rows.push({titulo:"fecha de inspeccion : ", descripcion: res.data[0].copia})
+            }
+          this.rows.push({titulo:"Cite Informe : ", descripcion: res.data[0].carta_cite})
           this.rows.push({titulo:"Fecha de Envio de Informe : ", descripcion: res.data[0].carta_fecha})
-          this.rows.push({titulo:"Proyecto Contempla: ", descripcion: res.data[0].adjunto})
           this.rows.push({titulo:"Estado del Proyecto : ", descripcion: res.data[0].status})
+             if(res.data[0].ficha){
+               this.rows.push({titulo:"Cuenta con Planimetria Aprobada? ", descripcion: res.data[0].ficha.planimetria})
+               this.rows.push({titulo:"Ubicacion : ", descripcion: res.data[0].ficha.ubicacion})
+               this.rows.push({titulo:"Circunscripcion : ", descripcion: res.data[0].ficha.circunscripcion})
+               this.rows.push({titulo:"Latitud : ", descripcion: res.data[0].ficha.latitud})
+               this.rows.push({titulo:"Longitud : ", descripcion: res.data[0].ficha.longitud})
+               this.rows.push({titulo:"Reporte Fotografico (izquierda) : ", descripcion: res.data[0].ficha.foto1})
+               this.rows.push({titulo:"Reporte Fotografico (derecha) : ", descripcion: res.data[0].ficha.foto2})
+               this.rows.push({titulo:"Mapa de Inspeccion  (fotografia): ", descripcion: res.data[0].ficha.foto3})
+             }
              let cr=0
             let ing=0
             let req=0

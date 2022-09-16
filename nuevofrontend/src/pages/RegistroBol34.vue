@@ -66,7 +66,10 @@
              </ul>
           </q-td>
            <q-td key="informe" :props="props">
-            {{props.row.informe}}
+            {{props.row.carta_cite}}
+          </q-td>
+           <q-td key="fecha1" :props="props">
+            {{props.row.carta_fecha}}
           </q-td>
            <q-td key="estado" :props="props">
             {{props.row.status}}
@@ -480,6 +483,7 @@ const columns = [
   { name: 'fecha', align: "center",label: 'Fecha', field: 'fecha',sortable:true },
   { name: "funcionarios",align: "left",label: "Funcionario(s)",field: "funcionarios",sortable: true,},
   { name: "informe",align: "left",label: "Informe",field: "Informe",sortable: true,},
+  { name: 'fecha1', align: "center",label: 'Enviado', field: 'fecha1',sortable:true },
   { name: "estado",align: "left",label: "Estado",field: "estado",sortable: true,},
   { name: 'opcion',align: "center", label: 'Opciones ', field: 'opcion', sortable: false }
   ];
