@@ -1615,10 +1615,10 @@ if(this.dato.status==="RECIBIDO" || this.dato.status==null){
           case "3":
                gerentedepartamental="Ing. Miguel Angel Balboa Hinojosa"
                jefetecnico="Ing. Silvia Mariela Ramirez Rios"
-               piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
-               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
-               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
-               xpiso1=65
+               piso1='Oficina Departamental Cochabamba: Av. Eudoro Galindo, Nº2310 esq. C/Flor de Naranjos'
+               piso2='Telf. (591-4) 4797421 – 4797422 - 4787423   Fax. (591-4)4797420'
+               piso3='Web: www.fps.gob.bo – Cochabamba - Bolivia'
+               xpiso1=66
                xpiso2=80
                xpiso3=88
 
@@ -1626,7 +1626,7 @@ if(this.dato.status==="RECIBIDO" || this.dato.status==null){
           case "4":
                gerentedepartamental="Ing. Moises Ciprian Choque"
                jefetecnico="Ing. Roger Juaquin Copa Condori"
-                piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
+               piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
                piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
                piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
                xpiso1=65
@@ -1635,12 +1635,13 @@ if(this.dato.status==="RECIBIDO" || this.dato.status==null){
                break;
           case "5":
                gerentedepartamental="Ing. Mario Mamani Humacacho"
-               piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
-               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
-               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
-               xpiso1=65
-               xpiso2=80
-               xpiso3=88
+               jefetecnico="Ing. Wilder Cruz Alcaraz"
+               piso1='Oficina Departamental Potosí: Calle Tomas Manchego S/N entre Enrique Peñaranda y Jaime Escalante'
+               piso2='Telf. 6247345 – 6247344   Fax. 6-622455'
+               piso3='Web: www.fps.gob.bo – Potosí - Bolivia'
+               xpiso1=32
+               xpiso2=75
+               xpiso3=76
                break;
           case "6":
                gerentedepartamental="Ing. Edzon Alvaro Plata Prado"
@@ -1665,12 +1666,12 @@ if(this.dato.status==="RECIBIDO" || this.dato.status==null){
           case "8":
                gerentedepartamental="Ing. Jorge Luis Tellez Gutierrez"
                jefetecnico="Ing. Carlos Oscar Rivero Villavicencio"
-                piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
-               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
-               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
-               xpiso1=65
+               piso1='Oficina Departamental Beni: Av. Comunidad Europea, entre C/ Nataniel Garcia y Raúl Monje Z/El Carmen '
+               piso2='Telf. 72846584 - 72846587    Fax. 3-462476'
+               piso3='Web: www.fps.gob.bo – Beni - Bolivia'
+               xpiso1=32
                xpiso2=80
-               xpiso3=88
+               xpiso3=85
            break;
           case "9":
                gerentedepartamental="Ing. Oscar Julio Teran Ayala"
@@ -1685,7 +1686,7 @@ if(this.dato.status==="RECIBIDO" || this.dato.status==null){
           default:
                gerentedepartamental="Ing. solo departamentales"
                jefetecnico="Ing. solo departamentales"
-                piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
+               piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
                piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
                piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
                xpiso1=65
