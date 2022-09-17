@@ -34,17 +34,17 @@ class Proyecto extends Model
     public function programa(){
         return $this->belongsTo(Programa::class);
     }
-    
+
      //relacion muchos a muchos
      public function codigos(){
-        return $this->belongsToMany(Codigo::class);   
+        return $this->belongsToMany(Codigo::class);
     }
     public function funcionarios(){
         return $this->belongsToMany(Persona::class,'persona_proyecto');
      }
     //relacion muchos a muchospolimorfica
     public function empresas(){
-        return $this->morphedByMany('App\Models\Empresa','detalle')->withPivot('monto');
+        return $this->morphedByMany('App\Models\Empresa','detalle')->withPivot(['monto']);
      }
      //relacion muchos a muchos polimorfica
     public function personas(){
@@ -58,8 +58,9 @@ class Proyecto extends Model
     public function contratos(){
         return $this->hasMany(Contrato::class);
     }
-
-
-     
+    //relacion uno a muchos
+    public function lotes(){
+        return $this->hasMany('\App\Models\Lote');
+    }
 
 }

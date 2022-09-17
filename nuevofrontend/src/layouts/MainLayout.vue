@@ -45,7 +45,7 @@
             <q-icon color="teal" name="login" />
           </q-item-section>
 
-          <q-item-section>Login</q-item-section>
+          <q-item-section>Ingreso</q-item-section>
         </q-item>
 
         <q-item   v-if="$store.state.login.empresas"

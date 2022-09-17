@@ -2048,7 +2048,7 @@ if(this.dato.status==="RECIBIDO" || this.dato.status==null){
      this.titulo="RESULTADOS DE EVALUACION"
 
           if(this.dato.carta_cite==null){
-            this.dato.carta_cite="INF/FPS/GDLP"
+            this.dato.carta_cite="INF/FPS/GDXX Nº 0XXX/2022"
           }
           if(this.dato.cumple==null){
               this.dato.cumple="NO"

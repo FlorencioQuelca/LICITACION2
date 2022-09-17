@@ -41,6 +41,9 @@ class Empresa extends Model
     public function contratos(){
         return $this->morphToMany('App\Models\Contrato','detalle1');
     }
-   
+    public function lotes(){
+        return $this->morphToMany('App\Models\Lote','detallelote');
+    }
+
 
 }

@@ -1,7 +1,7 @@
 <template>
  <div class="q-pa-md">
     <div >
-       <q-btn   v-if="this.$store.state.login.user.name==='SECRETARIA'"
+       <q-btn   v-if="this.$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
       label="Nuevo Registro"
       color="red"
       icon="add_circle"
@@ -75,7 +75,7 @@
             {{props.row.status}}
           </q-td>
             <q-td  key="opcion" :props="props">
-                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA'"
+                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                         dense
                         round
                         flat
@@ -83,7 +83,7 @@
                         @click="addRow2(props)"
                         icon="playlist_add"
                       ></q-btn>
-                        <q-btn v-if="$store.state.login.user.name==='SECRETARIA'"
+                        <q-btn v-if="$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                         dense
                         round
                         flat
@@ -91,7 +91,7 @@
                         @click="verRow2(props)"
                         icon="list"
                       ></q-btn>
-                        <q-btn v-if="this.$store.state.login.user.name!=='SECRETARIA'"
+                        <q-btn v-if="this.$store.state.login.user.name!=='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                         dense
                         round
                         flat
@@ -100,7 +100,7 @@
                         icon="groups"
                       ></q-btn>
 
-                       <q-btn v-if="$store.state.login.user.name==='SECRETARIA'"
+                       <q-btn v-if="$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                             dense
                             round
                             flat
@@ -108,7 +108,7 @@
                             @click="editRow(props)"
                             icon="edit"
                         ></q-btn>
-                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA'"
+                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                             dense
                             round
                             flat
@@ -116,7 +116,7 @@
                             @click="sendeditRow(props)"
                             icon="send"
                         ></q-btn>
-                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA'"
+                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                             dense
                             round
                             flat
@@ -353,7 +353,7 @@
                   :rows="funcionarios"
                   :columns="subcol2"
                   row-key="nombre"
-                  :rows-per-page-options="[10, 15, 20, 0]"
+                  :rows-per-page-options="[0]"
                   separator="cell"
                   dense
                 >
@@ -598,7 +598,9 @@ export default {
                                                  if(this.$store.state.login.user.id===it.users[index].id){
                                                            this.data.push(it)
                                                  }else{
-                                                  if(this.$store.state.login.user.name==="SECRETARIA" || this.$store.state.login.user.name==="ADMINISTRADOR"){
+                                                  const secre=this.$store.state.login.user.name.split(" ")
+                                                //  console.log(secre)
+                                                  if(secre[0]==="SECRETARIA" || this.$store.state.login.user.tipo==='admin'){
                                                          this.data.push(it)
                                                          break;
                                                          }
@@ -607,7 +609,8 @@ export default {
 
                                            }
                                           }else{
-                                             if(this.$store.state.login.user.name==="SECRETARIA" || this.$store.state.login.user.name==="ADMINISTRADOR" ){
+                                              const secre=this.$store.state.login.user.name.split(" ")
+                                             if(secre[0]==="SECRETARIA" || this.$store.state.login.user.tipo==='admin' ){
                                                 this.data.push(it)
                                              }
 
@@ -628,8 +631,6 @@ export default {
            if(this.$store.state.login.user.status==='CENTRAL'){
              this.misdatos()
            }else{
-
-
              this.data=this.$store.state.login.user.registros;
            }
        },
@@ -647,8 +648,15 @@ export default {
        });
        },
       cargarUsers(){
+       this.funcionarios=[]
       this.$api.get(process.env.API + "/userid/"+this.$store.state.login.user.ci).then((res) => {
-       this.funcionarios = res.data;
+               res.data.forEach(it=>{
+                    const secre=it.name.split(" ")
+                    if(secre[0]!=='SECRETARIA' && it.tipo!=='admin'){
+                        this.funcionarios.push(it)
+                    }
+               })
+         // this.funcionarios = res.data;
        //  console.log(this.funcionarios);
        // console.log(res.data);
         this.$q.loading.hide();
@@ -686,10 +694,8 @@ export default {
       this.dato.interno ="E/CN/2022-0XXXX"
       this.dato.adjunto =" 1 Carpeta (fojas XX y CD)"
 
-
         this.alert=true;
        },
-
 
        onSubmit(){
       //
@@ -933,7 +939,18 @@ export default {
        this.dialog_add2 = false;
      },
       adicionarfuncionario(item) {
-      this.funcionariosSelectos.push(item.row);
+           if(this.funcionariosSelectos.length===1){
+             this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "No se puede asignar 2 fiscales a un proyecto",
+                        });
+
+           }else{
+             this.funcionariosSelectos.push(item.row);
+           }
+
      // console.log(this.funcionariosSelectos);
     },
 

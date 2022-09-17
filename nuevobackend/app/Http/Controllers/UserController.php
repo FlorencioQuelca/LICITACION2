@@ -23,7 +23,7 @@ class UserController extends Controller
 
 
         if (!Auth::attempt($request->all())) {
-            return response()->json(['res' => 'No existe el usuario'], 400);
+            return response()->json(['res'=> false, 'message'=>"No existe usuario"], 400);
         }
        if (User::where('email', $request->email)->whereDate('fechalimite', '>', now())->get()->count() == 0) {
            return response()->json(['res' => 'Su usuario sobre paso el limite de ingreso'], 200);
@@ -100,10 +100,13 @@ class UserController extends Controller
         $user->permisos()->detach();
         $user->permisos()->attach($permiso);
     }
-    public function pass(Request $request, User $user){
-        $user->update([
-            'password' => Hash::make($request->password)
-        ]);
+    public function pass(Request $request,  $id){
+        $user=User::find($id);
+        $user->password =Hash::make($request->password);
+        $user->save();
+        // $user->update([
+        //     'password' => Hash::make($request->password)
+        // ]);
         return $user;
     }
     public function destroy(User $user){

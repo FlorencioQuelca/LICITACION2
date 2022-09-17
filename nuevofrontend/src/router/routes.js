@@ -18,6 +18,7 @@ import Reportes from "pages/Reporte_visitas";
 import RegistroBol34 from "pages/RegistroBol34";
 import DetalleBol34 from "pages/DetalleBol34";
 import ReporteBol34 from "pages/ReporteBol34";
+import Setting from "pages/Setting";
 
 
 const routes = [
@@ -37,6 +38,7 @@ const routes = [
       { path: 'Contratos', component: Contratos,meta: { requiresAuth: true }},
       { path: 'Usuarios', component: Usuarios,meta: { requiresAuth: true }},
       { path: '/Presentados/:id/view',  name: 'presentados.view',component: Presentados,meta: { requiresAuth: true}},
+      { path: '/Setting/:id/view',  name: 'setting.view',component: Setting,meta: { requiresAuth: true}},
       { path: 'Solicitud', component: Solicitud,meta: { requiresAuth: true }},
       { path: 'Visitas', component: Visitas,meta: { requiresAuth: true }},
       { path: 'Trabajos', component: Trabajos,meta: { requiresAuth: true }},

@@ -20,13 +20,13 @@ class Sociedad extends Model
         "observacion",
         "departamento",
     ];
-    
+
     protected $hidden =['created_at','updated_at'];
-    
+
      public function empresas(){
        return $this->belongsToMany(Empresa::class)->withPivot('participacion');
     }
-   
+
     //relacion muchos a muchos polimorfica
     public function proyectos(){
         return $this->morphToMany('App\Models\Proyecto','detalle');
@@ -35,7 +35,10 @@ class Sociedad extends Model
     public function contratos(){
         return $this->morphToMany('App\Models\Contrato','detalle1');
     }
-    
+    public function lotes(){
+        return $this->morphToMany('App\Models\Lote','detallelote');
+    }
 
-   
+
+
 }

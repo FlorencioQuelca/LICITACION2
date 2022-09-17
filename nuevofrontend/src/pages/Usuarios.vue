@@ -92,7 +92,7 @@
       :rows="data"
       :columns="columns"
       row-key="name"
-      :rows-per-page-options="[50,100,0]"
+      :rows-per-page-options="[10,50,100,0]"
        separator="cell"
        dense
        >
@@ -114,9 +114,13 @@
           <q-td key="email" :props="props">
             {{props.row.email}}
           </q-td>
+           <q-td key="departamento" :props="props">
+            {{props.row.status}}
+          </q-td>
           <q-td key="fechalimite" :props="props">
             {{props.row.fechalimite}}
           </q-td>
+
           <q-td key="opcion" :props="props">
           <q-btn
               dense
@@ -286,9 +290,8 @@ export default {
         {name: "name", align: "left", label: "Nombre ", field: "name", sortable: true,},
         {name: "tipo", align: "left", label: "tipo ", field: "tipo", sortable: true,},
         {name: "email", align: "left", label: "Email", field: "email", sortable: true,},
-        {name: "fechalimite", align: "left", label: "Fecha limite", field: "fechalimite", sortable: true,
-        },
-
+        {name: "departamento", align: "left", label: "Departamento", field: "departamento", sortable: true,},
+        {name: "fechalimite", align: "left", label: "Fecha limite", field: "fechalimite", sortable: true,},
         { name: "opcion", label: "Opcion", field: "action", sortable: false },
       ],
       data: [],
@@ -318,7 +321,7 @@ export default {
     updatepermisos(){
 
       this.$api.put(process.env.API+'/updatepermisos/'+this.dato2.id,{permisos:this.permisos2}).then(res=>{
-        console.log(res.data)
+     //   console.log(res.data)
         this.modelpermiso=false
         this.misdatos()
       }).catch(err=>{
@@ -476,7 +479,8 @@ export default {
       this.dato.fin = 0;
     },
     cambiopass (item) {
-      this.filter=''
+     // console.log(item)
+     this.filter=item.row.email
       this.$q.dialog({
         title: 'Cambiar password',
         message: 'Ingresar nueva contraseña',
@@ -489,7 +493,7 @@ export default {
       }).onOk(data => {
         this.$q.loading.show()
         this.$api.put(process.env.API+'/pass/'+item.row.id,{password:data}).then(res=>{
-          console.log(res.data);
+        //  console.log(res.data);
           this.$q.loading.hide()
         })
       }).onCancel(() => {

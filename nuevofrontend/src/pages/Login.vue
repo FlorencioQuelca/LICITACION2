@@ -65,21 +65,29 @@ export default {
        this.$q.loading.show()
        let email = this.email
         let password = this.password
-        this.$store.dispatch('login/login', { email, password })
-       .then((res) =>{
-         // console.log(res.data);
+        this.$store.dispatch('login/login', { email, password }).then((res) =>{
+            // console.log(res.data);
+
+                this.$q.notify({
+                    color: "green-4",
+                    textColor: "white",
+                    icon: "cloud_done",
+                    message: "Ingreso al sistema correctamente",
+                  });
+                  this.$router.push('/')
 
           this.$q.loading.hide();
 
-        this.$router.push('/')
+
 
         })
        .catch(err => {
         this.$q.loading.hide();
-       this.this.$q.notify({
+       this.$q.notify({
               message:err,
               color:'red',
-              icon:'error'
+              icon:'error',
+               message: "Verifique su usuario y contraseña o llame al administrador 75402473",
             })
        })
     },

@@ -50,6 +50,9 @@ class Persona extends Model
     public function visitas(){
         return $this->belongsToMany(Visita::class,'persona_visita')->withPivot(['tipo','mochila','observacion']);;
     }
+    public function lotes(){
+        return $this->morphToMany('App\Models\Lote','detallelote');
+    }
 
 }
 

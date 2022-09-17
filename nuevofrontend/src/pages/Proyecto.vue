@@ -131,16 +131,13 @@
               type="number"
               label="Plazo de Entrega"
               hint="Ingresar plazo de Entrega"
-
             />
-
              <q-input
               outlined
               v-model="dato.lotes"
               type="text"
               label="Numero de Lotes"
               hint="Ingresar numero de lotes"
-
             />
              </div>
              </div>
@@ -285,6 +282,22 @@
             </q-td>
 
           <q-td key="opcion" :props="props">
+                       <q-btn
+                        dense
+                        round
+                        flat
+                        color="black"
+                        @click="lotes(props)"
+                        icon="difference"
+                      ></q-btn>
+                       <q-btn
+                        dense
+                        round
+                        flat
+                        color="blue"
+                        @click="detalle(props)"
+                        icon="settings"
+                      ></q-btn>
            <q-btn
               dense
               round
@@ -441,7 +454,7 @@
     </q-dialog>
 
 
-      <!-- empresas asociados  adicionar codigo/>-->
+      <!--  adicionar codigo/>-->
       <q-dialog v-model="dialog_add">
       <q-card style="max-width: 80%; width: 50%">
         <q-card-section class="bg-green-14 text-white">
@@ -456,6 +469,53 @@
               type="text"
               label="Codigo de proyecto"
               hint="Ingresar codigo de proyecto"
+               lazy-rules
+              :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
+            />
+
+            <div>
+              <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+
+    <!--  adicionar lotes/>-->
+      <q-dialog v-model="dialog_add_lotes">
+      <q-card style="max-width: 80%; width: 50%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Agregar Lote</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+
+          <q-form @submit="onAdd_lote" class="q-gutter-md">
+            <q-input
+              outlined
+              v-model="codigo.nro"
+              type="text"
+              label="Nro de Lote"
+              hint="Ingresar Nº de lote "
+               lazy-rules
+              :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
+            />
+            <q-input
+              outlined
+              v-model="codigo.nombre"
+              type="text"
+              label="Descripcion del lote"
+              hint="Ingresar descripcion del lote"
+               lazy-rules
+              :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
+            />
+             <q-input
+              outlined
+              v-model="codigo.monto"
+              type="text"
+              label="Monto del lote"
+              hint="Ingresar Monto del lote"
                lazy-rules
               :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
             />
@@ -920,6 +980,7 @@ export default {
    dialog_del:false,
    dialog_mod:false,
    dialog_add:false,
+   dialog_add_lotes:false,
    dialog_list:false,
    dialog_delsub: false,
    dialog_add1:false,
@@ -1563,7 +1624,15 @@ proyecto:{},
             icon: 'warning'
           })
         }
-  }
+  },
+    detalle(item) {
+      this.dato2 = item.row;
+      this.$router.push({name: 'setting.view', params: {id:this.dato2.id}})
+    },
+    lotes(item) {
+      this.dato2 = item.row;
+      this.dialog_add_lotes=true;
+    },
   },
 };
 </script>
