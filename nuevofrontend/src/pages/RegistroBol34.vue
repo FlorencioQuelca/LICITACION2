@@ -1,7 +1,7 @@
 <template>
  <div class="q-pa-md">
     <div >
-       <q-btn   v-if="this.$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
+       <q-btn   v-if="secre[0]==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
       label="Nuevo Registro"
       color="red"
       icon="add_circle"
@@ -542,6 +542,7 @@ export default {
       data:[],
       data2:[],
       dato:{},
+      secre:this.$store.state.login.user.name.split(" "),
       dato2:{},
       alert:false,
       dialog_del:false,
