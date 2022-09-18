@@ -258,9 +258,26 @@
           <q-td key="plazo" :props="props">
             {{props.row.plazo}}
           </q-td>
-          <q-td key="lotes" :props="props">
-            {{props.row.lotes}}
+            <q-td key="funcionarios" :props="props">
+              <ul>
+              <span v-for="(it,index) in props.row.funcionarios" :key="index">
+                  <li>
+                   {{it.grado}} {{it.datosp}} {{it.ci}}
+                </li>
+              </span>
+             </ul>
           </q-td>
+         <q-td key="lotes" :props="props">
+              <ul>
+              <span v-for="(codigos,index) in props.row.lotes" :key="index">
+                  <li>
+                    {{codigos.nombre}} {{codigos.monto}}
+                </li>
+              </span>
+             </ul>
+          </q-td>
+
+
 
            <q-td key="comision" :props="props">
                       <q-btn
@@ -279,6 +296,8 @@
                         @click="verRow2(props)"
                         icon="list"
                       ></q-btn>
+
+
             </q-td>
 
           <q-td key="opcion" :props="props">
@@ -286,9 +305,17 @@
                         dense
                         round
                         flat
-                        color="black"
+                        color="green"
                         @click="lotes(props)"
                         icon="difference"
+                      ></q-btn>
+                       <q-btn
+                        dense
+                        round
+                        flat
+                        color="green"
+                        @click="lotes_view(props)"
+                        icon="list"
                       ></q-btn>
                        <q-btn
                         dense
@@ -513,7 +540,8 @@
              <q-input
               outlined
               v-model="codigo.monto"
-              type="text"
+              type="Number"
+              step="0.01"
               label="Monto del lote"
               hint="Ingresar Monto del lote"
                lazy-rules
@@ -935,6 +963,46 @@
     </q-dialog>
 
 
+     <!-- LISTA DE LOTES />-->
+   <q-dialog v-model="dialog_list_lotes">
+      <q-card style="max-width: 80%; width: 50%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">lista de lotes</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+                <q-table
+                    :rows="dato2.lotes"
+                    :columns="subcol"
+                    :rows-per-page-options="[0]"
+                    separator="cell"
+                    dense
+                    >
+      <template v-slot:body="props">
+          <q-tr :props="props">
+          <q-td key="nombre" :props="props">
+            {{ props.row.nombre}}
+          </q-td>
+          <q-td key="opcion" :props="props">
+                        <q-btn
+                        dense
+                        round
+                        flat
+                        color="red"
+                        @click="deletesub_lotes(props)"
+                        icon="delete"
+                      ></q-btn>
+          </q-td>
+          </q-tr>
+          </template>
+          </q-table>
+            <div>
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+
   </div>
 </template>
 
@@ -967,6 +1035,7 @@ const  columns= [
   { name: 'plazo', align:"center",label: 'plazo', field: 'plazo', sortable: true },
   { name: 'lotes',align:"Center", label: 'Lotes', field: 'lotes', sortable: true },
   { name: 'comision',align:"left", label: 'Comision', field: 'comision', sortable: true },
+  { name: 'funcionarios',align:"left", label: 'Comision', field: 'funcionarios', sortable: true },
   { name: 'opcion', label: 'Opcion', field: 'opcion' }
    ]
 
@@ -987,6 +1056,7 @@ export default {
    dialog_add2:false,
    dialog_list1:false,
    dialog_list2:false,
+   dialog_list_lotes:false,
    dialog_delsub1:false,
    dialog_delsub2: false,
    dialog_delsub3: false,
@@ -1011,7 +1081,7 @@ proyecto:{},
         {
           name: "nombre",
           required: true,
-          label: "Codigo de Proyecto",
+          label: "Nombre",
           align: "left",
          // field: (row.codigos) => row.nombre,
         // field: row => row.name,
@@ -1284,6 +1354,38 @@ proyecto:{},
     deletesub4(item) {
       this.dato3 = item.row;
       this.dialog_delsub4 = true;
+    },
+    deletesub_lotes(item) {
+      this.dato3 = item.row;
+
+      console.log(this.dato3)
+
+       this.$q.dialog({
+                  title: 'Eliminar ',
+                  message: 'Esta seguro que desea Eliminar este Registro ?',
+                  cancel: true,
+                  persistent: true
+                  // console.log('>>>> OK')
+                }).onOk(() => {
+                    this.$q.loading.show()
+               //       this.$api.delete( process.env.API+"/lote/" + this.dato3.id).then((res) => {
+                this.$api.delete(process.env.API + "/lote/" + this.dato3.id ).then((res) => {
+                          if (res.data.res === true) {
+                            this.$q.notify({
+                              color: "green-4",
+                              textColor: "white",
+                              icon: "cloud_done",
+                              message: "eliminado correctamente",
+                            });
+                          }
+                          this.misdatos();
+                          this.$q.loading.hide()
+                           this.dialog_list_lotes = false;
+                  })
+                }).onCancel(() => {
+                    this.$q.loading.hide()
+
+                })
     },
     onDelsub() {
       this.$q.loading.show();
@@ -1631,8 +1733,40 @@ proyecto:{},
     },
     lotes(item) {
       this.dato2 = item.row;
+      console.log(item.row);
+       this.codigo={}
+     let number=0
+       if(item.row.lotes.length>0){
+       for(let i=0;i<item.row.lotes.length;i++){
+          if(item.row.lotes[i].nro>number){
+               number=item.row.lotes[i].nro
+          }
+       }
+        number++
+       }else{
+        number=1
+       }
+
+       this.codigo.proyecto_id=item.row.id
+       this.codigo.nombre=item.row.nombre +" LOTE "+number;
+       this.codigo.nro=number
       this.dialog_add_lotes=true;
     },
+
+    onAdd_lote() {
+      this.$q.loading.show();
+       this.$api.post(process.env.API + "/lote/",this.codigo).then((res) => {
+            console.log(res.data)
+            this.$q.loading.hide();
+             this.dialog_add_lotes=false;
+               this.misdatos();
+       });
+     },
+      lotes_view(item) {
+      this.dato2 = item.row;
+      this.dialog_list_lotes = true;
+    }
+
   },
 };
 </script>

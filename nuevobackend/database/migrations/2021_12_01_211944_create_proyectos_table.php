@@ -31,9 +31,9 @@ class CreateProyectosTable extends Migration
             $table->foreign('departamento_id')->references('id')->on('departamentos')->onDelete('set null')->onUpdate('cascade');
             $table->foreign('programa_id')->references('id')->on('programas')->onDelete('set null')->onUpdate('cascade');
             $table->foreign('tipo_id')->references('id')->on('tipos')->onDelete('set null')->onUpdate('cascade');
-            
 
-            
+
+
             $table->timestamps();
         });
     }

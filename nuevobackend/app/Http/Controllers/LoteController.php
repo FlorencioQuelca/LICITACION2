@@ -35,7 +35,14 @@ class LoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $lote=new Lote();
+        $lote->nro=$request->nro;
+        $lote->nombre=$request->nombre;
+        $lote->monto=$request->monto;
+        $lote->proyecto_id=$request->proyecto_id;
+        $lote->save();
+       // Lote::create($request->all());
+        return \response()->json(['res'=> true, 'message'=>'Creado correctamente'],200);
     }
 
     /**
@@ -46,7 +53,8 @@ class LoteController extends Controller
      */
     public function show(Lote $lote)
     {
-        //
+        return $lote;
+        return \response()->json($lote,200);
     }
 
     /**
@@ -69,7 +77,8 @@ class LoteController extends Controller
      */
     public function update(Request $request, Lote $lote)
     {
-        //
+        $lote->update($request->all());
+        return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
     }
 
     /**
@@ -80,6 +89,13 @@ class LoteController extends Controller
      */
     public function destroy(Lote $lote)
     {
-        //
+        try{
+            $lote->delete();
+          //  ProyectoPersona::destroy($id);
+            return \response()->json(['res'=> true, 'message'=>'Eliminado Correctamente'],200);
+        }
+        catch(\Exception $e){
+            return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
+        }
     }
 }

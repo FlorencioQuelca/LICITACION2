@@ -12,17 +12,16 @@ use Illuminate\Http\Request;
 
 class ProyectoController extends Controller
 {
-
     public function index(){
-        $proyectos = Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])->orderByDesc('id')->get();
+        $proyectos = Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios','lotes'])->orderByDesc('id')->get();
         return \response()->json($proyectos, 200);
     }
     public function proyectoslibre(){
-        $proyectos = Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])->orderByDesc('id')->get();
+        $proyectos = Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios','lotes'])->orderByDesc('id')->get();
         return \response()->json($proyectos, 200);
     }
     public function proyectoid(Proyecto $proyecto){
-        $proyecto =Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])
+        $proyecto =Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios','lotes'])
                             ->orWhere('id', '=', $proyecto->id)->get();
 
         return \response()->json($proyecto,200);

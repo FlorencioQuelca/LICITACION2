@@ -1,9 +1,9 @@
 <template>
   <div class="q-pa-md">
     <q-btn
-      label="Licitaciones"
+      label="Atras"
       color="secondary"
-      icon="account_tree"
+      icon="arrow_back"
       @click="this.$router.push('/Proyecto')"
       class="q-mb-xs"
     />
@@ -60,7 +60,7 @@
                 label="Empresas"
                 stack
                 glossy
-                @click="view_form1"
+
                 color="purple"
                 style="width: 200px"
               />
@@ -71,7 +71,7 @@
                 label="Sociedad Accidental"
                 stack
                 glossy
-                @click="view_form2"
+
                 color="purple"
                 style="width: 200px; margin: 10px 0px 0px 0px"
               />
@@ -83,7 +83,7 @@
                 label="Consultor"
                 stack
                 glossy
-                @click="view_form3"
+
                 color="purple"
                 style="width: 200px; margin: 10px 0px 0px 0px"
               />
@@ -389,9 +389,11 @@ export default {
            this.rows.push({titulo:"Nro de Convocatoria ", descripcion: res.data[0].convocatoria})
            this.rows.push({titulo:"Codigos de proyecto ", descripcion: res.data[0].fecha})
            this.rows.push({titulo:"Comision Evaluadora ", descripcion: res.data[0].fecha})
-           this.rows.push({titulo:"Nº de lotes ", descripcion: res.data[0].fecha})
-
-
+            if(res.data[0].lotes.length>0){
+              this.rows.push({titulo:"Nº de lotes ", descripcion: res.data[0].lotes.length})
+            }else{
+              this.rows.push({titulo:"Nº de lotes ", descripcion: "PROCESO SIN LOTES"})
+            }
           this.departamento = res.data[0].departamento.nombre;
           this.programa = res.data[0].programa.nombre;
           // console.log(res.data[0]);

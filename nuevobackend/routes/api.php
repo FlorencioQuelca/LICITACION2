@@ -142,6 +142,11 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   Route::get('registrados',[\App\Http\Controllers\RegistroController::class,'registrados'])->name('registrados');
   Route::post('/uploadPhoto',[\App\Http\Controllers\FichaController::class,'uploadPhoto']);
   Route::post('/base64ficha',[\App\Http\Controllers\FichaController::class,'base64ficha']);
+
+
+  //lotes nueva mejora
+  Route::apiResource('lote',\App\Http\Controllers\LoteController::class);
+
 });
 
 

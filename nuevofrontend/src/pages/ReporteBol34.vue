@@ -107,16 +107,19 @@
     </div>
 </template>
 <script >  //vue 2
-
+import moment, { now } from 'moment';
  const total_days = (date1,date2)=> {
+           let date_2;
           if(date1==null){
             return 0
           }
           if(date2==null){
-            return 0
+            date_2=new Date(moment().format('YYYY-MM-DD'))
+          }else{
+            date_2=new Date(date2)
           }
         let date_1=new Date(date1)
-        let date_2=new Date(date2)
+
         let day_as_milliseconds = 86400000;
         let diff_in_millisenconds = date_2 - date_1;
         let diff_in_days = diff_in_millisenconds / day_as_milliseconds;
