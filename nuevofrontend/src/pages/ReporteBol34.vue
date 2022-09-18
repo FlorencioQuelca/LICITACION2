@@ -80,6 +80,9 @@
          <q-td key="estado" :props="props">
                {{props.row.status}}
          </q-td>
+         <q-td key="tiempo" :props="props">
+               {{props.row.duracion}} Dias
+         </q-td>
          <q-td key="avance" :props="props">
                {{props.row.puntaje}} %
          </q-td>
@@ -105,7 +108,20 @@
 </template>
 <script >  //vue 2
 
-
+ const total_days = (date1,date2)=> {
+          if(date1==null){
+            return 0
+          }
+          if(date2==null){
+            return 0
+          }
+        let date_1=new Date(date1)
+        let date_2=new Date(date2)
+        let day_as_milliseconds = 86400000;
+        let diff_in_millisenconds = date_2 - date_1;
+        let diff_in_days = diff_in_millisenconds / day_as_milliseconds;
+        return diff_in_days;
+    }
 const columns = [
   { name: 'nro', align:"center", label: 'N°', field: 'nro', sortable: true },
   { name: 'codigo', align: "left",label: 'Codigo VIPFE', field: 'codigo',sortable:true },
@@ -126,6 +142,7 @@ const columns = [
   { name: 'informe',align: "center", label: 'Informe', field: 'informe', sortable: false },
   { name: 'elegible',align: "center", label: 'Elegible', field: 'elegible', sortable: false },
   { name: 'estado',align: "center", label: 'Estado', field: 'estado', sortable: false },
+  { name: 'tiempo',align: "center", label: 'Tiempo', field: 'tiempo', sortable: false },
   { name: 'avance',align: "center", label: '% Evaluacion ', field: 'avance', sortable: false }
   ];
   import exportFromJSON from 'export-from-json'
@@ -141,6 +158,7 @@ export default {
       this.misdatos()
   },
     methods: {
+
         misdatos(){
         // this.$q.loading.show();
          //   this.$api.get(process.env.API+"/registrodepa/"+this.$store.state.login.user.ci).then((res)=>{
@@ -153,6 +171,7 @@ export default {
             let puntaje=0
         res.data.forEach(it=>{
                        if(this.$store.state.login.user.status===it.departamento.nombre){
+
                               if(it.status==="ENVIADO"){
                                  it.puntaje=100.00
                               }else{
@@ -179,6 +198,8 @@ export default {
 
                                   it.puntaje=puntaje
                               }
+                              let duracion=total_days(it.fecha,it.carta_fecha)
+                              it.duracion=duracion
 
                             this.data.push(it)
 
@@ -203,7 +224,8 @@ export default {
                          this.data[i].evaluador=user
                             }
                        }
-                     //   if(this.data[i].users!=null){
+
+                       let duracion=total_days(this.data[i].fecha,this.data[i].carta_fecha);
                         delete this.data[i].evaluacions
                          this.data[i].departamento=this.$store.state.login.user.status
                        delete  this.data[i].ficha
@@ -233,6 +255,9 @@ export default {
                         fecha_inspeccion=this.data[i].copia
                       }
 
+
+
+
                         this.data[i]={
                             nro:this.data[i].nro,
                             departamento:this.data[i].departamento,
@@ -255,6 +280,8 @@ export default {
                             aprobado:this.data[i].cumple,
                             status:this.data[i].status,
                             evaluacion:this.data[i].puntaje+" %",
+
+                            duracion:duracion,
 
                           ...this.data[i]
                         }
@@ -281,7 +308,8 @@ export default {
             exportFromJSON({data:datos, fileName:fileName, exportType:extension})
             this.misdatos();
 
-      }
+      },
+
     }
 }
 </script>

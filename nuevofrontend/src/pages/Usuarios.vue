@@ -3,7 +3,7 @@
     <q-btn
       label="Nuevo Usuario"
       color="positive"
-      @click="alert = true"
+      @click="nuevo_form"
       icon="add_circle"
       class="q-mb-xs"
     />
@@ -499,7 +499,14 @@ export default {
       }).onCancel(() => {
       }).onDismiss(() => {
       })
+    },
+    nuevo_form(){
+      this.alert=true
+      this.dato.tipo="USUARIO"
+      this.dato.fechalimite="2023-12-31"
+      this.dato.password="Ingreso.2022"
     }
+
   },
 };
 </script>

@@ -220,7 +220,8 @@ export default {
               icon: "edit",
               message: "en construccion",
             });
-    }
+    },
+
 }
 }
 </script>

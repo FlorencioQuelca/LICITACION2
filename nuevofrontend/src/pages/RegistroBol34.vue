@@ -75,7 +75,7 @@
             {{props.row.status}}
           </q-td>
             <q-td  key="opcion" :props="props">
-                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
+                      <q-btn v-if="secre[0]==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                         dense
                         round
                         flat
@@ -83,7 +83,7 @@
                         @click="addRow2(props)"
                         icon="playlist_add"
                       ></q-btn>
-                        <q-btn v-if="$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
+                        <q-btn v-if="secre[0]==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                         dense
                         round
                         flat
@@ -91,7 +91,7 @@
                         @click="verRow2(props)"
                         icon="list"
                       ></q-btn>
-                        <q-btn v-if="this.$store.state.login.user.name!=='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
+                        <q-btn v-if="secre[0]!=='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                         dense
                         round
                         flat
@@ -100,7 +100,7 @@
                         icon="groups"
                       ></q-btn>
 
-                       <q-btn v-if="$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
+                       <q-btn v-if="secre[0]==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                             dense
                             round
                             flat
@@ -108,7 +108,7 @@
                             @click="editRow(props)"
                             icon="edit"
                         ></q-btn>
-                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
+                      <q-btn v-if="secre[0]==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                             dense
                             round
                             flat
@@ -116,7 +116,7 @@
                             @click="sendeditRow(props)"
                             icon="send"
                         ></q-btn>
-                      <q-btn v-if="$store.state.login.user.name==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
+                      <q-btn v-if="secre[0]==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
                             dense
                             round
                             flat
@@ -599,22 +599,17 @@ export default {
                                                  if(this.$store.state.login.user.id===it.users[index].id){
                                                            this.data.push(it)
                                                  }else{
-                                                  const secre=this.$store.state.login.user.name.split(" ")
-                                                //  console.log(secre)
-                                                  if(secre[0]==="SECRETARIA" || this.$store.state.login.user.tipo==='admin'){
+                                                  if(this.secre[0]==="SECRETARIA" || this.$store.state.login.user.tipo==='admin'){
                                                          this.data.push(it)
                                                          break;
                                                          }
-
                                                  }
 
                                            }
                                           }else{
-                                              const secre=this.$store.state.login.user.name.split(" ")
-                                             if(secre[0]==="SECRETARIA" || this.$store.state.login.user.tipo==='admin' ){
+                                             if(this.secre[0]==="SECRETARIA" || this.$store.state.login.user.tipo==='admin' ){
                                                 this.data.push(it)
                                              }
-
                                           }
 
                                        // console.log();
