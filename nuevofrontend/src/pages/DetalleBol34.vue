@@ -1015,14 +1015,14 @@ export default {
                 this.departamento={label:it.label,value:it.value}
            }
         });
-         if(this.dato.status==="RECIBIDO" || this.dato.status==null){
+         if((this.dato.status==="RECIBIDO" || this.dato.status==null)  && this.$store.state.login.user.status!=="CENTRAL" ){
            this.dialog_form1=true;
          }else{
            this.$q.notify({
               color: "red",
               textColor: "white",
               icon: "cloud_done",
-              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+              message: "El informe ha sido enviado NO puede ser modificado  o  pida a secretaria y/o administrador que lo habiliten",
             });
          }
     },
@@ -1047,14 +1047,14 @@ export default {
                            this.evaluaciones[2].puntaje=it.pivot.puntaje
                          }
                  })
-       if(this.dato.status==="RECIBIDO" || this.dato.status==null){
+       if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
            this.dialog_form2345=true;
          }else{
            this.$q.notify({
               color: "red",
               textColor: "white",
               icon: "cloud_done",
-              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+              message: "El informe ha sido enviado NO puede ser modificadoo o pida a secretaria y/o administrador que lo habiliten",
             });
          }
 
@@ -1102,14 +1102,14 @@ export default {
                          }
 
                  })
-        if(this.dato.status==="RECIBIDO" || this.dato.status==null){
+        if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
            this.dialog_form2345=true;
          }else{
            this.$q.notify({
               color: "red",
               textColor: "white",
               icon: "cloud_done",
-              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+              message: "El informe ha sido enviado NO puede ser modificadoo o pida a secretaria y/o administrador que lo habiliten",
             });
          }
     },
@@ -1171,14 +1171,14 @@ export default {
                            this.evaluaciones[19].puntaje=it.pivot.puntaje
                          }
                  })
-        if(this.dato.status==="RECIBIDO" || this.dato.status==null){
+        if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
             this.dialog_form2345=true;
          }else{
            this.$q.notify({
               color: "red",
               textColor: "white",
               icon: "cloud_done",
-              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+              message: "El informe ha sido enviado NO puede ser modificadoo o pida a secretaria y/o administrador que lo habiliten",
             });
          }
     },
@@ -1192,14 +1192,14 @@ export default {
                            this.evaluaciones[20].puntaje=it.pivot.puntaje
                          }
         })
-if(this.dato.status==="RECIBIDO" || this.dato.status==null){
+if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
            this.dialog_form2345=true;
          }else{
            this.$q.notify({
               color: "red",
               textColor: "white",
               icon: "cloud_done",
-              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+              message: "El informe ha sido enviado NO puede ser modificadoo o pida a secretaria y/o administrador que lo habiliten",
             });
          }
     },
@@ -1656,17 +1656,17 @@ if(this.dato.status==="RECIBIDO" || this.dato.status==null){
           case "7":
                gerentedepartamental="Ing. Dargel Camacho Justiniano"
                jefetecnico="Ing. Jose Miguel Sanchez Andia"
-               piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
-               piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
-               piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
-               xpiso1=65
-               xpiso2=80
-               xpiso3=88
+               piso1='Of. Dptal. Santa Cruz: Edif. Casanova entre Calle Prolongación Beni y Aroma N.º 20 Zona/Primer Anillo'
+               piso2='Telf. 3-3555095      Fax. 3-3555095 int -102'
+               piso3='Web: www.fps.gob.bo – Santa Cruz - Bolivia'
+               xpiso1=32
+               xpiso2=76
+               xpiso3=75
                 break;
           case "8":
                gerentedepartamental="Ing. Jorge Luis Tellez Gutierrez"
                jefetecnico="Ing. Carlos Oscar Rivero Villavicencio"
-               piso1='Oficina Departamental Beni: Av. Comunidad Europea, entre C/ Nataniel Garcia y Raúl Monje Z/El Carmen '
+               piso1='Oficina Departamental Beni: Av. Comunidad Europea, entre C/ Nataniel Garcia y Raúl Monje Z/El Carmen'
                piso2='Telf. 72846584 - 72846587    Fax. 3-462476'
                piso3='Web: www.fps.gob.bo – Beni - Bolivia'
                xpiso1=32
@@ -2060,16 +2060,19 @@ if(this.dato.status==="RECIBIDO" || this.dato.status==null){
             this.dato.adjunto=" 1 Carpeta (fojas XXX y 1 CD)"
           }
 
-          if(this.dato.status==="RECIBIDO" || this.dato.status==null){
-           this.dialog_form6=true
+
+if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
+           this.dialog_form6=true;
          }else{
            this.$q.notify({
               color: "red",
               textColor: "white",
               icon: "cloud_done",
-              message: "El informe ha sido enviado NO puede ser modificado, pida a secretaria que lo habiliten",
+              message: "El informe ha sido enviado NO puede ser modificadoo o pida a secretaria y/o administrador que lo habiliten",
             });
          }
+
+
     },
     view_form7(){
       this.titulo="EVALUACION EN CAMPO"
@@ -2080,7 +2083,17 @@ if(this.dato.status==="RECIBIDO" || this.dato.status==null){
           this.fecha_inspeccion=moment().format('YYYY-MM-DD');
         }
 
+          if( this.$store.state.login.user.status!=="CENTRAL"){
            this.dialog_form7=true;
+         }else{
+           this.$q.notify({
+              color: "red",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "No puede acceder a este sitio",
+            });
+         }
+
 
 
     },
@@ -2099,10 +2112,32 @@ if(this.dato.status==="RECIBIDO" || this.dato.status==null){
                   this.$q.loading.hide();
                 });
            //      console.log("creado correctamente");
-                  this.dialog_form8=true;
+        if( this.$store.state.login.user.status!=="CENTRAL"){
+           this.dialog_form8=true;
+         }else{
+           this.$q.notify({
+              color: "red",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "No puede acceder a este sitio",
+            });
+         }
+
         }else{   // es con contenido
-               this.dato2=this.dato.ficha
-              this.dialog_form8=true;
+
+         if( this.$store.state.login.user.status!=="CENTRAL"){
+            this.dato2=this.dato.ficha
+           this.dialog_form8=true;
+         }else{
+           this.$q.notify({
+              color: "red",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "No puede acceder a este sitio",
+            });
+         }
+
+            //  this.dialog_form8=true;
         }
     },
     onMod8() {

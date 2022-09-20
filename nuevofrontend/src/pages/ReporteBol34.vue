@@ -32,8 +32,16 @@
            <q-td key="categoria" :props="props">
               {{props.row.autoridad}}
           </q-td>
+
            <q-td key="nombre" :props="props">
-            {{props.row.nombre}}
+            <q-btn v-if="this.$store.state.login.user.status==='CENTRAL'"
+                        dense
+                        round
+                        flat
+                        color="blue"
+                        @click="verRow1(props)"
+                        icon="info"
+               ></q-btn>  {{props.row.nombre}}
           </q-td>
            <q-td key="cite" :props="props">
             {{props.row.cite}}
@@ -161,6 +169,20 @@ export default {
       this.misdatos()
   },
     methods: {
+      verRow1(item) {
+      this.dato2 = item.row;
+       this.$router.push({name: 'DetalleBol34.view', params: {id:this.dato2.id}})
+        //this.$router.push("Licitaciones")
+
+     /*
+      if (this.dato2.tipo_id===2)
+         {
+            this.dialog_list1 = true;
+         }else{
+            this.dialog_list2 = true;
+         }
+        */
+    },
 
         misdatos(){
         // this.$q.loading.show();
@@ -173,9 +195,8 @@ export default {
            console.log(res.data);
             let puntaje=0
         res.data.forEach(it=>{
-                       if(this.$store.state.login.user.status===it.departamento.nombre){
 
-                              if(it.status==="ENVIADO"){
+                             if(it.status==="ENVIADO"){
                                  it.puntaje=100.00
                               }else{
                                    puntaje=0
@@ -204,7 +225,13 @@ export default {
                               let duracion=total_days(it.fecha,it.carta_fecha)
                               it.duracion=duracion
 
+                       if(this.$store.state.login.user.status===it.departamento.nombre){
                             this.data.push(it)
+
+                       }else{
+                               if(this.$store.state.login.user.status==="CENTRAL"){
+                                 this.data.push(it)
+                               }
 
                        }
               })
