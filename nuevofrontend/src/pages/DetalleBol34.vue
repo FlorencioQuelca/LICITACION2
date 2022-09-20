@@ -1,7 +1,14 @@
 <template>
   <div class="q-pa-md" style="padding:10px">
     <div style="display:flex; justify-content:space-between">
-    <q-btn
+    <q-btn    v-if="this.$store.state.login.user.status==='CENTRAL'"
+      label=" ATRAS"
+      color="secondary"
+      icon="account_tree"
+      @click="this.$router.push('/ReporteBol34')"
+      class="q-mb-xs"
+    />
+    <q-btn v-if="this.$store.state.login.user.status!=='CENTRAL'"
       label=" ATRAS"
       color="secondary"
       icon="account_tree"

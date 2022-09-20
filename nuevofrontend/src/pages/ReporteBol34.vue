@@ -26,6 +26,9 @@
            <q-td key="codigo" :props="props">
             {{props.row.codigo}}
           </q-td>
+           <q-td key="departamento" :props="props">
+            {{props.row.departamento.nombre}}
+          </q-td>
            <q-td key="municipio" :props="props">
             {{props.row.municipio}}
           </q-td>
@@ -91,6 +94,22 @@
          <q-td key="tiempo" :props="props">
                {{props.row.duracion}} Dias
          </q-td>
+         <q-td  v-if="props.row.ficha!=null"
+                key="area" :props="props">
+               {{props.row.ficha.area}} m2
+         </q-td>
+         <q-td  v-if="props.row.ficha==null"
+                key="area" :props="props">
+                   0.00 m2
+         </q-td>
+         <q-td   v-if="props.row.ficha!=null"
+               key="solicitante" :props="props">
+               {{props.row.ficha.observacion4}}
+         </q-td>
+         <q-td   v-if="props.row.ficha===null"
+               key="solicitante" :props="props">
+                --
+         </q-td>
          <q-td key="avance" :props="props">
                {{props.row.puntaje}} %
          </q-td>
@@ -136,6 +155,7 @@ import moment, { now } from 'moment';
 const columns = [
   { name: 'nro', align:"center", label: 'N°', field: 'nro', sortable: true },
   { name: 'codigo', align: "left",label: 'Codigo VIPFE', field: 'codigo',sortable:true },
+  { name: 'departamento', align: "left",label: 'Departamento', field: 'departamento',sortable:true},
   { name: 'municipio', align: "left",label: 'Municipio', field: 'municipio',sortable:true},
   { name: 'categoria', align: "left",label: 'Categoria', field: 'categoria',sortable:true},
   { name: 'nombre',required: true,align: "left", label: 'Nombre de la propuesta', field: 'nombre',sortable:true },
@@ -154,6 +174,8 @@ const columns = [
   { name: 'elegible',align: "center", label: 'Elegible', field: 'elegible', sortable: false },
   { name: 'estado',align: "center", label: 'Estado', field: 'estado', sortable: false },
   { name: 'tiempo',align: "center", label: 'Tiempo', field: 'tiempo', sortable: false },
+  { name: 'area',align: "center", label: 'Area (m2)', field: 'area', sortable: false },
+  { name: 'solicitante',align: "center", label: ' U. Solicitante', field: 'solicitante', sortable: false },
   { name: 'avance',align: "center", label: '% Evaluacion ', field: 'avance', sortable: false }
   ];
   import exportFromJSON from 'export-from-json'
@@ -257,7 +279,7 @@ export default {
 
                        let duracion=total_days(this.data[i].fecha,this.data[i].carta_fecha);
                         delete this.data[i].evaluacions
-                         this.data[i].departamento=this.$store.state.login.user.status
+                      // this.data[i].departamento=this.$store.state.login.user.status
                        delete  this.data[i].ficha
                        delete  this.data[i].departamento_id
 
@@ -285,12 +307,19 @@ export default {
                         fecha_inspeccion=this.data[i].copia
                       }
 
+                      let area=" "
+                       let solicitante=" "
+                         if(this.data[i].ficha!=null){
+                            area=this.data[i].ficha.area
+                            solicitante=this.data[i].ficha.observacion4
+
+                         }
 
 
 
                         this.data[i]={
                             nro:this.data[i].nro,
-                            departamento:this.data[i].departamento,
+                            departamento:this.data[i].departamento.nombre,
                             municipio:this.data[i].municipio,
                             categoria:this.data[i].autoridad,
                             codigo_vipfe:this.data[i].codigo,
@@ -309,9 +338,10 @@ export default {
                             evaluador:this.data[i].evaluador,
                             aprobado:this.data[i].cumple,
                             status:this.data[i].status,
+                            area:area,
+                            solictante:solicitante,
                             evaluacion:this.data[i].puntaje+" %",
-
-                            duracion:duracion,
+                            duracionDias:duracion,
 
                           ...this.data[i]
                         }
@@ -331,7 +361,6 @@ export default {
 
                          datos.push(this.data[i])
                  }
-
            //  const datos=this.data
              const fileName="REPORTE_BOL34_"+this.$store.state.login.user.status
              const extension=exportFromJSON.types.xls
