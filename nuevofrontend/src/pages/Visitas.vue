@@ -1123,7 +1123,7 @@ export default {
       this.dato2 = item.row;
       this.dialog_add1 = true;
       this.personasSelectos=[];
-        this.filter1= ""
+      this.filter1= ""
     },
     addRow2(item) {
       this.dato2 = item.row;

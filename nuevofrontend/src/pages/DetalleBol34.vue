@@ -498,23 +498,25 @@
                   />
 
                   <div class="q-pa-md">
-                        <span> Proyecto fue Priorizado por la GAM/GAIOC/JUNTAS vecinales ?</span>
+                        <span> Proyecto fue Priorizado por la GAM/GAIOC/JUNTAS VECINAL/ORGANIZACION SOCIAL ?</span>
                         <q-radio v-model="dato2.priorizado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
                         <q-radio v-model="dato2.priorizado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
                       </div>
-                       <q-input
-                    outlined
-                    dense
-                    v-model="dato2.observacion4"
-                    type="text"
-                    label="Observacion"
-                    hint="Ingresar alguna Observacion"
-                  />
+                     <q-select  v-if="dato2.priorizado=='SI'"
+                     outlined
+                     v-model="dato2.observacion4"
+                     :options="['G.A.M.', 'G.A.I.O.C.', 'J.V.','O.S.']"
+                     label="Priorizado por:"
+                     stack-label
+                     dense
+                    />
                   <q-uploader
                         class="full-width"
-                        label="Subir FOTOGRAFIA Nº1(IZQUIERDA) "
+                        label="Subir FOTOGRAFIA Nº1 (IZQUIERDA) (Max 4mb) "
                         accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile1"
+                        max-files="1"
+                        max-total-size="4096"
 
                       />
 
@@ -666,9 +668,11 @@
                   />
                    <q-uploader
                         class="full-width"
-                        label="Subir FOTOGRAFIA Nº2(DERECHA) "
+                        label="Subir FOTOGRAFIA Nº2 (DERECHA) (Max 4mb) "
                          accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile2"
+                        max-files="1"
+                        max-total-size="4096"
                       />
 
 
@@ -740,11 +744,12 @@
                         />
 
                        <q-uploader
-
                         class="full-width"
-                        label="Subir FOTOGRAFIA (PLANO DE UBICACION) "
+                        label="Subir FOTOGRAFIA (PLANO DE UBICACION)  (Max 4mb)"
                          accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile3"
+                        max-files="1"
+                        max-total-size="4096"
                       />
                 </div>
              </div>
@@ -1718,7 +1723,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
         let referencia="RESPUESTA A LA SOLICITUD DE EVALUACION Y VERIFICACION DE CONTENIDO PROYECTO "+this.dato.nombre
         let profesional=this.cambiarminiscula(this.$store.state.login.user.name)
 
-
           let doc = new jsPDF('portrait' ,null, 'letter');
           let logofps = new Image();
            logofps.src = 'logofps.png';
@@ -1939,7 +1943,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text(i88, 112,226,{maxWidth: 77,align: "justify"})
              doc.text(i99, 112,242,{maxWidth: 77,align: "justify"})
              doc.text(i100,112,247,{maxWidth: 77,align: "justify"})
-
                     //hoja 4
             doc.addPage();
             doc.addImage(chacana, 'PNG', 25, 10, 20, 20);
@@ -2053,7 +2056,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
       },
         view_form6(){
      this.titulo="RESULTADOS DE EVALUACION"
-
           if(this.dato.carta_cite==null){
             this.dato.carta_cite="INF/FPS/GDXX Nº 0XXX/2022"
           }
@@ -2066,8 +2068,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
           if(this.dato.adjunto==null){
             this.dato.adjunto=" 1 Carpeta (fojas XXX y 1 CD)"
           }
-
-
 if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
            this.dialog_form6=true;
          }else{
@@ -2078,8 +2078,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
               message: "El informe ha sido enviado NO puede ser modificadoo o pida a secretaria y/o administrador que lo habiliten",
             });
          }
-
-
     },
     view_form7(){
       this.titulo="EVALUACION EN CAMPO"
@@ -2100,9 +2098,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
               message: "No puede acceder a este sitio",
             });
          }
-
-
-
     },
     view_form8(){
       this.titulo="FICHA TECNICA DE INSPECCION DE CAMPO"

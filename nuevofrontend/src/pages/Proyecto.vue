@@ -1358,7 +1358,7 @@ proyecto:{},
     deletesub_lotes(item) {
       this.dato3 = item.row;
 
-      console.log(this.dato3)
+     // console.log(this.dato3)
 
        this.$q.dialog({
                   title: 'Eliminar ',
@@ -1729,7 +1729,7 @@ proyecto:{},
   },
     detalle(item) {
       this.dato2 = item.row;
-      this.$router.push({name: 'setting.view', params: {id:this.dato2.id}})
+      this.$router.push({name: 'detallelotes.view', params: {id:this.dato2.id}})
     },
     lotes(item) {
       this.dato2 = item.row;
