@@ -2268,7 +2268,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                     this.enlosetado=false
                     this.otro=false
            }else{
-                 if(this.dato.firmado_por!=''){
+                 if(this.dato.firmado_por){
                    const items1=this.dato.firmado_por.split('-')
                  }
 
@@ -3235,7 +3235,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text('RETIRO DE ENLADRILLADO', 146, 195)
              doc.text('RETIRO EMPEDRADO', 146, 199)
              doc.text('RETIRO ENLOSETADO', 146, 203)
-                  if(this.dato.firmado_por!=''){
+                  if(this.dato.firmado_por){
             let items2=this.dato.firmado_por.split("-")
                  console.log(items2)
                  for(let i=0; i<items2.length-1; i++){
