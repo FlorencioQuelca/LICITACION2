@@ -22,6 +22,13 @@
       class="q-mb-xs"
       @click="imprimir"
     />
+       <q-btn
+      label="Imprimir EVALUCION TECNICA"
+      color="red"
+      icon="print"
+      class="q-mb-xs"
+      @click="imprimirEvaluacion"
+    />
     <q-btn
       label="Imprimir FICHA TECNICA"
       color="green"
@@ -2577,6 +2584,382 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              window.open(doc.output('bloburl',{filename:"FICHA.pdf"}), '_blank');
              this.$q.loading.hide()
              })
+
+
+
+    },
+     imprimirEvaluacion(){
+       if(this.dato.ficha==null){
+                  this.$q.notify({
+                    color: "red",
+                    textColor: "white",
+                    icon: "cloud_done",
+                    message: "Cargue datos requeridos en la ficha tecnica ",
+                  });
+             return
+
+
+      }
+
+
+        let doc = new jsPDF('portrait' ,null, 'letter');
+          let logofps = new Image();
+           logofps.src = 'logofps.png';
+          let escudo = new Image();
+           escudo.src = 'escudo.png';
+          let mpd = new Image();
+           mpd.src = 'mpd.png';
+             doc.addImage(mpd, 'PNG', 25, 12, 20, 20);
+             doc.addImage(logofps, 'PNG', 170, 11, 25, 20);
+             doc.addImage(escudo, 'PNG', 95, 11, 20, 15);
+             doc.setFont('times')
+             doc.rect(15,10, 185,255)
+            // doc.rect(20,45, 50,45)
+             doc.rect(170,45, 30,5)
+             doc.rect(120,45, 50,5)
+             // parte -1
+             doc.rect(15,35, 185,5)
+             doc.rect(15,35, 185,10)
+             doc.rect(15,35, 185,15)
+             doc.rect(15,35, 185,20)
+
+             doc.rect(65,35, 135,20)
+
+
+             //parte 0
+             doc.rect(15,55, 185,10)
+             doc.rect(15,55, 185,20)
+             doc.rect(95,55, 105,5)
+             doc.rect(95,55, 105,15)
+             doc.rect(95,55, 105,20)
+
+             doc.rect(120,55, 80,5)
+             doc.rect(120,55, 80,15)
+
+             doc.rect(145,55, 55,5)
+             doc.rect(145,55, 55,15)
+
+             doc.rect(170,55, 30,10)
+
+             doc.rect(120,70, 25,5)
+             doc.rect(145,70, 55,5)
+
+
+             doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+             doc.text("PROYECTO PRIORIZADO POR LA GAM/GAIOC/JUNTAS VECINALES U ORGANIZACIONES SOCIALES ", 16,60,{maxWidth: 75,align: "justify"})
+             doc.text("MONTO DEL PROYECTO  (Bs) ", 16,70,{maxWidth: 85,align: "justify"})
+             doc.text("GAM", 105,58)
+             doc.text("GAIOC", 128,58)
+             doc.text("JUNTA VECINAL", 149,58)
+             doc.text("ORGANIZACION SOCIAL", 173,58)
+             doc.text("INFRAESTRUCTURA", 98,68)
+             doc.text("SUPERVISION", 125,68)
+             doc.text("TOTAL", 167,68)
+
+
+             doc.text("X", 107,63)
+             doc.text("X", 132,63)
+             doc.text("X", 157,63)
+             doc.text("X", 184,63)
+
+             doc.text("2499474.55", 108,73,{maxWidth: 25,align: "center"})
+             doc.text("23404.34", 134,73,{maxWidth: 25,align: "center"})
+             doc.text("6272.818.89", 190,73,{maxWidth: 25,align: "center"})
+
+
+             //parte 1
+             doc.rect(15,75, 185,5,'F')
+             doc.rect(15,75, 185,10)
+             doc.rect(15,75, 185,20)
+
+             doc.rect(15,75, 185,30)
+
+             doc.rect(95,80, 105,5)
+             doc.rect(95,85, 105,5)
+             doc.rect(95,85, 105,10)
+             doc.rect(120,85, 80,5)
+             doc.rect(120,85, 80,10)
+             doc.rect(145,85, 55,5)
+             doc.rect(145,85, 55,10)
+
+
+             doc.rect(95,95, 105,5)
+             doc.rect(95,95, 105,10)
+             doc.rect(120,95, 80,5)
+             doc.rect(120,95, 80,10)
+             doc.rect(145,95, 55,5)
+             doc.rect(145,95, 55,10)
+
+             doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF');
+             doc.text('CRITERIOS DE ELEGIBILIDAD (DESEABLE ) (marcar con una X)', 16, 79).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000');
+             doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+             doc.text("N° DE FAMILIAS BENEFICIARIAS", 16,84)
+             doc.text("PROYECTO QUE ATIENDE A UNA INFRAESTRUCTURA PUBLICA", 16,90)
+             doc.text("EL PROYECTO NO DEBE ENCONTRARSE EN ÁREAS Y/O ZONAS DE RIESGOS NATURALES Y GEOLÓGICOS", 16,100,{maxWidth: 75,align: "justify"})
+             doc.text("CUMPLE", 103,88)
+             doc.text("NO CUMPLE", 126,88)
+             doc.text("OBSERVACION (centro de salud/ centro educativo)", 149,88)
+             doc.text("CUMPLE", 103,98)
+             doc.text("NO CUMPLE", 126,98)
+             doc.text("OBSERVACIONES", 149,98)
+
+             doc.text("200 familias", 100,83)
+
+             doc.text("X", 107,93)
+             doc.text("X", 133,93)
+             doc.text("21312312312312312312", 146,93)
+
+             doc.text("X", 107,103)
+             doc.text("X", 133,103)
+             doc.text("dasdasdasdasdasd", 146,103)
+
+
+                //parte 2
+             doc.rect(15,105,185,8,'DF')
+             doc.rect(15,105,185,12)
+             doc.rect(15,105,185,16)
+             doc.rect(15,105,185,20)
+             doc.rect(15,105,185,24)
+             doc.rect(15,105,185,28)
+             doc.rect(15,105,185,32)
+
+
+
+             doc.rect(175,105,25,32)
+             doc.rect(150,105,25,32)
+             doc.rect(125,105,25,32)
+
+             doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF');
+             doc.text('REQUISITOS DEL PROYECTO (marcar con una X):', 16, 110)
+              doc.setFontSize(6, 'bold').setFontSize(6).setFont(undefined, 'bold').setTextColor('#FFFFFF');
+             doc.text('PRESENTA ', 132, 109)
+             doc.text('NO PRESENTA ', 155, 109)
+             doc.text('NO CORRESPONDE ', 178, 109)
+             doc.text('(CATEGORIA A)', 180, 112).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000').setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000');;
+              doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+             doc.text("NOTA DE SOLICITUD DE FINANCIAMIENTO POR GAM/GAIOC/J.V.O.S.", 16,116)
+             doc.text("CERTIFICACION DE EXISTENCIA DE SERVICIOS BASICOS (ALCANTARILLADO SANITARIO, AGUA POTABLE).", 16,120)
+             doc.text("ACTA DE CONSENSO SOCIAL", 16,124)
+             doc.text("ACTA DE COMPROMISO PARA LA EJECUCÍON DE CORDONES DE ACERA", 16,128)
+             doc.text("PLANIMETRIA APROBADA", 16,132)
+             doc.text("ACTA DE COMPROMISO PARA FIRMA DE CONVENIO CTF/CFP", 16,136)
+
+             doc.text("X", 137,116)
+             doc.text("X", 162,116)
+             doc.text("X", 187,116)
+
+             doc.text("X", 137,120)
+             doc.text("X", 162,120)
+             doc.text("X", 187,120)
+
+             doc.text("X", 137,124)
+             doc.text("X", 162,124)
+             doc.text("X", 187,124)
+
+             doc.text("X", 137,128)
+             doc.text("X", 162,128)
+             doc.text("X", 187,128)
+
+             doc.text("X", 137,132)
+             doc.text("X", 162,132)
+             doc.text("X", 187,132)
+
+             doc.text("X", 137,136)
+             doc.text("X", 162,136)
+             doc.text("X", 187,136)
+
+             //parte 3
+             doc.rect(15,137,185,8,'FD')
+             doc.rect(15,137,185,12)
+             doc.rect(15,137,185,16)
+             doc.rect(15,137,185,20)
+             doc.rect(15,137,185,24)
+             doc.rect(15,137,185,28)
+             doc.rect(15,137,185,32)
+             doc.rect(15,137,185,38)
+             doc.rect(15,137,185,42)
+             doc.rect(15,137,185,46)
+             doc.rect(15,137,185,50)
+
+
+             doc.rect(175,145,25,42)
+             doc.rect(150,145,25,42)
+             doc.rect(125,145,25,42)
+
+
+
+             doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF');
+             doc.text('INGENIERIA DEL PROYECTO (marcar con una X)', 16, 142)
+             doc.setFontSize(6, 'bold').setFontSize(6).setFont(undefined, 'bold').setTextColor('#FFFFFF');
+             doc.text('PRESENTA ', 132, 142)
+             doc.text('NO PRESENTA ', 155, 142)
+             doc.text('DEBE SER ', 182, 140)
+             doc.text('COMPLEMENTADO', 178, 144).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000').setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000')
+             doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+             doc.text("RESUMEN EJECUTIVO", 16,148)
+             doc.text("DIAGNOSTICO DEL PROYECTO/ESTUDIO SOCIOECONOMICO", 16,152)
+             doc.text("LOCALIZACION (CROQUIS DE UBICACION)", 16,156)
+             doc.text("PRECIOS UNITARIOS", 16,160)
+             doc.text("COMPUTOS METRICOS", 16,164)
+             doc.text("CRONOGRAMA DE EJECUCION", 16,168)
+             doc.text("PLANOS DE CONSTRUCCION (PLANOS DE PLANTA, DETALLES CONSTRUCTIVOS DE LAS OBRAS DE ARTE, PERFIL LONGITUDINAL Y TRANSVERSAL", 16,172,{maxWidth: 95,align: "justify"})
+             doc.text("ESPECIFICACIONES TECNICAS", 16,178)
+             doc.text("REPORTE FOTOGRAFICO", 16,182)
+             doc.text("PRESUPUESTO GENERAL", 16,186)
+
+
+             doc.text("X", 137,148)
+             doc.text("X", 162,148)
+             doc.text("X", 187,148)
+
+             doc.text("X", 137,152)
+             doc.text("X", 162,152)
+             doc.text("X", 187,152)
+
+             doc.text("X", 137,156)
+             doc.text("X", 162,156)
+             doc.text("X", 187,156)
+
+             doc.text("X", 137,160)
+             doc.text("X", 162,160)
+             doc.text("X", 187,160)
+
+             doc.text("X", 137,164)
+             doc.text("X", 162,164)
+             doc.text("X", 187,164)
+
+             doc.text("X", 137,168)
+             doc.text("X", 162,168)
+             doc.text("X", 187,168)
+
+             doc.text("X", 137,173)
+             doc.text("X", 162,173)
+             doc.text("X", 187,173)
+
+             doc.text("X", 137,178)
+             doc.text("X", 162,178)
+             doc.text("X", 187,178)
+
+             doc.text("X", 137,182)
+             doc.text("X", 162,182)
+             doc.text("X", 187,182)
+
+             doc.text("X", 137,186)
+             doc.text("X", 162,186)
+             doc.text("X", 187,186)
+
+
+                   //parte 4
+             doc.rect(15,187,185,5,'FD')
+             doc.rect(15,187,185,9)
+             doc.rect(15,187,185,13)
+             doc.rect(15,187,185,17)
+             doc.rect(15,187,185,21)
+
+             doc.rect(70,192,20,16)
+             doc.rect(125,192,20,16)
+             doc.rect(180,192,20,16)
+
+             doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF')
+             doc.text('SE OBSERVARON LOS SIGUIENTES ITEMS', 16, 191).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000')
+             doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+             doc.text('CORDONES DE ACERA', 16, 195)
+             doc.text('ALCANTARILLADO SANITARIO', 16, 199)
+             doc.text('MEDIDAS DE BIOSEGURIDAD', 16, 203)
+             doc.text('COLOCADO DE PLANTINES', 16, 207)
+
+             doc.text('ACERA DE CEMENTO', 96, 195)
+             doc.text('GRADAS DE H°C°', 96, 199)
+             doc.text('BARANDA DE FG', 96, 203)
+             doc.text('MUROS DE CONTENSION', 96, 207)
+
+
+             doc.text('RETIRO DE ENLADRILLADO', 146, 195)
+             doc.text('RETIRO EMPEDRADO', 146, 199)
+             doc.text('RETIRO ENLOSETADO', 146, 203)
+
+
+             doc.text('X', 80, 195)
+             doc.text('X', 135, 195)
+             doc.text('X', 190, 195)
+
+             doc.text('X', 80, 199)
+             doc.text('X', 135, 199)
+             doc.text('X', 190, 199)
+
+             doc.text('X', 80, 203)
+             doc.text('X', 135,203)
+             doc.text('X', 190, 203)
+
+             doc.text('X', 80, 207)
+             doc.text('X', 135, 207)
+
+
+                   //parte 5
+             doc.rect(15,208,185,5,'FD')
+             doc.rect(15,208,185,9)
+             doc.rect(15,208,185,13)
+
+             doc.rect(180,208,20,16)
+
+
+             doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF')
+             doc.text('CONCLUSIONES DE LA INSPECCION TECNICA', 16, 212).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000')
+             doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+             doc.text('EL PROYECTO CUMPLE  CON LOS CRITERIOS Y REQUISITOS DEL PROGRAMA', 16, 216)
+             doc.text('EL PROYECTO  NO CUMPLE  CON LOS CRITERIOS Y REQUISITOS DEL PROGRAMA', 16, 220)
+
+              doc.text('X', 190, 216)
+              doc.text('X', 190, 220)
+
+
+
+          //parte 6
+             doc.rect(15,221,185,5,'FD')
+             doc.rect(15,221,185,13)
+             doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF')
+             doc.text('RECOMENDACIONES', 16, 225).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000')
+              doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+             doc.text('TEXTOsdasdasdasd asdasd', 16, 229,{maxWidth: 160,align: "justify"})
+
+             doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+            //  doc.rect(25,190, 170,60)
+             doc.setFontSize(8,"bold").setFont(undefined, 'normal');
+             doc.text("NOMBRE DEL PROYECTO", 16,39,{maxWidth: 75,align: "justify"})
+             doc.text("DEPARTAMENTO :", 16,44,{maxWidth: 75,align: "justify"})
+             doc.text("MUNICIPIO :", 16,49,{maxWidth: 75,align: "justify"}).setFont(undefined, 'normal');
+             doc.text("AREA DE ENLOSETADO (M2)", 16,54,{maxWidth: 75,align: "justify"})
+             doc.text("CATEGORIA DEL MUNICIPIO:", 125,49)
+
+                // doc.text('*', 214, 280) //milimetros
+             doc.setFontSize(9,"normal").setFont(undefined, 'normal');
+             doc.text(this.dato.nombre, 71,39,{maxWidth: 126,align: "justify"})
+             doc.setFontSize(9,"normal").setFont(undefined, 'normal');
+
+             doc.text(this.dato.departamento.nombre, 71,44,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.municipio, 71,49,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.municipio, 71,54,{maxWidth: 126,align: "justify"})
+
+             doc.text("' "+this.dato.autoridad+" '", 184,49,{maxWidth: 126,align: "justify"})
+
+             doc.setFontSize(8, 'normal')
+             doc.text(" ...........................................................                                               ...........................                                              .........................  ",25, 258)
+             doc.text("Sello y Firma                                                                 Sello y Firmna                                                  Sello y Firma  ",40, 261)
+             doc.text("GERENTE DEPARTAMENTAL FPS                                            JEFE TECNICO                                               EVALUADOR  ",25, 264)
+             doc.text("Fecha: ",16, 268)
+             doc.text("Página 1 de 1",184, 268)
+             doc.text('ESTADO PLURINACIONAL DE BOLIVIA', 80, 29)
+             doc.setFont(undefined, 'bold');
+             doc.setFontSize(12,"bold")
+             doc.text('EVALUACION TECNICA BOL - 34',73,34)
+
+
+
+
+
+             window.open(doc.output('bloburl',{filename:"FICHA.pdf"}), '_blank');
+
+
 
 
 
