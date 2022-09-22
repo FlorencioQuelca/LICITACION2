@@ -213,6 +213,7 @@
               label="Ingresar adjunto copiar carta MPD "
               hint="Ingrese documnetos adjuntos EJEMPLO '1 CARPETA (FOJAS XX Y 1 CD)' "
             />
+
              </div>
              </div>
             <div>
@@ -304,7 +305,21 @@
               type="text"
                 hint="Ingresar Municipio que corresponde"
             />
-            <q-input
+
+            <div class="q-pa-md"  >
+                  <span> existe el municipio ?</span>
+                  <q-radio v-model="dato2.mosca" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
+                  <q-radio v-model="dato2.mosca" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
+             </div>
+         <q-input  v-if="dato2.mosca==='NO'"
+              outlined
+              v-model="dato2.municipio"
+              type="text"
+              label="Ingresar Municipio  "
+              hint="Ingrese municipio (caso excepcional) "
+            />
+
+              <q-input
               outlined
               v-model="dato2.adjunto"
               type="text"
@@ -700,6 +715,7 @@ export default {
       this.dato.fecha =moment().format('YYYY-MM-DD');
        this.dato.departamento_id=this.departamento.value;
        this.dato.municipio=this.municipio.label;
+       this.dato.mosca='SI';
        this.dato.nombre=((this.dato.nombre).toUpperCase()).trim()
        this.dato.status="RECIBIDO"
          this.totalmunicipios.forEach(it => {
@@ -732,6 +748,8 @@ export default {
        },
         onMod() {
        this.dato2.departamento_id=this.departamento.value;
+
+        if(this.dato2.mosca==='SI'){
        this.dato2.municipio=this.municipio.label;
        this.dato2.nombre=((this.dato2.nombre).toUpperCase()).trim()
           this.totalmunicipios.forEach(it => {
@@ -740,6 +758,7 @@ export default {
              // console.log(this.dato.autoridad);
             }
          })
+         }
       this.$q.loading.show();
       this.$api
         .put(process.env.API + "/registros/" + this.dato2.id, this.dato2)
