@@ -15,7 +15,7 @@
       @click="this.$router.push('/RegistroBol34')"
       class="q-mb-xs"
     />
-     <q-btn
+     <q-btn v-if="false"
       label="Imprimir INFORME"
       color="red"
       icon="print"
@@ -131,7 +131,7 @@
                      </div>
                    </div>
 
-                  <div class="row">
+                  <div class="row" v-if="false">
                       <div class="col">
                        <q-btn icon="looks_5" label="VARIACION POSITIVA O NEGATIVA" stack glossy @click="view_form5" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
                         </div>
@@ -145,7 +145,7 @@
                    </div>
                   <div class="row">
                       <div class="col">
-                       <q-btn icon="looks_6" label="RESULTADOS DE EVALUACION" stack glossy @click="view_form6" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
+                       <q-btn icon="looks_5" label="RESULTADOS DE EVALUACION" stack glossy @click="view_form6" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
                         </div>
                         <div class="col">
                          <q-linear-progress size="50px" :value="progress6" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
@@ -301,18 +301,58 @@
 
         <q-card-section class="q-pt-xs">
           <q-form @submit="onMod6" class="q-gutter-md">
-           <div class="q-gutter-sm">
-               <span> El proyecto Cumple con la Evaluacion ?</span>
+               <q-input
+              outlined
+              v-model="dato.monto3"
+              type="Number"
+              step="0.01"
+               label="AREA DE ENLOSETADO"
+              hint="Ingresar Area de Enlosetado (M2)"
+            />
+                            <q-select
+                              outlined
+                              v-model="dato.presentado_por"
+                              :options="['G.A.M.', 'G.A.I.O.C.', 'J.V.','O.S.']"
+                              label="Priorizado por:"
+                              stack-label
+
+                              />
+            <div class="q-gutter-sm" >
+            <span> El proyecto tiene los siguientes items</span>
+                  <q-checkbox keep-color v-model="cordones" label="CORDONES DE ACERA" color="teal" />
+                  <q-checkbox keep-color v-model="alcantarillado" label="ALCANTARILLADO SANITARIO" color="orange" />
+                  <q-checkbox keep-color v-model="medidas" label="MEDIDAS DE BIOSEGURADAD (COVID)" color="red" />
+                  <q-checkbox keep-color v-model="colocado" label="COLOCADO DE PLANTINES" color="cyan" />
+
+                  <q-checkbox keep-color v-model="acera" label="ACERA DE CEMENTO" color="teal" />
+                  <q-checkbox keep-color v-model="gradas" label="GRADAS H°C°" color="orange" />
+                  <q-checkbox keep-color v-model="baranda" label="BARRAS DE FG" color="red" />
+                  <q-checkbox keep-color v-model="muros" label="MUROS DE CONTENSION" color="cyan" />
+
+                  <q-checkbox keep-color v-model="enladrillado" label="RETIRO DE ENLADRILLADO" color="teal" />
+                  <q-checkbox keep-color v-model="empedrado" label="RETIRO DE EMPEDRADO" color="orange" />
+                  <q-checkbox keep-color v-model="enlosetado" label="RETIRO DE ENLOSETADO" color="red" />
+                  <q-checkbox keep-color v-model="otro" label="OTRO" color="cyan" />
+                  <q-input  v-if="otro==true"
+                  outlined
+                  type="text"
+                  v-model="otrosi"
+                   label="otro item"
+                  hint="item importante del proyecto"
+                />
+          </div>
+                <div class="q-gutter-sm">
+               <span color='red' > El proyecto Cumple con la Evaluacion ?</span>
               <q-radio v-model="dato.cumple" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
               <q-radio v-model="dato.cumple" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
              </div>
-            <q-input
-              outlined
-              v-model="dato.carta_cite"
-              type="text"
-               label="Nombre del CITE DEL INFORME"
-              hint="Ingresar el CITE DEL INFORME (sacar del SIGEC)"
-            />
+                <q-input
+                  outlined
+                  type="textarea"
+                  v-model="dato.observacion"
+                 label="RECOMENDACIONES"
+                  hint="Describa sus recomendaciones"
+                />
                   <q-input
                   outlined
                   type="date"
@@ -320,13 +360,6 @@
                   hint="Ingresar Fecha de envio"
                 />
 
-            <q-input
-              outlined
-              v-model="dato.adjunto"
-              type="text"
-               label="Describir que se adjunta"
-              hint="Ingresar datos adjuntos"
-            />
 
             <div>
               <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
@@ -407,6 +440,98 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+    <!--          formularios 2,3,4 de evaluacion   -->
+    <q-dialog v-model="dialog_form2345_corregido" persistent>
+      <q-card style="max-width: 80%; width: 90%">
+        <q-card-section class="bg-green-14 text-white">
+          <div style="display: flex; justify-content:space-between ">
+          <div class="text-h6"><q-icon name="edit" /> {{titulo}}</div>
+          <q-btn label="SALIR" @click="refrescar" color="blue" icon="close" />
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-xs">
+               <div class="row" v-for="item in evaluaciones" :key="item.id"  style="margin:0;padding:0 ">
+                     <div class="col-5"  v-if="item.tipo===op">
+                          <q-card-section style="background-color:#F2F3F4">
+                          <div class="text-subtitle2">{{item.nombre}} : {{item.descripcion}}</div>
+                        </q-card-section>
+                     </div>
+                     <div class="col-2" v-if="item.tipo===op &&item.tipo==='CRITERIO'"  >
+                      <div class="q-gutter-sm" dense>
+
+                            <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="SI" label="Presenta" />
+                            <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="NO" label="No Presenta" />
+                            <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="No corresponde." label="No corresponde (Categoria A)" />
+                            <q-radio v-if="item.tipo==='CRITERIO'" dense v-model="item.valor" val="SI" label="Cumple" />
+                            <q-radio v-if="item.tipo==='CRITERIO'" dense v-model="item.valor" val="NO" label="No Cumple" />
+
+                            <q-radio v-if="item.tipo==='INGENIERIA'" dense v-model="item.valor" val="SI" label="Presenta" />
+                            <q-radio v-if="item.tipo==='INGENIERIA'" dense v-model="item.valor" val="NO" label="No presenta" />
+                            <q-radio v-if="item.tipo==='INGENIERIA'" dense v-model="item.valor" val="Debe ser Complementado" label="Debe ser complementado" />
+                      </div>
+                     </div>
+
+                      <div class="col-6" v-if="item.tipo===op  && item.tipo!=='CRITERIO'"  >
+                      <div class="q-gutter-sm" dense>
+
+                            <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="SI" label="Presenta" />
+                            <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="NO" label="No Presenta" />
+                            <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="No corresponde." label="No corresponde (Categoria A)" />
+                            <q-radio v-if="item.tipo==='CRITERIO'" dense v-model="item.valor" val="SI" label="Cumple" />
+                            <q-radio v-if="item.tipo==='CRITERIO'" dense v-model="item.valor" val="NO" label="No Cumple" />
+
+                            <q-radio v-if="item.tipo==='INGENIERIA'" dense v-model="item.valor" val="SI" label="Presenta" />
+                            <q-radio v-if="item.tipo==='INGENIERIA'" dense v-model="item.valor" val="NO" label="No presenta" />
+                            <q-radio v-if="item.tipo==='INGENIERIA'" dense v-model="item.valor" val="Debe ser Complementado" label="Debe ser complementado" />
+                      </div>
+                     </div>
+
+
+
+                     <div class="col-4"  v-if="item.tipo===op && item.tipo==='CRITERIO' ">
+                      <q-input  v-if="item.nombre!=='C-1'"
+                        outlined
+                        v-model="item.descripcion1"
+                        type="textarea"
+                        label="Observacion"
+                        hint="Ingrese la observacion"
+                      />
+                      <q-input  v-if="item.nombre==='C-1' "
+                        outlined
+                        v-model="item.descripcion1"
+                        type="Number"
+                        step="1"
+                        label="familias"
+                        hint="Ingrese Numero de Familias beneficiarias"
+                      />
+                     </div>
+                        <div class="col-1"  v-if="item.tipo===op">
+                          <q-btn v-if="item.puntaje==='1.00'"
+                        dense
+                        round
+                        flat
+                        color="green"
+                        @click="guardar(item)"
+                        icon="save"
+                      ></q-btn>
+                          <q-btn v-else
+                        dense
+                        round
+                        flat
+                        color="blue"
+                        @click="editar(item)"
+                        icon="save"
+                      ></q-btn>
+                        </div>
+               </div>
+        </q-card-section>
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6"> No olvide llenar cada uno de los DATOS del Proyecto </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
 
      <!--          formulario 7  -->
     <q-dialog v-model="dialog_form7">
@@ -791,6 +916,9 @@ const columna = [
   { name: 'descripcion',   align:'lefth', label: 'Descripcion', field: 'descripcion' },
 
 ];
+
+const items=['cordones','alcantarillado', 'medidas', 'colocado', 'acera', 'gradas', 'baranda', 'muros', 'enladrillado', 'empedrado','enlosetado'];
+
 export default {
 
 
@@ -821,6 +949,7 @@ export default {
    // progressLabel2:(progress2*100).toFixed(2)+'%'
     dialog_form1:false,
     dialog_form2345:false,
+    dialog_form2345_corregido:false,
     dialog_form6:false,
     dialog_form7:false,
     dialog_form8:false,
@@ -841,6 +970,20 @@ export default {
       titulo:"",
       op:"",
       confirm:false,
+
+      cordones:false,
+      alcantarillado:false,
+      medidas:false,
+      colocado:false,
+      acera:false,
+      gradas:false,
+      baranda:false,
+      muros:false,
+      enladrillado:false,
+      empedrado:false,
+      enlosetado:false,
+      otro:false,
+      otrosi:'',
 
 
   }),
@@ -897,7 +1040,7 @@ export default {
         .then((res) => {
           this.dato=res.data[0]
          //this.datocopia=this.dato.evaluacions
-        //  console.log(this.dato);
+          console.log(this.dato);
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
@@ -1067,7 +1210,7 @@ export default {
                          }
                  })
        if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
-           this.dialog_form2345=true;
+           this.dialog_form2345_corregido=true;
          }else{
            this.$q.notify({
               color: "red",
@@ -1122,7 +1265,7 @@ export default {
 
                  })
         if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
-           this.dialog_form2345=true;
+           this.dialog_form2345_corregido=true;
          }else{
            this.$q.notify({
               color: "red",
@@ -1191,7 +1334,7 @@ export default {
                          }
                  })
         if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
-            this.dialog_form2345=true;
+            this.dialog_form2345_corregido=true;
          }else{
            this.$q.notify({
               color: "red",
@@ -1267,6 +1410,46 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
               this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
 
         }
+         let ans=""
+         if(this.cordones){
+                ans+='cordones-'
+         }
+         if(this.alcantarillado){
+                ans+='alcantarillado-'
+         }
+         if(this.medidas){
+                ans+='medidas-'
+         }
+         if(this.colocado){
+                ans+='colocado-'
+         }
+         if(this.acera){
+                ans+='acera-'
+         }
+         if(this.gradas){
+                ans+='gradas-'
+         }
+         if(this.baranda){
+                ans+='baranda-'
+         }
+         if(this.muros){
+                ans+='muros-'
+         }
+         if(this.enladrillado){
+                ans+='enladrillado-'
+         }
+         if(this.empedrado){
+                ans+='empedrado-'
+         }
+         if(this.enlosetado){
+                ans+='enlosetado-'
+         }
+         if(this.otro){
+                ans+='otro-'
+               this.dato.comunidades=this.otrosi
+         }
+       this.dato.firmado_por=ans
+
       this.$q.loading.show();
       this.$api
         .put(process.env.API + "/registros/" + this.dato.id, this.dato)
@@ -1314,26 +1497,22 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
     },
     guardar(item){
 
-         if(item.tipo==="REQUISITO"){
+         if(item.tipo==="CRITERIO"){
                  if(item.valor==null){
                 this.$q.notify({
                             color: "red-4",
                             textColor: "white",
                             icon: "cloud_done",
-                            message: "debe seleccionar SI 'Presenta' O 'No Presenta'",
+                            message: "debe seleccionar CUMPLE O 'NO CUMPLE'",
                           });
                 }else{
-              this.resultado.presenta=item.valor;
-               if(item.tipo==="REQUISITO" && item.nombre!="R-2"){
-                       this.resultado.descripcion=item.valor
-                     }else
-                     {
-                        if(item.descripcion1==null){
-                          this.resultado.descripcion="Cumple"
-                        }else{
-                          this.resultado.descripcion=item.descripcion1
-                        }
-                     }
+
+               this.resultado.presenta=item.valor;
+                    if(item.nombre=='C-1'){
+                      this.resultado.descripcion= String(item.descripcion1)
+                    }else{
+                      this.resultado.descripcion=item.descripcion1
+                    }
               this.resultado.id=item.id
               this.resultado.tipo=item.tipo;
               this.resultado.nombre=item.nombre;
@@ -1358,18 +1537,12 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                             color: "red-4",
                             textColor: "white",
                             icon: "cloud_done",
-                            message: "debe seleccionar SI 'CUMPLE' O 'NO CUMPLE'",
+                            message: "debe seleccionar una opcion 'PRESENTA ' O 'NO PRESENTA'",
                           });
-      }else if(item.descripcion1==null){
-                this.$q.notify({
-                            color: "red-4",
-                            textColor: "white",
-                            icon: "cloud_done",
-                            message: "debe colocar una descripcion'",
-                          });
+
       }else {
         this.resultado.presenta=item.valor;
-        this.resultado.descripcion=item.descripcion1;
+        this.resultado.descripcion='';
         this.resultado.id=item.id
         this.resultado.tipo=item.tipo;
         this.resultado.nombre=item.nombre;
@@ -1395,13 +1568,16 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                     this.resultado.evaluacion_id=item.id
                     this.resultado.registro_id=it.pivot.registro_id
                     this.resultado.puntaje="3.00"
-                   if(item.tipo==="REQUISITO" && item.nombre!="R-2"){
-                       this.resultado.descripcion=item.valor
-                     }else
-                     {
-                       this.resultado.descripcion=item.descripcion1
-                     }
-                       this.resultado.presenta=item.valor
+
+                     if(item.nombre=='C-1'){
+                      this.resultado.descripcion= String(item.descripcion1)
+                    }else{
+                       if(item.nombre==='C-2' || item.nombre==='C-3' ){
+                         this.resultado.descripcion=item.descripcion1
+                       }
+                    }
+                    //this.resultado.descripcion=item.descripcion1
+                    this.resultado.presenta=item.valor
                     this.resultado.tipo=it.tipo;
 
                       this.$api.put(process.env.API+"/registroevaluacion1/"+it.pivot.id,this.resultado).then((res) => {
@@ -1414,7 +1590,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                          // this.misdatos();
 
                         });
-
                 }
          })
       },
@@ -1459,7 +1634,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
         this.dato.puntaje3=Number(this.dato.puntaje3)+1
         this.$api.put(process.env.API + "/registros/" + this.dato.id, this.dato)
         .then((res) => {});
-        this.dialog_form2345=false;
+        this.dialog_form2345_corregido=false;
 
 
        },
@@ -2062,7 +2237,9 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
         return answer
       },
         view_form6(){
-     this.titulo="RESULTADOS DE EVALUACION"
+
+
+            this.titulo="RESULTADOS DE EVALUACION"
           if(this.dato.carta_cite==null){
             this.dato.carta_cite="INF/FPS/GDXX Nº 0XXX/2022"
           }
@@ -2075,7 +2252,75 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
           if(this.dato.adjunto==null){
             this.dato.adjunto=" 1 Carpeta (fojas XXX y 1 CD)"
           }
-if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
+           // ITEMS =FIRMADO_POR
+           if(this.dato.firmado_por==null){
+
+                    this.cordones=false
+                    this.alcantarillado=false
+                    this.medidas=false
+                    this.colocado=false
+                    this.acera=false
+                    this.gradas=false
+                    this.baranda=false
+                    this.muros=false
+                    this.enladrillado=false
+                    this.empedrado=false
+                    this.enlosetado=false
+                    this.otro=false
+           }else{
+            const items1=this.dato.firmado_por.split('-')
+                 for(let i=0;i<items1.length;i++){
+
+                    if(items1[i]==='cordones'){
+                            this.cordones=true
+                    }
+                    if(items1[i]==='alcantarillado'){
+                            this.alcantarillado=true
+                    }
+                    if(items1[i]==='medidas'){
+                            this.medidas=true
+                    }
+
+                    if(items1[i]==='colocado'){
+                            this.colocado=true
+                    }
+
+                    if(items1[i]==='acera'){
+                            this.acera =true
+                    }
+
+                    if(items1[i]==='gradas'){
+                            this.gradas=true
+                    }
+
+                    if(items1[i]==='baranda'){
+                            this.baranda=true
+                    }
+
+                    if(items1[i]==='muros'){
+                            this.muros=true
+                    }
+
+                    if(items1[i]==='enladrillado'){
+                            this.enladrillado=true
+                    }
+
+                    if(items1[i]==='empedrado'){
+                            this.empedrado=true
+                    }
+                    if(items1[i]==='enlosetado'){
+                            this.enlosetado=true
+                    }
+                    if(items1[i]==='otro'){
+                        this.otro=true
+                        this.otrosi=this.dato.comunidades
+                    }
+
+                 }
+
+           }
+
+         if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
            this.dialog_form6=true;
          }else{
            this.$q.notify({
@@ -2589,26 +2834,13 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
     },
      imprimirEvaluacion(){
-       if(this.dato.ficha==null){
-                  this.$q.notify({
-                    color: "red",
-                    textColor: "white",
-                    icon: "cloud_done",
-                    message: "Cargue datos requeridos en la ficha tecnica ",
-                  });
-             return
-
-
-      }
-
-
-        let doc = new jsPDF('portrait' ,null, 'letter');
+          let doc = new jsPDF('portrait' ,null, 'letter');
           let logofps = new Image();
-           logofps.src = 'logofps.png';
+          logofps.src = 'logofps.png';
           let escudo = new Image();
-           escudo.src = 'escudo.png';
+          escudo.src = 'escudo.png';
           let mpd = new Image();
-           mpd.src = 'mpd.png';
+          mpd.src = 'mpd.png';
              doc.addImage(mpd, 'PNG', 25, 12, 20, 20);
              doc.addImage(logofps, 'PNG', 170, 11, 25, 20);
              doc.addImage(escudo, 'PNG', 95, 11, 20, 15);
@@ -2656,15 +2888,25 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("SUPERVISION", 125,68)
              doc.text("TOTAL", 167,68)
 
+               if(this.dato.presentado_por==='G.A.M.'){
+                 doc.text("X", 107,63)
+               }else if(this.dato.presentado_por==='G.A.I.O.C.'){
+                 doc.text("X", 132,63)
+               }else if(this.dato.presentado_por==='J.V.'){
+                 doc.text("X", 157,63)
+               }else{
+                 doc.text("X", 184,63)
+               }
 
-             doc.text("X", 107,63)
-             doc.text("X", 132,63)
-             doc.text("X", 157,63)
-             doc.text("X", 184,63)
+             doc.text(this.dato.monto1+' Bs.', 108,73,{maxWidth: 25,align: "center"})
+             doc.text(this.dato.monto2+' Bs.', 134,73,{maxWidth: 25,align: "center"})
+             doc.text(this.dato.total+' Bs.', 190,73,{maxWidth: 25,align: "center"})
 
-             doc.text("2499474.55", 108,73,{maxWidth: 25,align: "center"})
-             doc.text("23404.34", 134,73,{maxWidth: 25,align: "center"})
-             doc.text("6272.818.89", 190,73,{maxWidth: 25,align: "center"})
+
+         //    doc.text("X", 107,103)
+           //  doc.text("X", 133,103)
+           //  doc.text("dasdasdasdasdasd", 146,103)
+
 
 
              //parte 1
@@ -2703,16 +2945,190 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("NO CUMPLE", 126,98)
              doc.text("OBSERVACIONES", 149,98)
 
-             doc.text("200 familias", 100,83)
 
-             doc.text("X", 107,93)
-             doc.text("X", 133,93)
-             doc.text("21312312312312312312", 146,93)
 
-             doc.text("X", 107,103)
-             doc.text("X", 133,103)
-             doc.text("dasdasdasdasdasd", 146,103)
+              if(this.dato.evaluacions){
 
+
+                 this.dato.evaluacions.forEach(it =>{
+                  if(it.nombre==="C-1"){
+                      doc.text(it.pivot.descripcion+' FAMILIAS', 100,83)
+                  }
+                   if(it.nombre==="C-2"){
+                   if(it.pivot.presenta==="SI"){
+                        doc.text("X", 107,93)
+                     }else{
+                       doc.text("X", 133,93)
+                     }
+                        doc.text(it.pivot.descripcion+'.', 146,93)
+                }
+                if(it.nombre==="C-3"){
+                   if(it.pivot.presenta==="SI"){
+                      doc.text("X", 107,103)
+                     }else{
+                         doc.text("X", 133,103)
+                     }
+                  doc.text(it.pivot.descripcion+'.', 146,103)
+                }
+
+                if(it.nombre==="R-1"){
+                      if(it.pivot.presenta==="SI"){
+                        doc.text("X", 137,116)
+                     }else if(it.pivot.presenta==='NO'){
+                         doc.text("X", 162,116)
+                     }else{
+                            doc.text("X", 187,116)
+                     }
+                }
+                if(it.nombre==="R-2"){
+
+                }
+
+
+                if(it.nombre==="R-3"){
+                     if(it.pivot.presenta==="SI"){
+                         doc.text("X", 137,120)
+                     }else if(it.pivot.presenta==='NO'){
+                          doc.text("X", 162,120)
+                     }else{
+                            doc.text("X", 187,120)
+                     }
+                }
+                if(it.nombre==="R-4"){
+                   if(it.pivot.presenta==="SI"){
+                         doc.text("X", 137,124)
+                     }else if(it.pivot.presenta=='NO'){
+                            doc.text("X", 162,124)
+                     }else{
+                             doc.text("X", 187,124)
+                     }
+
+                }
+                if(it.nombre==="R-5"){
+                   if(it.pivot.presenta==="SI"){
+                          doc.text("X", 137,128)
+                     }else if(it.pivot.presenta=='NO'){
+                            doc.text("X", 162,128)
+                     }else{
+                             doc.text("X", 187,128)
+                     }
+                }
+
+                if(it.nombre==="R-6"){
+                   if(it.pivot.presenta==="SI"){
+                          doc.text("X", 137,132)
+                     }else if(it.pivot.presenta=='NO'){
+                             doc.text("X", 162,132)
+                     }else{
+                           doc.text("X", 187,132)
+                     }
+                }
+                if(it.nombre==="R-7"){
+                   if(it.pivot.presenta==="SI"){
+                              doc.text("X", 137,136)
+                     }else if(it.pivot.presenta=='NO'){
+                             doc.text("X", 162,136)
+                     }else{
+                            doc.text("X", 187,136)
+                     }
+                }
+
+                if(it.nombre==="I-1"){
+                  if(it.pivot.presenta==="SI"){
+                                  doc.text("X", 137,148)
+                     }else if(it.pivot.presenta=='NO'){
+                             doc.text("X", 162,148)
+                     }else{
+                           doc.text("X", 187,148)
+                     }
+                }
+                if(it.nombre==="I-2"){
+                 if(it.pivot.presenta==="SI"){
+                              doc.text("X", 137,152)
+                     }else if(it.pivot.presenta==='NO'){
+                               doc.text("X", 162,152)
+                     }else{
+                              doc.text("X", 187,152)
+                     }
+                }
+                if(it.nombre==="I-3"){
+                      if(it.pivot.presenta==="SI"){
+                                  doc.text("X", 137,156)
+                          }else if(it.pivot.presenta==='NO'){
+                                  doc.text("X", 162,156)
+                          }else{
+                                  doc.text("X", 187,156)
+                          }
+                }
+
+
+                if(it.nombre==="I-4"){
+                     if(it.pivot.presenta==="SI"){
+                             doc.text("X", 137,160)
+                     }else if(it.pivot.presenta==='NO'){
+                             doc.text("X", 162,160)
+                     }else{
+                          doc.text("X", 187,160)
+                     }
+                }
+                if(it.nombre==="I-5"){
+                 if(it.pivot.presenta==="SI"){
+                               doc.text("X", 137,164)
+                     }else if(it.pivot.presenta==='NO'){
+                            doc.text("X", 162,164)
+                     }else{
+                               doc.text("X", 187,164)
+                     }
+                }
+                if(it.nombre==="I-6"){
+                 if(it.pivot.presenta==="SI"){
+                             doc.text("X", 137,168)
+                     }else if(it.pivot.presenta=='NO'){
+                             doc.text("X", 162,168)
+                     }else{
+                            doc.text("X", 187,168)
+                     }
+                }
+                if(it.nombre==="I-7"){
+                 if(it.pivot.presenta==="SI"){
+                                doc.text("X", 137,173)
+                     }else if(it.pivot.presenta=='NO'){
+                             doc.text("X", 162,173)
+                     }else{
+                            doc.text("X", 187,173)
+                     }
+                }
+                if(it.nombre==="I-8"){
+                 if(it.pivot.presenta==="SI"){
+                         doc.text("X", 137,178)
+                     }else if(it.pivot.presenta=='NO'){
+                           doc.text("X", 162,178)
+                     }else{
+                       doc.text("X", 187,178)
+                     }
+                }
+                if(it.nombre==="I-9"){
+                if(it.pivot.presenta==="SI"){
+                                doc.text("X", 137,182)
+                     }else if(it.pivot.presenta=='NO'){
+                            doc.text("X", 162,182)
+                     }else{
+                            doc.text("X", 187,182)
+                     }
+                }
+                if(it.nombre==="I-10"){
+                 if(it.pivot.presenta==="SI"){
+                             doc.text("X", 137,186)
+                     }else if(it.pivot.presenta=='NO'){
+                               doc.text("X", 162,186)
+                     }else{
+                               doc.text("X", 187,186)
+                     }
+                }
+
+
+             })
+          }
 
                 //parte 2
              doc.rect(15,105,185,8,'DF')
@@ -2744,29 +3160,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("PLANIMETRIA APROBADA", 16,132)
              doc.text("ACTA DE COMPROMISO PARA FIRMA DE CONVENIO CTF/CFP", 16,136)
 
-             doc.text("X", 137,116)
-             doc.text("X", 162,116)
-             doc.text("X", 187,116)
 
-             doc.text("X", 137,120)
-             doc.text("X", 162,120)
-             doc.text("X", 187,120)
-
-             doc.text("X", 137,124)
-             doc.text("X", 162,124)
-             doc.text("X", 187,124)
-
-             doc.text("X", 137,128)
-             doc.text("X", 162,128)
-             doc.text("X", 187,128)
-
-             doc.text("X", 137,132)
-             doc.text("X", 162,132)
-             doc.text("X", 187,132)
-
-             doc.text("X", 137,136)
-             doc.text("X", 162,136)
-             doc.text("X", 187,136)
 
              //parte 3
              doc.rect(15,137,185,8,'FD')
@@ -2808,45 +3202,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("PRESUPUESTO GENERAL", 16,186)
 
 
-             doc.text("X", 137,148)
-             doc.text("X", 162,148)
-             doc.text("X", 187,148)
-
-             doc.text("X", 137,152)
-             doc.text("X", 162,152)
-             doc.text("X", 187,152)
-
-             doc.text("X", 137,156)
-             doc.text("X", 162,156)
-             doc.text("X", 187,156)
-
-             doc.text("X", 137,160)
-             doc.text("X", 162,160)
-             doc.text("X", 187,160)
-
-             doc.text("X", 137,164)
-             doc.text("X", 162,164)
-             doc.text("X", 187,164)
-
-             doc.text("X", 137,168)
-             doc.text("X", 162,168)
-             doc.text("X", 187,168)
-
-             doc.text("X", 137,173)
-             doc.text("X", 162,173)
-             doc.text("X", 187,173)
-
-             doc.text("X", 137,178)
-             doc.text("X", 162,178)
-             doc.text("X", 187,178)
-
-             doc.text("X", 137,182)
-             doc.text("X", 162,182)
-             doc.text("X", 187,182)
-
-             doc.text("X", 137,186)
-             doc.text("X", 162,186)
-             doc.text("X", 187,186)
 
 
                    //parte 4
@@ -2877,23 +3232,50 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text('RETIRO DE ENLADRILLADO', 146, 195)
              doc.text('RETIRO EMPEDRADO', 146, 199)
              doc.text('RETIRO ENLOSETADO', 146, 203)
+                  if(this.dato.firmado_por!=''){
+            let items2=this.dato.firmado_por.split("-")
+                 console.log(items2)
+                 for(let i=0; i<items2.length-1; i++){
+                      if(items[i]=='cordones'){
+                            doc.text('X', 80, 195)
+                      }
+                      if(items[i]=='acera'){
+                            doc.text('X', 135, 195)
+                      }
+                      if(items[i]=='enladrillado'){
+                             doc.text('X', 190, 195)
+                      }
+                      if(items[i]=='alcantarillado'){
+                            doc.text('X', 80, 199)
+                      }
+                      if(items[i]=='gradas'){
+                           doc.text('X', 135, 199)
+                      }
+                      if(items[i]=='empedrado'){
+                          doc.text('X', 190, 199)
+                      }
+                      if(items[i]=='medidas'){
+                           doc.text('X', 80, 203)
+                      }
+                      if(items[i]=='baranda'){
+                          doc.text('X', 135,203)
+                      }
+                      if(items[i]=='enlosetado'){
+                         doc.text('X', 190, 203)
+                      }
+                      if(items[i]=='colocado'){
+                          doc.text('X', 80, 207)
+                      }
+                      if(items[i]=='muros'){
+                         doc.text('X', 135, 207)
+                      }
+                      if(items[i]=='otro'){
+                         doc.text(this.dato.comunidades+'dfsdf:', 146, 207)
+                         doc.text('X', 190, 207)
+                      }
 
-
-             doc.text('X', 80, 195)
-             doc.text('X', 135, 195)
-             doc.text('X', 190, 195)
-
-             doc.text('X', 80, 199)
-             doc.text('X', 135, 199)
-             doc.text('X', 190, 199)
-
-             doc.text('X', 80, 203)
-             doc.text('X', 135,203)
-             doc.text('X', 190, 203)
-
-             doc.text('X', 80, 207)
-             doc.text('X', 135, 207)
-
+                 }
+                  }
 
                    //parte 5
              doc.rect(15,208,185,5,'FD')
@@ -2909,8 +3291,13 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text('EL PROYECTO CUMPLE  CON LOS CRITERIOS Y REQUISITOS DEL PROGRAMA', 16, 216)
              doc.text('EL PROYECTO  NO CUMPLE  CON LOS CRITERIOS Y REQUISITOS DEL PROGRAMA', 16, 220)
 
-              doc.text('X', 190, 216)
-              doc.text('X', 190, 220)
+                       if(this.dato.cumple==='SI'){
+                                  doc.text('X', 190, 216)
+                       }else{
+                                 doc.text('X', 190, 220)
+                       }
+
+
 
 
 
@@ -2920,7 +3307,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF')
              doc.text('RECOMENDACIONES', 16, 225).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000')
               doc.setFontSize(6,"bold").setFont(undefined, 'normal');
-             doc.text('TEXTOsdasdasdasd asdasd', 16, 229,{maxWidth: 160,align: "justify"})
+             doc.text(this.dato.observacion+'.', 16, 229,{maxWidth: 160,align: "justify"})
 
              doc.setFontSize(6,"bold").setFont(undefined, 'normal');
             //  doc.rect(25,190, 170,60)
@@ -2936,9 +3323,9 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text(this.dato.nombre, 71,39,{maxWidth: 126,align: "justify"})
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
 
-             doc.text(this.dato.departamento.nombre, 71,44,{maxWidth: 126,align: "justify"})
-             doc.text(this.dato.municipio, 71,49,{maxWidth: 126,align: "justify"})
-             doc.text(this.dato.municipio, 71,54,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.departamento.nombre+'.', 71,44,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.municipio+'.', 71,49,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.monto3+' m2', 71,54,{maxWidth: 126,align: "justify"})
 
              doc.text("' "+this.dato.autoridad+" '", 184,49,{maxWidth: 126,align: "justify"})
 
