@@ -2268,7 +2268,10 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                     this.enlosetado=false
                     this.otro=false
            }else{
-            const items1=this.dato.firmado_por.split('-')
+                 if(this.dato.firmado_por!=''){
+                   const items1=this.dato.firmado_por.split('-')
+                 }
+
                  for(let i=0;i<items1.length;i++){
 
                     if(items1[i]==='cordones'){
@@ -3333,7 +3336,8 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text(" ...........................................................                                               ...........................                                              .........................  ",25, 258)
              doc.text("Sello y Firma                                                                 Sello y Firmna                                                  Sello y Firma  ",40, 261)
              doc.text("GERENTE DEPARTAMENTAL FPS                                            JEFE TECNICO                                               EVALUADOR  ",25, 264)
-             doc.text("Fecha: ",16, 268)
+             let fecha_informe=this.dato.carta_fecha==null ?  moment().format('YYYY-MM-DD') : this.dato.carta_fecha
+             doc.text("Fecha: "+fecha_informe,16, 268)
              doc.text("Página 1 de 1",184, 268)
              doc.text('ESTADO PLURINACIONAL DE BOLIVIA', 80, 29)
              doc.setFont(undefined, 'bold');
