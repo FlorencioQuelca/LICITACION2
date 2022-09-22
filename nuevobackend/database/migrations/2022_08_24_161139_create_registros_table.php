@@ -55,7 +55,7 @@ class CreateRegistrosTable extends Migration
 
 
             //pie de pagina
-            $table->string('mosca')->nullable();  ///SIN ASIGNAR
+            $table->string('mosca')->nullable();  ///asignado a municipio caso excepcional
             $table->string('copia')->nullable();// fecha deisnpeccion
             $table->string('adjunto')->nullable();
             $table->string('vinculo')->nullable();//  INSPECION si/no

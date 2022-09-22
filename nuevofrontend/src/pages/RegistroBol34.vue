@@ -307,7 +307,7 @@
             />
 
             <div class="q-pa-md"  >
-                  <span> existe el municipio ?</span>
+                  <span> Esta escrito correctamente el municipio ?</span>
                   <q-radio v-model="dato2.mosca" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="SI" />
                   <q-radio v-model="dato2.mosca" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="NO" label="NO" />
              </div>
@@ -753,7 +753,7 @@ export default {
        this.dato2.municipio=this.municipio.label;
        this.dato2.nombre=((this.dato2.nombre).toUpperCase()).trim()
           this.totalmunicipios.forEach(it => {
-            if((it.municipio).toUpperCase()===this.dato.municipio){
+            if((it.municipio).toUpperCase()===this.dato2.municipio){
               this.dato2.autoridad =it.municipio_codigo
              // console.log(this.dato.autoridad);
             }
