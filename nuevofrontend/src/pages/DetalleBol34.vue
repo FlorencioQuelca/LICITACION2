@@ -649,7 +649,6 @@
                         accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile1"
                         max-files="1"
-                        max-total-size="4096"
 
                       />
 
@@ -805,7 +804,7 @@
                          accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile2"
                         max-files="1"
-                        max-total-size="4096"
+
                       />
 
 
@@ -882,7 +881,7 @@
                          accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile3"
                         max-files="1"
-                        max-total-size="4096"
+
                       />
                 </div>
              </div>
