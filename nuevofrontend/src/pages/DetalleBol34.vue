@@ -462,7 +462,8 @@
 
                             <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="SI" label="Presenta" />
                             <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="NO" label="No Presenta" />
-                            <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="No corresponde." label="No corresponde (Categoria A)" />
+                            <q-radio  v-if="item.tipo==='REQUISITO' && (item.nombre==='R-3')||(item.nombre==='R-6') " dense v-model="item.valor" val="No corresponde." label="No corresponde (Categoria A)" />
+
                             <q-radio v-if="item.tipo==='CRITERIO'" dense v-model="item.valor" val="SI" label="Cumple" />
                             <q-radio v-if="item.tipo==='CRITERIO'" dense v-model="item.valor" val="NO" label="No Cumple" />
 
@@ -477,7 +478,7 @@
 
                             <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="SI" label="Presenta" />
                             <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="NO" label="No Presenta" />
-                            <q-radio  v-if="item.tipo==='REQUISITO'" dense v-model="item.valor" val="No corresponde." label="No corresponde (Categoria A)" />
+                            <q-radio  v-if="item.tipo==='REQUISITO' && (item.nombre==='R-3')||(item.nombre==='R-6') " dense v-model="item.valor" val="No corresponde." label="No corresponde (Categoria A)" />
                             <q-radio v-if="item.tipo==='CRITERIO'" dense v-model="item.valor" val="SI" label="Cumple" />
                             <q-radio v-if="item.tipo==='CRITERIO'" dense v-model="item.valor" val="NO" label="No Cumple" />
 
@@ -2270,9 +2271,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
            }else{
                  if(this.dato.firmado_por){
                    const items1=this.dato.firmado_por.split('-')
-                 }
-
-                 for(let i=0;i<items1.length;i++){
+                  for(let i=0;i<items1.length;i++){
 
                     if(items1[i]==='cordones'){
                             this.cordones=true
@@ -2320,6 +2319,9 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                     }
 
                  }
+                 }
+
+
 
            }
 
@@ -2642,11 +2644,11 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.rect(20,20, 180,161)
              doc.rect(75,95, 125,10)
              doc.rect(75,95, 125,5)
-              doc.rect(75,95, 20,10)
+             doc.rect(75,95, 20,10)
              doc.rect(75,95, 40,10)
              doc.rect(75,115, 125,10)
              doc.rect(75,115, 125,5)
-              doc.rect(75,115, 20,10)
+             doc.rect(75,115, 20,10)
              doc.rect(75,115, 40,10)
              doc.rect(75,130, 125,10)
              doc.rect(75,130, 125,5)
@@ -2900,11 +2902,12 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                }else{
                  doc.text("X", 184,63)
                }
+             doc.setFontSize(8,"bold").setFont(undefined, 'normal');
 
              doc.text(this.dato.monto1+' Bs.', 108,73,{maxWidth: 25,align: "center"})
              doc.text(this.dato.monto2+' Bs.', 134,73,{maxWidth: 25,align: "center"})
-             doc.text(this.dato.total+' Bs.', 190,73,{maxWidth: 25,align: "center"})
-
+             doc.text(this.dato.total+' Bs.', 188,73,{maxWidth: 25,align: "center"})
+              doc.setFontSize(6,"bold").setFont(undefined, 'normal');
 
          //    doc.text("X", 107,103)
            //  doc.text("X", 133,103)
@@ -2943,7 +2946,8 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("EL PROYECTO NO DEBE ENCONTRARSE EN ÁREAS Y/O ZONAS DE RIESGOS NATURALES Y GEOLÓGICOS", 16,100,{maxWidth: 75,align: "justify"})
              doc.text("CUMPLE", 103,88)
              doc.text("NO CUMPLE", 126,88)
-             doc.text("OBSERVACION (centro de salud/ centro educativo)", 149,88)
+             doc.text("OBSERVACION (CENTRO EDUCATIVO/SALUD)", 147,88)
+            // doc.text("OBSERVACION (CENTRO DE SALUD/EDUCATIVO)", 149,88)
              doc.text("CUMPLE", 103,98)
              doc.text("NO CUMPLE", 126,98)
              doc.text("OBSERVACIONES", 149,98)
@@ -2963,7 +2967,16 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                      }else{
                        doc.text("X", 133,93)
                      }
-                        doc.text(it.pivot.descripcion+'.', 146,93)
+
+                              if(it.pivot.descripcion.length>35){
+                                    doc.setFontSize(5,"bold").setFont(undefined, 'normal');
+                                doc.text(it.pivot.descripcion+'.', 146,92,{maxWidth: 53,align: "justify"})
+                              }else{
+                                  doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+                              doc.text(it.pivot.descripcion+'.', 146,93,{maxWidth: 50,align: "justify"})
+                              }
+                doc.setFontSize(8,"bold").setFont(undefined, 'normal');
+
                 }
                 if(it.nombre==="C-3"){
                    if(it.pivot.presenta==="SI"){
@@ -2971,7 +2984,17 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                      }else{
                          doc.text("X", 133,103)
                      }
-                  doc.text(it.pivot.descripcion+'.', 146,103)
+                                  if(it.pivot.descripcion.length>35){
+                                    doc.setFontSize(5,"bold").setFont(undefined, 'normal');
+                                    doc.text(it.pivot.descripcion+'.', 146,102,{maxWidth: 53,align: "justify"})
+                                  }else{
+                                    doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+                                    doc.text(it.pivot.descripcion+'.', 146,103,{maxWidth: 50,align: "justify"})
+                                  }
+
+
+
+
                 }
 
                 if(it.nombre==="R-1"){
@@ -3239,41 +3262,41 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
             let items2=this.dato.firmado_por.split("-")
                  console.log(items2)
                  for(let i=0; i<items2.length-1; i++){
-                      if(items[i]=='cordones'){
+                      if(items2[i]=='cordones'){
                             doc.text('X', 80, 195)
                       }
-                      if(items[i]=='acera'){
+                      if(items2[i]=='acera'){
                             doc.text('X', 135, 195)
                       }
-                      if(items[i]=='enladrillado'){
+                      if(items2[i]=='enladrillado'){
                              doc.text('X', 190, 195)
                       }
-                      if(items[i]=='alcantarillado'){
+                      if(items2[i]=='alcantarillado'){
                             doc.text('X', 80, 199)
                       }
-                      if(items[i]=='gradas'){
+                      if(items2[i]=='gradas'){
                            doc.text('X', 135, 199)
                       }
-                      if(items[i]=='empedrado'){
+                      if(items2[i]=='empedrado'){
                           doc.text('X', 190, 199)
                       }
-                      if(items[i]=='medidas'){
+                      if(items2[i]=='medidas'){
                            doc.text('X', 80, 203)
                       }
-                      if(items[i]=='baranda'){
+                      if(items2[i]=='baranda'){
                           doc.text('X', 135,203)
                       }
-                      if(items[i]=='enlosetado'){
+                      if(items2[i]=='enlosetado'){
                          doc.text('X', 190, 203)
                       }
-                      if(items[i]=='colocado'){
+                      if(items2[i]=='colocado'){
                           doc.text('X', 80, 207)
                       }
-                      if(items[i]=='muros'){
+                      if(items2[i]=='muros'){
                          doc.text('X', 135, 207)
                       }
-                      if(items[i]=='otro'){
-                         doc.text(this.dato.comunidades+'dfsdf:', 146, 207)
+                      if(items2[i]=='otro'){
+                         doc.text(this.dato.comunidades+'.', 146, 207)
                          doc.text('X', 190, 207)
                       }
 
@@ -3293,24 +3316,18 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.setFontSize(6,"bold").setFont(undefined, 'normal');
              doc.text('EL PROYECTO CUMPLE  CON LOS CRITERIOS Y REQUISITOS DEL PROGRAMA', 16, 216)
              doc.text('EL PROYECTO  NO CUMPLE  CON LOS CRITERIOS Y REQUISITOS DEL PROGRAMA', 16, 220)
-
                        if(this.dato.cumple==='SI'){
                                   doc.text('X', 190, 216)
                        }else{
                                  doc.text('X', 190, 220)
                        }
-
-
-
-
-
           //parte 6
              doc.rect(15,221,185,5,'FD')
              doc.rect(15,221,185,13)
              doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF')
              doc.text('RECOMENDACIONES', 16, 225).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000')
               doc.setFontSize(6,"bold").setFont(undefined, 'normal');
-             doc.text(this.dato.observacion+'.', 16, 229,{maxWidth: 160,align: "justify"})
+             doc.text(this.dato.observacion.toUpperCase()+'.', 16, 229,{maxWidth: 175,align: "justify"})
 
              doc.setFontSize(6,"bold").setFont(undefined, 'normal');
             //  doc.rect(25,190, 170,60)
@@ -3323,31 +3340,34 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
                 // doc.text('*', 214, 280) //milimetros
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
-             doc.text(this.dato.nombre, 71,39,{maxWidth: 126,align: "justify"})
+               if((this.dato.nombre.length+this.dato.codigo.length)>68){
+                 doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,37,{maxWidth: 126,align: "justify"})
+               }else{
+                  doc.setFontSize(9,"normal").setFont(undefined, 'normal');
+                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,39,{maxWidth: 126,align: "justify"})
+               }
+
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
 
-             doc.text(this.dato.departamento.nombre+'.', 71,44,{maxWidth: 126,align: "justify"})
-             doc.text(this.dato.municipio+'.', 71,49,{maxWidth: 126,align: "justify"})
-             doc.text(this.dato.monto3+' m2', 71,54,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.departamento.nombre+'.', 69,44,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.municipio+'.', 69,49,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.monto3+' m2', 69,54,{maxWidth: 126,align: "justify"})
 
              doc.text("' "+this.dato.autoridad+" '", 184,49,{maxWidth: 126,align: "justify"})
 
              doc.setFontSize(8, 'normal')
              doc.text(" ...........................................................                                               ...........................                                              .........................  ",25, 258)
-             doc.text("Sello y Firma                                                                 Sello y Firmna                                                  Sello y Firma  ",40, 261)
+             doc.text("Sello y Firma                                                                 Sello y Firma                                                  Sello y Firma  ",40, 261)
              doc.text("GERENTE DEPARTAMENTAL FPS                                            JEFE TECNICO                                               EVALUADOR  ",25, 264)
-             let fecha_informe=this.dato.carta_fecha==null ?  moment().format('YYYY-MM-DD') : this.dato.carta_fecha
-             doc.text("Fecha: "+fecha_informe,16, 268)
+             const fecha_informe=this.dato.carta_fecha==null ?  moment().format('YYYY-MM-DD') : this.dato.carta_fecha
+             const fechaDeCarta= this.fechalarga(fecha_informe,this.dato.departamento.nombre)
+             doc.text("Fecha: "+fechaDeCarta,16, 268)
              doc.text("Página 1 de 1",184, 268)
              doc.text('ESTADO PLURINACIONAL DE BOLIVIA', 80, 29)
              doc.setFont(undefined, 'bold');
              doc.setFontSize(12,"bold")
              doc.text('EVALUACION TECNICA BOL - 34',73,34)
-
-
-
-
-
              window.open(doc.output('bloburl',{filename:"FICHA.pdf"}), '_blank');
 
 
