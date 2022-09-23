@@ -650,6 +650,7 @@
                         :factory="uploadFile1"
                         max-files="1"
 
+
                       />
 
                 </div>
