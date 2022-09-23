@@ -3341,12 +3341,12 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
                 // doc.text('*', 214, 280) //milimetros
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
-               if((this.dato.nombre.length+this.dato.codigo.length)>68){
+               if((this.dato.nombre.length+this.dato.codigo.length)>78){
                  doc.setFontSize(6,"bold").setFont(undefined, 'normal');
-                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,37,{maxWidth: 126,align: "justify"})
+                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,37,{maxWidth: 127,align: "justify"})
                }else{
                   doc.setFontSize(9,"normal").setFont(undefined, 'normal');
-                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,39,{maxWidth: 126,align: "justify"})
+                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,39,{maxWidth: 127,align: "justify"})
                }
 
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
