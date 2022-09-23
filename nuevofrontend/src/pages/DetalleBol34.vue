@@ -693,7 +693,7 @@
                        <q-input
                     outlined
                     dense
-                    v-model="dato2.energia"
+                    v-model="dato2.electricidad"
                     type="Number"
                     step="0.01"
                     label="% Energia Electrica"
