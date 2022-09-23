@@ -648,7 +648,6 @@
                         label="Subir FOTOGRAFIA Nº1 (IZQUIERDA) (Max 4mb) "
                         accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile1"
-                        max-files="1"
 
 
                       />
@@ -804,7 +803,6 @@
                         label="Subir FOTOGRAFIA Nº2 (DERECHA) (Max 4mb) "
                          accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile2"
-                        max-files="1"
 
                       />
 
@@ -881,7 +879,7 @@
                         label="Subir FOTOGRAFIA (PLANO DE UBICACION)  (Max 4mb)"
                          accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile3"
-                        max-files="1"
+
 
                       />
                 </div>
@@ -2769,7 +2767,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                         fotografia3=''
                      }
              this.$api.post('base64ficha',{imagen1:fotografia1,imagen2:fotografia2,imagen3:fotografia3}).then(res=>{
-                //console.log(res.data)
+                console.log(res.data)
                 this.$q.loading.hide()
                 if (res.data[0]!=null){
                    let  imgData1 =res.data[0]
@@ -3341,12 +3339,19 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
                 // doc.text('*', 214, 280) //milimetros
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
-               if((this.dato.nombre.length+this.dato.codigo.length)>78){
+               if( (this.dato.nombre.length+this.dato.codigo.length)>90){
                  doc.setFontSize(6,"bold").setFont(undefined, 'normal');
                  doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,37,{maxWidth: 127,align: "justify"})
                }else{
-                  doc.setFontSize(9,"normal").setFont(undefined, 'normal');
+
+                 if((this.dato.nombre.length+this.dato.codigo.length)>=76){
+                 doc.setFontSize(8,"normal").setFont(undefined, 'normal');
                  doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,39,{maxWidth: 127,align: "justify"})
+                 }else{
+                 doc.setFontSize(9,"normal").setFont(undefined, 'normal');
+                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,39,{maxWidth: 127,align: "justify"})
+                 }
+
                }
 
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
