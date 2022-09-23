@@ -3327,7 +3327,8 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF')
              doc.text('RECOMENDACIONES', 16, 225).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000')
               doc.setFontSize(6,"bold").setFont(undefined, 'normal');
-             doc.text(this.dato.observacion.toUpperCase()+'.', 16, 229,{maxWidth: 175,align: "justify"})
+
+             doc.text((this.dato.observacion+'.').toUpperCase()+'.', 16, 229,{maxWidth: 175,align: "justify"})
 
              doc.setFontSize(6,"bold").setFont(undefined, 'normal');
             //  doc.rect(25,190, 170,60)
