@@ -2904,17 +2904,17 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                  if(this.dato.monto1>0){
                    doc.text(this.adicionarComas(this.dato.monto1)+' Bs.', 108,73,{maxWidth: 25,align: "center"})
                  }else{
-                   doc.text(this.dato.monto1+' Bs.', 108,73,{maxWidth: 25,align: "center"})
+                   doc.text(this.adicionarComas(this.dato.monto1)+' Bs.', 108,73,{maxWidth: 25,align: "center"})
                  }
                  if(this.dato.monto2>0){
                     doc.text(this.adicionarComas(this.dato.monto2)+' Bs.', 134,73,{maxWidth: 25,align: "center"})
                  }else{
-                  doc.text(this.dato.monto2+' Bs.', 134,73,{maxWidth: 25,align: "center"})
+                  doc.text(this.adicionarComas(this.dato.monto2)+' Bs.', 134,73,{maxWidth: 25,align: "center"})
                  }
                  if(this.dato.total>0){
                     doc.text(this.adicionarComas(this.dato.total)+' Bs.', 188,73,{maxWidth: 25,align: "center"})
                  }else{
-                  doc.text(this.dato.total+' Bs.', 188,73,{maxWidth: 25,align: "center"})
+                  doc.text(this.adicionarComas(this.dato.total)+' Bs.', 188,73,{maxWidth: 25,align: "center"})
                  }
 
               doc.setFontSize(6,"bold").setFont(undefined, 'normal');
@@ -3417,32 +3417,32 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
            ans=cadena[0]
           break;
         case 4:
-           ans=cadena[0][0]+','+cadena[0][1]+cadena[0][2]+cadena[0][3]
+           ans=cadena[0][0]+'.'+cadena[0][1]+cadena[0][2]+cadena[0][3]
           break;
         case 5:
-           ans=cadena[0][0]+cadena[0][1]+','+cadena[0][2]+cadena[0][3]+cadena[0][4]
+           ans=cadena[0][0]+cadena[0][1]+'.'+cadena[0][2]+cadena[0][3]+cadena[0][4]
           break;
         case 6:
-           ans=cadena[0][0]+cadena[0][1]+cadena[0][2]+','+cadena[0][3]+cadena[0][4]+cadena[0][5]
+           ans=cadena[0][0]+cadena[0][1]+cadena[0][2]+'.'+cadena[0][3]+cadena[0][4]+cadena[0][5]
           break;
         case 7:
-           ans=cadena[0][0]+','+cadena[0][1]+cadena[0][2]+cadena[0][3]+','+cadena[0][4]+cadena[0][5]+cadena[0][6]
+           ans=cadena[0][0]+'.'+cadena[0][1]+cadena[0][2]+cadena[0][3]+'.'+cadena[0][4]+cadena[0][5]+cadena[0][6]
           break;
         case 8:
-           ans=cadena[0][0]+cadena[0][1]+','+cadena[0][2]+cadena[0][3]+cadena[0][4]+','+cadena[0][5]+cadena[0][6]+cadena[0][7]
+           ans=cadena[0][0]+cadena[0][1]+'.'+cadena[0][2]+cadena[0][3]+cadena[0][4]+'.'+cadena[0][5]+cadena[0][6]+cadena[0][7]
           break;
         case 9:
-           ans=cadena[0][0]+cadena[0][1]+cadena[0][2]+','+cadena[0][3]+cadena[0][4]+cadena[0][5]+','+cadena[0][6]+cadena[0][7]+cadena[0][8]
+           ans=cadena[0][0]+cadena[0][1]+cadena[0][2]+'.'+cadena[0][3]+cadena[0][4]+cadena[0][5]+'.'+cadena[0][6]+cadena[0][7]+cadena[0][8]
           break;
         case 10:
-           ans=cadena[0][0]+','+cadena[0][1]+cadena[0][2]+cadena[0][3]+','+cadena[0][4]+cadena[0][5]+cadena[0][6]+','+cadena[0][7]+cadena[0][8]+cadena[0][9]
+           ans=cadena[0][0]+'.'+cadena[0][1]+cadena[0][2]+cadena[0][3]+'.'+cadena[0][4]+cadena[0][5]+cadena[0][6]+'.'+cadena[0][7]+cadena[0][8]+cadena[0][9]
           break;
 
         default:
              ans=cadena[0]
           break;
       }
-      return ans+'.'+cadena[1]
+      return ans+','+cadena[1]
 
     }
 
