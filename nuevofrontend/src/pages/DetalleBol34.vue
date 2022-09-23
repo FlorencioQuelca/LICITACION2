@@ -2901,10 +2901,22 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                  doc.text("X", 184,63)
                }
              doc.setFontSize(8,"bold").setFont(undefined, 'normal');
+                 if(this.dato.monto1>0){
+                   doc.text(this.adicionarComas(this.dato.monto1)+' Bs.', 108,73,{maxWidth: 25,align: "center"})
+                 }else{
+                   doc.text(this.dato.monto1+' Bs.', 108,73,{maxWidth: 25,align: "center"})
+                 }
+                 if(this.dato.monto2>0){
+                    doc.text(this.adicionarComas(this.dato.monto2)+' Bs.', 134,73,{maxWidth: 25,align: "center"})
+                 }else{
+                  doc.text(this.dato.monto2+' Bs.', 134,73,{maxWidth: 25,align: "center"})
+                 }
+                 if(this.dato.total>0){
+                    doc.text(this.adicionarComas(this.dato.total)+' Bs.', 188,73,{maxWidth: 25,align: "center"})
+                 }else{
+                  doc.text(this.dato.total+' Bs.', 188,73,{maxWidth: 25,align: "center"})
+                 }
 
-             doc.text(this.dato.monto1+' Bs.', 108,73,{maxWidth: 25,align: "center"})
-             doc.text(this.dato.monto2+' Bs.', 134,73,{maxWidth: 25,align: "center"})
-             doc.text(this.dato.total+' Bs.', 188,73,{maxWidth: 25,align: "center"})
               doc.setFontSize(6,"bold").setFont(undefined, 'normal');
 
          //    doc.text("X", 107,103)
@@ -3325,8 +3337,12 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF')
              doc.text('RECOMENDACIONES', 16, 225).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000')
               doc.setFontSize(6,"bold").setFont(undefined, 'normal');
+               if(this.dato.observacion){
+                 doc.text((this.dato.observacion).toUpperCase(), 16, 229,{maxWidth: 175,align: "justify"})
+               }else{
+                 doc.text('.', 16, 229,{maxWidth: 175,align: "justify"})
+               }
 
-             doc.text((this.dato.observacion+'.').toUpperCase()+'.', 16, 229,{maxWidth: 175,align: "justify"})
 
              doc.setFontSize(6,"bold").setFont(undefined, 'normal');
             //  doc.rect(25,190, 170,60)
@@ -3339,15 +3355,19 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
                 // doc.text('*', 214, 280) //milimetros
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
-               if( (this.dato.nombre.length+this.dato.codigo.length)>90){
+               if( (this.dato.nombre.length+this.dato.codigo.length)>=100){
                  doc.setFontSize(6,"bold").setFont(undefined, 'normal');
                  doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,37,{maxWidth: 127,align: "justify"})
                }else{
-
-                 if((this.dato.nombre.length+this.dato.codigo.length)>=76){
-                 doc.setFontSize(8,"normal").setFont(undefined, 'normal');
+                       let cant =this.dato.nombre.length+this.dato.codigo.length
+                       // console.log(cant)
+                 if((cant)>=73){
+                 doc.setFontSize(7,"normal").setFont(undefined, 'normal');
                  doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,39,{maxWidth: 127,align: "justify"})
-                 }else{
+                 }else  if((cant)>=70){
+                   doc.setFontSize(8,"normal").setFont(undefined, 'normal');
+                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,39,{maxWidth: 127,align: "justify"})
+                  }else{
                  doc.setFontSize(9,"normal").setFont(undefined, 'normal');
                  doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,39,{maxWidth: 127,align: "justify"})
                  }
@@ -3379,6 +3399,50 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
 
 
+
+    },
+    adicionarComas(numero){
+      let cadena= numero.split('.')
+      let ans=''
+
+      let j=0
+      switch (cadena[0].length) {
+        case 1:
+           ans=cadena[0]
+          break;
+        case 2:
+           ans=cadena[0]
+          break;
+        case 3:
+           ans=cadena[0]
+          break;
+        case 4:
+           ans=cadena[0][0]+','+cadena[0][1]+cadena[0][2]+cadena[0][3]
+          break;
+        case 5:
+           ans=cadena[0][0]+cadena[0][1]+','+cadena[0][2]+cadena[0][3]+cadena[0][4]
+          break;
+        case 6:
+           ans=cadena[0][0]+cadena[0][1]+cadena[0][2]+','+cadena[0][3]+cadena[0][4]+cadena[0][5]
+          break;
+        case 7:
+           ans=cadena[0][0]+','+cadena[0][1]+cadena[0][2]+cadena[0][3]+','+cadena[0][4]+cadena[0][5]+cadena[0][6]
+          break;
+        case 8:
+           ans=cadena[0][0]+cadena[0][1]+','+cadena[0][2]+cadena[0][3]+cadena[0][4]+','+cadena[0][5]+cadena[0][6]+cadena[0][7]
+          break;
+        case 9:
+           ans=cadena[0][0]+cadena[0][1]+cadena[0][2]+','+cadena[0][3]+cadena[0][4]+cadena[0][5]+','+cadena[0][6]+cadena[0][7]+cadena[0][8]
+          break;
+        case 10:
+           ans=cadena[0][0]+','+cadena[0][1]+cadena[0][2]+cadena[0][3]+','+cadena[0][4]+cadena[0][5]+cadena[0][6]+','+cadena[0][7]+cadena[0][8]+cadena[0][9]
+          break;
+
+        default:
+             ans=cadena[0]
+          break;
+      }
+      return ans+'.'+cadena[1]
 
     }
 
