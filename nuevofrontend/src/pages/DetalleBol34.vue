@@ -1128,8 +1128,15 @@ export default {
             this.progress6=1
            this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
         }else {
-              this.progress6=0.6
+           if (this.dato.observacion && this.dato.cumple){
+                 this.progress6=1
               this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
+           }else{
+                 this.progress6=0.8
+              this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
+
+           }
+
         }
          if(this.dato.ficha!=null){
               if(this.dato.ficha.aprobado!=null && this.dato.ficha.foto1!=null && this.dato.ficha.foto2!=null&& this.dato.ficha.foto3!=null){
@@ -3316,7 +3323,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                    //parte 5
              doc.rect(15,208,185,5,'FD')
              doc.rect(15,208,185,9)
-             doc.rect(15,208,185,13)
+             doc.rect(15,208,185,16)
 
              doc.rect(180,208,20,16)
 
