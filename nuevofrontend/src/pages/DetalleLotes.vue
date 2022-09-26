@@ -506,6 +506,50 @@
       </q-card>
     </q-dialog>
 
+<!-- Adicionar empresa y/o sociedad accidentañl/>-->
+      <q-dialog v-model="dialog_add_empresa">
+      <q-card style="max-width: 80%; width: 50%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Agregar Empresa/Sociedad Accidental</div>
+        </q-card-section>
+        <div class="row">
+        <div class="col-12">
+          <q-option-group
+            v-model="group"
+            :options="opciones"
+            color="primary"
+            inline
+          />
+        </div>
+        </div>
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onAdd2" class="q-gutter-md">
+
+
+             <q-select
+              v-model="codigo.lote"
+               :options="lotes"
+               label="Standard"
+               >
+             </q-select>
+             <q-input
+              outlined
+              v-model="codigo.monto"
+              type="number"
+              step="0.01"
+              label="Monto Ofertante"
+              hint="Ingresar Monto ofertante"
+            />
+            <div>
+              <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+
 
 
 
@@ -534,8 +578,12 @@ export default {
     columna,
     dialog_add1:false,
     dialog_add2:false,
+    dialog_add_empresa:false,
+    dialog_add_consultor:false,
+    dialog_add_sociedad:false,
     codigo:{},
     codigos:[],
+    lotes:[],
     consultores:[],
     consultoresSelectos:[],
     empresas:[],
@@ -626,6 +674,9 @@ export default {
       this.$api.get(process.env.API + "/proyectoid/" + this.$route.params.id).then((res) => {
           this.data = res.data[0];
           this.dato = res.data[0];
+
+
+
            console.log(res.data)
            this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
            this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
@@ -641,6 +692,8 @@ export default {
            this.rows.push({titulo:"Codigos de proyecto ", descripcion: res.data[0].fecha})
            this.rows.push({titulo:"Comision Evaluadora ", descripcion: res.data[0].fecha})
             if(res.data[0].lotes.length>0){
+               //   res.data[0].lote.
+              // this.lotes=res.data[0].lotes.forEaach
               this.rows.push({titulo:"Nº de lotes ", descripcion: res.data[0].lotes.length})
             }else{
               this.rows.push({titulo:"Nº de lotes ", descripcion: "PROCESO SIN LOTES"})
@@ -691,7 +744,10 @@ export default {
     //  console.log(this.personasSelectos);
     },
     agregarEmpresa(item){
+        this.dialog_add_empresa = true;
         this.empresasSelectos.push(item.row);
+
+
     //  console.log(this.personasSelectos)
     },
     agregarSociedad(item){

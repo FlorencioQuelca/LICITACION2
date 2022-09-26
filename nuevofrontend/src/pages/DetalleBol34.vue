@@ -1039,7 +1039,7 @@ export default {
         .then((res) => {
           this.dato=res.data[0]
          //this.datocopia=this.dato.evaluacions
-          console.log(this.dato);
+         // console.log(this.dato);
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
@@ -2774,7 +2774,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                         fotografia3=''
                      }
              this.$api.post('base64ficha',{imagen1:fotografia1,imagen2:fotografia2,imagen3:fotografia3}).then(res=>{
-                console.log(res.data)
+              //  console.log(res.data)
                 this.$q.loading.hide()
                 if (res.data[0]!=null){
                    let  imgData1 =res.data[0]
@@ -3277,7 +3277,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text('RETIRO ENLOSETADO', 146, 203)
                   if(this.dato.firmado_por){
             let items2=this.dato.firmado_por.split("-")
-                 console.log(items2)
+                // console.log(items2)
                  for(let i=0; i<items2.length-1; i++){
                       if(items2[i]=='cordones'){
                             doc.text('X', 80, 195)

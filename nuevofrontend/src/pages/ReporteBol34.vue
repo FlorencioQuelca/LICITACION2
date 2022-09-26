@@ -207,7 +207,7 @@ export default {
       //    this.$q.loading.hide();
         this.data=[]
        this.$api.get(process.env.API+"/registrados").then((res)=>{
-           console.log(res.data);
+         //  console.log(res.data);
             let puntaje=0
         res.data.forEach(it=>{
 
