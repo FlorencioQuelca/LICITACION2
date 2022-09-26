@@ -1139,7 +1139,7 @@ export default {
 
         }
          if(this.dato.ficha!=null){
-              if(this.dato.ficha.aprobado!=null && this.dato.ficha.foto1!=null && this.dato.ficha.foto2!=null&& this.dato.ficha.foto3!=null){
+              if(this.dato.ficha.foto1 && this.dato.ficha.foto2 && this.dato.ficha.foto3){
                           this.progress8=1
                         this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
                       }else  if(this.dato.ficha.aprobado!=null){
@@ -2405,7 +2405,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
         }
     },
     onMod8() {
-         if(this.dato.ficha.foto1!=null && this.dato.ficha.foto2!=null&& this.dato.ficha.foto3!=null){
+         if(this.dato.ficha.foto1 && this.dato.ficha.foto2 && this.dato.ficha.foto3){
            this.progress8=1
             this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
          }else {
