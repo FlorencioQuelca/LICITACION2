@@ -94,22 +94,15 @@
          <q-td key="tiempo" :props="props">
                {{props.row.duracion}} Dias
          </q-td>
-         <q-td  v-if="props.row.ficha!=null"
+         <q-td
                 key="area" :props="props">
-               {{props.row.ficha.area}} m2
+               {{props.row.monto3}} m2
          </q-td>
-         <q-td  v-if="props.row.ficha==null"
-                key="area" :props="props">
-                   0.00 m2
+
+         <q-td  key="solicitante" :props="props">
+               {{props.row.presentado_por}}
          </q-td>
-         <q-td   v-if="props.row.ficha!=null"
-               key="solicitante" :props="props">
-               {{props.row.ficha.observacion4}}
-         </q-td>
-         <q-td   v-if="props.row.ficha===null"
-               key="solicitante" :props="props">
-                --
-         </q-td>
+
          <q-td key="avance" :props="props">
                {{props.row.puntaje}} %
          </q-td>
@@ -273,15 +266,20 @@ export default {
                                this.data[i].evaluador=user
                             }else{
                                 let user=" "
-                         this.data[i].evaluador=user
+                               this.data[i].evaluador=user
                             }
                        }
+                      let depa=""
+                      if(this.data[i].departamento){
+                       depa=this.data[i].departamento.nombre
+                      }
 
                        let duracion=total_days(this.data[i].fecha,this.data[i].carta_fecha);
                         delete this.data[i].evaluacions
                       // this.data[i].departamento=this.$store.state.login.user.status
                        delete  this.data[i].ficha
                        delete  this.data[i].departamento_id
+
 
                         delete this.data[i].mosca
                         delete this.data[i].carta_ref
@@ -291,10 +289,8 @@ export default {
                         delete this.data[i].observacion
                         delete this.data[i].url
                         delete this.data[i].firmado_por
-                        delete this.data[i].presentado_por
                         delete this.data[i].comunidades
                         delete this.data[i].provincia
-                        delete this.data[i].monto3
                         delete this.data[i].puntaje1
                         delete this.data[i].puntaje2
                         delete this.data[i].puntaje3
@@ -307,19 +303,10 @@ export default {
                         fecha_inspeccion=this.data[i].copia
                       }
 
-                      let area=" "
-                       let solicitante=" "
-                         if(this.data[i].ficha!=null){
-                            area=this.data[i].ficha.area
-                            solicitante=this.data[i].ficha.observacion4
-
-                         }
-
-
 
                         this.data[i]={
                             nro:this.data[i].nro,
-                            departamento:this.data[i].departamento.nombre,
+                            departament:depa,
                             municipio:this.data[i].municipio,
                             categoria:this.data[i].autoridad,
                             codigo_vipfe:this.data[i].codigo,
@@ -338,8 +325,8 @@ export default {
                             evaluador:this.data[i].evaluador,
                             aprobado:this.data[i].cumple,
                             status:this.data[i].status,
-                            area:area,
-                            solictante:solicitante,
+                            area:this.data[i].monto3,
+                            solictante:this.data[i].presentado_por,
                             evaluacion:this.data[i].puntaje+" %",
                             duracionDias:duracion,
 
@@ -358,6 +345,9 @@ export default {
                           delete this.data[i].carta_cite
                           delete this.data[i].cumple
                           delete this.data[i].puntaje
+                          delete this.data[i].departamento
+                          delete this.data[i].monto3
+                          delete this.data[i].presentado_por
 
                          datos.push(this.data[i])
                  }
