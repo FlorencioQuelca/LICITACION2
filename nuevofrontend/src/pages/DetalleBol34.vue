@@ -2677,6 +2677,9 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.rect(75,170, 40,10)
              doc.rect(75,170, 60,10)
             //  doc.rect(25,190, 170,60)
+
+
+
              doc.setFontSize(8,"bold").setFont(undefined, 'bold');
              doc.text("1. PROGRAMA", 21,49,{maxWidth: 75,align: "justify"})
              doc.text("2. NOMBRE DEL PROYECTO", 21,54,{maxWidth: 75,align: "justify"})
