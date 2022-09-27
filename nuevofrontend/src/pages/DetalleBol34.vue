@@ -3347,7 +3347,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                        }
           //parte 6
              doc.rect(15,221,185,5,'FD')
-             doc.rect(15,221,185,13)
+           //  doc.rect(15,221,185,1)
              doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF')
              doc.text('RECOMENDACIONES', 16, 225).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000')
               doc.setFontSize(6,"bold").setFont(undefined, 'normal');
