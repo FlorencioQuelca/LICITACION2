@@ -2735,25 +2735,32 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
               }else{
                 doc.text( "X", 105,124,{maxWidth: 20,align: "center"})
               }
-              doc.text( this.dato.ficha.observacion5a+".", 120,124,{maxWidth: 70,align: "justify"})
 
+                 doc.setFontSize(5,"normal").setFont(undefined, 'normal');
+               if(this.dato.ficha.observacion5a){
+                 doc.text( this.dato.ficha.observacion5a, 120,122,{maxWidth: 70,align: "justify"})
+               }else{
+                 doc.text(".", 120,124,{maxWidth: 70,align: "justify"})
+               }
+              doc.text( this.dato.ficha.observacion5b+".", 158,137,{maxWidth: 40,align: "justify"})
+              doc.text( this.dato.ficha.observacion5c+".", 138,152,{maxWidth: 60,align: "justify"})
+              doc.text( this.dato.ficha.observacion5d+".", 138,162,{maxWidth: 60,align: "justify"})
+              doc.text( this.dato.ficha.observacion6+".", 138,177,{maxWidth: 60,align: "justify"})
+
+              doc.setFontSize(8,"normal").setFont(undefined, 'normal');
               doc.text( this.dato.ficha.agua+" %", 85,139,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.alcantarillado+" %", 105,139,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.electricidad+" %", 125,139,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.gasnatural+" %", 145,139,{maxWidth: 20,align: "center"})
-              doc.text( this.dato.ficha.observacion5b+".", 160,139,{maxWidth: 70,align: "justify"})
               doc.text( this.dato.ficha.tierra+" %", 85,154,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.empedrado+" %", 105,154,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.otro+" %", 125,154,{maxWidth: 20,align: "center"})
-              doc.text( this.dato.ficha.observacion5c+".", 140,154,{maxWidth: 70,align: "justify"})
               doc.text( this.dato.ficha.ejecutado+" %", 85,164,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.porejecutar+" %", 105,164,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.longitudporejecutar+" m", 125,164,{maxWidth: 20,align: "center"})
-              doc.text( this.dato.ficha.observacion5d+".", 140,164,{maxWidth: 70,align: "justify"})
               doc.text( this.dato.ficha.longituddecimal+" m", 85,179,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.ancho+" m", 105,179,{maxWidth: 20,align: "center"})
               doc.text( this.dato.ficha.area+" m2", 125,179,{maxWidth: 25,align: "center"})
-              doc.text( this.dato.ficha.observacion6+".", 140,179,{maxWidth: 70,align: "justify"})
 
              doc.setFontSize(8, 'normal')
              doc.text("Página 1 de 2",180, 262)
