@@ -731,8 +731,8 @@ export default {
            this.rows.push({titulo:"Nro de Convocatoria ", descripcion: res.data[0].convocatoria})
            this.rows.push({titulo:"Codigos de proyecto ", descripcion: res.data[0].fecha})
            this.rows.push({titulo:"Comision Evaluadora ", descripcion: res.data[0].fecha})
-            if(res.data[0].lotes.length>0){
-                 this.lotes=[]
+             this.lotes=[]
+           if(res.data[0].lotes.length>0){
                const lotes1=res.data[0].lotes
               lotes1.forEach((it)=> {
                   this.lotes.push({label:it.nombre,value:it.id});
@@ -797,6 +797,7 @@ export default {
                           message: "Solo puede seleccionar un Registro",
                         });
                 }else{
+                    this.codigo=item.row
                     this.consultoresSelectos.push(item.row);
                 }
            }
@@ -941,11 +942,11 @@ export default {
         if(this.consultoresSelectos.length){
                                 if(this.lotes.length>0){
                                   this.$q.loading.show()
-                                  console.log('asd',this.codigo)
+                                      console.log('asd',this.codigo)
                                     this.$api.put(process.env.API+"/personalotes/"+this.codigo.lote.value, {id:this.codigo.id}).then((res) => {
                                       console.log(res.data);
                                             this.$q.notify({
-                                        color: "green-4",
+                                              color: "green-4",
                                         textColor: "white",
                                         icon: "cloud_done",
                                         message: "Agregado Correctamente",
@@ -960,9 +961,12 @@ export default {
                                       });
 
                                    }else{
+                                    // console.log(this.$route.params.id)
+                                   // console.log('this.dato.id',this.dato.id)
+                                      //  console.log('asd',this.codigo)
                                     this.$q.loading.show();
-                                      this.$api.put(process.env.API + "/personaproyectos/"+this.dato.id,this.codigo).then((res) => {
-                                            this.$q.notify({
+                                      this.$api.put(process.env.API+"/personaproyectos/"+this.dato.id, {id:this.codigo.id}).then((res) => {
+                                        this.$q.notify({
                                         color: "green-4",
                                         textColor: "white",
                                         icon: "cloud_done",
