@@ -1544,8 +1544,6 @@ proyecto:{},
            }else{
              res1.data[0].monto =this.codigo.monto;
              this.$api.put(process.env.API+"/empresaproyectos/"+this.dato2.id,res1.data[0]).then((res) => {
-
-
                      this.$q.notify({
                           color: "green-4",
                           textColor: "white",
@@ -1557,8 +1555,6 @@ proyecto:{},
                        this.dialog_add2 = false;
                         this.misdatos();
                        });
-
-
            }
        });
 
@@ -1577,7 +1573,7 @@ proyecto:{},
                  this.$q.loading.hide();
            }else{
                res1.data[0].monto =this.codigo.monto;
-               console.log(res1.data[0]);
+             //  console.log(res1.data[0]);
                   this.$api.put(process.env.API + "/sociedadproyectos/"+this.dato2.id,res1.data[0]).then((res) => {
                               this.$q.notify({
                           color: "green-4",

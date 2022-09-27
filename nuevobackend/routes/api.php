@@ -145,8 +145,8 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   //lotes nueva mejora
 
 
-  Route::put('/personalote/{lote}',[\App\Http\Controllers\LoteController::class,'personalote'])->name('personalote');
-  Route::put('personalotedetach/{lote}',[\App\Http\Controllers\LoteController::class,'personalotedetach'])->name('personalotedetach');
+  Route::put('personalotes/{lote}',[\App\Http\Controllers\LoteController::class,'personalotes'])->name('personalotes');
+  Route::put('personalotesdetach/{lote}',[\App\Http\Controllers\LoteController::class,'personalotesdetach'])->name('personalotesdetach');
 
   Route::put('empresalotes/{lote}',[\App\Http\Controllers\LoteController::class,'empresalotes']); //CRUD de SociedadAccidental;
   Route::put('empresalotesdetach/{lote}',[\App\Http\Controllers\LoteController::class,'empresalotesdetach']); //CRUD de SociedadAccidental;

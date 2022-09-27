@@ -101,10 +101,9 @@ class LoteController extends Controller
             return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
         }
     }
-    public function personalote(Request $request,Lote $lote){
+    public function personalotes(Request $request,Lote $lote){
          $persona= Persona::find($request->id);
-       //  $lote= Lote::find($id);
-         $lote->personas()->attach($persona,['monto'=>0]);
+         $lote->personas()->attach($persona);
      }
      public function personalotesdetach(Request $request,Lote $lote){
         $persona= Persona::find($request->id);

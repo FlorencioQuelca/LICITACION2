@@ -547,7 +547,7 @@
     </q-dialog>
 
 
-<!-- Adicionar empresa con monto ofertado-->
+<!-- Adicionar sociedad accidental con monto ofertado-->
       <q-dialog v-model="dialog_add_sociedad">
       <q-card style="max-width: 80%; width: 60%">
         <q-card-section class="bg-green-14 text-white">
@@ -857,20 +857,36 @@ export default {
             this.consultoresSelectos.push(this.codigo)
             this.dialog_add_consultor = false;
           }
-
-
     },
     onSendEmpresaSociedad(){
        if (this.group==='op1'){
                 if(this.empresasSelectos.length){
                                    if(this.lotes.length>0){
-
-
+                                      this.$api.put(process.env.API+"/empresalotes/"+this.codigo.lote.value,{id:this.codigo.id, monto:this.codigo.monto}).then((res) => {
+                                      this.$q.notify({
+                                            color: "green-4",
+                                            textColor: "white",
+                                            icon: "cloud_done",
+                                            message: "Agregado Correctamente",
+                                          });
+                                         this.dialog_add2=false;
+                                          this.misdatos();
+                                        });
 
                                    }else{
 
+                                     this.$api.put(process.env.API+"/empresaproyectos/"+this.dato.id,{id:this.codigo.id, monto:this.codigo.monto}).then((res) => {
+                                      this.$q.notify({
+                                            color: "green-4",
+                                            textColor: "white",
+                                            icon: "cloud_done",
+                                            message: "Agregado Correctamente",
+                                          });
+                                         this.dialog_add2=false;
+                                          this.misdatos();
+                                        });
                                    }
-                }else{
+                  }else{
                               this.$q.notify({
                                       color: "red-4",
                                       textColor: "white",
@@ -882,12 +898,30 @@ export default {
       }else{
                 console.log('ES SOCIEDAD');
                 if(this.sociedadesSelectos.length){
-                     if(this.lotes.length>0){
-
-
+                                    if(this.lotes.length>0){
+                                           this.$api.put(process.env.API+"/sociedadlotes/"+this.codigo.lote.value,{id:this.codigo.id,monto:this.codigo.monto}).then((res) => {
+                                            this.$q.notify({
+                                            color: "green-4",
+                                            textColor: "white",
+                                            icon: "cloud_done",
+                                            message: "Agregado Correctamente",
+                                            });
+                                            this.dialog_add2 = false;
+                                            this.misdatos();
+                                          });
 
                                    }else{
 
+                                     this.$api.put(process.env.API+"/sociedadproyectos/"+this.dato.id,{id:this.codigo.id,monto:this.codigo.monto}).then((res) => {
+                                            this.$q.notify({
+                                            color: "green-4",
+                                            textColor: "white",
+                                            icon: "cloud_done",
+                                            message: "Agregado Correctamente",
+                                            });
+                                            this.dialog_add2 = false;
+                                            this.misdatos();
+                                          });
                                    }
 
                 }else{
@@ -907,8 +941,8 @@ export default {
         if(this.consultoresSelectos.length){
                                 if(this.lotes.length>0){
                                   this.$q.loading.show()
-                                  console.log(this.codigo)
-                                    this.$api.put(process.env.API+"/personalote/"+this.dato.id, {id:this.codigo.id}).then((res) => {
+                                  console.log('asd',this.codigo)
+                                    this.$api.put(process.env.API+"/personalotes/"+this.codigo.lote.value, {id:this.codigo.id}).then((res) => {
                                       console.log(res.data);
                                             this.$q.notify({
                                         color: "green-4",
@@ -917,6 +951,7 @@ export default {
                                         message: "Agregado Correctamente",
                                          });
                                        this.dialog_add_consultor = false;
+                                           this.dialog_add1=false;
                                         this.$q.loading.hide();
                                          this.misdatos();
                                       }).catch( (it)=>{
@@ -934,6 +969,7 @@ export default {
                                         message: "Agregado Correctamente",
                                          });
                                        this.dialog_add_consultor = false;
+                                       this.dialog_add1=false;
                                          this.misdatos();
                                       });
                                        this.$q.loading.hide();
