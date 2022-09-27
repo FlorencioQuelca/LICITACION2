@@ -142,9 +142,18 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   Route::get('registrados',[\App\Http\Controllers\RegistroController::class,'registrados'])->name('registrados');
   Route::post('/uploadPhoto',[\App\Http\Controllers\FichaController::class,'uploadPhoto']);
   Route::post('/base64ficha',[\App\Http\Controllers\FichaController::class,'base64ficha']);
-
-
   //lotes nueva mejora
+
+
+  Route::put('/personalote/{lote}',[\App\Http\Controllers\LoteController::class,'personalote'])->name('personalote');
+  Route::put('personalotedetach/{lote}',[\App\Http\Controllers\LoteController::class,'personalotedetach'])->name('personalotedetach');
+
+  Route::put('empresalotes/{lote}',[\App\Http\Controllers\LoteController::class,'empresalotes']); //CRUD de SociedadAccidental;
+  Route::put('empresalotesdetach/{lote}',[\App\Http\Controllers\LoteController::class,'empresalotesdetach']); //CRUD de SociedadAccidental;
+
+  Route::put('sociedadlotes/{lote}',[\App\Http\Controllers\LoteController::class,'sociedadlotes']); //CRUD de SociedadAccidental;
+  Route::put('sociedadlotesdetach/{lote}',[\App\Http\Controllers\LoteController::class,'sociedadlotesdetach']); //CRUD de SociedadAccidental;
+
   Route::apiResource('lote',\App\Http\Controllers\LoteController::class);
 
 });

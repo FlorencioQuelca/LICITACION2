@@ -2774,7 +2774,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                         fotografia3=''
                      }
              this.$api.post('base64ficha',{imagen1:fotografia1,imagen2:fotografia2,imagen3:fotografia3}).then(res=>{
-              //  console.log(res.data)
+                console.log(res.data)
                 this.$q.loading.hide()
                 if (res.data[0]!=null){
                    let  imgData1 =res.data[0]

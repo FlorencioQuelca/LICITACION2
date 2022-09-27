@@ -82,9 +82,7 @@
          <q-td key="fechaenvio" :props="props">
                {{props.row.carta_fecha}}
          </q-td>
-         <q-td key="informe" :props="props">
-               {{props.row.carta_cite}}
-         </q-td>
+
          <q-td key="elegible" :props="props">
                {{props.row.cumple}}
          </q-td>
@@ -163,7 +161,7 @@ const columns = [
   { name: 'inspeccion',align: "center", label: 'Inspeccionado ', field: 'inspeccion', sortable: false },
   { name: 'fechainspeccion',align: "center", label: 'Fecha de Inspeccion', field: 'fechainspeccion', sortable: false },
   { name: 'fechaenvio',align: "center", label: 'Fecha de Envio', field: 'fechaenvio', sortable: false },
-  { name: 'informe',align: "center", label: 'Informe', field: 'informe', sortable: false },
+
   { name: 'elegible',align: "center", label: 'Elegible', field: 'elegible', sortable: false },
   { name: 'estado',align: "center", label: 'Estado', field: 'estado', sortable: false },
   { name: 'tiempo',align: "center", label: 'Tiempo', field: 'tiempo', sortable: false },

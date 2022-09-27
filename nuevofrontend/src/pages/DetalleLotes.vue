@@ -224,12 +224,12 @@
     </div>
       <!--  adicionar consultor />-->
       <q-dialog v-model="dialog_add1">
-      <q-card style="max-width: 80%; width: 80%">
+      <q-card style="max-width: 80%; width: 90%">
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6">Agregar Persona</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
-           <q-form @submit="onAdd1" class="q-gutter-md">
+           <q-form @submit="onSendConsultor" class="q-gutter-md">
             <q-table
                   :filter="filter1"
                   title="Lista de personas registradas"
@@ -289,9 +289,12 @@
                 </q-table>
                   <div class="col-6">
                 <ul v-for="(it, index) in consultoresSelectos" :key="index">
-                  <li style="color=red">
-                    {{ it.ci }} {{it.datosp}}
-                  </li>
+                  <li v-if="dato.lotes.length>0">
+                      CI:{{it.ci}} Nombre Completo {{it.datosp}} Lote: {{it.lote.label}}
+                    </li>
+                    <li v-else>
+                      Ci:{{it.ci}} Nombre Completo {{it.datosp}}
+                    </li>
                 </ul>
               </div>
             <div>
@@ -320,7 +323,7 @@
         </div>
         </div>
         <q-card-section class="q-pt-xs">
-          <q-form @submit="onAdd2" class="q-gutter-md">
+          <q-form @submit="onSendEmpresaSociedad" class="q-gutter-md">
 
               <q-card-section v-if="group === 'op1'" class="q-pt-xs">
              <q-table
@@ -387,9 +390,11 @@
 
                <div class="col-6">
                   <ul v-for="(it, index) in empresasSelectos" :key="index">
-                    <li style="color=red">
-                      {{ it.nit }} {{it.nombreEmpresa}}
-
+                    <li v-if="dato.lotes.length>0">
+                      NIT:{{ it.nit }} Empresa: {{it.nombreEmpresa}} Lote: {{it.lote.label}} Monto ofertado: {{it.monto}}
+                    </li>
+                    <li v-else>
+                      NIT: {{ it.nit }} Empresa: {{it.nombreEmpresa}}  Monto Ofertado: {{it.monto}}
                     </li>
                   </ul>
               </div>
@@ -489,9 +494,12 @@
 
                <div class="col-6">
                 <ul v-for="(it, index) in sociedadesSelectos" :key="index">
-                  <li style="color=red">
-                    {{ it.codigo }} .{{it.nombreEmpresa}}
-                  </li>
+                 <li v-if="dato.lotes.length>0">
+                      Codigo:{{ it.codigo }} Sociedad: {{it.nombreEmpresa}} Lote: {{it.lote.label}} Monto ofertado: {{it.monto}}
+                    </li>
+                    <li v-else>
+                      Codigo: {{ it.codigo }} Sociedad: {{it.nombreEmpresa}}  Monto Ofertado: {{it.monto}}
+                    </li>
                 </ul>
               </div>
               </q-card-section>
@@ -506,30 +514,19 @@
       </q-card>
     </q-dialog>
 
-<!-- Adicionar empresa y/o sociedad accidentañl/>-->
+<!-- Adicionar empresa con monto ofertado-->
       <q-dialog v-model="dialog_add_empresa">
-      <q-card style="max-width: 80%; width: 50%">
+      <q-card style="max-width: 80%; width: 60%">
         <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6">Agregar Empresa/Sociedad Accidental</div>
+          <div class="text-h6">Agregar Empresa</div>
         </q-card-section>
-        <div class="row">
-        <div class="col-12">
-          <q-option-group
-            v-model="group"
-            :options="opciones"
-            color="primary"
-            inline
-          />
-        </div>
-        </div>
         <q-card-section class="q-pt-xs">
-          <q-form @submit="onAdd2" class="q-gutter-md">
-
-
-             <q-select
-              v-model="codigo.lote"
+          <q-form @submit="onAdd_empresa" class="q-gutter-md">
+             <q-select  v-if="dato.lotes.length>0"
+                outlined
+                v-model="lote"
                :options="lotes"
-               label="Standard"
+               label="Lotes"
                >
              </q-select>
              <q-input
@@ -550,6 +547,63 @@
     </q-dialog>
 
 
+<!-- Adicionar empresa con monto ofertado-->
+      <q-dialog v-model="dialog_add_sociedad">
+      <q-card style="max-width: 80%; width: 60%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Agregar Sociedad </div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onAdd_sociedad" class="q-gutter-md">
+             <q-select  v-if="dato.lotes.length>0"
+                outlined
+                v-model="lote"
+               :options="lotes"
+               label="Lotes"
+               >
+             </q-select>
+             <q-input
+              outlined
+              v-model="codigo.monto"
+              type="number"
+              step="0.01"
+              label="Monto Ofertante"
+              hint="Ingresar Monto ofertante"
+            />
+            <div>
+              <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+
+
+<!-- Adicionar consultor -->
+      <q-dialog v-model="dialog_add_consultor">
+      <q-card style="max-width: 80%; width: 60%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6">Agregar Consultor</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onAdd_consultor" class="q-gutter-md">
+             <q-select  v-if="dato.lotes.length>0"
+                outlined
+                v-model="lote"
+               :options="lotes"
+               label="Lotes"
+               >
+             </q-select>
+            <div>
+              <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
 
 
 
@@ -581,9 +635,11 @@ export default {
     dialog_add_empresa:false,
     dialog_add_consultor:false,
     dialog_add_sociedad:false,
+
     codigo:{},
     codigos:[],
     lotes:[],
+    lote:{},
     consultores:[],
     consultoresSelectos:[],
     empresas:[],
@@ -595,29 +651,16 @@ export default {
     filter3:'',
 
 
-    subcol: [
-      {
-        name: "nombre",
-        required: true,
-        label: "Codigo de Proyecto",
-        align: "left",
-        // field: (row.codigos) => row.nombre,
-        // field: row => row.name,
-        // format: val => `${val}`,
-        field: "nombre",
-        sortable: true,
+    subcol: [{
+        name: "nombre",required: true,label: "Codigo de Proyecto",align: "left",// field: (row.codigos) => row.nombre,// field: row => row.name, // format: val => `${val}`,
+        field: "nombre",sortable: true,
       },
-      {
-        name: "opcion",
-        label: "opcion",
-        align: "rigth",
-        // field: (row) => row.codigo,
-        field: "opcion",
-        sortable: true,
+      {  name: "opcion",label: "opcion",align: "rigth",// field: (row) => row.codigo,
+         field: "opcion",sortable: true,
       },
     ],
     subcol1: [
-      {name: "ci",required: true,label: "C.I.",align: "center",field: "ci",sortable: true,},
+    {name: "ci",required: true,label: "C.I.",align: "center",field: "ci",sortable: true,},
     {name: "fechanac",label: "Fecha de Nacimiento",align: "center",field: "fechanac",sortable: true,},
     {name: "paterno",label: "Apellido Paterno",align: "left",field: "paterno",sortable: true,},
     {name: "materno",label: "Apellido Materno",align: "left",field: "materno",sortable: true,},
@@ -674,10 +717,7 @@ export default {
       this.$api.get(process.env.API + "/proyectoid/" + this.$route.params.id).then((res) => {
           this.data = res.data[0];
           this.dato = res.data[0];
-
-
-
-           console.log(res.data)
+         console.log(res.data)
            this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
            this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
            this.rows.push({titulo:"Cuce : ", descripcion: res.data[0].cuce})
@@ -692,8 +732,12 @@ export default {
            this.rows.push({titulo:"Codigos de proyecto ", descripcion: res.data[0].fecha})
            this.rows.push({titulo:"Comision Evaluadora ", descripcion: res.data[0].fecha})
             if(res.data[0].lotes.length>0){
-               //   res.data[0].lote.
-              // this.lotes=res.data[0].lotes.forEaach
+                 this.lotes=[]
+               const lotes1=res.data[0].lotes
+              lotes1.forEach((it)=> {
+                  this.lotes.push({label:it.nombre,value:it.id});
+              })
+                this.lote=this.lotes[0]
               this.rows.push({titulo:"Nº de lotes ", descripcion: res.data[0].lotes.length})
             }else{
               this.rows.push({titulo:"Nº de lotes ", descripcion: "PROCESO SIN LOTES"})
@@ -714,14 +758,14 @@ export default {
       cargarEmpresas() {
       this.$api.get(process.env.API + "/empresa").then((res) => {
         this.empresas = res.data;
-         console.log(res.data);
+       //  console.log(res.data);
         this.$q.loading.hide();
       });
       },
       cargarSociedades() {
       this.$api.get(process.env.API + "/sociedad").then((res) => {
         this.sociedades = res.data;
-          console.log(res.data);
+         // console.log(res.data);
         this.$q.loading.hide();
       });
     },
@@ -740,19 +784,172 @@ export default {
          }
     },
     agregarConsultor(item){
-        this.consultoresSelectos.push(item.row);
-    //  console.log(this.personasSelectos);
+      this.codigo={}
+            if(this.lotes.length){
+                    this.dialog_add_consultor = true;
+                    this.codigo=item.row
+            }else{
+               if(this.consultoresSelectos.length===1){
+                    this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Solo puede seleccionar un Registro",
+                        });
+                }else{
+                    this.consultoresSelectos.push(item.row);
+                }
+           }
     },
     agregarEmpresa(item){
+        this.codigo={}
         this.dialog_add_empresa = true;
-        this.empresasSelectos.push(item.row);
-
-
-    //  console.log(this.personasSelectos)
+        this.codigo=item.row
     },
     agregarSociedad(item){
-        this.sociedadesSelectos.push(item.row);
-    //  console.log(this.personasSelectos);
+        this.codigo={}
+        this.dialog_add_sociedad = true;
+        this.codigo=item.row
+    },
+    onAdd_empresa(){
+         if(this.lotes.length){
+           this.codigo.lote=this.lote
+         }
+          if(this.empresasSelectos.length===1){
+        this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Solo puede seleccionar un Registro",
+                        });
+          }else{
+        this.empresasSelectos.push(this.codigo);
+        this.dialog_add_empresa = false;
+          }
+   },
+    onAdd_sociedad(){
+         if(this.lotes.length){
+            this.codigo.lote=this.lote
+         }
+          if(this.sociedadesSelectos.length===1){
+        this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Solo puede seleccionar un Registro",
+                        });
+          }else{
+        this.sociedadesSelectos.push(this.codigo);
+        this.dialog_add_sociedad = false;
+          }
+    },
+    onAdd_consultor(){
+      if(this.consultoresSelectos.length===1){
+        this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Solo puede seleccionar un Registro",
+                        });
+          }else{
+
+            this.codigo.lote=this.lote
+            this.consultoresSelectos.push(this.codigo)
+            this.dialog_add_consultor = false;
+          }
+
+
+    },
+    onSendEmpresaSociedad(){
+       if (this.group==='op1'){
+                if(this.empresasSelectos.length){
+                                   if(this.lotes.length>0){
+
+
+
+                                   }else{
+
+                                   }
+                }else{
+                              this.$q.notify({
+                                      color: "red-4",
+                                      textColor: "white",
+                                      icon: "cloud_done",
+                                      message: "debe  Seleccionar Una Empresa",
+                                    });
+
+                }
+      }else{
+                console.log('ES SOCIEDAD');
+                if(this.sociedadesSelectos.length){
+                     if(this.lotes.length>0){
+
+
+
+                                   }else{
+
+                                   }
+
+                }else{
+                              this.$q.notify({
+                                      color: "red-4",
+                                      textColor: "white",
+                                      icon: "cloud_done",
+                                      message: "debe Seleccionar Una Sociedad Accidental",
+                                    });
+
+                }
+         }
+
+
+    },
+    onSendConsultor(){
+        if(this.consultoresSelectos.length){
+                                if(this.lotes.length>0){
+                                  this.$q.loading.show()
+                                  console.log(this.codigo)
+                                    this.$api.put(process.env.API+"/personalote/"+this.dato.id, {id:this.codigo.id}).then((res) => {
+                                      console.log(res.data);
+                                            this.$q.notify({
+                                        color: "green-4",
+                                        textColor: "white",
+                                        icon: "cloud_done",
+                                        message: "Agregado Correctamente",
+                                         });
+                                       this.dialog_add_consultor = false;
+                                        this.$q.loading.hide();
+                                         this.misdatos();
+                                      }).catch( (it)=>{
+                                        this.$q.loading.hide();
+                                        console.log(it)
+                                      });
+
+                                   }else{
+                                    this.$q.loading.show();
+                                      this.$api.put(process.env.API + "/personaproyectos/"+this.dato.id,this.codigo).then((res) => {
+                                            this.$q.notify({
+                                        color: "green-4",
+                                        textColor: "white",
+                                        icon: "cloud_done",
+                                        message: "Agregado Correctamente",
+                                         });
+                                       this.dialog_add_consultor = false;
+                                         this.misdatos();
+                                      });
+                                       this.$q.loading.hide();
+
+                                   }
+
+
+                }else{
+                              this.$q.notify({
+                                      color: "red-4",
+                                      textColor: "white",
+                                      icon: "cloud_done",
+                                      message: "debe Seleccionar un Consultor",
+                                    });
+
+                }
     }
   },
 };

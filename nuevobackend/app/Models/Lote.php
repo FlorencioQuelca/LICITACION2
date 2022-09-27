@@ -28,15 +28,16 @@ class Lote extends Model
     protected $hidden =['created_at','updated_at'];
 
     //relacion muchos a muchos inversa polimorfica
+    public function personas(){
+        return $this->morphedByMany('App\Models\Persona','detallelote')->withPivot(['monto']);
+   }
+
     public function empresas(){
-            return $this->morphedByMany('App\Models○\Empresa','detallelote')->withPivot(['monto']);;
+        return $this->morphedByMany('App\Models\Empresa','detallelote')->withPivot(['monto']);
     }
      public function sociedads(){
-            return $this->morphedByMany('App\Models○\Sociedad','detallelote')->withPivot(['monto']);;
+        return $this->morphedByMany('App\Models\Sociedad','detallelote')->withPivot(['monto']);
     }
-    public function personas(){
-        return $this->morphedByMany('App\Models○\Persona','detallelote')->withPivot(['monto']);;
-   }
    //relacion uno a muchos inversa
     public function proyecto(){
        return $this->belongsTo('App\Models\Proyecto');
