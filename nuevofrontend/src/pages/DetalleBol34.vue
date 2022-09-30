@@ -2072,7 +2072,8 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
         let vinculo ="VINCULO H.R. Nº "+this.dato.interno
         let informe=this.dato.carta_cite+"."
         let referencia="RESPUESTA A LA SOLICITUD DE EVALUACION Y VERIFICACION DE CONTENIDO PROYECTO "+this.dato.nombre
-        let profesional=this.cambiarminiscula(this.$store.state.login.user.name)
+        //let profesional=this.cambiarminiscula(this.$store.state.login.user.name)
+        let profesional="Arq. Cinthia Mabel Choque Paredes"
 
           let doc = new jsPDF('portrait' ,null, 'letter');
           let logofps = new Image();
