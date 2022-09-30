@@ -45,11 +45,11 @@ class CreateRegistrosTable extends Migration
             $table->string("observacion")->nullable();  // RECOMENDACIONES
 
             //carta
-            $table->string("carta_a")->nullable();
+            $table->string("carta_a")->nullable(); //fecha de la carta
             $table->string("carta_via")->nullable();
             $table->string("carta_de")->nullable();
             $table->string("carta_ref")->nullable();
-            $table->date('carta_fecha')->nullable();
+            $table->date('carta_fecha')->nullable(); //fecha de la ficha tecnica
             $table->string('carta_cite')->nullable();
             $table->string('cumple')->nullable();
 

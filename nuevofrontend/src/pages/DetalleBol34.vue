@@ -15,7 +15,7 @@
       @click="this.$router.push('/RegistroBol34')"
       class="q-mb-xs"
     />
-     <q-btn v-if="false"
+     <q-btn v-if="this.$store.state.login.user.status==='CENTRAL'"
       label="Imprimir INFORME"
       color="red"
       icon="print"
@@ -181,6 +181,18 @@
                      </div>
                    </div>
 
+                  <div class="row" v-if="this.$store.state.login.user.status==='CENTRAL'">
+                      <div class="col">
+                       <q-btn icon="summarize" label="DATOS PARA INFORME" stack glossy @click="view_form0" color="purple" style="width:200px; margin:10px 0px 0px 0px" />
+                        </div>
+                        <div class="col">
+                         <q-linear-progress size="50px" :value="progress9" color="accent" class="q-mt-sm" style="margin:20px 0px 0px 0px">
+                        <div class="absolute-full flex flex-center">
+                          <q-badge color="white" text-color="accent" :label="progressLabel9" />
+                        </div>
+                        </q-linear-progress>
+                     </div>
+                   </div>
 
 
                </div>
@@ -563,6 +575,39 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
+
+
+     <!--          formulario 0 NACIONAL  -->
+    <q-dialog v-model="dialog_form0">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6"><q-icon name="edit" /> {{titulo}}</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onMod0" class="q-gutter-md">
+            <q-input
+              outlined
+              v-model="dato.carta_cite"
+              type="text"
+              label="Hoja de Ruta"
+              hint="Ingresar Hoja de Ruta"
+            />
+            <q-input
+              outlined
+              v-model="dato.carta_a"
+              type="date"
+              hint="Ingresar fecha de la Carta"
+            />
+            <div>
+              <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
      <!--          formulario 8  -->
     <q-dialog v-model="dialog_form8">
       <q-card style="max-width: 100%; width: 100%">
@@ -648,10 +693,7 @@
                         label="Subir FOTOGRAFIA Nº1 (IZQUIERDA) (Max 4mb) "
                         accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile1"
-
-
                       />
-
                 </div>
                 <div class="col-4">
 
@@ -805,8 +847,6 @@
                         :factory="uploadFile2"
 
                       />
-
-
                 </div>
                 <div class="col-4">
                  <div class="row">
@@ -852,8 +892,6 @@
                     label="Observacion"
                     hint="Ingresar alguna Observacion"
                   />
-
-
                    <div class="q-pa-md">
                         <span>  CONCLUSIONES: Usted recomienda Rechazar o Aprobar el proyecto ?</span>
                         <q-radio v-model="dato2.aprobado" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="SI" label="APROBAR" />
@@ -873,20 +911,14 @@
                           label="dias"
                           hint="Ingresar en cuantos dias"
                         />
-
                        <q-uploader
                         class="full-width"
                         label="Subir FOTOGRAFIA (PLANO DE UBICACION)  (Max 4mb)"
                          accept=".jpg,png,jpeg,image/*"
                         :factory="uploadFile3"
-
-
                       />
                 </div>
              </div>
-
-
-
             <div>
               <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
               <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
@@ -937,6 +969,7 @@ export default {
     progress6:0.2,
     progress7:0.0,
     progress8:0.0,
+    progress9:0.0,
     progressLabel1:'20.0 %',
     progressLabel2:'0.0 %',
     progressLabel3:'20.0 %',
@@ -945,6 +978,7 @@ export default {
     progressLabel6:'20.0 %',
     progressLabel7:'0.0 %',
     progressLabel8:'0.0 %',
+    progressLabel9:'0.0 %',
    // progressLabel2:(progress2*100).toFixed(2)+'%'
     dialog_form1:false,
     dialog_form2345:false,
@@ -952,6 +986,7 @@ export default {
     dialog_form6:false,
     dialog_form7:false,
     dialog_form8:false,
+    dialog_form0:false,
     fecha_inspeccion:moment().format('YYYY-MM-DD'),
      departamentos:[],
       departamento:{},
@@ -1138,6 +1173,14 @@ export default {
            }
 
         }
+
+         if(this.dato.carta_a && this.dato.carta_cite){
+           this.progress9=1
+                this.progressLabel9=(this.progress7*100).toFixed(2)+"%"
+          }else{
+               this.progress9=0.0
+                this.progressLabel9=(this.progress9*100).toFixed(2)+"%"
+          }
          if(this.dato.ficha!=null){
               if(this.dato.ficha.foto1 && this.dato.ficha.foto2 && this.dato.ficha.foto3){
                           this.progress8=1
@@ -1501,6 +1544,23 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
           this.$q.loading.hide();
         });
     },
+     onMod0() {
+      this.$q.loading.show();
+      this.$api.put(process.env.API + "/registros/" + this.dato.id, this.dato)
+        .then((res) => {
+          if (res.data.res === true) {
+            this.$q.notify({
+              color: "green-4",
+              textColor: "white",
+              icon: "cloud_done",
+              message: "Modificado correctamente",
+            });
+          }
+          this.dialog_form0 = false;
+          this.misdatos();
+          this.$q.loading.hide();
+        });
+    },
     guardar(item){
 
          if(item.tipo==="CRITERIO"){
@@ -1694,9 +1754,10 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
         let i88=""
         let i99=""
         let i100=""
+        console.log(this.dato.evaluacions);
         this.dato.evaluacions.forEach(it =>{
                 if(it.nombre==="C-1"){
-                  c11=it.pivot.descripcion
+                  c11= 'El proyecto beneficia a '+ it.pivot.descripcion + " familias"
                      if(it.pivot.presenta==="SI"){
                        c11presenta="Cumple"
                      }else{
@@ -1720,56 +1781,162 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                      }
                 }
                 if(it.nombre==="R-1"){
-                  r11=it.pivot.descripcion
+                     if(it.pivot.presenta==="SI"){
+                       r11="Presenta."
+                     }else{
+                       r11="No Presenta."
+                     }
                 }
                 if(it.nombre==="R-2"){
-                  r22=it.pivot.descripcion
+
+                 if(it.pivot.presenta==="SI"){
+                       r22="Cumple, el monto se encuentra por debajo del techo máximo de Inversion."
+                     }else {
+                       r22="No Cumple, el presupuesto debe ser ajustado"
+                     }
                 }
                 if(it.nombre==="R-3"){
-                  r33=it.pivot.descripcion
+                       if(it.pivot.presenta==="SI"){
+                       r33="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       r33="No Presenta."
+                     }else{
+                      r33="No corresponde (Categoria A)"
+                     }
                 }
                 if(it.nombre==="R-4"){
-                  r44=it.pivot.descripcion
+                   if(it.pivot.presenta==="SI"){
+                       r44="Presenta."
+                     }else{
+                       r44="No Presenta."
+                     }
+                 // r44=it.pivot.descripcion
                 }
                 if(it.nombre==="R-5"){
-                  r55=it.pivot.descripcion
+                   if(it.pivot.presenta==="SI"){
+                       r55="Presenta."
+                     }else{
+                       r55="No Presenta."
+                     }
+               //  r55=it.pivot.descripcion
                 }
                 if(it.nombre==="R-6"){
-                  r66=it.pivot.descripcion
+
+                   if(it.pivot.presenta==="SI"){
+                       r66="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       r66="No Presenta."
+                     }else{
+                      r66="No corresponde (Categoria A)"
+                     }
                 }
                 if(it.nombre==="R-7"){
-                  r77=it.pivot.descripcion
+                       if(it.pivot.presenta==="SI"){
+                       r77="Presenta."
+                     }else{
+                       r77="No Presenta."
+                     }
                 }
 
                 if(it.nombre==="I-1"){
-                  i11=it.pivot.descripcion
+                   if(it.pivot.presenta==="SI"){
+                       i11="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       i11="No Presenta."
+                     }else{
+                      i11="Debe ser Complementado."
+                     }
+                //  i11=it.pivot.descripcion
                 }
                 if(it.nombre==="I-2"){
-                  i22=it.pivot.descripcion
+                   if(it.pivot.presenta==="SI"){
+                       i22="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       i22="No Presenta."
+                     }else{
+                      i22="Debe ser Complementado."
+                     }
+               //   i22=it.pivot.descripcion
                 }
                 if(it.nombre==="I-3"){
-                  i33=it.pivot.descripcion
+                   if(it.pivot.presenta==="SI"){
+                       i33="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       i33="No Presenta."
+                     }else{
+                      i33="Debe ser Complementado."
+                     }
+                  //i33=it.pivot.descripcion
                 }
                 if(it.nombre==="I-4"){
-                  i44=it.pivot.descripcion
+                     if(it.pivot.presenta==="SI"){
+                       i44="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       i44="No Presenta."
+                     }else{
+                      i44="Debe ser Complementado."
+                     }
+                 // i44=it.pivot.descripcion
                 }
                 if(it.nombre==="I-5"){
-                  i55=it.pivot.descripcion
+                     if(it.pivot.presenta==="SI"){
+                       i55="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       i55="No Presenta."
+                     }else{
+                       i55="Debe ser Complementado."
+                     }
+                 // i55=it.pivot.descripcion
                 }
                 if(it.nombre==="I-6"){
-                  i66=it.pivot.descripcion
+                     if(it.pivot.presenta==="SI"){
+                       i66="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       i66="No Presenta."
+                     }else{
+                      i66="Debe ser Complementado."
+                     }
+                //  i66=it.pivot.descripcion
                 }
                 if(it.nombre==="I-7"){
-                  i77=it.pivot.descripcion
+                     if(it.pivot.presenta==="SI"){
+                       i77="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       i77="No Presenta."
+                     }else{
+                      i77="Debe ser Complementado."
+                     }
+                  //i77=it.pivot.descripcion
                 }
                 if(it.nombre==="I-8"){
-                  i88=it.pivot.descripcion
+                     if(it.pivot.presenta==="SI"){
+                       i88="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       i88="No Presenta."
+                     }else{
+                       i88="Debe ser Complementado."
+                     }
+                  //i88=it.pivot.descripcion
                 }
                 if(it.nombre==="I-9"){
-                  i99=it.pivot.descripcion
+                     if(it.pivot.presenta==="SI"){
+                       i99="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       i88="No Presenta."
+                     }else{
+                      i99="Debe ser Complementado."
+                     }
+                //  i99=it.pivot.descripcion
                 }
                 if(it.nombre==="I-10"){
-                  i100=it.pivot.descripcion
+                     if(it.pivot.presenta==="SI"){
+                       i100="Presenta."
+                     }else if(it.pivot.presenta==="NO"){
+                       i100="No Presenta."
+                     }else{
+                      i100="Debe ser Complementado."
+                     }
+               //   i100=it.pivot.descripcion
                 }
         })
         let con1="De la revisión de la documentación concerniente a la solicitud de enlosetado del proyecto "+this.dato.nombre+" del Departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+" y según el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se concluye:"
@@ -1884,8 +2051,8 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                xpiso3=88
                break;
           default:
-               gerentedepartamental="Ing. solo departamentales"
-               jefetecnico="Ing. solo departamentales"
+               gerentedepartamental="Arq. Vicente Israel Quisbert Herrera"
+               jefetecnico="Arq. Conthia Mabel Choque Paredes"
                piso1='Oficina Central: Calle Belisario Salinas, esq. Presbítero Medina Nº354 Z/Sopocachi'
                piso2='Telf. 2-412474 - 411995    Fax. 2-413124    Casilla 10713'
                piso3='Web: www.fps.gob.bo – La Paz - Bolivia'
@@ -1899,11 +2066,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
         let rec3="Es todo cuanto podemos informar para los fines consiguientes."
         let gerentenacional="Ing. Sergio Janco Vargas"
         let mosca= this.mosca(gerentenacional)+"/"+this.mosca(gerentedepartamental)+"/"+this.mosca(this.$store.state.login.user.name)
-         if(this.mosca(gerentedepartamental)===this.mosca(jefetecnico)){
-            mosca= this.mosca(gerentenacional)+"/"+this.mosca(gerentedepartamental)+"/"+this.mosca(this.$store.state.login.user.name)
-         }else{
-           mosca= this.mosca(gerentenacional)+"/"+this.mosca(gerentedepartamental)+"/"+this.mosca(jefetecnico)+"/"+this.mosca(this.$store.state.login.user.name)
-         }
+
         let copia="C.c. Archivo Programa Bol-34/2021"
         let adjunto="Se adjunta : "+this.dato.adjunto
         let vinculo ="VINCULO H.R. Nº "+this.dato.interno
@@ -1931,8 +2094,8 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text(informe, 78,45)
              doc.text(gerentenacional, 65,55)
              doc.text(gerentedepartamental, 65,68)
-             doc.text(jefetecnico, 65,80)
-             doc.text(profesional, 65,93)
+             //doc.text(jefetecnico, 65,80)
+             doc.text(profesional, 65,88)
              //PIE DE PAGINA
              doc.setFontSize(8, 'normal')
             doc.text(piso1,xpiso1, 262)
@@ -1944,18 +2107,20 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.setFontSize(12,"bold")
              doc.text('INFORME', 100,40)
              doc.text("GERENTE DE PROGRAMAS Y PROYECTOS", 65,60)
-             doc.text("GERENTE DEPARTAMENTAL DE FPS LA PAZ", 65,73)
-             doc.text("JEFE DE UNIDAD TECNICA LA PAZ", 65,85)
-             doc.text("PROFESIONAL TECNICO FPS", 65,98)
+             doc.text("JEFE DE UNIDAD DE PROGRAMAS Y PROYECTOS", 65,73)
+             doc.text("PRODUCTOS Y SOCILAES a.i", 65,78)
+           //  doc.text("JEFE DE UNIDAD TECNICA LA PAZ", 65,85)
+             doc.text("PROFESIONAL TÉCNICO - INFRAESTRUCTURA", 65,93)
+             doc.text("PRODUCTIVA Y PROYECTOS ESPECIALES", 65,98)
              doc.text("A:", 35,55)
              doc.text("Vía:", 35,68)
-             doc.text("DE:", 35,93)
+             doc.text("DE:", 35,88)
              doc.text("REF:", 35,105)
 
              doc.text(referencia, 65,105,{maxWidth: 125,align: "justify"})
              doc.text("FECHA:", 35,133)
-            let fecha_informe=this.dato.carta_fecha==null ?  moment().format('YYYY-MM-DD') : this.dato.carta_fecha
-            let departamento=this.$store.state.login.user.status
+            let fecha_informe=this.dato.carta_a==null ?  moment().format('YYYY-MM-DD') : this.dato.carta_a
+            let departamento="LA PAZ"
              const fechaDeCarta= this.fechalarga(fecha_informe,departamento)
              doc.text(fechaDeCarta, 65,133)
              doc.line(30,135,190,135)
@@ -2243,8 +2408,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
         return answer
       },
         view_form6(){
-
-
             this.titulo="RESULTADOS DE EVALUACION"
           if(this.dato.carta_cite==null){
             this.dato.carta_cite="INF/FPS/GDXX Nº 0XXX/2022"
@@ -2322,14 +2485,9 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                         this.otro=true
                         this.otrosi=this.dato.comunidades
                     }
-
                  }
                  }
-
-
-
            }
-
          if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
            this.dialog_form6=true;
          }else{
@@ -2341,6 +2499,16 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
             });
          }
     },
+     view_form0(){
+       this.titulo="DATOS COMPLEMENTARIOS AL INFORME"
+        if(this.dato.carta_cite===null){
+          this.dato.carta_cite='INF/FPS/GPP - UPPS N° 0XXX/2022'
+        }
+         if(this.dato.carta_a===null){
+         this.dato.carta_a= moment().format('YYYY-MM-DD');
+         }
+      this.dialog_form0=true
+     },
     view_form7(){
       this.titulo="EVALUACION EN CAMPO"
         if(this.dato.vinculo==null){
