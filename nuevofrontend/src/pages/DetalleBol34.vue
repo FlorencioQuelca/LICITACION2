@@ -1074,7 +1074,7 @@ export default {
         .then((res) => {
           this.dato=res.data[0]
          //this.datocopia=this.dato.evaluacions
-         // console.log(this.dato);
+        // console.log(this.dato);
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})

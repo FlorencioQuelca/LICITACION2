@@ -102,14 +102,10 @@
         </div>
       </q-card-section>
 
-
-
     </q-card>
 
-
-
-    <q-card v-if="data.tipo_id === 1" dense>
-      <q-card-section class="bg-green-14 text-white">
+    <q-card v-if="data.tipo_id === 1 && data.lotes.length===0" dense>
+      <q-card-section class="bg-green-14 text-white"  style="padding: 2px 2px 2px 25px">
         <div class="text-h6">Lista oficial de Oferentes Presentados</div>
       </q-card-section>
       <div class="row">
@@ -125,7 +121,7 @@
       <q-card-section v-if="group === 'op1'" class="q-pt-xs">
         <q-table
           :rows="data.empresas"
-          :columns="subcol2"
+          :columns="subcol2a"
           separator="cell"
           dense
           :rows-per-page-options="[0]"
@@ -135,8 +131,11 @@
               <q-td key="nit" :props="props">
                 {{ props.row.nit }}
               </q-td>
-              <q-td key="nombre" :props="props">
+             <q-td key="nombreEmpresa" :props="props">
                 {{ props.row.nombreEmpresa }}
+              </q-td>
+              <q-td key="nombreLegal" :props="props">
+                {{ props.row.nombreLegal }}
               </q-td>
               <q-td key="monto" :props="props">
                 {{ props.row.pivot.monto }}
@@ -149,7 +148,7 @@
       <q-card-section v-else class="q-pt-xs">
         <q-table
           :rows="data.sociedads"
-          :columns="subcol3"
+          :columns="subcol3a"
           separator="cell"
           dense
           :rows-per-page-options="[0]"
@@ -159,33 +158,117 @@
               <q-td key="codigo" :props="props">
                 {{ props.row.codigo }}
               </q-td>
-              <q-td key="nombre" :props="props">
+              <q-td key="nombreEmpresa" :props="props">
                 {{ props.row.nombreEmpresa }}
               </q-td>
+              <q-td key="nombreLegal" :props="props">
+                {{ props.row.nombreLegal }}
+              </q-td>
+              <q-td key="asociados" :props="props">
+                   <ul>
+                          <span v-for="(empresas,index) in props.row.empresas" :key="index">
+                              <li >
+                                {{empresas.nit}}  ({{empresas.pivot.participacion}}) %  {{empresas.nombreLegal}}
+                            </li>
+                          </span>
+                        </ul>
+                      </q-td>
+
               <q-td key="monto" :props="props">
                 {{ props.row.pivot.monto }}
               </q-td>
-              <q-td key="empresas" :props="props">
-                <ul>
-                  <span
-                    v-for="(empresas, index) in props.row.empresas"
-                    :key="index"
-                  >
-                    <li>
-                      {{ empresas.nit }} ({{ empresas.pivot.participacion }}) %
-                    </li>
-                  </span>
-                </ul>
-              </q-td>
+
             </q-tr>
           </template>
         </q-table>
       </q-card-section>
     </q-card>
 
-    <div>
-      <q-card v-if="data.tipo_id === 2" dense>
-        <q-card-section class="bg-green-14 text-white" dense>
+
+  <div  v-for="(lote,index) in data.lotes" :key="index" dense>
+    <q-card v-if="data.tipo_id === 1 && data.lotes.length>0"  dense>
+      <q-card-section class="bg-green-14 text-white"  style="padding: 2px 2px 2px 25px">
+        <div class="text-h6">{{lote.nombre}}</div>
+      </q-card-section>
+      <div class="row">
+        <div class="col-12">
+          <q-option-group
+            v-model="group"
+            :options="opciones"
+            color="primary"
+            inline
+          />
+        </div>
+      </div>
+      <q-card-section v-if="group === 'op1'" class="q-pt-xs">
+        <q-table
+          :rows="lote.empresas"
+          :columns="subcol2a"
+          separator="cell"
+          dense
+          :rows-per-page-options="[0]"
+        >
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td key="nit" :props="props">
+                {{ props.row.nit }}
+              </q-td>
+             <q-td key="nombreEmpresa" :props="props">
+                {{ props.row.nombreEmpresa }}
+              </q-td>
+              <q-td key="nombreLegal" :props="props">
+                {{ props.row.nombreLegal }}
+              </q-td>
+              <q-td key="monto" :props="props">
+                {{ props.row.pivot.monto }}
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+      </q-card-section>
+
+      <q-card-section v-else class="q-pt-xs">
+        <q-table
+          :rows="lote.sociedads"
+          :columns="subcol3a"
+          separator="cell"
+          dense
+          :rows-per-page-options="[0]"
+        >
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td key="codigo" :props="props">
+                {{ props.row.codigo }}
+              </q-td>
+              <q-td key="nombreEmpresa" :props="props">
+                {{ props.row.nombreEmpresa }}
+              </q-td>
+              <q-td key="nombreLegal" :props="props">
+                {{ props.row.nombreLegal }}
+              </q-td>
+              <q-td key="asociados" :props="props">
+                   <ul>
+                          <span v-for="(empresas,index) in props.row.empresas" :key="index">
+                              <li >
+                                {{empresas.nit}}  ({{empresas.pivot.participacion}}) %  {{empresas.nombreLegal}}
+                            </li>
+                          </span>
+                        </ul>
+                      </q-td>
+
+              <q-td key="monto" :props="props">
+                {{ props.row.pivot.monto }}
+              </q-td>
+
+            </q-tr>
+          </template>
+        </q-table>
+      </q-card-section>
+    </q-card>
+  </div>
+
+      <q-card v-if="data.tipo_id === 2 && data.lotes.length===0" dense>
+        <q-card-section class="bg-green-14 text-white" style="padding: 2px 2px 2px 25px">
           <div class="text-h6" dense>Lista de consultores presentados</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
@@ -221,7 +304,66 @@
           </q-table>
         </q-card-section>
       </q-card>
+
+       <div   v-for="(lote,index) in data.lotes" :key="index">
+       <q-card v-if="data.tipo_id === 2 && data.lotes.length>0">
+        <q-card-section class="bg-green-14 text-white"  style="padding: 2px 2px 2px 25px">
+          <div class="text-h6" > {{lote.nombre}} TOTAL: {{lote.personas.length}}</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <q-table
+            :rows="lote.personas"
+            :columns="subcol1"
+            separator="cell"
+            dense
+            :rows-per-page-options="[0]"
+          >
+            <template v-slot:body="props">
+              <q-tr :props="props">
+                <q-td key="ci" :props="props">
+                  {{ props.row.ci }}
+                </q-td>
+                <q-td key="fechanac" :props="props">
+                  {{ props.row.fechaNacimiento }}
+                </q-td>
+                <q-td key="paterno" :props="props">
+                  {{ props.row.paterno }}
+                </q-td>
+                <q-td key="materno" :props="props">
+                  {{ props.row.materno }}
+                </q-td>
+                <q-td key="nombres" :props="props">
+                  {{ props.row.nombres }}
+                </q-td>
+                <q-td key="nombre" :props="props">
+                  {{ props.row.datosp }}
+                </q-td>
+              </q-tr>
+            </template>
+          </q-table>
+        </q-card-section>
+      </q-card>
+
+
     </div>
+
+ <q-card >
+      <q-card-section class="bg-green-14 text-white"  >
+        <div class="text-h6">GANADORES</div>
+      </q-card-section>
+        <div class="row">
+           <q-item v-if="data.contrato!=null ">
+                <q-item-section >
+                <q-item-label>  {{data.contrato.nombre}}</q-item-label>
+                <q-item-label caption>contrato ESTAMOS TRABAJANDO EN ELLO</q-item-label>
+              </q-item-section>
+            </q-item>
+
+       </div>
+ </q-card>
+
+
+
       <!--  adicionar consultor />-->
       <q-dialog v-model="dialog_add1">
       <q-card style="max-width: 80%; width: 90%">
@@ -424,7 +566,7 @@
                     {{props.row.nombreLegal}}
                   </q-td>
 
-                   <q-td key="empresas" :props="props">
+                   <q-td key="asociados" :props="props">
                           <ul>
                           <span v-for="(empresas,index) in props.row.empresas" :key="index">
                               <li>
@@ -547,7 +689,7 @@
     </q-dialog>
 
 
-<!-- Adicionar sociedad accidental con monto ofertado-->
+    <!-- Adicionar sociedad accidental con monto ofertado-->
       <q-dialog v-model="dialog_add_sociedad">
       <q-card style="max-width: 80%; width: 60%">
         <q-card-section class="bg-green-14 text-white">
@@ -581,7 +723,7 @@
 
 
 
-<!-- Adicionar consultor -->
+    <!-- Adicionar consultor -->
       <q-dialog v-model="dialog_add_consultor">
       <q-card style="max-width: 80%; width: 60%">
         <q-card-section class="bg-green-14 text-white">
@@ -649,8 +791,6 @@ export default {
     filter1:'',
     filter2:'',
     filter3:'',
-
-
     subcol: [{
         name: "nombre",required: true,label: "Codigo de Proyecto",align: "left",// field: (row.codigos) => row.nombre,// field: row => row.name, // format: val => `${val}`,
         field: "nombre",sortable: true,
@@ -682,13 +822,26 @@ export default {
   {name: "codigo",required: true,label: "codigo",align: "left",field: "codigo",sortable: true,},
   { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
   { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
-  { name: "empresas",label: "asociados",align: "left",field: "asociados",sortable: true,},
+  { name: "asociados",label: "asociados",align: "left",field: "asociados",sortable: true,},
   { name: 'opcion',align:"center",label: 'Accion', field: 'opcion', sortable: false },
   { name: 'fono1', align:"center",label: 'Celular', field: 'fono1', sortable: true },
   { name: 'fono2', align:"center",label: 'Telefono', field: 'fono2', sortable: true },
   { name: 'email',align:"left", label: 'Correo', field: 'email', sortable: true },
   { name: 'direccion', align:"left",label: 'Direccion', field: 'direccion', sortable: true },
   { name: "opcion",label: "opcion",align: "left",field: "opcion",sortable: true,},
+    ],
+    subcol2a: [
+  {name: "nit", required: true,label: "N.I.T.", align: "left",field: "nit", sortable: true,},
+  { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
+  { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
+  { name: 'monto', align:"center",label: 'Oferta', field: 'monto', sortable: true },
+    ],
+  subcol3a: [
+  {name: "codigo",required: true,label: "codigo",align: "left",field: "codigo",sortable: true,},
+  { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
+  { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
+  { name: "asociados",label: "asociados",align: "left",field: "asociados",sortable: true,},
+  { name: 'monto', align:"center",label: 'Oferta', field: 'monto', sortable: true },
     ],
 
     opciones: [
@@ -718,17 +871,17 @@ export default {
           this.data = res.data[0];
           this.dato = res.data[0];
          console.log(res.data)
-           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
            this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
+           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
            this.rows.push({titulo:"Cuce : ", descripcion: res.data[0].cuce})
            this.rows.push({titulo:"Programa : ", descripcion: res.data[0].programa.nombre})
            this.rows.push({titulo:"Monto toal [Bs] : ", descripcion: res.data[0].precio})
            this.rows.push({titulo:"Plazo [Dias]: ", descripcion: res.data[0].plazo})
-           this.rows.push({titulo:"Plazo [Dias]: ", descripcion: res.data[0].plazo})
+         //  this.rows.push({titulo:"Plazo [Dias]: ", descripcion: res.data[0].plazo})
            this.rows.push({titulo:"Enlace de la Reunion ", descripcion: res.data[0].link})
            this.rows.push({titulo:"Hora de la Apertura ", descripcion: res.data[0].hora})
            this.rows.push({titulo:"Fecha de la Apertura ", descripcion: res.data[0].fecha})
-           this.rows.push({titulo:"Nro de Convocatoria ", descripcion: res.data[0].convocatoria})
+        //   this.rows.push({titulo:"Nro de Convocatoria ", descripcion: res.data[0].convocatoria})
            this.rows.push({titulo:"Codigos de proyecto ", descripcion: res.data[0].fecha})
            this.rows.push({titulo:"Comision Evaluadora ", descripcion: res.data[0].fecha})
              this.lotes=[]
@@ -770,8 +923,9 @@ export default {
       });
     },
     ver_join(){
-     // this.dato2 = item.row;
-       this.codigo={}
+
+     if (this.$store.state.login.user.tipo==='admin'){
+      this.codigo={}
         if (this.dato.tipo_id===2)
          {
                   this.consultoresSelectos=[]
@@ -782,6 +936,18 @@ export default {
                 this.sociedadesSelectos=[]
                 this.dialog_add2 = true; // empresas y sociedades
          }
+
+     }else{
+       this.$q.notify({
+                          color: "red-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Usted no tiene Permiso para acceder a este sitio",
+                        });
+
+     }
+
+
     },
     agregarConsultor(item){
       this.codigo={}

@@ -92,6 +92,11 @@
          <q-td key="tiempo" :props="props">
                {{props.row.duracion}} Dias
          </q-td>
+          <q-td
+                key="familias" :props="props">
+               {{props.row.familias}}
+         </q-td>
+
          <q-td
                 key="area" :props="props">
                {{props.row.monto3}} m2
@@ -165,6 +170,7 @@ const columns = [
   { name: 'elegible',align: "center", label: 'Elegible', field: 'elegible', sortable: false },
   { name: 'estado',align: "center", label: 'Estado', field: 'estado', sortable: false },
   { name: 'tiempo',align: "center", label: 'Tiempo', field: 'tiempo', sortable: false },
+  { name: 'familias',align: "center", label: 'Familias', field: 'familias', sortable: false },
   { name: 'area',align: "center", label: 'Area (m2)', field: 'area', sortable: false },
   { name: 'solicitante',align: "center", label: ' U. Solicitante', field: 'solicitante', sortable: false },
   { name: 'avance',align: "center", label: '% Evaluacion ', field: 'avance', sortable: false }
@@ -176,6 +182,8 @@ export default {
       columns,
       filter:'',
       data:[],
+      familias:0,
+      evaluaciones:[],
     };
     },
     created(){
@@ -205,9 +213,19 @@ export default {
       //    this.$q.loading.hide();
         this.data=[]
        this.$api.get(process.env.API+"/registrados").then((res)=>{
-         //  console.log(res.data);
+    // console.log(res.data);
             let puntaje=0
+            this.evaluaciones=res.data.evaluacions;
+
         res.data.forEach(it=>{
+                  this.familias=0
+              it.evaluacions.forEach(it =>{
+                    if(it.nombre==='C-1'){
+                           this.familias=it.pivot.descripcion
+                         }
+                     })
+                     it.familias=this.familias
+
 
                              if(it.status==="ENVIADO"){
                                  it.puntaje=100.00
@@ -247,7 +265,10 @@ export default {
                                }
 
                        }
+
+
               })
+
           this.$q.loading.hide();
        });
        },
@@ -323,6 +344,7 @@ export default {
                             evaluador:this.data[i].evaluador,
                             aprobado:this.data[i].cumple,
                             status:this.data[i].status,
+                            familias:this.data[i].familias,
                             area:this.data[i].monto3,
                             solictante:this.data[i].presentado_por,
                             evaluacion:this.data[i].puntaje+" %",

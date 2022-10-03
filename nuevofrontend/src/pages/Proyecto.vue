@@ -132,13 +132,7 @@
               label="Plazo de Entrega"
               hint="Ingresar plazo de Entrega"
             />
-             <q-input
-              outlined
-              v-model="dato.lotes"
-              type="text"
-              label="Numero de Lotes"
-              hint="Ingresar numero de lotes"
-            />
+
              </div>
              </div>
             <div>
@@ -258,7 +252,7 @@
           <q-td key="plazo" :props="props">
             {{props.row.plazo}}
           </q-td>
-            <q-td key="funcionarios" :props="props">
+            <q-td key="comision" :props="props">
               <ul>
               <span v-for="(it,index) in props.row.funcionarios" :key="index">
                   <li>
@@ -276,11 +270,8 @@
               </span>
              </ul>
           </q-td>
-
-
-
-           <q-td key="comision" :props="props">
-                      <q-btn
+          <q-td key="opcion" :props="props">
+              <q-btn
                         dense
                         round
                         flat
@@ -297,17 +288,13 @@
                         icon="list"
                       ></q-btn>
 
-
-            </q-td>
-
-          <q-td key="opcion" :props="props">
                        <q-btn
                         dense
                         round
                         flat
                         color="green"
                         @click="lotes(props)"
-                        icon="difference"
+                        icon="playlist_add"
                       ></q-btn>
                        <q-btn
                         dense
@@ -459,14 +446,6 @@
 
               label="Plazo de Entrega"
               hint="Ingresar plazo de Entrega"
-            />
-             <q-input
-              outlined
-              v-model="dato2.lotes"
-              type="text"
-              label="Numero de Lotes"
-              hint="Ingresar numero de lotes"
-
             />
              </div>
              </div>
@@ -1033,9 +1012,9 @@ const  columns= [
   { name: 'hora', align:"center",label: 'hora', field: 'hora', sortable: true },
   { name: 'precio', align:"center",label: 'Precio', field: 'precio', sortable: true },
   { name: 'plazo', align:"center",label: 'plazo', field: 'plazo', sortable: true },
-  { name: 'lotes',align:"Center", label: 'Lotes', field: 'lotes', sortable: true },
   { name: 'comision',align:"left", label: 'Comision', field: 'comision', sortable: true },
-  { name: 'funcionarios',align:"left", label: 'Comision', field: 'funcionarios', sortable: true },
+  { name: 'lotes',align:"left", label: 'Lotes', field: 'lotes', sortable: true },
+  //{ name: 'funcionarios',align:"left", label: 'Comision', field: 'funcionarios', sortable: true },
   { name: 'opcion', label: 'Opcion', field: 'opcion' }
    ]
 

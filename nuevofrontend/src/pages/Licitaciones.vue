@@ -450,7 +450,9 @@ proyecto:{},
     },
     verRow1(item) {
       this.dato2 = item.row;
-       this.$router.push({name: 'presentados.view', params: {id:this.dato2.id}})
+    //    this.dato2 = item.row;
+       this.$router.push({name: 'detallelotes.view', params: {id:this.dato2.id}})
+      // this.$router.push({name: 'presentados.view', params: {id:this.dato2.id}})
 //this.$router.push("Licitaciones")
 
      /*
