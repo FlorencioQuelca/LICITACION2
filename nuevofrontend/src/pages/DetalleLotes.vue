@@ -346,22 +346,61 @@
 
 
     </div>
-
- <q-card >
+<div   v-for="(contrato,index) in data.contratos" :key="index">
+     <q-card >
       <q-card-section class="bg-green-14 text-white"  >
-        <div class="text-h6">GANADORES</div>
+        <div class="text-h6">{{contrato.nombre}}</div>
       </q-card-section>
         <div class="row">
-           <q-item v-if="data.contrato!=null ">
+                <q-item>
                 <q-item-section >
-                <q-item-label>  {{data.contrato.nombre}}</q-item-label>
-                <q-item-label caption>contrato ESTAMOS TRABAJANDO EN ELLO</q-item-label>
-              </q-item-section>
-            </q-item>
+                <q-item-label >CONSULTORES</q-item-label>
+                  </q-item-section>
+               </q-item>
+                       <ul>
+                          <span v-for="(persona,index) in contrato.personas" :key="index">
+                              <li >
+                                {{persona.ci}}   {{persona.datosp}} ({{persona.pivot.categoria}})
+                            </li>
+                          </span>
+                        </ul>
+        </div>
+          <div class="row">
+                <q-item>
+                <q-item-section >
+                <q-item-label >EMPRESAS</q-item-label>
+                  </q-item-section>
+               </q-item>
+                       <ul>
+                          <span v-for="(it,index) in contrato.empresas" :key="index">
+                              <li >
+                                {{it.nit}}   {{it.nombreLegal}} ({{it.pivot.categoria}})
+                            </li>
+                          </span>
 
-       </div>
- </q-card>
+                        </ul>
+        </div>
+          <div class="row">
+                <q-item>
+                <q-item-section >
+                <q-item-label >SOCIEDADES</q-item-label>
+                  </q-item-section>
+               </q-item>
+                       <ul>
+                          <span v-for="(it,index) in contrato.sociedads" :key="index">
+                              <li >
+                                {{it.nit}}   {{it.nombreLegal}} ({{it.pivot.categoria}})
+                            </li>
+                          </span>
+                        </ul>
+        </div>
 
+
+
+    </q-card>
+
+
+</div>
 
 
       <!--  adicionar consultor />-->

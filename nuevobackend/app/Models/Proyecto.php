@@ -54,8 +54,8 @@ class Proyecto extends Model
         return $this->morphedByMany('App\Models\Sociedad','detalle')->withPivot(['monto']);
      }
      // relacion uno a muchos
-    public function contrato(){
-        return $this->hasOne(Contrato::class);
+    public function contratos(){
+        return $this->hasMany(Contrato::class);
     }
     //relacion uno a muchos
     public function lotes(){

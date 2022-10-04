@@ -23,7 +23,7 @@
       @click="imprimir"
     />
        <q-btn
-      label="Imprimir EVALUCION TECNICA"
+      label="Imprimir EVALUACION TECNICA"
       color="red"
       icon="print"
       class="q-mb-xs"
@@ -1062,7 +1062,7 @@ export default {
          this.$q.loading.show();
 
        this.$api.get(process.env.API+"/evaluacions").then((res)=>{
-        console.log(res.data);
+       // console.log(res.data);
           this.evaluaciones=res.data
           this.$q.loading.hide();
        });
@@ -1074,7 +1074,7 @@ export default {
         .then((res) => {
           this.dato=res.data[0]
          //this.datocopia=this.dato.evaluacions
-       console.log(this.dato);
+      // console.log(this.dato);
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
@@ -3148,9 +3148,9 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("NO CUMPLE", 126,98)
              doc.text("OBSERVACIONES", 149,98)
 
+           //  console.log('entro hasta aqui')
 
-
-              if(this.dato.evaluacions){
+              if(this.dato.evaluacions.length>0){
 
 
                  this.dato.evaluacions.forEach(it =>{
@@ -3351,6 +3351,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
              })
           }
+          //  console.log('entro hasta aqui 2')
 
                 //parte 2
              doc.rect(15,105,185,8,'DF')
@@ -3454,8 +3455,8 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text('RETIRO DE ENLADRILLADO', 146, 195)
              doc.text('RETIRO EMPEDRADO', 146, 199)
              doc.text('RETIRO ENLOSETADO', 146, 203)
-                  if(this.dato.firmado_por){
-            let items2=this.dato.firmado_por.split("-")
+                  if(this.dato.firmado_por!=null){
+              let items2=this.dato.firmado_por.split("-")
                 // console.log(items2)
                  for(let i=0; i<items2.length-1; i++){
                       if(items2[i]=='cordones'){
@@ -3498,6 +3499,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
                  }
                   }
+              //    console.log('entro hasta aqui 3')
 
                    //parte 5
              doc.rect(15,208,185,5,'FD')

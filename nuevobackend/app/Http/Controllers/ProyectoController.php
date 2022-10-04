@@ -21,7 +21,7 @@ class ProyectoController extends Controller
         return \response()->json($proyectos, 200);
     }
     public function proyectoid(Proyecto $proyecto){
-        $proyecto =Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios','lotes','lotes.personas','lotes.empresas','lotes.sociedads','lotes.sociedads.empresas', 'contrato','contrato.personas','contrato.empresas','contrato.sociedads'])
+        $proyecto =Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios','lotes','lotes.personas','lotes.empresas','lotes.sociedads','lotes.sociedads.empresas', 'contratos','contratos.personas','contratos.empresas','contratos.sociedads'])
                             ->orWhere('id', '=', $proyecto->id)->get();
 
         return \response()->json($proyecto,200);
