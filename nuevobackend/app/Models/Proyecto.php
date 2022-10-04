@@ -18,7 +18,6 @@ class Proyecto extends Model
             "link",
             "precio",
             "plazo",
-            "lotes",
             "programa_id",
             "tipo_id",
             "departamento_id"

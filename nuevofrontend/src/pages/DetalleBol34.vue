@@ -1062,7 +1062,7 @@ export default {
          this.$q.loading.show();
 
        this.$api.get(process.env.API+"/evaluacions").then((res)=>{
-       //  console.log(res.data);
+        console.log(res.data);
           this.evaluaciones=res.data
           this.$q.loading.hide();
        });
@@ -1074,7 +1074,7 @@ export default {
         .then((res) => {
           this.dato=res.data[0]
          //this.datocopia=this.dato.evaluacions
-        // console.log(this.dato);
+       console.log(this.dato);
           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
           this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
           this.rows.push({titulo:"Municipio : ", descripcion: res.data[0].municipio})
@@ -1347,7 +1347,7 @@ export default {
                          if(it.nombre==="I-4"){
                            this.evaluaciones[13].descripcion1=it.pivot.descripcion
                            this.evaluaciones[13].valor=it.pivot.presenta
-                           this.evaluaciones[12].puntaje=it.pivot.puntaje
+                           this.evaluaciones[13].puntaje=it.pivot.puntaje
                          }
 
                           if(it.nombre==="I-5"){
