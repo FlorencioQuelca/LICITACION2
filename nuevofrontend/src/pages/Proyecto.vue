@@ -1624,7 +1624,6 @@ proyecto:{},
      onSubmit() {
       this.errores =null;
       this.$q.loading.show();
-
        this.dato.departamento_id=this.depa.value;
        this.dato.programa_id=this.prog.value;
        this.dato.tipo_id=this.tipo.value;

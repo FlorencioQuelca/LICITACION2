@@ -503,13 +503,7 @@
 
 
                      <div class="col-4"  v-if="item.tipo===op && item.tipo==='CRITERIO' ">
-                      <q-input  v-if="item.nombre!=='C-1'"
-                        outlined
-                        v-model="item.descripcion1"
-                        type="textarea"
-                        label="Observacion"
-                        hint="Ingrese la observacion"
-                      />
+
                       <q-input  v-if="item.nombre==='C-1' "
                         outlined
                         v-model="item.descripcion1"
@@ -517,6 +511,20 @@
                         step="1"
                         label="familias"
                         hint="Ingrese Numero de Familias beneficiarias"
+                      />
+                       <q-input  v-if="item.nombre==='C-2'"
+                        outlined
+                        v-model="item.descripcion1"
+                        type="textarea"
+                        label="Centro de salud / U.E. Villa fps"
+                        hint="Ingrese nombre de una Escuela o centro de salud"
+                      />
+                       <q-input  v-if="item.nombre==='C-3'"
+                        outlined
+                        v-model="item.descripcion1"
+                        type="textarea"
+                        label="zona/area geologica sin/con riesgo"
+                        hint="Mencione que no es una zona/area de riesgo"
                       />
                      </div>
                         <div class="col-1"  v-if="item.tipo===op">
@@ -1094,13 +1102,18 @@ export default {
             if(res.data[0].vinculo==='SI'){
               this.rows.push({titulo:"fecha de inspeccion : ", descripcion: res.data[0].copia})
             }
-          this.rows.push({titulo:"Cite Informe : ", descripcion: res.data[0].carta_cite})
-          this.rows.push({titulo:"Fecha de Envio de Informe : ", descripcion: res.data[0].carta_fecha})
-          this.rows.push({titulo:"Estado del Proyecto : ", descripcion: res.data[0].status})
+        this.rows.push({titulo:"Priorizado Por: ", descripcion: res.data[0].presentado_por})
+          if(res.data[0].monto3>0){
+        this.rows.push({titulo:"Area m2:", descripcion: res.data[0].monto3})
+          }
+      if(res.data[0].carta_fecha){
+                this.rows.push({titulo:"Fecha de Envio FICHA TECNICA : ", descripcion: res.data[0].carta_fecha})
+        }
+       this.rows.push({titulo:"Estado del Proyecto : ", descripcion: res.data[0].status})
              if(res.data[0].ficha){
                this.rows.push({titulo:"Cuenta con Planimetria Aprobada? ", descripcion: res.data[0].ficha.planimetria})
-               this.rows.push({titulo:"Ubicacion : ", descripcion: res.data[0].ficha.ubicacion})
-               this.rows.push({titulo:"Circunscripcion : ", descripcion: res.data[0].ficha.circunscripcion})
+             //  this.rows.push({titulo:"Ubicacion : ", descripcion: res.data[0].ficha.ubicacion})
+             //  this.rows.push({titulo:"Circunscripcion : ", descripcion: res.data[0].ficha.circunscripcion})
                this.rows.push({titulo:"Latitud : ", descripcion: res.data[0].ficha.latitud})
                this.rows.push({titulo:"Longitud : ", descripcion: res.data[0].ficha.longitud})
                this.rows.push({titulo:"Reporte Fotografico (izquierda) : ", descripcion: res.data[0].ficha.foto1})
@@ -1112,9 +1125,18 @@ export default {
             let req=0
             let var1=0
          res.data[0].evaluacions.forEach(it=>{
-             if(it.nombre==="C-1"){cr++}
-             if(it.nombre==="C-2"){cr++}
-             if(it.nombre==="C-3"){cr++}
+             if(it.nombre==="C-1"){
+              this.rows.push({titulo:"Nro Familias:", descripcion: it.pivot.descripcion})
+              if(it.pivot.descripcion){
+                cr++
+              }
+             }
+             if(it.nombre==="C-2"){ if(it.pivot.descripcion){
+                cr++
+              }}
+             if(it.nombre==="C-3"){ if(it.pivot.descripcion){
+                cr++
+              }}
              if(it.nombre==="R-1"){req++}
              if(it.nombre==="R-2"){req++}
              if(it.nombre==="R-3"){req++}
@@ -1159,20 +1181,24 @@ export default {
             this.progress1=0.5
             this.progressLabel1=(this.progress1*100).toFixed(2)+"%"
          }
-       if(this.dato.status!=="RECIBIDO" && this.dato.status!=null){
-            this.progress6=1
-           this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
-        }else {
-           if (this.dato.observacion && this.dato.cumple){
-                 this.progress6=1
-              this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
-           }else{
-                 this.progress6=0.8
-              this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
-
+         let pb=0
+           if(this.dato.monto3>0){
+            pb++
            }
-
-        }
+           if(this.dato.presentado_por){
+            pb++
+           }
+            if(this.dato.cumple){
+            pb++
+           }
+             if(this.dato.observacion){
+            pb++
+           }
+             if(this.dato.carta_fecha){
+            pb++
+           }
+          this.progress6=pb/5
+          this.progressLabel6=(this.progress6*100).toFixed(2)+"%"
 
          if(this.dato.carta_a && this.dato.carta_cite){
            this.progress9=1
@@ -1182,19 +1208,32 @@ export default {
                 this.progressLabel9=(this.progress9*100).toFixed(2)+"%"
           }
          if(this.dato.ficha!=null){
-              if(this.dato.ficha.foto1 && this.dato.ficha.foto2 && this.dato.ficha.foto3){
-                          this.progress8=1
-                        this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
-                      }else  if(this.dato.ficha.aprobado!=null){
-                            this.progress8=0.7
-                            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
-                      }else if(this.dato.ficha.distrito!=null){
-                        this.progress8=0.6
-                            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
-                      }else{
-                        this.progress8=0.5
-                            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
-                      }
+             let pbficha=0
+             if(this.dato.ficha.foto1){
+               pbficha++
+             }
+              if(this.dato.ficha.foto2){
+               pbficha++
+             }
+              if(this.dato.ficha.foto3){
+               pbficha++
+             }
+              if(this.dato.ficha.circunscripcion | this.dato.ficha.zona){
+               pbficha++
+             }  if(this.dato.ficha.aprobado){
+               pbficha++
+             }
+               if(this.dato.ficha.latitud){
+               pbficha++
+             }
+               if(this.dato.ficha.longitud){
+               pbficha++
+             }
+               if(this.dato.ficha.ubicacion){
+               pbficha++
+             }
+              this.progress8=pbficha/8
+            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
          }else{
             this.progress8=0
             this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
@@ -2574,15 +2613,18 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
         }
     },
     onMod8() {
-         if(this.dato.ficha.foto1 && this.dato.ficha.foto2 && this.dato.ficha.foto3){
-           this.progress8=1
-            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
-         }else {
-            this.progress8=0.7
-            this.progressLabel8=(this.progress8*100).toFixed(2)+"%"
-         }
+          this.$q.loading.show();
+       //   console.log(this.dato2)
+              if(this.dato.ficha.foto1){
+                this.dato2.foto1=this.dato.ficha.foto1
+              }
+               if(this.dato.ficha.foto2){
+                this.dato2.foto2=this.dato.ficha.foto2
+              }
+               if(this.dato.ficha.foto3){
+                this.dato2.foto3=this.dato.ficha.foto3
+              }
 
-           this.$q.loading.show();
                this.$api.put(process.env.API+"/ficha/"+this.dato.ficha.id, this.dato2).then((res) => {
                 if(res.data.res===true){
                     this.$q.notify({
@@ -2623,7 +2665,9 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                     message: "Insertado Correctamente",
                   });
 
+
              this.misdatos()
+
             })
           }else{
                  this.$q.dialog({
@@ -2815,7 +2859,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.rect(20,20, 180,150)
              doc.rect(20,20, 180,150)
              doc.rect(20,20, 180,160)
-             doc.rect(20,20, 180,161)
+           //  doc.rect(20,20, 180,165)
              doc.rect(75,95, 125,10)
              doc.rect(75,95, 125,5)
              doc.rect(75,95, 20,10)
@@ -2957,7 +3001,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                 this.$q.loading.hide()
                 if (res.data[0]!=null){
                    let  imgData1 =res.data[0]
-                      doc.rect(25,190, 170,60)
+                  //    doc.rect(25,190, 170,60)
                    doc.addImage(imgData1, "jpeg", 23, 185, 85, 67, null, "FAST");
                 }
                 if(res.data[1]!=null){
@@ -3023,6 +3067,32 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
     },
      imprimirEvaluacion(){
+
+         if(this.dato.evaluacions){
+            let ans=0
+            this.dato.evaluacions.forEach(it =>{
+                  if(it.nombre==="C-1"   && it.pivot.descripcion!=null){
+                        ans++
+                  }
+                   if(it.nombre==="C-2"  && it.pivot.descripcion!=null){
+                        ans++
+                   }
+                 if(it.nombre==="C-3" && it.pivot.descripcion!=null){
+                           ans++
+                 }
+             })
+             console.log(ans);
+              if(ans<3){
+                          this.$q.notify({
+                    color: "red",
+                    textColor: "white",
+                    icon: "cloud_done",
+                    message: "CRITERIOS DE EVALUACION OBLIGATORIOS (Observacion)",
+                  });
+                 return
+              }
+
+         }
           let doc = new jsPDF('portrait' ,null, 'letter');
           let logofps = new Image();
           logofps.src = 'logofps.png';
@@ -3150,7 +3220,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
            //  console.log('entro hasta aqui')
 
-              if(this.dato.evaluacions.length>0){
+              if(this.dato.evaluacions){
 
 
                  this.dato.evaluacions.forEach(it =>{
@@ -3455,9 +3525,10 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text('RETIRO DE ENLADRILLADO', 146, 195)
              doc.text('RETIRO EMPEDRADO', 146, 199)
              doc.text('RETIRO ENLOSETADO', 146, 203)
-                  if(this.dato.firmado_por!=null){
+           //  console.log('entroaqui');
+             if(this.dato.firmado_por!==null){
               let items2=this.dato.firmado_por.split("-")
-                // console.log(items2)
+                //console.log('-->',items2)
                  for(let i=0; i<items2.length-1; i++){
                       if(items2[i]=='cordones'){
                             doc.text('X', 80, 195)
@@ -3499,7 +3570,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
                  }
                   }
-              //    console.log('entro hasta aqui 3')
+           //   console.log('entro hasta aqui 3')
 
                    //parte 5
              doc.rect(15,208,185,5,'FD')
@@ -3583,10 +3654,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.setFontSize(12,"bold")
              doc.text('EVALUACION TECNICA BOL - 34',73,34)
              window.open(doc.output('bloburl',{filename:"FICHA.pdf"}), '_blank');
-
-
-
-
 
     },
     adicionarComas(numero){

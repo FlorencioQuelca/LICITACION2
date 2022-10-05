@@ -97,6 +97,17 @@
                 style="width: 200px; margin: 10px 0px 0px 0px"
               />
             </div>
+             <div class="row">
+              <q-btn
+                icon="add_circle"
+                label="ASIGNAR CONTRATO"
+                stack
+                glossy
+                color="purple"
+                @click="asignar_contrato"
+                style="width: 200px; margin: 10px 0px 0px 0px"
+              />
+            </div>
 
           </div>
         </div>
@@ -343,9 +354,92 @@
           </q-table>
         </q-card-section>
       </q-card>
+       </div>
+
+    <q-table
+      title="LISTA DE CONTRATOS FIRMADOS"
+      :rows="dato.contratos"
+      :columns="columnas_contratos"
+      row-key="nombre"
+      :rows-per-page-options="[0]"
+      separator="cell"
+   >
+     <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td key="numero" :props="props">
+            {{props.row.numero}}
+          </q-td>
+           <q-td key="nombre" :props="props">
+            {{props.row.nombre}}
+          </q-td>
+          <q-td key="opcion1" :props="props">
+                                  <q-btn
+                                    dense
+                                    round
+                                    flat
+                                    color="green"
+                                    @click="addRow(props)"
+                                    icon="playlist_add"
+                                  ></q-btn>
+                                  <q-btn
+                                    dense
+                                    round
+                                    flat
+                                    color="green"
+                                    @click="verRow(props)"
+                                    icon="list"
+                                  ></q-btn>
+                                   <q-btn
+                                    dense
+                                    round
+                                    flat
+                                    color="red"
+                                    @click="addRow_detail(props)"
+                                    icon="playlist_add"
+                                  ></q-btn>
+                                 <q-btn
+                                  dense
+                                  round
+                                  flat
+                                  color="red"
+                                  @click="verRow1(props)"
+                                  icon="list"
+                                ></q-btn>
+            </q-td>
+              <q-td key="seguimiento" :props="props">
+            {{props.row.seguimiento}}
+          </q-td>
+           <q-td key="fechaini" :props="props">
+            {{props.row.fechaini}}
+          </q-td>
+
+             <q-td key="montobs" :props="props">
+            {{props.row.montobs}}
+          </q-td>
+
+            <q-td v-if="$store.state.login.user.tipo==='admin'" key="opcion" :props="props">
+                       <q-btn
+                            dense
+                            round
+                            flat
+                            color="yellow"
+                            @click="editRow(props)"
+                            icon="edit"
+                        />
+                    <q-btn
+                      dense
+                      round
+                      flat
+                      color="red"
+                      @click="deleteRow(props)"
+                      icon="delete"
+                    ></q-btn>
+            </q-td>
+       </q-tr>
+      </template>
+    </q-table>
 
 
-    </div>
 <div   v-for="(contrato,index) in data.contratos" :key="index">
      <q-card >
       <q-card-section class="bg-green-14 text-white"  >
@@ -785,6 +879,60 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+     <!--          ADICIONAR contrato -->
+   <q-dialog v-model="form_add_contrato">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6"><q-icon name="add_circle" /> Nuevo Contrato: {{dato.nombre}}</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onCreateContrato"  class="q-gutter-md">
+            <q-select  v-if="dato.lotes.length>0"
+               outlined
+              :options="data_lotes"
+              v-model="loteElegido"
+              label="proyecto asociado"
+           >
+            </q-select>
+             <q-input v-else
+              outlined
+              v-model="dato.nombre"
+              type="text"
+              label="Nombre del proyecto"
+              hint="Ingresar nombre del proyecto"
+            />
+               <q-input
+              outlined
+              v-model="dato2.numero"
+              type="text"
+              label="Numero de contrato"
+              hint="Ingresar Numero de contrato Ej.(02-2022)"
+                 lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+           <q-input
+              outlined
+              v-model="dato2.seguimiento"
+              type="text"
+              label="Nombre del seguimiento ejemplo FPS/02/2020"
+              hint="Ingresar EL SEGUIMIENTO"
+
+            />
+             <q-input
+                  outlined
+                  type="date"
+                  v-model="dato2.fechaini"
+                  hint="Ingresar Fecha de Inicio de contrato"
+                />
+
+            <div>
+              <q-btn label="Crear contrato" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
 
 
 
@@ -798,7 +946,8 @@ const columna = [
     required: true,
     label: 'Titulo',
     align: 'right',
-    field: 'titulo'
+    field: 'titulo',
+
   },
   { name: 'descripcion',   align:'lefth', label: 'Descripcion', field: 'descripcion' },
 
@@ -807,6 +956,7 @@ export default {
   data: () => ({
     data: {},
     dato: {},
+    dato2:{},
     rows:[],
     programa: "",
     departamento: "",
@@ -816,6 +966,9 @@ export default {
     dialog_add_empresa:false,
     dialog_add_consultor:false,
     dialog_add_sociedad:false,
+    form_add_contrato:false,
+    data_lotes:[],
+    loteElegido:{},
 
     codigo:{},
     codigos:[],
@@ -894,6 +1047,19 @@ export default {
       },
     ],
     group: "op1",
+
+   columnas_contratos: [
+  { name: 'numero', align:"left",label: 'Numero del contrato', field: 'numero', sortable: true },
+  { name: 'nombre',required: true, align:"left",label: 'Nombre del Proyecto', field: 'nombre', sortable: true },
+
+  { name: 'opcion1', label: 'Opcion', field: 'opcion1', sortable: false },
+  { name: 'seguimiento',align:"left", label: 'Seguimiento', field: 'seguimiento', sortable: true },
+  { name: 'fechaini', align:"left",label: 'Fecha de Inicio de contrato', field: 'fechaini', sortable: true },
+  { name: 'montobs',align:"left", label: 'Monto de Contrato Bs', field: 'montobs', sortable: true },
+ // { name: 'observacion',align:"left", label: 'Observacion', field: 'observacion', sortable: true },
+  { name: 'opcion', label: 'Opcion', field: 'opcion', sortable: false }
+   ]
+
   }),
   created() {},
   mounted() {
@@ -1196,6 +1362,76 @@ export default {
 
                 }
     }
+    ,
+    asignar_contrato(){
+
+       if(this.dato.lotes.length>0){
+        this.data_lotes=[]
+         this.dato.lotes.forEach(it =>{
+          this.data_lotes.push({label:it.nombre ,value:it.id})
+         })
+         this.loteElegido=this.data_lotes[0];
+         this.form_add_contrato=true
+       }else{
+
+         this.form_add_contrato=true
+       }
+
+    },
+    onCreateContrato(){
+       if(this.dato.lotes.length>0){
+        this.dato2.nombre=this.loteElegido.label
+        this.dato2.codigos=this.loteElegido.id
+       }else{
+         this.dato2.nombre=this.dato.nombre
+         this.dato2.codigos=this.dato.id
+       }
+      this.dato2.proyecto_id =this.dato.id
+      this.$q.loading.show();
+      this.$api.post(process.env.API+"/contratos/", this.dato2).then((res) => {
+
+         if(res.data.res===true)
+          {
+            this.$q.notify({
+            color: "green-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Contrato Creado Correctamente",
+          });
+
+          }else{
+            this.$q.loading.hide();
+          }
+           this.form_add_contrato=false
+          this.misdatos();
+        }).catch((e)=>{
+          this.$q.loading.hide();
+          console.log(e)
+        });
+
+
+    },
+     addRow_detail(item) {
+      this.dato2 = item.row;
+      this.codigo={}
+      console.log(this.dato2);
+        if (this.dato.tipo_id===2)
+         {
+                 this.dialog_add1 = true;/// personas
+                 this.personas=this.dato.personas
+                 this.persona={}
+                 this.persona.id=-1
+         }else{
+                 this.dialog_add2 = true;  // empresas, sociedad y consultores
+                 this.empresas=this.dato.empresas
+                 this.sociedads=this.dato.sociedads
+                 this.empresa={}
+                 this.empresa.id=-1
+                 this.sociedad={}
+                 this.sociedad.id=-1
+
+         }
+    },
   },
 };
 </script>

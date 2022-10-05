@@ -125,9 +125,7 @@
                 color="secondary"
                 inline
               />
-
               </div>
-
              </div>
             <div>
               <q-btn label="Crear contrato" type="submit" color="positive" icon="add_circle" />
@@ -162,15 +160,13 @@
             {{props.row.numero}}
           </q-td>
            <q-td key="nombre" :props="props">
-            {{props.row.proyecto.nombre}}
+            {{props.row.nombre}}
           </q-td>
-
 
            <q-td key="archivos" :props="props">
               <ul>
               <span v-for="(codigos,index) in props.row.archivos" :key="index">
                   <li>
-
                     {{codigos.nombre}}  {{codigos.tipo}}
                         <q-btn
                             dense
