@@ -216,9 +216,8 @@ class ContratoController extends Controller
 
     }
     public function personacontratos(Request $request,Contrato $contrato){
-
         $persona= Persona::find($request->id);
-        $contrato->personas()->attach($persona);
+        $contrato->personas()->attach($persona,['oficial'=>$request->monto]);
      }
      public function personacontratosdetach(Request $request,Contrato $contrato){
         $persona= Persona::find($request->id);
@@ -226,7 +225,7 @@ class ContratoController extends Controller
      }
             public function empresacontratos(Request $request,Contrato $contrato){
                 $empresa= Empresa::find($request->id);
-                $contrato->empresas()->attach($empresa);
+                $contrato->empresas()->attach($empresa,['oficial'=>$request->monto]);
 
             }
             public function empresacontratosdetach(Request $request,Contrato $contrato){
@@ -236,7 +235,7 @@ class ContratoController extends Controller
 
             public function sociedadcontratos(Request $request,Contrato $contrato){
                 $sociedad= Sociedad::find($request->id);
-                $contrato->sociedads()->attach($sociedad);
+                $contrato->sociedads()->attach($sociedad,['oficial'=>$request->monto]);
             }
             public function sociedadcontratosdetach(Request $request,Contrato $contrato){
                 $sociedad= Sociedad::find($request->id);

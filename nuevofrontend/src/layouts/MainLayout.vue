@@ -152,7 +152,8 @@
           <q-item-section avatar>
             <q-icon color="teal" name="summarize" />
           </q-item-section>
-          <q-item-section>RegistroBol34</q-item-section>
+          <q-item-section >RegistroBol34</q-item-section>
+
         </q-item>
 
           <q-item  v-if="$store.state.login.reportebol34"
@@ -189,10 +190,10 @@ export default defineComponent({
   },
   setup () {
     const leftDrawerOpen = ref(false)
-    return {
+     return {
       // essentialLinks: linksList,
       leftDrawerOpen,
-      toggleLeftDrawer () {
+        toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }
     }

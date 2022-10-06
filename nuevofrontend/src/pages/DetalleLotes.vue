@@ -411,11 +411,37 @@
           </q-td>
            <q-td key="fechaini" :props="props">
             {{props.row.fechaini}}
-          </q-td>
-
-             <q-td key="montobs" :props="props">
-            {{props.row.montobs}}
-          </q-td>
+          </q-td >
+             <q-td  v-if="props.row.personas"
+             key="dependientes" :props="props">
+                       <ul>
+                          <span v-for="(it,index) in props.row.personas" :key="index">
+                              <li >
+                                {{it.ci}}   {{it.datosp}} ({{it.pivot.oficial}}) Bs {{it.pivot.categoria}}
+                            </li>
+                          </span>
+                        </ul>
+           </q-td>
+           <q-td  v-if="props.row.empresas"
+             key="dependientes" :props="props">
+                       <ul>
+                          <span v-for="(it,index) in props.row.empresas" :key="index">
+                              <li >
+                                {{it.nit}}   {{it.nombreEmpresa}} ({{it.pivot.oficial}}) Bs {{it.pivot.categoria}}
+                            </li>
+                          </span>
+                        </ul>
+           </q-td>
+            <q-td  v-if="props.row.sociedads"
+             key="dependientes" :props="props">
+                       <ul>
+                          <span v-for="(it,index) in props.row.sociedads" :key="index">
+                              <li >
+                                {{it.codigo}}   {{it.nombreEmpresa}} ({{it.pivot.oficial}}) Bs {{it.pivot.categoria}}
+                            </li>
+                          </span>
+                        </ul>
+           </q-td>
 
             <q-td v-if="$store.state.login.user.tipo==='admin'" key="opcion" :props="props">
                        <q-btn
@@ -454,7 +480,7 @@
                        <ul>
                           <span v-for="(persona,index) in contrato.personas" :key="index">
                               <li >
-                                {{persona.ci}}   {{persona.datosp}} ({{persona.pivot.categoria}})
+                                {{persona.ci}}   {{persona.datosp}}  ({{persona.pivot.oficial}}) {{persona.pivot.categoria}}
                             </li>
                           </span>
                         </ul>
@@ -468,7 +494,7 @@
                        <ul>
                           <span v-for="(it,index) in contrato.empresas" :key="index">
                               <li >
-                                {{it.nit}}   {{it.nombreLegal}} ({{it.pivot.categoria}})
+                                {{it.nit}}   {{it.nombreLegal}} ({{it.pivot.oficial}})
                             </li>
                           </span>
 
@@ -483,7 +509,7 @@
                        <ul>
                           <span v-for="(it,index) in contrato.sociedads" :key="index">
                               <li >
-                                {{it.nit}}   {{it.nombreLegal}} ({{it.pivot.categoria}})
+                                {{it.nit}}   {{it.nombreLegal}} ({{it.pivot.oficial}})
                             </li>
                           </span>
                         </ul>
@@ -562,7 +588,7 @@
                     </q-input>
                   </template>
                 </q-table>
-                  <div class="col-6">
+               <div class="col-6" v-if="!contrato">
                 <ul v-for="(it, index) in consultoresSelectos" :key="index">
                   <li v-if="dato.lotes.length>0">
                       CI:{{it.ci}} Nombre Completo {{it.datosp}} Lote: {{it.lote.label}}
@@ -572,6 +598,15 @@
                     </li>
                 </ul>
               </div>
+               <div class="col-6" v-if="contrato" >
+                <ul v-for="(it, index) in consultoresSelectos" :key="index">
+                    <li >
+                      Ci:{{it.ci}} Nombre Completo {{it.datosp}}
+                    </li>
+                </ul>
+              </div>
+
+
             <div>
               <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
@@ -663,7 +698,7 @@
                   </template>
                 </q-table>
 
-               <div class="col-6">
+               <div class="col-6"  v-if="!contrato">
                   <ul v-for="(it, index) in empresasSelectos" :key="index">
                     <li v-if="dato.lotes.length>0">
                       NIT:{{ it.nit }} Empresa: {{it.nombreEmpresa}} Lote: {{it.lote.label}} Monto ofertado: {{it.monto}}
@@ -673,6 +708,16 @@
                     </li>
                   </ul>
               </div>
+                <div class="col-6"  v-if="contrato">
+                  <ul v-for="(it, index) in empresasSelectos" :key="index">
+
+                    <li>
+                      NIT: {{ it.nit }} Empresa: {{it.nombreEmpresa}}
+                    </li>
+                  </ul>
+              </div>
+
+
               </q-card-section>
 
               <q-card-section v-if="group === 'op2'" class="q-pt-xs">
@@ -767,7 +812,7 @@
                   </template>
                 </q-table>
 
-               <div class="col-6">
+               <div class="col-6" v-if="!contrato">
                 <ul v-for="(it, index) in sociedadesSelectos" :key="index">
                  <li v-if="dato.lotes.length>0">
                       Codigo:{{ it.codigo }} Sociedad: {{it.nombreEmpresa}} Lote: {{it.lote.label}} Monto ofertado: {{it.monto}}
@@ -775,6 +820,14 @@
                     <li v-else>
                       Codigo: {{ it.codigo }} Sociedad: {{it.nombreEmpresa}}  Monto Ofertado: {{it.monto}}
                     </li>
+                </ul>
+              </div>
+               <div class="col-6" v-if="contrato">
+                <ul v-for="(it, index) in sociedadesSelectos" :key="index">
+                     <li >
+                      Codigo:{{ it.codigo }} Sociedad: {{it.nombreEmpresa}}
+                    </li>
+
                 </ul>
               </div>
               </q-card-section>
@@ -963,6 +1016,7 @@ export default {
     columna,
     dialog_add1:false,
     dialog_add2:false,
+    contrato:false,
     dialog_add_empresa:false,
     dialog_add_consultor:false,
     dialog_add_sociedad:false,
@@ -975,10 +1029,13 @@ export default {
     lotes:[],
     lote:{},
     consultores:[],
+    consultores1:[],
     consultoresSelectos:[],
     empresas:[],
+    empresas1:[],
     empresasSelectos:[],
     sociedades:[],
+    sociedades1:[],
     sociedadesSelectos:[],
     filter1:'',
     filter2:'',
@@ -1051,11 +1108,10 @@ export default {
    columnas_contratos: [
   { name: 'numero', align:"left",label: 'Numero del contrato', field: 'numero', sortable: true },
   { name: 'nombre',required: true, align:"left",label: 'Nombre del Proyecto', field: 'nombre', sortable: true },
-
   { name: 'opcion1', label: 'Opcion', field: 'opcion1', sortable: false },
   { name: 'seguimiento',align:"left", label: 'Seguimiento', field: 'seguimiento', sortable: true },
-  { name: 'fechaini', align:"left",label: 'Fecha de Inicio de contrato', field: 'fechaini', sortable: true },
-  { name: 'montobs',align:"left", label: 'Monto de Contrato Bs', field: 'montobs', sortable: true },
+  { name: 'fechaini', align:"left",label: 'Fecha de firma de contrato', field: 'fechaini', sortable: true },
+  { name: 'dependientes',align:"left", label: 'Dependientes', field: 'dependientes', sortable: true },
  // { name: 'observacion',align:"left", label: 'Observacion', field: 'observacion', sortable: true },
   { name: 'opcion', label: 'Opcion', field: 'opcion', sortable: false }
    ]
@@ -1108,63 +1164,66 @@ export default {
     },
       cargarConsultores() {
       this.$api.get(process.env.API + "/consultor").then((res) => {
-        this.consultores = res.data;
+        this.consultores1 = res.data;
         // console.log(this.personas);
         this.$q.loading.hide();
       });
       },
       cargarEmpresas() {
       this.$api.get(process.env.API + "/empresa").then((res) => {
-        this.empresas = res.data;
+        this.empresas1 = res.data;
        //  console.log(res.data);
         this.$q.loading.hide();
       });
       },
       cargarSociedades() {
       this.$api.get(process.env.API + "/sociedad").then((res) => {
-        this.sociedades = res.data;
+        this.sociedades1 = res.data;
          // console.log(res.data);
         this.$q.loading.hide();
       });
     },
     ver_join(){
-
+     this.contrato=false
      if (this.$store.state.login.user.tipo==='admin'){
       this.codigo={}
         if (this.dato.tipo_id===2)
          {
-                  this.consultoresSelectos=[]
+                this.consultoresSelectos=[]
+                 this.consultores= this.consultores1;
                  this.dialog_add1 = true; //personas
          }else{
                 this.group='op1',
                 this.empresasSelectos=[]
                 this.sociedadesSelectos=[]
+                this.sociedades = this.sociedades1
+                this.empresas = this.empresas1
                 this.dialog_add2 = true; // empresas y sociedades
          }
 
      }else{
        this.$q.notify({
-                          color: "red-4",
-                          textColor: "white",
-                          icon: "cloud_done",
+                          color: "red-4",textColor: "white",icon: "cloud_done",
                           message: "Usted no tiene Permiso para acceder a este sitio",
                         });
 
      }
 
-
     },
     agregarConsultor(item){
-      this.codigo={}
+       this.codigo={}
+      if(this.contrato){
+                this.codigo=item.row
+                this.consultoresSelectos.push(item.row);
+
+      }else{
             if(this.lotes.length){
                     this.dialog_add_consultor = true;
                     this.codigo=item.row
             }else{
                if(this.consultoresSelectos.length===1){
                     this.$q.notify({
-                          color: "red-4",
-                          textColor: "white",
-                          icon: "cloud_done",
+                          color: "red-4",textColor: "white",icon: "cloud_done",
                           message: "Solo puede seleccionar un Registro",
                         });
                 }else{
@@ -1172,42 +1231,53 @@ export default {
                     this.consultoresSelectos.push(item.row);
                 }
            }
+
+      }
+
     },
     agregarEmpresa(item){
-        this.codigo={}
+      this.codigo={}
+       if(this.contrato){
+                this.codigo=item.row
+                this.empresasSelectos.push(item.row);
+      }else{
         this.dialog_add_empresa = true;
         this.codigo=item.row
+      }
+
     },
     agregarSociedad(item){
         this.codigo={}
+          if(this.contrato){
+                this.codigo=item.row
+                this.sociedadesSelectos.push(item.row);
+      }else{
         this.dialog_add_sociedad = true;
         this.codigo=item.row
+      }
     },
     onAdd_empresa(){
-         if(this.lotes.length){
+        if(this.lotes.length){
            this.codigo.lote=this.lote
          }
           if(this.empresasSelectos.length===1){
-        this.$q.notify({
-                          color: "red-4",
-                          textColor: "white",
-                          icon: "cloud_done",
+                       this.$q.notify({
+                          color: "red-4",textColor: "white",icon: "cloud_done",
                           message: "Solo puede seleccionar un Registro",
                         });
           }else{
-        this.empresasSelectos.push(this.codigo);
-        this.dialog_add_empresa = false;
+                  this.empresasSelectos.push(this.codigo);
+                  this.dialog_add_empresa = false;
           }
+
    },
     onAdd_sociedad(){
          if(this.lotes.length){
             this.codigo.lote=this.lote
          }
           if(this.sociedadesSelectos.length===1){
-        this.$q.notify({
-                          color: "red-4",
-                          textColor: "white",
-                          icon: "cloud_done",
+                  this.$q.notify({
+                          color: "red-4",textColor: "white",icon: "cloud_done",
                           message: "Solo puede seleccionar un Registro",
                         });
           }else{
@@ -1218,149 +1288,177 @@ export default {
     onAdd_consultor(){
       if(this.consultoresSelectos.length===1){
         this.$q.notify({
-                          color: "red-4",
-                          textColor: "white",
-                          icon: "cloud_done",
+                          color: "red-4",textColor: "white",icon: "cloud_done",
                           message: "Solo puede seleccionar un Registro",
                         });
           }else{
-
             this.codigo.lote=this.lote
             this.consultoresSelectos.push(this.codigo)
             this.dialog_add_consultor = false;
           }
     },
     onSendEmpresaSociedad(){
-       if (this.group==='op1'){
-                if(this.empresasSelectos.length){
-                                   if(this.lotes.length>0){
-                                      this.$api.put(process.env.API+"/empresalotes/"+this.codigo.lote.value,{id:this.codigo.id, monto:this.codigo.monto}).then((res) => {
-                                      this.$q.notify({
-                                            color: "green-4",
-                                            textColor: "white",
-                                            icon: "cloud_done",
-                                            message: "Agregado Correctamente",
-                                          });
-                                         this.dialog_add2=false;
-                                          this.misdatos();
-                                        });
+      if(this.contrato){
 
-                                   }else{
+          if (this.group==='op1'){
 
-                                     this.$api.put(process.env.API+"/empresaproyectos/"+this.dato.id,{id:this.codigo.id, monto:this.codigo.monto}).then((res) => {
-                                      this.$q.notify({
-                                            color: "green-4",
-                                            textColor: "white",
-                                            icon: "cloud_done",
-                                            message: "Agregado Correctamente",
-                                          });
-                                         this.dialog_add2=false;
-                                          this.misdatos();
-                                        });
-                                   }
-                  }else{
+             if(this.empresasSelectos.length){
+                this.empresasSelectos[0].monto=this.empresasSelectos[0].pivot.monto
+                this.$api.put(process.env.API+"/empresacontratos/"+this.dato2.id,this.empresasSelectos[0]).then((res) => {
+                    this.$q.notify({
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Agregado Correctamente",
+                        });
+                       this.dialog_add2 = false;
+                        this.misdatos();
+                       });
+               this.dialog_add2=false;
+              }else{
+                this.$q.notify({color: "red-4",textColor: "white",icon: "cloud_done",message: "debe Seleccionar un Consultor",});
+              }
+          }else{
+
+              if(this.sociedadesSelectos.length){
+                  this.sociedadesSelectos[0].monto=this.sociedadesSelectos[0].pivot.monto
+                 this.$api.put(process.env.API + "/sociedadcontratos/"+this.dato2.id,this.sociedadesSelectos[0]).then((res) => {
                               this.$q.notify({
-                                      color: "red-4",
-                                      textColor: "white",
-                                      icon: "cloud_done",
-                                      message: "debe  Seleccionar Una Empresa",
-                                    });
+                          color: "green-4",
+                          textColor: "white",
+                          icon: "cloud_done",
+                          message: "Agregado Correctamente",
+                        });
+                         this.dialog_add2 = false;
+                        this.misdatos();
+                         });
 
-                }
+               this.dialog_add2=false;
+               console.log('aqui');
+              }else{
+                this.$q.notify({color: "red-4",textColor: "white",icon: "cloud_done",message: "debe Seleccionar un Consultor",});
+              }
+
+
+
+          }
       }else{
-                console.log('ES SOCIEDAD');
-                if(this.sociedadesSelectos.length){
+        if (this.group==='op1'){
+                 if(this.empresasSelectos.length){
                                     if(this.lotes.length>0){
-                                           this.$api.put(process.env.API+"/sociedadlotes/"+this.codigo.lote.value,{id:this.codigo.id,monto:this.codigo.monto}).then((res) => {
-                                            this.$q.notify({
-                                            color: "green-4",
-                                            textColor: "white",
-                                            icon: "cloud_done",
-                                            message: "Agregado Correctamente",
-                                            });
-                                            this.dialog_add2 = false;
-                                            this.misdatos();
-                                          });
+                                       this.$api.put(process.env.API+"/empresalotes/"+this.codigo.lote.value,{id:this.codigo.id, monto:this.codigo.monto}).then((res) => {
+                                       this.$q.notify({
+                                             color: "green-4",textColor: "white",icon: "cloud_done",
+                                             message: "Agregado Correctamente",
+                                           });
+                                          this.dialog_add2=false;
+                                           this.misdatos();
+                                         });
+                                    }else{
+                                      this.$api.put(process.env.API+"/empresaproyectos/"+this.dato.id,{id:this.codigo.id, monto:this.codigo.monto}).then((res) => {
+                                       this.$q.notify({
+                                             color: "green-4",textColor: "white",icon: "cloud_done",
+                                             message: "Agregado Correctamente",
+                                           });
+                                          this.dialog_add2=false;
+                                           this.misdatos();
+                                         });
+                                    }
+                   }else{
+                               this.$q.notify({
+                                       color: "red-4",textColor: "white",icon: "cloud_done",
+                                       message: "debe  Seleccionar Una Empresa",
+                                     });
+                 }
+       }else{
+                 if(this.sociedadesSelectos.length){
+                                     if(this.lotes.length>0){
+                                            this.$api.put(process.env.API+"/sociedadlotes/"+this.codigo.lote.value,{id:this.codigo.id,monto:this.codigo.monto}).then((res) => {
+                                             this.$q.notify({
+                                             color: "green-4",textColor: "white",icon: "cloud_done",
+                                             message: "Agregado Correctamente",
+                                             });
+                                             this.dialog_add2 = false;
+                                             this.misdatos();
+                                           });
+                                    }else{
 
-                                   }else{
+                                      this.$api.put(process.env.API+"/sociedadproyectos/"+this.dato.id,{id:this.codigo.id,monto:this.codigo.monto}).then((res) => {
+                                             this.$q.notify({
+                                             color: "green-4",textColor: "white",icon: "cloud_done",                                            message: "Agregado Correctamente",
+                                             });
+                                             this.dialog_add2 = false;
+                                             this.misdatos();
+                                           });
+                                    }
+                 }else{
+                                  this.$q.notify({color: "red-4",textColor: "white",icon: "cloud_done",message: "debe Seleccionar Una Sociedad Accidental",});
 
-                                     this.$api.put(process.env.API+"/sociedadproyectos/"+this.dato.id,{id:this.codigo.id,monto:this.codigo.monto}).then((res) => {
-                                            this.$q.notify({
-                                            color: "green-4",
-                                            textColor: "white",
-                                            icon: "cloud_done",
-                                            message: "Agregado Correctamente",
-                                            });
-                                            this.dialog_add2 = false;
-                                            this.misdatos();
-                                          });
-                                   }
-
-                }else{
-                              this.$q.notify({
-                                      color: "red-4",
-                                      textColor: "white",
-                                      icon: "cloud_done",
-                                      message: "debe Seleccionar Una Sociedad Accidental",
-                                    });
-
-                }
-         }
+                 }
+          }
+      }
 
 
     },
     onSendConsultor(){
-        if(this.consultoresSelectos.length){
+      if(this.contrato){
+
+          if(this.consultoresSelectos.length){
+
+               this.$q.loading.show()
+                 this.consultoresSelectos[0].monto=this.consultoresSelectos[0].pivot.monto
+                  this.$api.put(process.env.API + "/personacontratos/"+this.dato2.id,this.consultoresSelectos[0]).then((res) => {
+                              this.$q.notify({color: "green-4",textColor: "white",icon: "cloud_done",message: "Agregado Correctamente",})
+                         this.dialog_add1 = false
+                        this.misdatos()
+                        // console.log(res.data)
+                        });
+
+
+          }else{
+            this.$q.notify({color: "red-4",textColor: "white",icon: "cloud_done",message: "debe Seleccionar un Consultor",});
+          }
+      }else{
+          if(this.consultoresSelectos.length){
                                 if(this.lotes.length>0){
                                   this.$q.loading.show()
-                                      console.log('asd',this.codigo)
-                                    this.$api.put(process.env.API+"/personalotes/"+this.codigo.lote.value, {id:this.codigo.id}).then((res) => {
+                                       let monto=0
+                                       this.dato.lotes.forEach(it =>{
+                                           if(this.codigo.lote.value===it.id){
+                                              monto=it.monto
+                                           }
+                                        })
+                                        console.log(monto);
+                                    this.$api.put(process.env.API+"/personalotes/"+this.codigo.lote.value, {id:this.codigo.id,monto:monto}).then((res) => {
                                       console.log(res.data);
                                             this.$q.notify({
-                                              color: "green-4",
-                                        textColor: "white",
-                                        icon: "cloud_done",
-                                        message: "Agregado Correctamente",
-                                         });
-                                       this.dialog_add_consultor = false;
-                                           this.dialog_add1=false;
-                                        this.$q.loading.hide();
-                                         this.misdatos();
+                                              color: "green-4",textColor: "white",icon: "cloud_done",message: "Agregado Correctamente",});
+                                            this.dialog_add_consultor = false;
+                                            this.dialog_add1=false;
+                                            this.$q.loading.hide();
+                                            this.misdatos();
                                       }).catch( (it)=>{
                                         this.$q.loading.hide();
                                         console.log(it)
                                       });
 
                                    }else{
-                                    // console.log(this.$route.params.id)
-                                   // console.log('this.dato.id',this.dato.id)
-                                      //  console.log('asd',this.codigo)
                                     this.$q.loading.show();
-                                      this.$api.put(process.env.API+"/personaproyectos/"+this.dato.id, {id:this.codigo.id}).then((res) => {
+
+                                      this.$api.put(process.env.API+"/personaproyectos/"+this.dato.id, {id:this.codigo.id, monto:this.dato.precio}).then((res) => {
                                         this.$q.notify({
-                                        color: "green-4",
-                                        textColor: "white",
-                                        icon: "cloud_done",
-                                        message: "Agregado Correctamente",
-                                         });
+                                        color: "green-4",textColor: "white",icon: "cloud_done",message: "Agregado Correctamente",});
                                        this.dialog_add_consultor = false;
                                        this.dialog_add1=false;
                                          this.misdatos();
                                       });
                                        this.$q.loading.hide();
-
                                    }
-
-
                 }else{
-                              this.$q.notify({
-                                      color: "red-4",
-                                      textColor: "white",
-                                      icon: "cloud_done",
-                                      message: "debe Seleccionar un Consultor",
-                                    });
-
+                              this.$q.notify({color: "red-4",textColor: "white",icon: "cloud_done",message: "debe Seleccionar un Consultor",});
                 }
+      }
+
     }
     ,
     asignar_contrato(){
@@ -1415,22 +1513,55 @@ export default {
       this.dato2 = item.row;
       this.codigo={}
       console.log(this.dato2);
+       if(this.dato.lotes.length>0){
+            this.dato.lotes.forEach(it =>{
+                         if(it.nombre===this.dato2.nombre){
+                                this.contrato=true
+                                 if(this.dato.tipo_id===2){
+                                   this.dialog_add1 = true;/// personas
+                                    this.consultoresSelectos=[]
+                                   this.consultores=it.personas
+                                   this.persona={}
+                                   this.persona.id=-1
+                                 }else{
+                                    this.dialog_add2 = true;  // empresas, sociedad y consultores
+                                     this.consultoresSelectos=[]
+                                    this.empresasSelectos=[]
+                                    this.sociedadesSelectos=[]
+                                    this.empresas=it.empresas
+                                    this.sociedades=it.sociedads
+                                    this.empresa={}
+                                    this.empresa.id=-1
+                                    this.sociedad={}
+                                    this.sociedad.id=-1
+                                 }
+                         }
+            })
+            console.log(this.consultores);
+       }else{
+        this.contrato=true
         if (this.dato.tipo_id===2)
          {
                  this.dialog_add1 = true;/// personas
-                 this.personas=this.dato.personas
+                  this.consultoresSelectos=[]
+                 this.consultores=this.dato.personas
                  this.persona={}
                  this.persona.id=-1
          }else{
                  this.dialog_add2 = true;  // empresas, sociedad y consultores
+                 this.consultoresSelectos=[]
+                 this.empresasSelectos=[]
+                 this.sociedadesSelectos=[]
                  this.empresas=this.dato.empresas
-                 this.sociedads=this.dato.sociedads
+                 this.sociedades=this.dato.sociedads
                  this.empresa={}
                  this.empresa.id=-1
                  this.sociedad={}
                  this.sociedad.id=-1
 
          }
+       }
+
     },
   },
 };

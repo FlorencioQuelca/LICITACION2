@@ -103,7 +103,7 @@ class LoteController extends Controller
     }
     public function personalotes(Request $request,Lote $lote){
          $persona= Persona::find($request->id);
-         $lote->personas()->attach($persona);
+         $lote->personas()->attach($persona,['monto'=>$request->monto]);
      }
      public function personalotesdetach(Request $request,Lote $lote){
         $persona= Persona::find($request->id);

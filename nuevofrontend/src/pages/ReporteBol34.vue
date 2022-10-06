@@ -114,12 +114,11 @@
 
         <template v-slot:top-left>
            <q-toolbar flat>
-              <q-toolbar-title>REGISTRO BOL 34</q-toolbar-title>
-
+              <q-toolbar-title>REPORTE BOL 34 - {{$store.state.login.user.status}}</q-toolbar-title>
               <q-btn
                   color="primary"
                   icon-right="archive"
-                  label="Descargar en excel"
+                  label="Descargar en Excel"
                   no-caps
                   @click="exportTable"
                 />
@@ -194,7 +193,6 @@ export default {
       this.dato2 = item.row;
        this.$router.push({name: 'DetalleBol34.view', params: {id:this.dato2.id}})
         //this.$router.push("Licitaciones")
-
      /*
       if (this.dato2.tipo_id===2)
          {
@@ -204,7 +202,6 @@ export default {
          }
         */
     },
-
         misdatos(){
         // this.$q.loading.show();
          //   this.$api.get(process.env.API+"/registrodepa/"+this.$store.state.login.user.ci).then((res)=>{
@@ -216,7 +213,6 @@ export default {
     // console.log(res.data);
             let puntaje=0
             this.evaluaciones=res.data.evaluacions;
-
         res.data.forEach(it=>{
                   this.familias=0
               it.evaluacions.forEach(it =>{
@@ -225,8 +221,6 @@ export default {
                          }
                      })
                      it.familias=this.familias
-
-
                              if(it.status==="ENVIADO"){
                                  it.puntaje=100.00
                               }else{
@@ -250,7 +244,6 @@ export default {
                                  if(it.ficha && it.ficha.ubicacion){
                                    puntaje+=10
                                  }
-
                                   it.puntaje=puntaje
                               }
                               let duracion=total_days(it.fecha,it.carta_fecha)
@@ -258,15 +251,11 @@ export default {
 
                        if(this.$store.state.login.user.status===it.departamento.nombre){
                             this.data.push(it)
-
                        }else{
                                if(this.$store.state.login.user.status==="CENTRAL"){
                                  this.data.push(it)
                                }
-
                        }
-
-
               })
 
           this.$q.loading.hide();

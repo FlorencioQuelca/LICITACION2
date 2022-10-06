@@ -73,7 +73,7 @@ class ProyectoController extends Controller
 
      public function personaproyectos(Request $request,Proyecto $proyecto){
         $persona= Persona::find($request->id);
-        $proyecto->personas()->attach($persona);
+        $proyecto->personas()->attach($persona,['monto'=>$request->monto]);
      }
      public function personaproyectosdetach(Request $request,Proyecto $proyecto){
         $persona= Persona::find($request->id);

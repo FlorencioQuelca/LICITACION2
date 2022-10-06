@@ -42,15 +42,15 @@ class Contrato extends Model
 
     //relacion muchos a muchospolimorfica
     public function empresas(){
-        return $this->morphedByMany('App\Models\Empresa','detalle1')->withPivot(['categoria']);
+        return $this->morphedByMany('App\Models\Empresa','detalle1')->withPivot(['oficial']);
      }
      //relacion muchos a muchos polimorfica
     public function personas(){
-        return $this->morphedByMany('App\Models\Persona','detalle1')->withPivot(['categoria']);
+        return $this->morphedByMany('App\Models\Persona','detalle1')->withPivot(['oficial']);
      }
      //relacion uno a muchos
     public function sociedads(){
-        return $this->morphedByMany('App\Models\Sociedad','detalle1')->withPivot(['categoria']);
+        return $this->morphedByMany('App\Models\Sociedad','detalle1')->withPivot(['oficial']);
      }
      //persona que firma
      //  public function firmas(){
@@ -58,6 +58,6 @@ class Contrato extends Model
      // }
       //relacion muchos a muchos polimorfica
     public function dependientes(){
-        return $this->morphedByMany('App\Models\Persona','detalle1')->withPivot(['categoria']);
+        return $this->morphedByMany('App\Models\Persona','detalle1')->withPivot(['categoria','oficial']);
      }
 }

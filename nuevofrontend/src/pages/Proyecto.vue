@@ -594,7 +594,6 @@
           <div class="text-h6">Agregar Consultor</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
-
           <q-form @submit="onAdd1" class="q-gutter-md">
             <q-input
               outlined
@@ -605,7 +604,6 @@
                lazy-rules
               :rules="[(val) => val!='' && val!=null || 'Por favor ingresa datos']"
             />
-
             <div>
               <q-btn label="Agregar" type="submit" color="positive" icon="add_circle" />
               <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
