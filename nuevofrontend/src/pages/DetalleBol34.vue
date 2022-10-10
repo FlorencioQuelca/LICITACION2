@@ -2835,16 +2835,19 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.setFont('times')
              doc.rect(20,20, 180,235)
              doc.rect(20,45, 50,45)
-             doc.rect(155,60, 45,5)
+             doc.rect(155,66, 45,4)
+
              doc.rect(20,20, 180,25)
+
              doc.rect(20,20, 180,30)
-             doc.rect(20,20, 180,35)
-             doc.rect(20,20, 180,40)
-             doc.rect(20,20, 180,45)
+             doc.rect(20,20, 180,42)
+             doc.rect(20,20, 180,46)
              doc.rect(20,20, 180,50)
-             doc.rect(20,20, 180,55)
-             doc.rect(20,20, 180,60)
-             doc.rect(20,20, 180,65)
+             doc.rect(20,20, 180,54)
+             doc.rect(20,20, 180,58)
+             doc.rect(20,20, 180,62)
+             doc.rect(20,20, 180,66)
+
              doc.rect(20,20, 180,70)
              doc.rect(20,20, 180,75)
              doc.rect(20,20, 180,85)
@@ -2861,31 +2864,32 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.rect(20,20, 180,160)
            //  doc.rect(20,20, 180,165)
              doc.rect(75,95, 125,10)
-             doc.rect(75,95, 125,5)
+             doc.rect(75,95, 125,4)
              doc.rect(75,95, 20,10)
              doc.rect(75,95, 40,10)
              doc.rect(75,115, 125,10)
-             doc.rect(75,115, 125,5)
+             doc.rect(75,115, 125,4)
              doc.rect(75,115, 20,10)
              doc.rect(75,115, 40,10)
              doc.rect(75,130, 125,10)
-             doc.rect(75,130, 125,5)
+             doc.rect(75,130, 125,4)
              doc.rect(75,130, 20,10)
              doc.rect(75,130, 40,10)
              doc.rect(75,130, 60,10)
-             doc.rect(75,130, 80,10)
+             doc.rect(75,130, 77,10)
              doc.rect(75,145, 125,10)
-             doc.rect(75,145, 125,5)
+             doc.rect(75,145, 125,4)
              doc.rect(75,145, 20,10)
              doc.rect(75,145, 40,10)
              doc.rect(75,145, 60,10)
              doc.rect(75,155, 125,10)
-             doc.rect(75,155, 125,5)
+             doc.rect(75,155, 125,4)
              doc.rect(75,155, 20,10)
              doc.rect(75,155, 40,10)
              doc.rect(75,155, 60,10)
+
              doc.rect(75,170, 125,10)
-             doc.rect(75,170, 125,5)
+             doc.rect(75,170, 125,4)
              doc.rect(75,170, 20,10)
              doc.rect(75,170, 40,10)
              doc.rect(75,170, 60,10)
@@ -2895,13 +2899,13 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
              doc.setFontSize(8,"bold").setFont(undefined, 'bold');
              doc.text("1. PROGRAMA", 21,49,{maxWidth: 75,align: "justify"})
-             doc.text("2. NOMBRE DEL PROYECTO", 21,54,{maxWidth: 75,align: "justify"})
-             doc.text("3. UBICACIÓN", 21,59,{maxWidth: 75,align: "justify"}).setFont(undefined, 'normal');
-             doc.text("MUNICIPIO:", 21,64,{maxWidth: 75,align: "justify"})
-             doc.text("ZONA:", 21,69,{maxWidth: 75,align: "justify"})
-             doc.text("CIRCUNSCRIPCION:", 21,74,{maxWidth: 75,align: "justify"})
-             doc.text("DISTRITO:", 21,79,{maxWidth: 75,align: "justify"})
-             doc.text("DIRECCION/UBICACION GENERAL:", 21,84,{maxWidth: 75,align: "justify"})
+             doc.text("2. NOMBRE DEL PROYECTO", 21,56,{maxWidth: 75,align: "justify"})
+             doc.text("3. UBICACIÓN", 21,65,{maxWidth: 75,align: "justify"}).setFont(undefined, 'normal');
+             doc.text("MUNICIPIO:", 21,69,{maxWidth: 75,align: "justify"})
+             doc.text("ZONA:", 21,73,{maxWidth: 81,align: "justify"})
+             doc.text("CIRCUNSCRIPCION:", 21,77,{maxWidth: 75,align: "justify"})
+             doc.text("DISTRITO:", 21,81,{maxWidth: 75,align: "justify"})
+             doc.text("DIRECCION/UBICACION GENERAL:", 21,85,{maxWidth: 75,align: "justify"})
              doc.text("CORRDENADAS GEOGRAFICAS:", 21,89,{maxWidth: 75,align: "justify"}).setFont(undefined, 'bold');
              doc.text("4. PROYECTO PRIORIZADO POR LAS GAM/GAIOC/JUNTAS VECINALES U ORGANIZACIONES SOCIALES", 21,94,{maxWidth: 150,align: "justify"})
              doc.text("5. CRITERIOS DE ELEGIBILIDAD Y COBERTURA (DESEABLE)", 21,109,{maxWidth: 150,align: "justify"})
@@ -2912,7 +2916,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("7. REPORTE FOTOGRAFICO", 21,184,{maxWidth: 150,align: "justify"})
              doc.setFontSize(8,"bold").setFont(undefined, 'normal');
              doc.text("Programa nacional de Emergencia para la Generacion de Empleo", 72,49,{maxWidth: 100,align: "justify"})
-             doc.text("CATEGORIA:", 157,64,{maxWidth: 100,align: "justify"})
+             doc.text("CATEGORIA:", 157,69,{maxWidth: 100,align: "justify"})
              doc.text("(marcar con una X)", 21,121,{maxWidth: 100,align: "justify"})
              doc.text("DOCUMENTO ES ?", 50,121,{maxWidth: 100,align: "justify"})
              doc.text("Tipo de servicio", 21,136,{maxWidth: 100,align: "justify"})
@@ -2920,31 +2924,38 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("Dimensiones y/o Area del enlosetado (M2)", 21,176,{maxWidth: 100,align: "justify"})
 
                 // doc.text('*', 214, 280) //milimetros
-             doc.setFontSize(6,"normal").setFont(undefined, 'normal');
-             doc.text(this.dato.nombre, 71,52,{maxWidth: 126,align: "justify"})
+            // doc.setFontSize(7,"normal").setFont(undefined, 'normal');
+              if( (this.dato.nombre.length+this.dato.codigo.length)>198){
+                doc.setFontSize(7,"bold").setFont(undefined, 'bold');
+                 doc.text(this.dato.nombre +' - ( '+this.dato.codigo+' )', 71,52,{maxWidth: 127,align: "justify"})
+               }else{
+                 doc.setFontSize(9,"bold").setFont(undefined, 'bold');
+                 doc.text(this.dato.nombre +' - ( '+this.dato.codigo+' )', 71,54,{maxWidth: 127,align: "justify"})
+
+               }
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
-             doc.text(this.dato.ficha.ubicacion+".", 71,58,{maxWidth: 126,align: "justify"})
-             doc.text(this.dato.municipio, 71,63,{maxWidth: 126,align: "justify"})
-             doc.text("' "+this.dato.autoridad+" '", 184,64,{maxWidth: 126,align: "justify"})
-             doc.text(this.dato.ficha.zona+".", 71,68,{maxWidth: 126,align: "justify"})
-             doc.text(this.dato.ficha.circunscripcion+".", 71,73,{maxWidth: 126,align: "justify"})
-             doc.text(this.dato.ficha.distrito+".", 71,78,{maxWidth: 126,align: "justify"})
-             doc.text(this.dato.ficha.direccion+".", 71,83,{maxWidth: 126,align: "justify"})
-             doc.text("Latitud: "+this.dato.ficha.latitud, 71,88,{maxWidth: 126,align: "justify"})
-             doc.text("Longitud: "+this.dato.ficha.longitud, 135,88,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.ficha.ubicacion+".", 71,65,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.municipio, 71,69,{maxWidth: 126,align: "justify"})
+             doc.text("' "+this.dato.autoridad+" '", 184,69,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.ficha.zona+".", 71,73,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.ficha.circunscripcion+".", 71,77,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.ficha.distrito+".", 71,81,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.ficha.direccion+".", 71,85,{maxWidth: 126,align: "justify"})
+             doc.text("Latitud: "+this.dato.ficha.latitud, 71,89,{maxWidth: 126,align: "justify"})
+             doc.text("Longitud: "+this.dato.ficha.longitud, 135,89,{maxWidth: 126,align: "justify"})
                 doc.setFontSize(7,"normal").setFont(undefined, 'normal');
              doc.text("        SI                         NO                                           Observacion", 80,98,{maxWidth: 126,align: "justify"})
              doc.text("   OFICIAL GAM        EN TRAMITE                                  Observacion", 75,118,{maxWidth: 126,align: "justify"})
-             doc.text("% A. Potable       % Alcantarillado     % Energia Electr.      % Gas Natural          Observacion", 79,134,{maxWidth: 126,align: "justify"})
-             doc.text("Tierra (%)          Empedrado (%)            Otro(%)                   Observacion", 80,149,{maxWidth: 126,align: "justify"})
-             doc.text("Ejecutado(%)      Por Ejecutar(%)    Long. por Ejecutar        Observacion", 80,159,{maxWidth: 126,align: "justify"})
-             doc.text("      Longitud                  Ancho                          Area                   Observacion", 76,174,{maxWidth: 126,align: "justify"})
+             doc.text("% A. Potable       % Alcantarillado     % Energia Electr.     % Gas Natural          Observacion", 79,133,{maxWidth: 126,align: "justify"})
+             doc.text("Tierra (%)          Empedrado (%)            Otro(%)                   Observacion", 80,148,{maxWidth: 126,align: "justify"})
+             doc.text("Ejecutado(%)      Por Ejecutar(%)    Long. por Ejecutar        Observacion", 80,158,{maxWidth: 126,align: "justify"})
+             doc.text("      Longitud                  Ancho                          Area                   Observacion", 76,173,{maxWidth: 126,align: "justify"})
               if(this.dato.ficha.priorizado==="SI"){
                 doc.text( "X", 86,104,{maxWidth: 20,align: "center"})
               }else{
                 doc.text( "X", 105,104,{maxWidth: 20,align: "center"})
               }
-              doc.text( this.dato.ficha.observacion4+".", 120,104,{maxWidth: 70,align: "justify"})
+              doc.text( this.dato.ficha.observacion4+".", 117,102,{maxWidth: 70,align: "justify"})
 
               if(this.dato.ficha.planimetria==="SI"){
                 doc.text( "X", 86,124,{maxWidth: 20,align: "center"})
@@ -2954,14 +2965,15 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
                  doc.setFontSize(5,"normal").setFont(undefined, 'normal');
                if(this.dato.ficha.observacion5a){
-                 doc.text( this.dato.ficha.observacion5a, 120,122,{maxWidth: 70,align: "justify"})
+                 doc.text( this.dato.ficha.observacion5a, 117,121,{maxWidth: 72,align: "justify"})
                }else{
                  doc.text(".", 120,124,{maxWidth: 70,align: "justify"})
                }
-              doc.text( this.dato.ficha.observacion5b+".", 158,137,{maxWidth: 40,align: "justify"})
-              doc.text( this.dato.ficha.observacion5c+".", 138,152,{maxWidth: 60,align: "justify"})
-              doc.text( this.dato.ficha.observacion5d+".", 138,162,{maxWidth: 60,align: "justify"})
-              doc.text( this.dato.ficha.observacion6+".", 138,177,{maxWidth: 60,align: "justify"})
+                  doc.setFontSize(5,"normal").setFont(undefined, 'normal');
+              doc.text( this.dato.ficha.observacion5b+".", 153,136,{maxWidth: 44,align: "justify"})
+              doc.text( this.dato.ficha.observacion5c+".", 136,151,{maxWidth: 62,align: "justify"})
+              doc.text( this.dato.ficha.observacion5d+".", 136,161,{maxWidth: 62,align: "justify"})
+              doc.text( this.dato.ficha.observacion6+".", 136,176,{maxWidth: 62,align: "justify"})
 
               doc.setFontSize(8,"normal").setFont(undefined, 'normal');
               doc.text( this.dato.ficha.agua+" %", 85,139,{maxWidth: 20,align: "center"})
@@ -3106,15 +3118,15 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.setFont('times')
              doc.rect(15,10, 185,255)
             // doc.rect(20,45, 50,45)
-             doc.rect(170,45, 30,5)
-             doc.rect(120,45, 50,5)
+             doc.rect(170,47, 30,4)
+             doc.rect(120,47, 50,4)
              // parte -1
-             doc.rect(15,35, 185,5)
-             doc.rect(15,35, 185,10)
-             doc.rect(15,35, 185,15)
+             doc.rect(15,35, 185,8)
+             doc.rect(15,35, 185,12)
+             doc.rect(15,35, 185,16)
              doc.rect(15,35, 185,20)
 
-             doc.rect(65,35, 135,20)
+             doc.rect(60,35, 140,20)
 
 
              //parte 0
@@ -3189,20 +3201,21 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.rect(15,75, 185,30)
 
              doc.rect(95,80, 105,5)
-             doc.rect(95,85, 105,5)
-             doc.rect(95,85, 105,10)
-             doc.rect(120,85, 80,5)
-             doc.rect(120,85, 80,10)
-             doc.rect(145,85, 55,5)
-             doc.rect(145,85, 55,10)
+
+             doc.rect(95,85, 30,3)//
+             doc.rect(95,85, 30,10)
+             doc.rect(110,85, 15,3)//
+             doc.rect(110,85, 15,10)
+             doc.rect(125,85, 75,3)
+             doc.rect(125,85, 75,10)
 
 
-             doc.rect(95,95, 105,5)
-             doc.rect(95,95, 105,10)
-             doc.rect(120,95, 80,5)
-             doc.rect(120,95, 80,10)
-             doc.rect(145,95, 55,5)
-             doc.rect(145,95, 55,10)
+             doc.rect(95,95, 30,3)
+             doc.rect(95,95, 30,10)
+             doc.rect(110,95, 15,3)
+             doc.rect(110,95, 15,10)
+             doc.rect(125,95, 75,3)
+             doc.rect(125,95, 75,10)
 
              doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF');
              doc.text('CRITERIOS DE ELEGIBILIDAD (DESEABLE ) (marcar con una X)', 16, 79).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000');
@@ -3210,55 +3223,56 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("N° DE FAMILIAS BENEFICIARIAS", 16,84)
              doc.text("PROYECTO QUE ATIENDE A UNA INFRAESTRUCTURA PUBLICA", 16,90)
              doc.text("EL PROYECTO NO DEBE ENCONTRARSE EN ÁREAS Y/O ZONAS DE RIESGOS NATURALES Y GEOLÓGICOS", 16,100,{maxWidth: 75,align: "justify"})
-             doc.text("CUMPLE", 103,88)
-             doc.text("NO CUMPLE", 126,88)
-             doc.text("OBSERVACION (CENTRO EDUCATIVO/SALUD)", 147,88)
+             doc.text("CUMPLE", 97,87)
+             doc.text("NO CUMPLE", 111,87)
+             doc.text("OBSERVACION (CENTRO EDUCATIVO/SALUD)", 127,87)
             // doc.text("OBSERVACION (CENTRO DE SALUD/EDUCATIVO)", 149,88)
-             doc.text("CUMPLE", 103,98)
-             doc.text("NO CUMPLE", 126,98)
-             doc.text("OBSERVACIONES", 149,98)
+             doc.text("CUMPLE", 97,97)
+             doc.text("NO CUMPLE", 111,97)
+             doc.text("OBSERVACIONES", 127,97)
 
            //  console.log('entro hasta aqui')
-
+                   console.log(this.dato.evaluacions)
               if(this.dato.evaluacions){
-
+               doc.setFontSize(8,"bold").setFont(undefined, 'normal');
 
                  this.dato.evaluacions.forEach(it =>{
                   if(it.nombre==="C-1"){
+                      doc.setFontSize(8,"bold").setFont(undefined, 'normal');
                       doc.text(it.pivot.descripcion+' FAMILIAS', 100,83)
                   }
                    if(it.nombre==="C-2"){
                    if(it.pivot.presenta==="SI"){
-                        doc.text("X", 107,93)
+                        doc.text("X", 102,93)
                      }else{
-                       doc.text("X", 133,93)
+                       doc.text("X", 116,93)
                      }
 
                               if(it.pivot.descripcion.length>35){
                                     doc.setFontSize(5,"bold").setFont(undefined, 'normal');
-                                doc.text(it.pivot.descripcion+'.', 146,92,{maxWidth: 53,align: "justify"})
+                                doc.text(it.pivot.descripcion+'.', 126,90,{maxWidth: 73,align: "justify"})
                               }else{
                                   doc.setFontSize(6,"bold").setFont(undefined, 'normal');
-                              doc.text(it.pivot.descripcion+'.', 146,93,{maxWidth: 50,align: "justify"})
+                              doc.text(it.pivot.descripcion+'.', 126,91,{maxWidth: 70,align: "justify"})
                               }
                 doc.setFontSize(8,"bold").setFont(undefined, 'normal');
 
                 }
                 if(it.nombre==="C-3"){
                    if(it.pivot.presenta==="SI"){
-                      doc.text("X", 107,103)
+                      doc.text("X", 102,102)
                      }else{
-                         doc.text("X", 133,103)
+                         doc.text("X", 116,102)
                      }
                                   if(it.pivot.descripcion.length>35){
                                     doc.setFontSize(5,"bold").setFont(undefined, 'normal');
-                                    doc.text(it.pivot.descripcion+'.', 146,102,{maxWidth: 53,align: "justify"})
+                                    doc.text(it.pivot.descripcion+'.', 126,100,{maxWidth: 73,align: "justify"})
                                   }else{
                                     doc.setFontSize(6,"bold").setFont(undefined, 'normal');
-                                    doc.text(it.pivot.descripcion+'.', 146,103,{maxWidth: 50,align: "justify"})
+                                    doc.text(it.pivot.descripcion+'.', 126,101,{maxWidth: 70,align: "justify"})
                                   }
 
-
+                       doc.setFontSize(8,"bold").setFont(undefined, 'normal');
 
 
                 }
@@ -3606,43 +3620,43 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.setFontSize(6,"bold").setFont(undefined, 'normal');
             //  doc.rect(25,190, 170,60)
              doc.setFontSize(8,"bold").setFont(undefined, 'normal');
-             doc.text("NOMBRE DEL PROYECTO", 16,39,{maxWidth: 75,align: "justify"})
-             doc.text("DEPARTAMENTO :", 16,44,{maxWidth: 75,align: "justify"})
-             doc.text("MUNICIPIO :", 16,49,{maxWidth: 75,align: "justify"}).setFont(undefined, 'normal');
+             doc.text("NOMBRE DEL PROYECTO : ", 16,40,{maxWidth: 75,align: "justify"})
+             doc.text("DEPARTAMENTO :", 16,46,{maxWidth: 75,align: "justify"})
+             doc.text("MUNICIPIO :", 16,50,{maxWidth: 75,align: "justify"}).setFont(undefined, 'normal');
              doc.text("AREA DE ENLOSETADO (M2)", 16,54,{maxWidth: 75,align: "justify"})
-             doc.text("CATEGORIA DEL MUNICIPIO:", 125,49)
+             doc.text("CATEGORIA DEL MUNICIPIO:", 125,50)
 
                 // doc.text('*', 214, 280) //milimetros
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
-               if( (this.dato.nombre.length+this.dato.codigo.length)>=100){
+               if( (this.dato.nombre.length+this.dato.codigo.length)>150){
                  doc.setFontSize(6,"bold").setFont(undefined, 'normal');
-                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,37,{maxWidth: 127,align: "justify"})
+                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 64,37,{maxWidth: 132,align: "justify"})
                }else{
                        let cant =this.dato.nombre.length+this.dato.codigo.length
                        // console.log(cant)
-                 if((cant)>=73){
+                 if((cant)>=100){
                  doc.setFontSize(7,"normal").setFont(undefined, 'normal');
-                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,39,{maxWidth: 127,align: "justify"})
+                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 64,38,{maxWidth: 132,align: "justify"})
                  }else  if((cant)>=70){
                    doc.setFontSize(8,"normal").setFont(undefined, 'normal');
-                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,39,{maxWidth: 127,align: "justify"})
+                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 64,38,{maxWidth: 132,align: "justify"})
                   }else{
                  doc.setFontSize(9,"normal").setFont(undefined, 'normal');
-                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 69,39,{maxWidth: 127,align: "justify"})
+                 doc.text(this.dato.nombre +' ('+this.dato.codigo+')', 64,39,{maxWidth: 132,align: "justify"})
                  }
 
                }
 
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
 
-             doc.text(this.dato.departamento.nombre+'.', 69,44,{maxWidth: 126,align: "justify"})
-             doc.text(this.dato.municipio+'.', 69,49,{maxWidth: 126,align: "justify"})
-             doc.text(this.dato.monto3+' m2', 69,54,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.departamento.nombre+'.', 64,46,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.municipio+'.', 64,50,{maxWidth: 126,align: "justify"})
+             doc.text(this.dato.monto3+' m2', 64,54,{maxWidth: 126,align: "justify"})
 
-             doc.text("' "+this.dato.autoridad+" '", 184,49,{maxWidth: 126,align: "justify"})
+             doc.text("' "+this.dato.autoridad+" '", 184,50,{maxWidth: 126,align: "justify"})
 
              doc.setFontSize(8, 'normal')
-             doc.text(" ...........................................................                                               ...........................                                              .........................  ",25, 258)
+             doc.text(" ...........................................................                                              ...........................                                              .........................  ",25, 258)
              doc.text("Sello y Firma                                                                 Sello y Firma                                                  Sello y Firma  ",40, 261)
              doc.text("GERENTE DEPARTAMENTAL FPS                                            JEFE TECNICO                                               EVALUADOR  ",25, 264)
              const fecha_informe=this.dato.carta_fecha==null ?  moment().format('YYYY-MM-DD') : this.dato.carta_fecha
