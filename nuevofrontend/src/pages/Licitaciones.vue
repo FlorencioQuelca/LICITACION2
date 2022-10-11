@@ -1,8 +1,6 @@
 <template>
    <div class="q-pa-md">
-
   <!--          tabla PRINCIPOAL -->
-
     <q-table
       :filter="filter"
       title="PROYECTOS REGISTRADOS PARA LICITACION"
@@ -21,8 +19,6 @@
           </template>
         </q-input>
       </template>
-
-
      <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="departamento" :props="props">
@@ -56,6 +52,14 @@
             </q-td>
            <q-td key="nombre" :props="props">
             {{props.row.nombre}}
+             <ul >
+              <span v-for="(it,index) in props.row.lotes" :key="index">
+                  <li>
+                    {{it.nombre}}
+                </li>
+              </span>
+             </ul>
+
           </q-td>
 
            <q-td key="cuce" :props="props">
@@ -65,10 +69,7 @@
             {{props.row.link}}
           </q-td>
             <q-td key="fecha"  :props="props">
-
             {{ props.row.fecha    }}
-
-
 
           </q-td>
            <q-td key="hora" :props="props">
@@ -80,10 +81,6 @@
           <q-td key="plazo" :props="props">
             {{props.row.plazo}}
           </q-td>
-          <q-td key="lotes" :props="props">
-            {{props.row.lotes}}
-          </q-td>
-
             <q-td key="funcionarios" :props="props">
               <ul>
               <span v-for="(funcionarios,index) in props.row.funcionarios" :key="index">
@@ -97,8 +94,6 @@
            </q-tr>
       </template>
     </q-table>
-
-
 
           <!-- VER LISTA de PERSONAS  />-->
    <q-dialog v-model="dialog_list1">
@@ -440,7 +435,8 @@ proyecto:{},
     misdatos(){
     this.$q.loading.show();
        this.$api.get(process.env.API+"/proyectoslibre").then((res)=>{
-         this.data =res.data;
+         this.data =res.data
+         console.log(res.data)
          this.$q.loading.hide();
        });
     },

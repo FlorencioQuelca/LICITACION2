@@ -17,7 +17,7 @@ class ProyectoController extends Controller
         return \response()->json($proyectos, 200);
     }
     public function proyectoslibre(){
-        $proyectos = Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios'])->orderByDesc('id')->get();
+        $proyectos = Proyecto::with(['sociedads.empresas','personas','empresas','programa', 'tipo', 'departamento','codigos', 'funcionarios','lotes'])->orderByDesc('fecha')->get();
         return \response()->json($proyectos, 200);
     }
     public function proyectoid(Proyecto $proyecto){

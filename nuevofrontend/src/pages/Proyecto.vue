@@ -183,12 +183,9 @@
            <q-td key="tipo" :props="props">
             {{props.row.tipo.nombre}}
           </q-td>
-          <q-td key="codigo" :props="props">
-            {{props.row.codigo}}
-          </q-td>
            <q-td key="codigos" :props="props">
               <ul>
-              <span v-for="(codigos,index) in props.row.codigos" :key="index">
+               <span v-for="(codigos,index) in props.row.codigos" :key="index">
                   <li>
                     {{codigos.nombre}}
                 </li>
@@ -215,24 +212,33 @@
             </q-td>
            <q-td key="nombre" :props="props">
             {{props.row.nombre}}
+             <ul>
+              <span v-for="(it,index) in props.row.lotes" :key="index">
+                  <li>
+                    {{it.nombre}} {{it.monto}}
+                </li>
+              </span>
+             </ul>
           </q-td>
             <q-td key="action1" :props="props">
-                      <q-btn
+                       <q-btn
                         dense
                         round
                         flat
-                        color="blue"
-                        @click="addRow1(props)"
+                        color="green"
+                        @click="lotes(props)"
                         icon="playlist_add"
                       ></q-btn>
-                        <q-btn
+                       <q-btn
                         dense
                         round
                         flat
-                        color="blue"
-                        @click="verRow1(props)"
+                        color="green"
+                        @click="lotes_view(props)"
                         icon="list"
                       ></q-btn>
+
+
             </q-td>
            <q-td key="cuce" :props="props">
             {{props.row.cuce}}
@@ -241,16 +247,21 @@
             {{props.row.link}}
           </q-td>
             <q-td key="fecha" :props="props">
-            {{props.row.fecha}}
+              <div>
+                {{props.row.fecha}}
+              </div>
+              <div>
+                 {{props.row.hora}}
+              </div>
           </q-td>
-           <q-td key="hora" :props="props">
-            {{props.row.hora}}
-          </q-td>
+
           <q-td key="precio" :props="props">
-            {{props.row.precio}}
-          </q-td>
-          <q-td key="plazo" :props="props">
-            {{props.row.plazo}}
+            <div>
+            {{props.row.precio}} [Bs]
+            </div>
+            <div>
+            {{props.row.plazo}} [Dias]
+            </div>
           </q-td>
             <q-td key="comision" :props="props">
               <ul>
@@ -261,15 +272,7 @@
               </span>
              </ul>
           </q-td>
-         <q-td key="lotes" :props="props">
-              <ul>
-              <span v-for="(codigos,index) in props.row.lotes" :key="index">
-                  <li>
-                    {{codigos.nombre}} {{codigos.monto}}
-                </li>
-              </span>
-             </ul>
-          </q-td>
+
           <q-td key="opcion" :props="props">
               <q-btn
                         dense
@@ -288,20 +291,20 @@
                         icon="list"
                       ></q-btn>
 
-                       <q-btn
+                     <q-btn
                         dense
                         round
                         flat
-                        color="green"
-                        @click="lotes(props)"
+                        color="blue"
+                        @click="addRow1(props)"
                         icon="playlist_add"
                       ></q-btn>
-                       <q-btn
+                        <q-btn
                         dense
                         round
                         flat
-                        color="green"
-                        @click="lotes_view(props)"
+                        color="blue"
+                        @click="verRow1(props)"
                         icon="list"
                       ></q-btn>
                        <q-btn
@@ -1006,12 +1009,12 @@ const  columns= [
   { name: 'action1', align:"center",label: 'Detalle', field: 'action1'},
   { name: 'cuce',align:"Center", label: 'cuce', field: 'cuce', sortable: true },
   { name: 'link',align:"left", label: 'link de la reunion', field: 'link', sortable: true },
-  { name: 'fecha', align:"left",label: 'Fecha', field: 'fecha', sortable: true },
-  { name: 'hora', align:"center",label: 'hora', field: 'hora', sortable: true },
-  { name: 'precio', align:"center",label: 'Precio', field: 'precio', sortable: true },
-  { name: 'plazo', align:"center",label: 'plazo', field: 'plazo', sortable: true },
-  { name: 'comision',align:"left", label: 'Comision', field: 'comision', sortable: true },
-  { name: 'lotes',align:"left", label: 'Lotes', field: 'lotes', sortable: true },
+  { name: 'fecha', align:"left",label: 'Fecha / Hora', field: 'fecha', sortable: true },
+ // { name: 'hora', align:"center",label: 'hora', field: 'hora', sortable: true },
+  { name: 'precio', align:"center",label: 'Monto / Plazo', field: 'precio', sortable: true },
+ // { name: 'plazo', align:"center",label: 'plazo', field: 'plazo', sortable: true },
+  { name: 'comision',align:"left", label: 'Comision Calificadora', field: 'comision', sortable: true },
+  //{ name: 'lotes',align:"left", label: 'Lotes', field: 'lotes', sortable: true },
   //{ name: 'funcionarios',align:"left", label: 'Comision', field: 'funcionarios', sortable: true },
   { name: 'opcion', label: 'Opcion', field: 'opcion' }
    ]

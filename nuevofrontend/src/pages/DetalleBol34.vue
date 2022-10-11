@@ -2894,9 +2894,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.rect(75,170, 40,10)
              doc.rect(75,170, 60,10)
             //  doc.rect(25,190, 170,60)
-
-
-
              doc.setFontSize(8,"bold").setFont(undefined, 'bold');
              doc.text("1. PROGRAMA", 21,49,{maxWidth: 75,align: "justify"})
              doc.text("2. NOMBRE DEL PROYECTO", 21,56,{maxWidth: 75,align: "justify"})
@@ -2931,7 +2928,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                }else{
                  doc.setFontSize(9,"bold").setFont(undefined, 'bold');
                  doc.text(this.dato.nombre +' - ( '+this.dato.codigo+' )', 71,54,{maxWidth: 127,align: "justify"})
-
                }
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
              doc.text(this.dato.ficha.ubicacion+".", 71,65,{maxWidth: 126,align: "justify"})
@@ -3020,7 +3016,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                    let  imgData2 =res.data[1]
                    doc.addImage(imgData2, "jpeg", 112, 185, 85, 67, null, "FAST");
                 }
-
              //PAGINA 2
               doc.addPage();
               doc.rect(20,20, 180,235)
@@ -3445,9 +3440,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.rect(15,105,185,24)
              doc.rect(15,105,185,28)
              doc.rect(15,105,185,32)
-
-
-
              doc.rect(175,105,25,32)
              doc.rect(150,105,25,32)
              doc.rect(125,105,25,32)
@@ -3466,9 +3458,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("ACTA DE COMPROMISO PARA LA EJECUCÍON DE CORDONES DE ACERA", 16,128)
              doc.text("PLANIMETRIA APROBADA", 16,132)
              doc.text("ACTA DE COMPROMISO PARA FIRMA DE CONVENIO CTF/CFP", 16,136)
-
-
-
              //parte 3
              doc.rect(15,137,185,8,'FD')
              doc.rect(15,137,185,12)
@@ -3481,14 +3470,9 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.rect(15,137,185,42)
              doc.rect(15,137,185,46)
              doc.rect(15,137,185,50)
-
-
              doc.rect(175,145,25,42)
              doc.rect(150,145,25,42)
              doc.rect(125,145,25,42)
-
-
-
              doc.setFontSize(8, 'bold').setFontSize(10).setFont(undefined, 'bold').setTextColor('#FFFFFF');
              doc.text('INGENIERIA DEL PROYECTO (marcar con una X)', 16, 142)
              doc.setFontSize(6, 'bold').setFontSize(6).setFont(undefined, 'bold').setTextColor('#FFFFFF');
@@ -3507,9 +3491,6 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("ESPECIFICACIONES TECNICAS", 16,178)
              doc.text("REPORTE FOTOGRAFICO", 16,182)
              doc.text("PRESUPUESTO GENERAL", 16,186)
-
-
-
 
                    //parte 4
              doc.rect(15,187,185,5,'FD')

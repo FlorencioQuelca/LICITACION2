@@ -4,7 +4,7 @@
       label="Atras"
       color="secondary"
       icon="arrow_back"
-      @click="this.$router.push('/Proyecto')"
+      @click="this.$router.push('/Licitaciones')"
       class="q-mb-xs"
     />
     <q-card
@@ -28,8 +28,7 @@
                   text-align: right;
                   padding: 0px;
                   border: 0px;
-                "
-              >
+                ">
                 <span>DATOS GENERALES DEL PROYECTO </span>
               </div>
             </div>
@@ -45,16 +44,14 @@
             >
             </q-table>
           </div>
-
           <div
             class="q-pa-md col-2"
             style="
               display: flex;
               flex-direction: column;
               justify-content: center;
-            "
-          >
-            <div class="row">
+            " >
+            <div class="row" v-if="this.$store.state.login.user.tipo==='admin'">
               <q-btn
                 icon="add_circle"
                 label="Empresas"
@@ -65,7 +62,7 @@
                 style="width: 200px"
               />
             </div>
-            <div class="row">
+            <div class="row" v-if="this.$store.state.login.user.tipo==='admin'">
               <q-btn
                 icon="add_circle"
                 label="Sociedad Accidental"
@@ -75,7 +72,7 @@
                 style="width: 200px; margin: 10px 0px 0px 0px"
               />
             </div>
-            <div class="row">
+            <div class="row" v-if="this.$store.state.login.user.tipo==='admin'" >
               <q-btn
                 icon="add_circle"
                 label="Consultor"
@@ -86,7 +83,7 @@
               />
             </div>
 
-              <div class="row">
+              <div class="row" v-if="this.$store.state.login.user.tipo==='admin'">
               <q-btn
                 icon="join_inner"
                 label="asignar"
@@ -97,7 +94,7 @@
                 style="width: 200px; margin: 10px 0px 0px 0px"
               />
             </div>
-             <div class="row">
+             <div class="row" v-if="this.$store.state.login.user.tipo==='admin'">
               <q-btn
                 icon="add_circle"
                 label="ASIGNAR CONTRATO"
@@ -356,7 +353,7 @@
       </q-card>
        </div>
 
-    <q-table
+    <q-table v-if="this.$store.state.login.user.tipo==='admin'"
       title="LISTA DE CONTRATOS FIRMADOS"
       :rows="dato.contratos"
       :columns="columnas_contratos"
@@ -442,7 +439,6 @@
                           </span>
                         </ul>
            </q-td>
-
             <q-td v-if="$store.state.login.user.tipo==='admin'" key="opcion" :props="props">
                        <q-btn
                             dense
@@ -465,27 +461,26 @@
       </template>
     </q-table>
 
-
 <div   v-for="(contrato,index) in data.contratos" :key="index">
      <q-card >
       <q-card-section class="bg-green-14 text-white"  >
         <div class="text-h6">{{contrato.nombre}}</div>
       </q-card-section>
-        <div class="row">
-                <q-item>
+        <div class="row" v-if="contrato.personas.length">
+                <q-item >
                 <q-item-section >
-                <q-item-label >CONSULTORES</q-item-label>
+                <q-item-label   >CONSULTORES</q-item-label>
                   </q-item-section>
                </q-item>
                        <ul>
                           <span v-for="(persona,index) in contrato.personas" :key="index">
                               <li >
-                                {{persona.ci}}   {{persona.datosp}}  ({{persona.pivot.oficial}}) {{persona.pivot.categoria}}
+                                {{persona.ci}}   {{persona.datosp}}  ({{persona.pivot.oficial}}) {{persona.pivot.categoria}} FONO:{{persona.fono1}}
                             </li>
                           </span>
                         </ul>
         </div>
-          <div class="row">
+          <div class="row" v-if="contrato.empresas.length">
                 <q-item>
                 <q-item-section >
                 <q-item-label >EMPRESAS</q-item-label>
@@ -494,13 +489,13 @@
                        <ul>
                           <span v-for="(it,index) in contrato.empresas" :key="index">
                               <li >
-                                {{it.nit}}   {{it.nombreLegal}} ({{it.pivot.oficial}})
+                                {{it.nit}}  -  {{it.nombreEmpresa}}  - {{it.nombreLegal}}  ({{it.pivot.oficial}} [Bs])
                             </li>
                           </span>
 
                         </ul>
         </div>
-          <div class="row">
+          <div class="row" v-if="contrato.sociedads.length">
                 <q-item>
                 <q-item-section >
                 <q-item-label >SOCIEDADES</q-item-label>
@@ -509,20 +504,13 @@
                        <ul>
                           <span v-for="(it,index) in contrato.sociedads" :key="index">
                               <li >
-                                {{it.nit}}   {{it.nombreLegal}} ({{it.pivot.oficial}})
+                                {{it.nit}} - {{it.nombreEmpresa}} - {{it.nombreLegal}} ({{it.pivot.oficial}} [Bs])
                             </li>
                           </span>
                         </ul>
         </div>
-
-
-
     </q-card>
-
-
 </div>
-
-
       <!--  adicionar consultor />-->
       <q-dialog v-model="dialog_add1">
       <q-card style="max-width: 80%; width: 90%">
@@ -993,6 +981,50 @@
 </template>
 
 <script>
+  const joinCodigos =(array)=> {
+    let ans=''
+    for (let i=0;i<array.length;i++){
+      if(i===array.length-1){
+        ans+=array[i].nombre
+      }else{
+        ans+=array[i].nombre+' - '
+      }
+    }
+    return ans
+}
+ const joinFuncionarios =(array)=> {
+    let ans=''
+    for (let i=0;i<array.length;i++){
+      if(i===array.length-1){
+        ans+=array[i].grado+'-'+array[i].datosp
+      }else{
+        ans+=array[i].grado+''+array[i].datosp+' - '
+      }
+    }
+    return ans
+}
+  const reverseFecha=(fecha)=>{
+         let fecha1=fecha.split("-")
+         let ans=""
+         let meses={
+            1:"enero",
+            2:"febrero",
+            3:"marzo",
+            4:"abril",
+            5:"mayo",
+            6:"junio",
+            7:"julio",
+            8:"agosto",
+            9:"septiembre",
+            10:"octubre",
+            11:"noviembre",
+            12:"diciembre",
+         }
+         return Number(fecha1[2])+" de "+meses[Number(fecha1[1])]+" de "+fecha1[0]
+
+      }
+
+
 const columna = [
   {
     name: 'titulo',
@@ -1131,6 +1163,7 @@ export default {
       this.$api.get(process.env.API + "/proyectoid/" + this.$route.params.id).then((res) => {
           this.data = res.data[0];
           this.dato = res.data[0];
+
          console.log(res.data)
            this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
            this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
@@ -1141,10 +1174,10 @@ export default {
          //  this.rows.push({titulo:"Plazo [Dias]: ", descripcion: res.data[0].plazo})
            this.rows.push({titulo:"Enlace de la Reunion ", descripcion: res.data[0].link})
            this.rows.push({titulo:"Hora de la Apertura ", descripcion: res.data[0].hora})
-           this.rows.push({titulo:"Fecha de la Apertura ", descripcion: res.data[0].fecha})
+           this.rows.push({titulo:"Fecha de la Apertura ", descripcion: reverseFecha(res.data[0].fecha)})
         //   this.rows.push({titulo:"Nro de Convocatoria ", descripcion: res.data[0].convocatoria})
-           this.rows.push({titulo:"Codigos de proyecto ", descripcion: res.data[0].fecha})
-           this.rows.push({titulo:"Comision Evaluadora ", descripcion: res.data[0].fecha})
+           this.rows.push({titulo:"Codigos de proyecto ", descripcion: joinCodigos(res.data[0].codigos)})
+           this.rows.push({titulo:"Comision Evaluadora ", descripcion: joinFuncionarios(res.data[0].funcionarios)})
              this.lotes=[]
            if(res.data[0].lotes.length>0){
                const lotes1=res.data[0].lotes
@@ -1200,7 +1233,6 @@ export default {
                 this.empresas = this.empresas1
                 this.dialog_add2 = true; // empresas y sociedades
          }
-
      }else{
        this.$q.notify({
                           color: "red-4",textColor: "white",icon: "cloud_done",
@@ -1208,7 +1240,6 @@ export default {
                         });
 
      }
-
     },
     agregarConsultor(item){
        this.codigo={}
@@ -1233,7 +1264,6 @@ export default {
            }
 
       }
-
     },
     agregarEmpresa(item){
       this.codigo={}
@@ -1244,7 +1274,6 @@ export default {
         this.dialog_add_empresa = true;
         this.codigo=item.row
       }
-
     },
     agregarSociedad(item){
         this.codigo={}
@@ -1269,7 +1298,6 @@ export default {
                   this.empresasSelectos.push(this.codigo);
                   this.dialog_add_empresa = false;
           }
-
    },
     onAdd_sociedad(){
          if(this.lotes.length){
@@ -1299,9 +1327,7 @@ export default {
     },
     onSendEmpresaSociedad(){
       if(this.contrato){
-
           if (this.group==='op1'){
-
              if(this.empresasSelectos.length){
                 this.empresasSelectos[0].monto=this.empresasSelectos[0].pivot.monto
                 this.$api.put(process.env.API+"/empresacontratos/"+this.dato2.id,this.empresasSelectos[0]).then((res) => {
@@ -1319,7 +1345,6 @@ export default {
                 this.$q.notify({color: "red-4",textColor: "white",icon: "cloud_done",message: "debe Seleccionar un Consultor",});
               }
           }else{
-
               if(this.sociedadesSelectos.length){
                   this.sociedadesSelectos[0].monto=this.sociedadesSelectos[0].pivot.monto
                  this.$api.put(process.env.API + "/sociedadcontratos/"+this.dato2.id,this.sociedadesSelectos[0]).then((res) => {
@@ -1338,9 +1363,6 @@ export default {
               }else{
                 this.$q.notify({color: "red-4",textColor: "white",icon: "cloud_done",message: "debe Seleccionar un Consultor",});
               }
-
-
-
           }
       }else{
         if (this.group==='op1'){
@@ -1563,6 +1585,7 @@ export default {
        }
 
     },
+
   },
 };
 </script>

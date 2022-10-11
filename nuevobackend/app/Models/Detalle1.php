@@ -12,6 +12,7 @@ class Detalle1 extends Model
     protected $fillable = [
         "observacion",
         "categoria",
+        "oficial",
 
     ];
     protected $hiden =["created_at", "update_ad"];
