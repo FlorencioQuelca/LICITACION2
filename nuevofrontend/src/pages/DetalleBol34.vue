@@ -3113,8 +3113,8 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.setFont('times')
              doc.rect(15,10, 185,255)
             // doc.rect(20,45, 50,45)
-             doc.rect(170,47, 30,4)
-             doc.rect(120,47, 50,4)
+             doc.rect(170,43, 30,4)
+             doc.rect(120,43, 50,4)
              // parte -1
              doc.rect(15,35, 185,8)
              doc.rect(15,35, 185,12)
@@ -3605,7 +3605,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text("DEPARTAMENTO :", 16,46,{maxWidth: 75,align: "justify"})
              doc.text("MUNICIPIO :", 16,50,{maxWidth: 75,align: "justify"}).setFont(undefined, 'normal');
              doc.text("AREA DE ENLOSETADO (M2)", 16,54,{maxWidth: 75,align: "justify"})
-             doc.text("CATEGORIA DEL MUNICIPIO:", 125,50)
+             doc.text("CATEGORIA DEL MUNICIPIO:", 125,46)
 
                 // doc.text('*', 214, 280) //milimetros
              doc.setFontSize(9,"normal").setFont(undefined, 'normal');
@@ -3634,7 +3634,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text(this.dato.municipio+'.', 64,50,{maxWidth: 126,align: "justify"})
              doc.text(this.dato.monto3+' m2', 64,54,{maxWidth: 126,align: "justify"})
 
-             doc.text("' "+this.dato.autoridad+" '", 184,50,{maxWidth: 126,align: "justify"})
+             doc.text("' "+this.dato.autoridad+" '", 184,46,{maxWidth: 126,align: "justify"})
 
              doc.setFontSize(8, 'normal')
              doc.text(" ...........................................................                                              ...........................                                              .........................  ",25, 258)
