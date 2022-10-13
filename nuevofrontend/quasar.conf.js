@@ -27,7 +27,7 @@ module.exports = configure(function (ctx) {
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: [
-      'app.scss'
+      'app.scss',
     ],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
@@ -95,7 +95,7 @@ module.exports = configure(function (ctx) {
 
       },
       lang: 'es',
-      
+
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -113,7 +113,7 @@ module.exports = configure(function (ctx) {
         'Notify',
         'Dialog'
       ],
-     
+
     },
 
     // animations: 'all', // --- includes all animations

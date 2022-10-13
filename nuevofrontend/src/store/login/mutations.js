@@ -23,6 +23,7 @@ export function auth_request(state){
     state.reportes=data.user.permisos.find(p=>p.id===12)!=undefined
     state.registro=data.user.permisos.find(p=>p.id===13)!=undefined
     state.reportebol34=data.user.permisos.find(p=>p.id===14)!=undefined
+    state.calendario=data.user.permisos.find(p=>p.id===15)!=undefined
 
 
 
@@ -49,5 +50,6 @@ export function auth_request(state){
     state.reportes=false
     state.registro=false
     state.reportebol34=false
+    state.calendario=false
 
   }

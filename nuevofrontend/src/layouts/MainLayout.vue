@@ -147,6 +147,14 @@
           <q-item-section>Usuarios</q-item-section>
         </q-item>
 
+        <q-item   v-if="$store.state.login.calendario"
+           clickable   active-class="my-menu-link" to="/Calendario" exact>
+          <q-item-section avatar>
+            <q-icon color="teal" name="today" />
+          </q-item-section>
+          <q-item-section>Calendario Aperturas</q-item-section>
+        </q-item>
+
           <q-item  v-if="$store.state.login.registro"
            clickable   active-class="my-menu-link" to="/RegistroBol34" exact>
           <q-item-section avatar>
