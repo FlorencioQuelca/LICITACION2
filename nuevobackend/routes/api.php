@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 //Route::get("/prueba",function(){
 //   return \App\Models\Empresa::all();
 //});
+Route::get('proyectoslibre',[\App\Http\Controllers\ProyectoController::class,'proyectoslibre'])->name('proyectoslibre'); //CRUD de proyectos;
 
 
 //login
@@ -94,7 +95,7 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   Route::post('getContrato/{archivo}',[\App\Http\Controllers\ArchivoController::class,'getContrato']);
 
   Route::apiResource('/archivos',\App\Http\Controllers\ArchivoController::class);
-  Route::get('proyectoslibre',[\App\Http\Controllers\ProyectoController::class,'proyectoslibre'])->name('proyectoslibre'); //CRUD de proyectos;
+
   Route::get('/proyectoid/{proyecto}',[\App\Http\Controllers\ProyectoController::class,'proyectoid'])->name('proyectoid'); //un solo proyecto
 
   // contrato
