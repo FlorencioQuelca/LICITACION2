@@ -3303,12 +3303,12 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                        doc.text("X", 101,93)
                      }
 
-                              if(it.pivot.descripcion.length>35){
+                              if(it.pivot.descripcion.length>120){
                                     doc.setFontSize(5,"bold").setFont(undefined, 'normal');
-                                doc.text(it.pivot.descripcion+'.', 111,90,{maxWidth: 88,align: "justify"})
+                                doc.text(it.pivot.descripcion, 111,90,{maxWidth: 88,align: "justify"})
                               }else{
-                                  doc.setFontSize(6,"bold").setFont(undefined, 'normal');
-                              doc.text(it.pivot.descripcion+'.', 111,91,{maxWidth: 88,align: "justify"})
+                                  doc.setFontSize(7,"bold").setFont(undefined, 'normal');
+                              doc.text(it.pivot.descripcion, 111,91,{maxWidth: 88,align: "justify"})
                               }
                 doc.setFontSize(8,"bold").setFont(undefined, 'normal');
 
@@ -3319,12 +3319,12 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                      }else{
                          doc.text("X", 101,102)
                      }
-                                  if(it.pivot.descripcion.length>35){
+                                  if(it.pivot.descripcion.length>160){
                                     doc.setFontSize(5,"bold").setFont(undefined, 'normal');
-                                    doc.text(it.pivot.descripcion+'.', 111,100,{maxWidth: 88,align: "justify"})
+                                    doc.text(it.pivot.descripcion, 111,100,{maxWidth: 88,align: "justify"})
                                   }else{
-                                    doc.setFontSize(6,"bold").setFont(undefined, 'normal');
-                                    doc.text(it.pivot.descripcion+'.', 111,101,{maxWidth: 88,align: "justify"})
+                                    doc.setFontSize(7,"bold").setFont(undefined, 'normal');
+                                    doc.text(it.pivot.descripcion, 111,101,{maxWidth: 88,align: "justify"})
                                   }
 
                        doc.setFontSize(8,"bold").setFont(undefined, 'normal');
@@ -3652,7 +3652,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
              doc.text('RECOMENDACIONES', 16, 225).setFontSize(10).setFont(undefined, 'normal').setTextColor('#000000')
               doc.setFontSize(6,"bold").setFont(undefined, 'normal');
                if(this.dato.observacion){
-                 doc.text((this.dato.observacion).toUpperCase(), 16, 229,{maxWidth: 175,align: "justify"})
+                 doc.text(this.dato.observacion, 16, 229,{maxWidth: 180,align: "justify"})
                }else{
                  doc.text('.', 16, 229,{maxWidth: 175,align: "justify"})
                }

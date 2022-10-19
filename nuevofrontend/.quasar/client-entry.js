@@ -53,9 +53,9 @@ const publicPath = ``
 
 
 async function start ({ app, router, store, storeKey }, bootFiles) {
+  
 
-
-
+  
   let hasRedirected = false
   const getRedirectUrl = url => {
     try { return router.resolve(url).href }
@@ -110,22 +110,22 @@ async function start ({ app, router, store, storeKey }, bootFiles) {
   if (hasRedirected === true) {
     return
   }
-
+  
 
   app.use(router)
   app.use(store, storeKey)
 
+  
 
+    
 
-
-
-
+    
       app.mount('#q-app')
+    
 
+    
 
-
-
-
+  
 
 }
 
@@ -133,9 +133,9 @@ createQuasarApp(createApp, quasarUserOptions)
 
   .then(app => {
     return Promise.all([
-
+      
       import(/* webpackMode: "eager" */ 'boot/axios')
-
+      
     ]).then(bootFiles => {
       const boot = bootFiles
         .map(entry => entry.default)
