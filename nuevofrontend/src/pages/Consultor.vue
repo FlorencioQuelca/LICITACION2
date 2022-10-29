@@ -603,8 +603,8 @@ export default {
        this.$api.get(process.env.API+"/consultor").then((res)=>{
       //  console.log(res.data)
          this.data =res.data;
-    this.$q.loading.hide();
-       });
+         this.$q.loading.hide();
+       }).catch(e=>console.log(e));
     },
     editRow(item) {
       this.dato2 = item.row
@@ -626,7 +626,7 @@ export default {
         this.dialog_del = false;
         this.misdatos();
 
-      });
+      }).catch(e=>console.log(e));
     },
      onSubmit() {
        this.errores =null;

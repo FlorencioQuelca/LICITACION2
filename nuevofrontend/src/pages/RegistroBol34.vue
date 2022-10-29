@@ -9,9 +9,7 @@
       class="q-mb-xs"
     />
     </div>
-
   <!--          tabla PRINCIPAL -->
-
     <q-table
       :filter="filter"
       title="REGISTRO DE PROYECTOS BOL34"
@@ -30,7 +28,7 @@
       </template>
 
      <template v-slot:body="props">
-        <q-tr :props="props">
+        <q-tr :props="props" >
           <q-td key="nro" :props="props">
             {{props.row.nro}}
           </q-td>
@@ -41,7 +39,22 @@
             {{props.row.municipio}}
           </q-td>
            <q-td key="nombre" :props="props">
+            <div v-if="props.row.status==='PRIORIZADO'" style="color:blue; font-weight:700">
             {{props.row.nombre}}
+            </div>
+            <div v-if="props.row.status==='ENVIADO'" style="color:green; font-weight:700">
+            {{props.row.nombre}}
+            </div>
+            <div  v-if="props.row.status==='RECIBIDO' || props.row.status===null">
+               <q-btn v-if="secre[0]!=='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
+                        dense
+                        round
+                        flat
+                        color="blue"
+                        @click="verRow1(props)"
+                        icon="info"
+               ></q-btn>{{props.row.nombre}}
+            </div>
           </q-td>
            <q-td key="cite" :props="props">
             {{props.row.cite}}
@@ -122,14 +135,22 @@
                             @click="desarchivar(props)"
                             icon="lock_open"
                         />
-                    <q-btn v-if="$store.state.login.user.tipo==='admin'"
-                      dense
-                      round
-                      flat
-                      color="red"
-                      @click="deleteRow(props)"
-                      icon="delete"
-                    ></q-btn>
+                         <q-btn v-if="secre[0]==='SECRETARIA' || this.$store.state.login.user.tipo==='admin'"
+                            dense
+                            round
+                            flat
+                            color="orange"
+                            @click="priorizado(props)"
+                            icon="priority_high"
+                        />
+                          <q-btn v-if="$store.state.login.user.tipo==='admin'"
+                            dense
+                            round
+                            flat
+                            color="red"
+                            @click="deleteRow(props)"
+                            icon="delete"
+                          ></q-btn>
             </q-td>
        </q-tr>
       </template>
@@ -579,9 +600,9 @@ export default {
 
     },
     created(){
+      this.misdatos()
+      this.misMunicipios()
       this.misDepartamentos()
-    this.misMunicipios()
-   this.misdatos()
    // this.misdatosDepa()
     this.cargarUsers()
   },
@@ -702,7 +723,6 @@ export default {
       this.dato.cite="MPD/VIPFE/DGPP-NE XXXX/2022"
       this.dato.interno ="E/CN/2022-0XXXX"
       this.dato.adjunto =" 1 Carpeta (fojas XX y CD)"
-
         this.alert=true;
        },
 
@@ -724,18 +744,12 @@ export default {
          })
      // this.dato.departamento_id=this.$store.state.login.user.ci
       this.$api.post(process.env.API+"/registros/", this.dato).then((res) => {
-         if(res.data.res===true)
-          {
             this.$q.notify({
             color: "green-4",
             textColor: "white",
             icon: "cloud_done",
             message: "Creado Correctamente",
           });
-
-          }else{
-            this.$q.loading.hide();
-          }
           this.alert= false;
           this.misdatos();
 
@@ -761,18 +775,16 @@ export default {
       this.$api
         .put(process.env.API + "/registros/" + this.dato2.id, this.dato2)
         .then((res) => {
-          if (res.data.res === true) {
             this.$q.notify({
               color: "green-4",
               textColor: "white",
               icon: "cloud_done",
               message: "Modificado correctamente",
             });
-          }
           this.dialog_mod = false;
           this.misdatos();
           this.$q.loading.hide();
-        });
+        }).catch(err=>console.log(err));
     },
       editRow(item) {
       this.dato2 = item.row;
@@ -790,9 +802,45 @@ export default {
         });
        this.dialog_mod = true;
     },
+    priorizado(item) {
+      this.dato2 = item.row;
+        this.$q.dialog({
+                  title: 'PROYECTO PRIORIZADO',
+                  message: 'El proyecto fue priorizado por el MPD ?',
+                  cancel: true,
+                  persistent: true
+                  // console.log('>>>> OK')
+                }).onOk(() => {
+                    this.$q.loading.show()
+                       this.$api.put(process.env.API + "/registros/" + this.dato2.id, {status:"PRIORIZADO"} )
+                        .then((res) => {
+                            this.$q.notify({
+                              color: "green-4",
+                              textColor: "white",
+                              icon: "cloud_done",
+                              message: "Estado cambiado a PRIORIZADO",
+                            });
+                          this.misdatos();
+                          this.$q.loading.hide()
+                  }).catch(er=>console.log(er))
+                }).onCancel(() => {
+                  this.$q.loading.show()
+                       this.$api.put(process.env.API + "/registros/" + this.dato2.id, {status:"ENVIADO"} )
+                        .then((res) => {
+                            this.$q.notify({
+                              color: "green-4",
+                              textColor: "white",
+                              icon: "cloud_done",
+                              message: "Estado cambiado a ENVIADO",
+                            });
+                          this.misdatos();
+                          this.$q.loading.hide()
+                  }).catch(er=>console.log(er))
+
+                })
+    },
       sendeditRow(item) {
       this.dato2 = item.row;
-
         this.$q.dialog({
                   title: 'ENVIO DE INFORME A LA OFICINA CENTRAL',
                   message: 'El informe se esta enviando a la oficina central, el tecnico no podra Modificarlo  esta de Acuerdo?',
@@ -803,24 +851,21 @@ export default {
                     this.$q.loading.show()
                 this.$api.put(process.env.API + "/registros/" + this.dato2.id, {status:"ENVIADO"} )
                         .then((res) => {
-                          if (res.data.res === true) {
                             this.$q.notify({
                               color: "green-4",
                               textColor: "white",
                               icon: "cloud_done",
                               message: "ENVIADO correctamente",
                             });
-                          }
                           this.misdatos();
                           this.$q.loading.hide()
-                  })
+                  }).catch(er=>console.log(er))
                 }).onCancel(() => {
                     this.$q.loading.hide()
                 })
     },
           desarchivar(item) {
       this.dato2 = item.row;
-
         this.$q.dialog({
                   title: 'HABILITAR PARA EDICION',
                   message: 'el Informe se esta HABILITANDO para su correccion o modificacion, esta seguro ?',
@@ -831,20 +876,17 @@ export default {
                     this.$q.loading.show()
                 this.$api.put(process.env.API + "/registros/" + this.dato2.id, {status:"RECIBIDO"} )
                         .then((res) => {
-                          if (res.data.res === true) {
                             this.$q.notify({
                               color: "green-4",
                               textColor: "white",
                               icon: "cloud_done",
                               message: "HABILITADO correctamente",
                             });
-                          }
-                          this.misdatos();
                           this.$q.loading.hide()
-                  })
+                          this.misdatos();
+                  }).catch(err=>console.log(err))
                 }).onCancel(() => {
                     this.$q.loading.hide()
-
                 })
     },
 
@@ -854,21 +896,17 @@ export default {
     },
     onDel() {
       this.$q.loading.show();
-
-      this.$api
-        .delete(process.env.API + "/registros/" + this.dato.id)
+      this.$api.delete(process.env.API + "/registros/" + this.dato.id)
         .then((res) => {
-          if (res.data.res === true) {
             this.$q.notify({
               color: "green-4",
               textColor: "white",
               icon: "cloud_done",
               message: "Eliminado correctamente",
             });
-          }
           this.dialog_del = false;
           this.misdatos();
-        });
+        }).catch(err=>console.log(err))
     },
       verRow1(item) {
       this.dato2 = item.row;
@@ -908,18 +946,16 @@ export default {
       this.$q.loading.show();
       this.$api.put(process.env.API + "/registrouserdetach/" + this.dato2.id,this.dato3)
         .then((res) => {
-          if (res.data.res === true) {
             this.$q.notify({
               color: "green-4",
               textColor: "white",
               icon: "cloud_done",
               message: "desasociado correctamente",
             });
-          }
           this.dialog_del1 = false;
           this.dialog_list=false;
           this.misdatos();
-        });
+        }).catch(err=>console.log(err));
     },
     onAdd2() {
         let ans={}
@@ -928,7 +964,6 @@ export default {
              ans=it
           //   this.$api.put(process.env.API+"/personavisitas/"+this.dato2.id,ans).then((res) => {
              this.$api.put(process.env.API+"/registrouser/"+this.dato2.id,ans).then((res) => {
-                  if(res.data.res===true){
                   this.$q.notify({
                           color: "green-4",
                           textColor: "white",
@@ -937,16 +972,7 @@ export default {
                         });
                       this.$q.loading.hide();
                         this.misdatos();
-                        }else{
-                            this.$q.notify({
-                          color: "red-4",
-                          textColor: "white",
-                          icon: "cloud_done",
-                          message: "Error al agregar",
-                        });
-                             this.$q.loading.hide();
-                        }
-                       });
+                       }).catch(err=>console.log(err))
 
       })
        this.dialog_add2 = false;

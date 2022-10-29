@@ -41,7 +41,7 @@ class CreateRegistrosTable extends Migration
             $table->string("firmado_por")->nullable();  //ITEMS
             $table->string("autoridad")->nullable(); //categoria municipal
             $table->string("url")->nullable();  //pdf
-            $table->string("status")->nullable();  // GENERADO /RECIVIDO
+            $table->string("status")->nullable();  // GENERADO /RECIBIDO
             $table->string("observacion")->nullable();  // RECOMENDACIONES
 
             //carta

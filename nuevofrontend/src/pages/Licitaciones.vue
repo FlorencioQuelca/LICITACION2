@@ -436,9 +436,9 @@ proyecto:{},
     this.$q.loading.show();
        this.$api.get(process.env.API+"/proyectoslibre").then((res)=>{
          this.data =res.data
-         console.log(res.data)
+        // console.log(res.data)
          this.$q.loading.hide();
-       });
+       }).catch(e=>console.log(e))
     },
      verRow(item) {
       this.dato2 = item.row;

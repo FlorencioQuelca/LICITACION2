@@ -4,14 +4,14 @@
     <q-btn    v-if="this.$store.state.login.user.status==='CENTRAL'"
       label=" ATRAS"
       color="secondary"
-      icon="account_tree"
+      icon="arrow_back"
       @click="this.$router.push('/ReporteBol34')"
       class="q-mb-xs"
     />
     <q-btn v-if="this.$store.state.login.user.status!=='CENTRAL'"
       label=" ATRAS"
       color="secondary"
-      icon="account_tree"
+      icon="arrow_back"
       @click="this.$router.push('/RegistroBol34')"
       class="q-mb-xs"
     />
@@ -285,7 +285,9 @@
               label="Monto de la Supervision"
               hint="Ingrese un numero "
             />
-            la suma es: {{sumar}}
+            <div style="color:red">
+             la suma es: <span style="color:green; font-weight:700"> {{sumar}}</span>
+            </div>
             <q-input
 
               outlined
@@ -298,8 +300,8 @@
             </div>
              </div>
             <div>
-              <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
-              <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
+              <q-btn  v-if="(this.dato.status==='RECIBIDO' || this.dato.status===null) && this.$store.state.login.user.status!=='CENTRAL'"  label="GUARDAR" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="SALIR" icon="close" color="negative" v-close-popup />
             </div>
           </q-form>
         </q-card-section>
@@ -376,8 +378,8 @@
 
 
             <div>
-              <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
-              <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
+              <q-btn  v-if="(this.dato.status==='RECIBIDO' || this.dato.status===null) && this.$store.state.login.user.status!=='CENTRAL'" label="GUARDAR" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="SALIR" icon="close" color="negative" v-close-popup />
             </div>
           </q-form>
         </q-card-section>
@@ -460,7 +462,7 @@
         <q-card-section class="bg-green-14 text-white">
           <div style="display: flex; justify-content:space-between ">
           <div class="text-h6"><q-icon name="edit" /> {{titulo}}</div>
-          <q-btn label="SALIR" @click="refrescar" color="blue" icon="close" />
+          <q-btn label="SALIR" @click="refrescar" color="red" icon="close" />
           </div>
         </q-card-section>
 
@@ -530,14 +532,15 @@
                       />
                      </div>
                         <div class="col-1"  v-if="item.tipo===op">
-                          <q-btn v-if="item.puntaje==='1.00'"
+                          <div v-if="(this.dato.status==='RECIBIDO' || this.dato.status===null) && this.$store.state.login.user.status!=='CENTRAL'">
+                        <q-btn v-if="item.puntaje==='1.00'"
                         dense
                         round
                         flat
                         color="green"
                         @click="guardar(item)"
                         icon="save"
-                      ></q-btn>
+                        ></q-btn>
                           <q-btn v-else
                         dense
                         round
@@ -545,7 +548,8 @@
                         color="blue"
                         @click="editar(item)"
                         icon="save"
-                      ></q-btn>
+                        ></q-btn>
+                        </div>
                         </div>
                </div>
         </q-card-section>
@@ -578,8 +582,8 @@
               hint="Ingresar observaciones"
             />
             <div>
-              <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
-              <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
+              <q-btn   v-if="(this.dato.status==='RECIBIDO' || this.dato.status===null) && this.$store.state.login.user.status!=='CENTRAL'" label="GUARDAR" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="SALIR" icon="close" color="negative" v-close-popup />
             </div>
           </q-form>
         </q-card-section>
@@ -612,7 +616,7 @@
             />
             <div>
               <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
-              <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
+              <q-btn label="SALIR" icon="close" color="negative" v-close-popup />
             </div>
           </q-form>
         </q-card-section>
@@ -930,8 +934,8 @@
                 </div>
              </div>
             <div>
-              <q-btn label="GUARDAR" type="submit" color="positive" icon="add_circle" />
-              <q-btn label="SALIR" icon="delete" color="negative" v-close-popup />
+              <q-btn   v-if="(this.dato.status==='RECIBIDO' || this.dato.status===null) && this.$store.state.login.user.status!=='CENTRAL'" label="GUARDAR" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="SALIR" icon="close" color="negative" v-close-popup />
             </div>
           </q-form>
         </q-card-section>
@@ -1323,14 +1327,14 @@ export default {
                 this.departamento={label:it.label,value:it.value}
            }
         });
-         if((this.dato.status==="RECIBIDO" || this.dato.status==null)  && this.$store.state.login.user.status!=="CENTRAL" ){
+         if(this.dato.status==="RECIBIDO" || this.dato.status===null ){
            this.dialog_form1=true;
          }else{
            this.$q.notify({
               color: "red",
               textColor: "white",
               icon: "cloud_done",
-              message: "El informe ha sido enviado NO puede ser modificado  o  pida a secretaria y/o administrador que lo habiliten",
+              message: "El informe ha sido  ENVIADO NO puede ser modificado  o  pida a secretaria y/o administrador que lo habiliten",
             });
          }
     },
@@ -1355,7 +1359,7 @@ export default {
                            this.evaluaciones[2].puntaje=it.pivot.puntaje
                          }
                  })
-       if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
+       if((this.dato.status==="RECIBIDO" || this.dato.status==null)){
            this.dialog_form2345_corregido=true;
          }else{
            this.$q.notify({
@@ -1410,7 +1414,7 @@ export default {
                          }
 
                  })
-        if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
+        if((this.dato.status==="RECIBIDO" || this.dato.status==null)){
            this.dialog_form2345_corregido=true;
          }else{
            this.$q.notify({
@@ -1479,7 +1483,7 @@ export default {
                            this.evaluaciones[19].puntaje=it.pivot.puntaje
                          }
                  })
-        if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
+        if((this.dato.status==="RECIBIDO" || this.dato.status==null)){
             this.dialog_form2345_corregido=true;
          }else{
            this.$q.notify({
@@ -1529,22 +1533,21 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
            this.progress1=0.5
            this.progressLabel1=(this.progress1*100).toFixed(2)+"%"
         }
-      this.$q.loading.show();
+      this.$q.loading.show()
       this.$api
         .put(process.env.API + "/registros/" + this.dato.id, this.dato)
         .then((res) => {
-          if (res.data.res === true) {
+
             this.$q.notify({
               color: "green-4",
               textColor: "white",
               icon: "cloud_done",
               message: "Modificado correctamente",
             });
-          }
           this.dialog_form1 = false;
           this.misdatos();
           this.$q.loading.hide();
-        });
+        }).catch(err =>console.log(e));
     },
      onMod6() {
         if(this.dato.status==='ENVIADO'){
@@ -1594,24 +1597,20 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                 ans+='otro-'
                this.dato.comunidades=this.otrosi
          }
-       this.dato.firmado_por=ans
-
+      this.dato.firmado_por=ans
       this.$q.loading.show();
-      this.$api
-        .put(process.env.API + "/registros/" + this.dato.id, this.dato)
+      this.$api.put(process.env.API + "/registros/" + this.dato.id, this.dato)
         .then((res) => {
-          if (res.data.res === true) {
             this.$q.notify({
               color: "green-4",
               textColor: "white",
               icon: "cloud_done",
               message: "Modificado correctamente",
             });
-          }
           this.dialog_form6 = false;
           this.misdatos();
           this.$q.loading.hide();
-        });
+        }).catch(er=>console.log(er))
     },
     onMod7() {
       this.$q.loading.show();
@@ -1628,35 +1627,31 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
       this.$api
         .put(process.env.API + "/registros/" + this.dato.id, this.dato)
         .then((res) => {
-          if (res.data.res === true) {
             this.$q.notify({
               color: "green-4",
               textColor: "white",
               icon: "cloud_done",
               message: "Modificado correctamente",
             });
-          }
           this.dialog_form7 = false;
           this.misdatos();
           this.$q.loading.hide();
-        });
+        }).catch(err=>console.log(err));
     },
      onMod0() {
       this.$q.loading.show();
       this.$api.put(process.env.API + "/registros/" + this.dato.id, this.dato)
         .then((res) => {
-          if (res.data.res === true) {
             this.$q.notify({
               color: "green-4",
               textColor: "white",
               icon: "cloud_done",
               message: "Modificado correctamente",
             });
-          }
           this.dialog_form0 = false;
           this.misdatos();
           this.$q.loading.hide();
-        });
+        }).catch(er=>console.log(er));
     },
     guardar(item){
 
@@ -1689,7 +1684,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                                   message: "Guardado Correctamente",
                                 });
                             //   this.misdatos();
-                                });
+                                }).catch(err=>console.log(err));
             }
 
 
@@ -1719,7 +1714,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                             message: "Guardado Correctamente",
                           });
                        //   this.misdatos();
-                          });
+                          }).catch(err=>console.log(err));
       }
          }
     },
@@ -1752,7 +1747,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                         });
                          // this.misdatos();
 
-                        });
+                        }).catch(err=>console.log(err));
                 }
          })
       },
@@ -1796,13 +1791,13 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
 
         this.dato.puntaje3=Number(this.dato.puntaje3)+1
         this.$api.put(process.env.API + "/registros/" + this.dato.id, this.dato)
-        .then((res) => {});
+        .then((res) => {}).catch(e=>console.log(e));
         this.dialog_form2345_corregido=false;
 
 
        },
       imprimir(){
-
+      //  this.$q.loading.show();
         let text1="En atencíon a nota CITE: "+this.dato.cite+", mediante la cual se solicita realizar la verificacíon y avaluación de requisitos exigidos del proyecto "+this.dato.nombre+" correspondiente al municipio de "+this.cambiarminiscula(this.dato.municipio)+" del departamento de "+this.cambiarminiscula(this.dato.departamento.nombre)+", mediante el Programa Nacional de Emergencia para la Generación de Empleo BOL34/2021; al respecto, tengo a bien informar el resultado de la evaluación y verificación del contenido del proyecto presentado.";
         let text2="Según lo establecido en el Reglamento Operativo del Programa Nacional de Emergencia para la Generación de Empleo BOL-34/2021 se menciona:";
         let text3="•    Punto 1.2. Objetivos del Programa – componente I: Infraestructura y Supervisión de Obras, mediante el cual se financiará la ejecución de Obras de Infraestructura urbana – rural y la Supervisión de las obras de las siguientes tipologías: (i) Vial (enlosetado de vías vehiculares y peatonales) …"
@@ -2455,7 +2450,8 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                      descargarnombre=this.dato.codigo+"_NO_CUMPLE"+".pdf"
                }
            // doc.save(descargarnombre);
-           window.open(doc.output('bloburl',{filename:descargarnombre}), '_blank');
+            window.open(doc.output('bloburl',{filename:descargarnombre}), '_blank');
+           //this.$q.loading.hide();
       },
       isBoldOpen (arrayLength, valueBefore = false) {
     const isEven = arrayLength % 2 === 0;
@@ -2588,7 +2584,7 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                  }
                  }
            }
-         if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.state.login.user.status!=="CENTRAL"){
+         if(this.dato.status==="RECIBIDO" || this.dato.status==null){
            this.dialog_form6=true;
          }else{
            this.$q.notify({
@@ -2617,17 +2613,8 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
         if(this.dato.copia==null){
           this.fecha_inspeccion=moment().format('YYYY-MM-DD');
         }
-
-          if( this.$store.state.login.user.status!=="CENTRAL"){
            this.dialog_form7=true;
-         }else{
-           this.$q.notify({
-              color: "red",
-              textColor: "white",
-              icon: "cloud_done",
-              message: "No puede acceder a este sitio",
-            });
-         }
+
     },
     view_form8(){
       this.titulo="FICHA TECNICA DE INSPECCION DE CAMPO"
@@ -2643,32 +2630,10 @@ if((this.dato.status==="RECIBIDO" || this.dato.status==null) && this.$store.stat
                 }).catch((e)=>{
                   this.$q.loading.hide();
                 });
-           //      console.log("creado correctamente");
-        if( this.$store.state.login.user.status!=="CENTRAL"){
            this.dialog_form8=true;
-         }else{
-           this.$q.notify({
-              color: "red",
-              textColor: "white",
-              icon: "cloud_done",
-              message: "No puede acceder a este sitio",
-            });
-         }
-
         }else{   // es con contenido
-
-         if( this.$store.state.login.user.status!=="CENTRAL"){
             this.dato2=this.dato.ficha
-           this.dialog_form8=true;
-         }else{
-           this.$q.notify({
-              color: "red",
-              textColor: "white",
-              icon: "cloud_done",
-              message: "No puede acceder a este sitio",
-            });
-         }
-
+           this.dialog_form8=true
             //  this.dialog_form8=true;
         }
     },

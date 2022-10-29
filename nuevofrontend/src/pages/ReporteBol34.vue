@@ -37,7 +37,28 @@
           </q-td>
 
            <q-td key="nombre" :props="props">
-            <q-btn v-if="this.$store.state.login.user.status==='CENTRAL'"
+             <div v-if="props.row.status==='PRIORIZADO'" style="color:blue; font-weight:500">
+              <q-btn v-if="this.$store.state.login.user.status==='CENTRAL'"
+                        dense
+                        round
+                        flat
+                        color="blue"
+                        @click="verRow1(props)"
+                        icon="info"
+               ></q-btn>{{props.row.nombre}}
+            </div>
+            <div v-if="props.row.status==='ENVIADO'" style="color:green; font-weight:500">
+                        <q-btn v-if="this.$store.state.login.user.status==='CENTRAL'"
+                        dense
+                        round
+                        flat
+                        color="blue"
+                        @click="verRow1(props)"
+                        icon="info"
+               ></q-btn> {{props.row.nombre}}
+            </div>
+            <div  v-if="props.row.status==='RECIBIDO' || props.row.status===null">
+               <q-btn v-if="this.$store.state.login.user.status==='CENTRAL'"
                         dense
                         round
                         flat
@@ -45,6 +66,7 @@
                         @click="verRow1(props)"
                         icon="info"
                ></q-btn>  {{props.row.nombre}}
+            </div>
           </q-td>
            <q-td key="cite" :props="props">
             {{props.row.cite}}
@@ -203,11 +225,11 @@ export default {
         */
     },
         misdatos(){
-        // this.$q.loading.show();
+        this.$q.loading.show();
          //   this.$api.get(process.env.API+"/registrodepa/"+this.$store.state.login.user.ci).then((res)=>{
        //    this.data=res.data
 
-      //    this.$q.loading.hide();
+     //   this.$q.loading.hide();
         this.data=[]
        this.$api.get(process.env.API+"/registrados").then((res)=>{
     // console.log(res.data);
