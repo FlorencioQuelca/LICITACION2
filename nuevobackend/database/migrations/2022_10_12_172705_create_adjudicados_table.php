@@ -34,7 +34,6 @@ class CreateAdjudicadosTable extends Migration
             $table->integer('gestion')->nullable();
             $table->decimal('montobs',10,2)->nullable();
             $table->decimal('montosus',10,2)->nullable();
-
             $table->string("status")->default("activo");
             $table->string("observacion")->nullable();
             $table->unsignedBigInteger('proyecto_id')->nullable();

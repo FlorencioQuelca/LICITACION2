@@ -68,7 +68,7 @@
 	export default {
 		data() {
 			return {
-        showDate: new Date(2022,9,15),
+        showDate: new Date(),
         data:[],
         message: "",
         attributes:[],

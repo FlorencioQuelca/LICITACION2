@@ -154,6 +154,13 @@
           </q-item-section>
           <q-item-section>Calendario Aperturas</q-item-section>
         </q-item>
+        <q-item   v-if="$store.state.login.adjudicados"
+           clickable   active-class="my-menu-link" to="/Adjudicados" exact>
+          <q-item-section avatar>
+            <q-icon color="teal" name="mode" />
+          </q-item-section>
+          <q-item-section>Adjudicados</q-item-section>
+        </q-item>
 
           <q-item  v-if="$store.state.login.registro"
            clickable   active-class="my-menu-link" to="/RegistroBol34" exact>

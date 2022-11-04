@@ -20,6 +20,7 @@ import DetalleBol34 from "pages/DetalleBol34";
 import ReporteBol34 from "pages/ReporteBol34";
 import DetalleLotes from "pages/DetalleLotes";
 import Calendario from "pages/Calendario";
+import Adjudicados from "pages/Adjudicados";
 
 
 const routes = [
@@ -38,6 +39,7 @@ const routes = [
       { name:'detalle' ,path: 'Detalle', component: Detalle, props:true,meta: { requiresAuth: true} },
       { path: 'Contratos', component: Contratos,meta: { requiresAuth: true }},
       { path: 'Calendario', component: Calendario,meta: { requiresAuth: true }},
+      { path: 'Adjudicados', component: Adjudicados,meta: { requiresAuth: true }},
       { path: 'Usuarios', component: Usuarios,meta: { requiresAuth: true }},
       { path: '/Presentados/:id/view',  name: 'presentados.view',component: Presentados,meta: { requiresAuth: true}},
       { path: '/DetalleLotes/:id/view',  name: 'detallelotes.view',component: DetalleLotes,meta: { requiresAuth: true}},

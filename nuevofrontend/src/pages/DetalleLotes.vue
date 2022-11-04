@@ -97,6 +97,17 @@
              <div class="row" v-if="this.$store.state.login.user.tipo==='admin'">
               <q-btn
                 icon="add_circle"
+                label="ASIGNAR ADJUDICADO"
+                stack
+                glossy
+                color="purple"
+                @click="asignar_adjudicado"
+                style="width: 200px; margin: 10px 0px 0px 0px"
+              />
+            </div>
+             <div class="row" v-if="this.$store.state.login.user.tipo==='admin'">
+              <q-btn
+                icon="add_circle"
                 label="ASIGNAR CONTRATO"
                 stack
                 glossy
@@ -976,11 +987,71 @@
     </q-dialog>
 
 
+    <!--          ADICIONAR contrato -->
+   <q-dialog v-model="form_add_adjudicado">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6"><q-icon name="add_circle" /> Nueva Adjudicacion: {{dato.nombre}}</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onCreateContrato"  class="q-gutter-md">
+            <q-select  v-if="dato.lotes.length>0"
+               outlined
+              :options="data_lotes"
+              v-model="loteElegido"
+              label="proyecto asociado"
+           >
+            </q-select>
+             <q-input v-else
+              outlined
+              v-model="dato.nombre"
+              type="text"
+              label="Nombre del proyecto"
+              hint="Ingresar nombre del proyecto"
+            />
+               <q-input
+              outlined
+              v-model="dato2.numero"
+              type="text"
+              label="Numero de resolucion"
+              hint="Ingresar Numero de resolucion Ej.(02-2022)"
+                 lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+           <q-input
+              outlined
+              v-model="dato2.seguimiento"
+              type="text"
+              label="Nombre del seguimiento ejemplo FPS/02/2022"
+              hint="Ingresar EL Nro SEGUIMIENTO"
+                lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+
+            />
+             <q-input
+                  outlined
+                  type="date"
+                  v-model="dato2.fechaini"
+                  hint="Ingresar fecha de la resolucion"
+                    lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+                />
+
+            <div>
+              <q-btn label="Crear contrato" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+
 
   </div>
 </template>
-
 <script>
+import moment, { now } from 'moment';
   const joinCodigos =(array)=> {
     let ans=''
     for (let i=0;i<array.length;i++){
@@ -1053,6 +1124,7 @@ export default {
     dialog_add_consultor:false,
     dialog_add_sociedad:false,
     form_add_contrato:false,
+    form_add_adjudicado:false,
     data_lotes:[],
     loteElegido:{},
 
@@ -1481,9 +1553,26 @@ export default {
                 }
       }
 
-    }
-    ,
+    },
+     asignar_adjudicado(){
+      this.dato2.fechaini=moment().format('YYYY-MM-DD');
+      this.dato2.seguimiento="GDLP/";
+      this.dato2.numero="XX-202X";
+         if(this.dato.lotes.length>0){
+        this.data_lotes=[]
+         this.dato.lotes.forEach(it =>{
+          this.data_lotes.push({label:it.nombre ,value:it.id})
+         })
+         this.loteElegido=this.data_lotes[0];
+         this.form_add_adjudicado=true
+       }else{
+         this.form_add_adjudicado=true
+       }
+    },
     asignar_contrato(){
+      this.dato2.fechaini=moment().format('YYYY-MM-DD');
+       this.dato2.seguimiento="GDLP/";
+      this.dato2.numero="XX-202X";
 
        if(this.dato.lotes.length>0){
         this.data_lotes=[]
