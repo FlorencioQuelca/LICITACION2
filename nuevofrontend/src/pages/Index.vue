@@ -99,7 +99,7 @@
 			this.message = `la fecha es: ${d.toLocaleDateString()}`
 		},
     enviar(){
-       this.$router.push({name: 'detallelotes.view', params: {id:this.idclick}})
+      // this.$router.push({name: 'detallelotes.view', params: {id:this.idclick}})
       // this.$router.push('/DetalleLotes')
     },
 		onClickItem(e) {
