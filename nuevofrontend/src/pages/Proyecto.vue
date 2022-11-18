@@ -7,27 +7,29 @@
       @click="alert = true"
       class="q-mb-xs"
     />
-     <q-btn
+    <!--
+     <q-btn v-if="this.$store.state.login.user.tipo==='admin'"
       label="Empresa"
       color="orange"
       icon="add_circle"
       @click= "this.$router.push('Empresa')"
       class="q-mb-xs"
     />
-     <q-btn
+     <q-btn v-if="this.$store.state.login.user.tipo==='admin'"
       label="Consultor"
       color="red"
       icon="add_circle"
       @click= "this.$router.push('Consultor')"
       class="q-mb-xs"
     />
-     <q-btn
+     <q-btn v-if="this.$store.state.login.user.tipo==='admin'"
       label="Sociedad"
       color="blue"
       icon="add_circle"
       @click= "this.$router.push('Sociedad')"
       class="q-mb-xs"
     />
+    -->
       <!--          ADICIONAR REGISTRO -->
    <q-dialog v-model="alert">
       <q-card style="max-width: 80%; width: 80%">
@@ -248,10 +250,10 @@
           </q-td>
             <q-td key="fecha" :props="props">
               <div>
-                {{props.row.fecha}}
+                 {{fechalarga(props.row.fecha)}}
               </div>
               <div>
-                 {{props.row.hora}}
+                 {{ horalarga(props.row.hora)}}
               </div>
           </q-td>
 
@@ -290,7 +292,7 @@
                         @click="verRow2(props)"
                         icon="list"
                       ></q-btn>
-
+                    <!--
                      <q-btn
                         dense
                         round
@@ -307,6 +309,7 @@
                         @click="verRow1(props)"
                         icon="list"
                       ></q-btn>
+                    -->
                        <q-btn
                         dense
                         round
@@ -323,7 +326,7 @@
               @click="editRow(props)"
               icon="edit"
           />
-            <q-btn
+            <q-btn v-if="this.$store.state.login.user.tipo==='admin'"
               dense
               round
               flat
@@ -1009,7 +1012,7 @@ const  columns= [
   { name: 'action1', align:"center",label: 'Detalle', field: 'action1'},
   { name: 'cuce',align:"Center", label: 'cuce', field: 'cuce', sortable: true },
   { name: 'link',align:"left", label: 'link de la reunion', field: 'link', sortable: true },
-  { name: 'fecha', align:"left",label: 'Fecha / Hora', field: 'fecha', sortable: true },
+  { name: 'fecha', align:"center",label: 'Fecha / Hora', field: 'fecha', sortable: true },
  // { name: 'hora', align:"center",label: 'hora', field: 'hora', sortable: true },
   { name: 'precio', align:"center",label: 'Monto / Plazo', field: 'precio', sortable: true },
  // { name: 'plazo', align:"center",label: 'plazo', field: 'plazo', sortable: true },
@@ -1206,6 +1209,35 @@ proyecto:{},
 
   },
   methods:{
+    horalarga(hora){
+         let hora1=hora.split(":")
+         let answer=""
+          if(Number(hora1[0])>=12){
+            answer=Number(hora1[0])+" : "+Number(hora1[1])+" PM"
+          }else{
+            answer=Number(hora1[0])+" : "+Number(hora1[1])+" AM"
+          }
+        return answer
+      },
+     fechalarga(fecha){
+         let fecha1=fecha.split("-")
+           let meses={
+            1:"enero",
+            2:"febrero",
+            3:"marzo",
+            4:"abril",
+            5:"mayo",
+            6:"junio",
+            7:"julio",
+            8:"agosto",
+            9:"septiembre",
+            10:"octubre",
+            11:"noviembre",
+            12:"diciembre",
+         }
+         let answer=Number(fecha1[2])+" de "+meses[Number(fecha1[1])]+" de "+fecha1[0]
+        return answer
+      },
      onReset() {
       this.dato.fecha=null;
       this.dato.hora =null;
@@ -1221,10 +1253,15 @@ proyecto:{},
     },
     misdatos(){
     this.$q.loading.show();
+    this.data=[]
        this.$api.get(process.env.API+"/proyectos").then((res)=>{
-       //console.log(res.data)
-         this.data =res.data;
-    this.$q.loading.hide();
+               res.data.forEach(it=>{
+                if(this.$store.state.login.user.status===it.departamento.nombre){
+                   this.data.push(it)
+                }
+              })
+                  //  this.data =res.data;
+                    this.$q.loading.hide();
        });
 
     },

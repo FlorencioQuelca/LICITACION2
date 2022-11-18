@@ -65,6 +65,7 @@
 	import "../../node_modules/vue-simple-calendar/dist/css/default.css"
   import "../../node_modules/vue-simple-calendar/dist/css/holidays-us.css"
 
+
 	export default {
 		data() {
 			return {
@@ -95,6 +96,44 @@
 
   },
 		methods: {
+       fechalarga(fecha){
+         let fecha1=fecha.split("-")
+           let meses={
+            1:"enero",
+            2:"febrero",
+            3:"marzo",
+            4:"abril",
+            5:"mayo",
+            6:"junio",
+            7:"julio",
+            8:"agosto",
+            9:"septiembre",
+            10:"octubre",
+            11:"noviembre",
+            12:"diciembre",
+         }
+         let answer=Number(fecha1[2])+" de "+meses[Number(fecha1[1])]+" de "+fecha1[0]
+        return answer
+      },
+       mesesLiteral(fecha){
+
+           let meses={
+            1:"enero",
+            2:"febrero",
+            3:"marzo",
+            4:"abril",
+            5:"mayo",
+            6:"junio",
+            7:"julio",
+            8:"agosto",
+            9:"septiembre",
+            10:"octubre",
+            11:"noviembre",
+            12:"diciembre",
+         }
+         let answer=meses[Number(fecha)]
+        return answer
+      },
       onClickDay(d) {
 			this.message = `la fecha es: ${d.toLocaleDateString()}`
 		},
@@ -106,10 +145,10 @@
       //console.log(e)
       let arr=e.tooltip.split(':')
 			this.title = ` ${e.title}`
-			this.fecha = e.startDate.getDay()+'-'+Number(e.startDate.getMonth()+1)+'-'+e.startDate.getFullYear()+' Hora: '+e.startDate.getHours()+':'+e.startDate.getMinutes()
-			this.cuce =arr[0]
+			this.fecha = e.startDate.getDay()+' de '+this.mesesLiteral(Number(e.startDate.getMonth()+1))+' de '+e.startDate.getFullYear()+' Horas: '+e.startDate.getHours()+':'+e.startDate.getMinutes()
+			this.cuce =arr[1]
 			this.url =e.url
-      this.departamento=arr[1]
+      this.departamento=arr[0]
       this.idclick=e.id
 		},
     	setShowDate(d) {
@@ -125,11 +164,10 @@
 
               res.data.forEach(it =>{
                 let anio=it.fecha.split('-')
-               let hora1=it.hora.split(':')
+                let hora1=it.hora.split(':')
                 let fecha1= new Date(anio[0], anio[1]-1, anio[2],hora1[0],hora1[1],hora1[2])
           //      let fecha2= new Date(anio[0], anio[1]-1, anio[2],hora1[0],hora1[1],hora1[2]+10)
-
-            this.attributes.push({id:it.id,startDate:fecha1,title:it.nombre,url:it.link,tooltip:it.cuce+":"+it.departamento.nombre,classes:"lapaz",style:"orange"})
+                 this.attributes.push({id:it.id,startDate:fecha1,title:it.nombre,url:it.link,tooltip:it.departamento.nombre+":"+it.cuce,classes:"lapaz",style:"orange"})
 
            })
          //  console.log(this.attributes)

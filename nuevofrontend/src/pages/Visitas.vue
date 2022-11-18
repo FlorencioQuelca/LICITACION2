@@ -1251,34 +1251,32 @@ export default {
        if(this.dato1.materno){
               this.dato1.datosp=this.dato1.datosp+(this.dato1.materno).trim()
        }
-
+       this.dato1.nit=this.dato1.ci
        this.dato1.datosp =((this.dato1.datosp).toUpperCase()).trim();
        this.dato1.status="NATURAL";
       this.$q.loading.show();
       this.$api.post(process.env.API+"/consultor/", this.dato1).then((res) => {
-
-         if(res.data.res===true)
-          {
-            this.$q.notify({
+              this.$q.notify({
             color: "green-4",
             textColor: "white",
             icon: "cloud_done",
             message: "Creado Correctamente",
           });
 
-          }else{
-              this.$q.notify({
+
+
+            this.$q.loading.hide();
+
+         this.alert123= false;
+          this.misdatos();
+          this.cargardatos1();
+        }).catch((e)=>{
+           this.$q.notify({
             color: "red-4",
             textColor: "white",
             icon: "cloud_done",
             message: "Error al crear verifique la existencia de la persona",
           });
-            this.$q.loading.hide();
-          }
-         this.alert123= false;
-          this.misdatos();
-          this.cargardatos1();
-        }).catch((e)=>{
           this.$q.loading.hide();
         });
     },

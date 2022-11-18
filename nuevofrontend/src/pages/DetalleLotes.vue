@@ -303,8 +303,8 @@
                 <q-td key="ci" :props="props">
                   {{ props.row.ci }}
                 </q-td>
-                <q-td key="fechanac" :props="props">
-                  {{ props.row.fechaNacimiento }}
+                <q-td key="nombres" :props="props">
+                  {{ props.row.nombres }}
                 </q-td>
                 <q-td key="paterno" :props="props">
                   {{ props.row.paterno }}
@@ -312,11 +312,11 @@
                 <q-td key="materno" :props="props">
                   {{ props.row.materno }}
                 </q-td>
-                <q-td key="nombres" :props="props">
-                  {{ props.row.nombres }}
+                <q-td key="fechanac" :props="props">
+                  {{ props.row.fechaNacimiento }}
                 </q-td>
-                <q-td key="nombre" :props="props">
-                  {{ props.row.datosp }}
+                <q-td key="nit" :props="props">
+                  {{ props.row.nit }}
                 </q-td>
               </q-tr>
             </template>
@@ -526,27 +526,28 @@
       <q-dialog v-model="dialog_add1">
       <q-card style="max-width: 80%; width: 90%">
         <q-card-section class="bg-green-14 text-white">
-          <div class="text-h6">Agregar Persona</div>
+          <div class="text-h6">Agregar Consulor(a) (Persona Natural)</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
            <q-form @submit="onSendConsultor" class="q-gutter-md">
             <q-table
                   :filter="filter1"
-                  title="Lista de personas registradas"
+                  title="Lista de Consultores Registrad@s"
                   :rows="consultores"
                   :columns="subcol1"
                   row-key="ci"
                   :rows-per-page-options="[5, 10, 20]"
                   separator="cell"
                   dense
+                  hide-bottom
                 >
                   <template v-slot:body="props">
                     <q-tr :props="props">
                       <q-td key="ci" :props="props">
                         {{ props.row.ci }}
                       </q-td>
-                      <q-td key="fechanac" :props="props">
-                        {{ props.row.fechaNacimiento }}
+                      <q-td key="nombres" :props="props">
+                        {{ props.row.nombres }}
                       </q-td>
                       <q-td key="paterno" :props="props">
                         {{ props.row.paterno }}
@@ -554,11 +555,11 @@
                       <q-td key="materno" :props="props">
                         {{ props.row.materno }}
                       </q-td>
-                      <q-td key="nombres" :props="props">
-                        {{ props.row.nombres }}
+                      <q-td key="fechanac" :props="props">
+                        {{ props.row.fechaNacimiento }}
                       </q-td>
-                      <q-td key="nombre" :props="props">
-                        {{ props.row.datosp }}
+                      <q-td key="nit" :props="props">
+                        {{ props.row.nit }}
                       </q-td>
                       <q-td key="opcion" :props="props">
                         <q-btn
@@ -579,7 +580,7 @@
                       dense
                       debounce="300"
                       v-model="filter1"
-                      placeholder="Buscar Persona"
+                      placeholder="Buscar por CI"
                     >
                       <template v-slot:append>
                         <q-icon name="search" />
@@ -637,13 +638,14 @@
               <q-card-section v-if="group === 'op1'" class="q-pt-xs">
              <q-table
                   :filter="filter2"
-                  title="Lista de Empresas registradas"
+                  title="Lista de Empresas Registradas"
                   :rows="empresas"
                   :columns="subcol2"
                   row-key="nit"
-                  :rows-per-page-options="[5, 10, 20]"
+                  :rows-per-page-options="[5]"
                   separator="cell"
                   dense
+                  hide-bottom
                 >
                   <template v-slot:body="props">
                     <q-tr :props="props">
@@ -651,24 +653,31 @@
                         {{ props.row.nit }}
                       </q-td>
                         <q-td key="nombreEmpresa" :props="props">
-            {{props.row.nombreEmpresa}}
-          </q-td>
+                           <div>
+                            {{props.row.nombreEmpresa}}
+                           </div>
+                           <div>
+                             RL: {{props.row.nombreLegal}}
+                           </div>
+                      </q-td>
+                       <q-td key="fono1" :props="props">
+                           <div>
+                           {{props.row.fono1}}
+                           </div>
+                           <div>
+                           {{props.row.fono2}}
+                           </div>
 
-          <q-td key="nombreLegal" :props="props">
-            {{props.row.nombreLegal}}
-          </q-td>
+                      </q-td>
 
-            <q-td key="fono1" :props="props">
-            {{props.row.fono1}}
-          </q-td>
-
-          <q-td key="email" :props="props">
-            {{props.row.email}}
-          </q-td>
-          <q-td key="direccion" :props="props">
-            {{props.row.direccion}}
-          </q-td>
-
+                      <q-td key="email" :props="props">
+                            <div>
+                             {{props.row.email}}
+                            </div>
+                            <div>
+                              {{props.row.direccion}}
+                            </div>
+                      </q-td>
                       <q-td key="opcion" :props="props">
                         <q-btn
                           dense
@@ -726,9 +735,10 @@
                   :rows="sociedades"
                   :columns="subcol3"
                   row-key="nombre"
-                  :rows-per-page-options="[5, 10, 20]"
+                  :rows-per-page-options="[5, 10]"
                   separator="cell"
                   dense
+                  hide-bottom
                 >
                   <template v-slot:body="props">
                     <q-tr :props="props">
@@ -737,17 +747,19 @@
                       </q-td>
 
                       <q-td key="nombreEmpresa" :props="props">
-                        {{ props.row.nombreEmpresa }}
-                      </q-td>
-                   <q-td key="nombreLegal" :props="props">
-                    {{props.row.nombreLegal}}
-                  </q-td>
+                           <div>
+                           {{ props.row.nombreEmpresa }}
+                           </div>
+                           <div>
+                           {{props.row.nombreLegal}}
+                           </div>
 
-                   <q-td key="asociados" :props="props">
+                      </q-td>
+                     <q-td key="asociados" :props="props">
                           <ul>
                           <span v-for="(empresas,index) in props.row.empresas" :key="index">
                               <li>
-                                {{empresas.nit}}  ({{empresas.pivot.participacion}}) %
+                                {{empresas.nit}}  ({{empresas.pivot.participacion}}%)   {{empresas.nombreEmpresa}}
                             </li>
                           </span>
                         </ul>
@@ -771,19 +783,24 @@
                       ></q-btn>
           </q-td>
             <q-td key="fono1" :props="props">
-            {{props.row.fono1}}
-          </q-td>
-           <q-td key="fono2" :props="props">
-            {{props.row.fono2}}
-          </q-td>
-          <q-td key="email" :props="props">
-            {{props.row.email}}
-          </q-td>
-          <q-td key="direccion" :props="props">
-            {{props.row.direccion}}
+                 <div>
+                 {{props.row.fono1}}
+                 </div>
+                 <div>
+                 {{props.row.fono2}}
+                 </div>
           </q-td>
 
-                      <q-td key="opcion" :props="props">
+
+          <q-td key="email" :props="props">
+             <div>
+            {{props.row.email}}
+             </div>
+             <div>
+            {{props.row.direccion}}
+             </div>
+          </q-td>
+          <q-td key="opcion" :props="props">
                         <q-btn
                           dense
                           round
@@ -1092,7 +1109,36 @@ import moment, { now } from 'moment';
             12:"diciembre",
          }
          return Number(fecha1[2])+" de "+meses[Number(fecha1[1])]+" de "+fecha1[0]
+      }
+     const horalarga=(hora)=>{
+         let hora1=hora.split(":")
+         let answer=""
+          if(Number(hora1[0])>=12){
+            answer=Number(hora1[0])+" : "+Number(hora1[1])+" PM"
+          }else{
+            answer=Number(hora1[0])+" : "+Number(hora1[1])+" AM"
+          }
+        return answer
+      }
 
+    const fechalarga=(fecha)=>{
+         let fecha1=fecha.split("-")
+           let meses={
+            1:"enero",
+            2:"febrero",
+            3:"marzo",
+            4:"abril",
+            5:"mayo",
+            6:"junio",
+            7:"julio",
+            8:"agosto",
+            9:"septiembre",
+            10:"octubre",
+            11:"noviembre",
+            12:"diciembre",
+         }
+         let answer=Number(fecha1[2])+" de "+meses[Number(fecha1[1])]+" de "+fecha1[0]
+        return answer
       }
 
 
@@ -1154,33 +1200,33 @@ export default {
     ],
     subcol1: [
     {name: "ci",required: true,label: "C.I.",align: "center",field: "ci",sortable: true,},
-    {name: "fechanac",label: "Fecha de Nacimiento",align: "center",field: "fechanac",sortable: true,},
+    {name: "nombres",label: "Nombres",align: "left",field: "nombres",sortable: true,},
     {name: "paterno",label: "Apellido Paterno",align: "left",field: "paterno",sortable: true,},
     {name: "materno",label: "Apellido Materno",align: "left",field: "materno",sortable: true,},
-    {name: "nombres",label: "Nombres",align: "left",field: "nombres",sortable: true,},
-    {name: "nombre",label: "Nombre Completo",align: "left",field: "nombre",sortable: true,},
+    {name: "fechanac",label: "Fecha de Nacimiento",align: "center",field: "fechanac",sortable: true,},
+    {name: "nit",label: "NIT",align: "left",field: "nit",sortable: true,},
     {name: "opcion",label: "opcion",align: "left",field: "opcion",sortable: true,},
     ],
     subcol2: [
   {name: "nit", required: true,label: "N.I.T.", align: "left",field: "nit", sortable: true,},
-  { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
-  { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
+  { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa y Representante Legal', field: 'nombreEmpresa',sortable: true },
+ // { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
   { name: 'fono1', align:"center",label: 'Celular', field: 'fono1', sortable: true },
   //{ name: 'fono2', align:"center",label: 'Telefono', field: 'fono2', sortable: true },
-  { name: 'email',align:"left", label: 'Correo', field: 'email', sortable: true },
-  { name: 'direccion', align:"left",label: 'Direccion', field: 'direccion', sortable: true },
+  { name: 'email',align:"left", label: 'Correo y Direccion', field: 'email', sortable: true },
+  //{ name: 'direccion', align:"left",label: 'Direccion', field: 'direccion', sortable: true },
   { name: "opcion",label: "opcion",align: "left",field: "opcion",sortable: true, },
     ],
   subcol3: [
   {name: "codigo",required: true,label: "codigo",align: "left",field: "codigo",sortable: true,},
-  { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
-  { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
+  { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa  y Representante Legal', field: 'nombreEmpresa',sortable: true },
+  //{ name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
   { name: "asociados",label: "asociados",align: "left",field: "asociados",sortable: true,},
   { name: 'opcion',align:"center",label: 'Accion', field: 'opcion', sortable: false },
   { name: 'fono1', align:"center",label: 'Celular', field: 'fono1', sortable: true },
-  { name: 'fono2', align:"center",label: 'Telefono', field: 'fono2', sortable: true },
-  { name: 'email',align:"left", label: 'Correo', field: 'email', sortable: true },
-  { name: 'direccion', align:"left",label: 'Direccion', field: 'direccion', sortable: true },
+ // { name: 'fono2', align:"center",label: 'Telefono', field: 'fono2', sortable: true },
+  { name: 'email',align:"left", label: 'Correo y Direccion', field: 'email', sortable: true },
+ // { name: 'direccion', align:"left",label: 'Direccion', field: 'direccion', sortable: true },
   { name: "opcion",label: "opcion",align: "left",field: "opcion",sortable: true,},
     ],
     subcol2a: [
@@ -1223,10 +1269,10 @@ export default {
   }),
   created() {},
   mounted() {
-    this.misdatos();
     this.cargarConsultores();
     this.cargarEmpresas();
     this.cargarSociedades();
+    this.misdatos();
   },
   methods: {
     misdatos() {
@@ -1245,7 +1291,7 @@ export default {
            this.rows.push({titulo:"Plazo [Dias]: ", descripcion: res.data[0].plazo})
          //  this.rows.push({titulo:"Plazo [Dias]: ", descripcion: res.data[0].plazo})
            this.rows.push({titulo:"Enlace de la Reunion ", descripcion: res.data[0].link})
-           this.rows.push({titulo:"Hora de la Apertura ", descripcion: res.data[0].hora})
+           this.rows.push({titulo:"Hora de la Apertura ", descripcion: horalarga(res.data[0].hora)})
            this.rows.push({titulo:"Fecha de la Apertura ", descripcion: reverseFecha(res.data[0].fecha)})
         //   this.rows.push({titulo:"Nro de Convocatoria ", descripcion: res.data[0].convocatoria})
            this.rows.push({titulo:"Codigos de proyecto ", descripcion: joinCodigos(res.data[0].codigos)})
