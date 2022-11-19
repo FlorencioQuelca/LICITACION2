@@ -19,7 +19,6 @@
       <!--          ADICIONAR REGISTRO -->
    <q-dialog v-model="alert">
       <q-card style="max-width: 80%; width: 80%">
-
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6"><q-icon name="add_circle" /> Nuevo Consultor</div>
         </q-card-section>

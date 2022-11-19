@@ -1255,10 +1255,14 @@ proyecto:{},
     this.$q.loading.show();
     this.data=[]
        this.$api.get(process.env.API+"/proyectos").then((res)=>{
-               res.data.forEach(it=>{
+              res.data.forEach(it=>{
                 if(this.$store.state.login.user.status===it.departamento.nombre){
                    this.data.push(it)
-                }
+                }else{
+                    if(this.$store.state.login.user.status==='CENTRAL'){
+                             this.data.push(it)
+                    }
+                   }
               })
                   //  this.data =res.data;
                     this.$q.loading.hide();

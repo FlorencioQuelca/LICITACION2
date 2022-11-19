@@ -57,7 +57,7 @@
                 label="Empresas"
                 stack
                 glossy
-
+                @click="form_empresa=true"
                 color="purple"
                 style="width: 200px"
               />
@@ -65,9 +65,10 @@
             <div class="row" v-if="this.$store.state.login.user.tipo==='admin'">
               <q-btn
                 icon="add_circle"
-                label="Sociedad Accidental"
+                label="Asociación Accidental"
                 stack
                 glossy
+                @click="nuevaAsociacion"
                 color="purple"
                 style="width: 200px; margin: 10px 0px 0px 0px"
               />
@@ -77,6 +78,7 @@
                 icon="add_circle"
                 label="Consultor"
                 stack
+                @click="form_consultor=true"
                 glossy
                 color="purple"
                 style="width: 200px; margin: 10px 0px 0px 0px"
@@ -147,11 +149,11 @@
         >
           <template v-slot:body="props">
             <q-tr :props="props">
-              <q-td key="nit" :props="props">
-                {{ props.row.nit }}
-              </q-td>
              <q-td key="nombreEmpresa" :props="props">
                 {{ props.row.nombreEmpresa }}
+              </q-td>
+              <q-td key="nit" :props="props">
+                {{ props.row.nit }}
               </q-td>
               <q-td key="nombreLegal" :props="props">
                 {{ props.row.nombreLegal }}
@@ -178,20 +180,34 @@
                 {{ props.row.codigo }}
               </q-td>
               <q-td key="nombreEmpresa" :props="props">
+                <div>
                 {{ props.row.nombreEmpresa }}
-              </q-td>
-              <q-td key="nombreLegal" :props="props">
-                {{ props.row.nombreLegal }}
+                </div>
+                  <ul>
+                          <span v-for="(empresas,index) in props.row.empresas" :key="index">
+                              <li >
+                                 ({{empresas.pivot.participacion}}%)  {{empresas.nombreEmpresa}}
+                            </li>
+                          </span>
+                  </ul>
               </q-td>
               <q-td key="asociados" :props="props">
                    <ul>
                           <span v-for="(empresas,index) in props.row.empresas" :key="index">
                               <li >
-                                {{empresas.nit}}  ({{empresas.pivot.participacion}}) %  {{empresas.nombreLegal}}
+                                <div>
+                                {{empresas.nit}}  ({{empresas.pivot.participacion}}%)  {{empresas.nombreEmpresa}}
+                              </div>
+                              <div>
+                                  de : {{empresas.nombreLegal}}
+                              </div>
                             </li>
                           </span>
                         </ul>
-                      </q-td>
+                </q-td>
+              <q-td key="nombreLegal" :props="props">
+                {{ props.row.nombreLegal }}
+              </q-td>
 
               <q-td key="monto" :props="props">
                 {{ props.row.pivot.monto }}
@@ -207,7 +223,7 @@
   <div  v-for="(lote,index) in data.lotes" :key="index" dense>
     <q-card v-if="data.tipo_id === 1 && data.lotes.length>0"  dense>
       <q-card-section class="bg-green-14 text-white"  style="padding: 2px 2px 2px 25px">
-        <div class="text-h6">{{lote.nombre}}</div>
+        <div class="text-h6"> {{lote.nombre}}  - Monto Referencial de: {{lote.monto}}</div>
       </q-card-section>
       <div class="row">
         <div class="col-12">
@@ -229,11 +245,11 @@
         >
           <template v-slot:body="props">
             <q-tr :props="props">
-              <q-td key="nit" :props="props">
-                {{ props.row.nit }}
-              </q-td>
              <q-td key="nombreEmpresa" :props="props">
                 {{ props.row.nombreEmpresa }}
+              </q-td>
+              <q-td key="nit" :props="props">
+                {{ props.row.nit }}
               </q-td>
               <q-td key="nombreLegal" :props="props">
                 {{ props.row.nombreLegal }}
@@ -260,20 +276,36 @@
                 {{ props.row.codigo }}
               </q-td>
               <q-td key="nombreEmpresa" :props="props">
+
+                <div>
                 {{ props.row.nombreEmpresa }}
+                </div>
+                  <ul>
+                          <span v-for="(empresas,index) in props.row.empresas" :key="index">
+                              <li >
+                                 ({{empresas.pivot.participacion}}%)  {{empresas.nombreEmpresa}}
+                            </li>
+                          </span>
+                  </ul>
               </q-td>
-              <q-td key="nombreLegal" :props="props">
-                {{ props.row.nombreLegal }}
-              </q-td>
+
               <q-td key="asociados" :props="props">
                    <ul>
                           <span v-for="(empresas,index) in props.row.empresas" :key="index">
                               <li >
-                                {{empresas.nit}}  ({{empresas.pivot.participacion}}) %  {{empresas.nombreLegal}}
+                               <div>
+                                {{empresas.nit}}  ({{empresas.pivot.participacion}}%)  {{empresas.nombreEmpresa}}
+                              </div>
+                              <div>
+                                  de : {{empresas.nombreLegal}}
+                              </div>
                             </li>
                           </span>
                         </ul>
                       </q-td>
+              <q-td key="nombreLegal" :props="props">
+                {{ props.row.nombreLegal }}
+              </q-td>
 
               <q-td key="monto" :props="props">
                 {{ props.row.pivot.monto }}
@@ -288,35 +320,35 @@
 
       <q-card v-if="data.tipo_id === 2 && data.lotes.length===0" dense>
         <q-card-section class="bg-green-14 text-white" style="padding: 2px 2px 2px 25px">
-          <div class="text-h6" dense>Lista de consultores presentados</div>
+          <div class="text-h6" dense>Lista de Consultores Presentados a La Propuesta</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
           <q-table
             :rows="data.personas"
-            :columns="subcol1"
+            :columns="subcol1a"
             separator="cell"
             dense
             :rows-per-page-options="[0]"
           >
             <template v-slot:body="props">
               <q-tr :props="props">
-                <q-td key="ci" :props="props">
-                  {{ props.row.ci }}
-                </q-td>
-                <q-td key="nombres" :props="props">
-                  {{ props.row.nombres }}
-                </q-td>
-                <q-td key="paterno" :props="props">
-                  {{ props.row.paterno }}
-                </q-td>
-                <q-td key="materno" :props="props">
-                  {{ props.row.materno }}
-                </q-td>
-                <q-td key="fechanac" :props="props">
-                  {{ props.row.fechaNacimiento }}
+                <q-td key="datosp" :props="props">
+                  {{ props.row.datosp }}
                 </q-td>
                 <q-td key="nit" :props="props">
                   {{ props.row.nit }}
+                </q-td>
+                <q-td key="rl" :props="props">
+                  {{ props.row.datosp }}
+                </q-td>
+                <q-td key="ci" :props="props">
+                  {{ props.row.ci }}
+                </q-td>
+                <q-td key="oferta" :props="props">
+                  {{ props.row.pivot.monto }}
+                </q-td>
+                <q-td key="fechanac" :props="props">
+                  {{ reverseFecha1(props.row.fechaNacimiento) }}
                 </q-td>
               </q-tr>
             </template>
@@ -327,35 +359,35 @@
        <div   v-for="(lote,index) in data.lotes" :key="index">
        <q-card v-if="data.tipo_id === 2 && data.lotes.length>0">
         <q-card-section class="bg-green-14 text-white"  style="padding: 2px 2px 2px 25px">
-          <div class="text-h6" > {{lote.nombre}} TOTAL: {{lote.personas.length}}</div>
+          <div class="text-h6" > {{lote.nombre}}  - Monto Referencial de: {{lote.monto}}</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
           <q-table
             :rows="lote.personas"
-            :columns="subcol1"
+            :columns="subcol1a"
             separator="cell"
             dense
             :rows-per-page-options="[0]"
           >
             <template v-slot:body="props">
               <q-tr :props="props">
+                <q-td key="datosp" :props="props">
+                  {{ props.row.datosp }}
+                </q-td>
+                <q-td key="nit" :props="props">
+                  {{ props.row.nit }}
+                </q-td>
+                <q-td key="rl" :props="props">
+                  {{ props.row.datosp }}
+                </q-td>
                 <q-td key="ci" :props="props">
                   {{ props.row.ci }}
                 </q-td>
+                <q-td key="oferta" :props="props">
+                  {{ props.row.pivot.monto }}
+                </q-td>
                 <q-td key="fechanac" :props="props">
-                  {{ props.row.fechaNacimiento }}
-                </q-td>
-                <q-td key="paterno" :props="props">
-                  {{ props.row.paterno }}
-                </q-td>
-                <q-td key="materno" :props="props">
-                  {{ props.row.materno }}
-                </q-td>
-                <q-td key="nombres" :props="props">
-                  {{ props.row.nombres }}
-                </q-td>
-                <q-td key="nombre" :props="props">
-                  {{ props.row.datosp }}
+                  {{ reverseFecha1(props.row.fechaNacimiento) }}
                 </q-td>
               </q-tr>
             </template>
@@ -543,6 +575,9 @@
                 >
                   <template v-slot:body="props">
                     <q-tr :props="props">
+                      <q-td key="nit" :props="props">
+                        {{ props.row.nit }}
+                      </q-td>
                       <q-td key="ci" :props="props">
                         {{ props.row.ci }}
                       </q-td>
@@ -557,9 +592,6 @@
                       </q-td>
                       <q-td key="fechanac" :props="props">
                         {{ props.row.fechaNacimiento }}
-                      </q-td>
-                      <q-td key="nit" :props="props">
-                        {{ props.row.nit }}
                       </q-td>
                       <q-td key="opcion" :props="props">
                         <q-btn
@@ -1064,6 +1096,328 @@
     </q-dialog>
 
 
+         <!--          ADICIONAR CONSULTOR-->
+   <q-dialog v-model="form_consultor">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6"><q-icon name="add_circle" /> Registrar Nuevo(a) Consultor(a)</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onSubmitConsultor" class="q-gutter-md">
+                 <div class="row">
+              <div class="col-6">
+            <q-input
+              outlined
+              v-model="dato0.ci"
+              type="text"
+              label="C.I."
+              hint="Ingresar Cedula de Identidad"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+              dense
+            />
+             <q-input
+              outlined
+              v-model="dato0.nit"
+              type="text"
+              label="N.I.T."
+              hint="Ingresar su NIT"
+              dense
+            />
+             <q-select
+             outlined
+            v-model="dato0.grado"
+            :options="grados"
+            label="Grado Academico"
+            type="text"
+            hint="Seleccionar Grado Academico"
+            options-dense
+            dense
+            rounded
+           />
+            <q-input
+              outlined
+              v-model="dato0.paterno"
+              type="text"
+              label="Apellido Paterno"
+              hint="Ingresar Apellido Paterno"
+              dense
+            />
+            <q-input
+              outlined
+              v-model="dato0.materno"
+              type="text"
+              label="Apellido Materno"
+              hint="Ingresar Apellido Materno"
+              dense
+            />
+             <q-input
+              outlined
+              v-model="dato0.nombres"
+              type="text"
+              label="Nombres"
+              hint="Ingresar Nombres"
+              dense
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+             </div>
+             <div class="col-6">
+                 <q-select
+             outlined
+           options-dense
+            v-model="dato0.genero"
+            :options="generos"
+            label="Genero"
+            type="text"
+            hint="Seleccionar Genero"
+            rounded
+            dense
+            />
+             <q-input
+                  outlined
+                  type="date"
+                  v-model="dato0.fechaNacimiento"
+                  hint="Ingresar Fecha de Nacimiento"
+                  dense
+                />
+            <q-input
+              outlined
+              v-model="dato0.fono1"
+              type="number"
+              label="Celular o Telefono 1"
+              hint="Ingresar Numero de Telefono"
+              dense
+            />
+            <q-input
+              outlined
+              v-model="dato0.fono2"
+              type="number"
+              label="Celular o Telefono 2"
+              hint="Ingresar Numero de Telefono"
+              dense
+            />
+              <q-input
+              outlined
+              v-model="dato0.email"
+              type="email"
+              label="Correo Electronico"
+              hint="Ingresar Correo Electronico"
+              dense
+            />
+             <q-input
+              outlined
+              v-model="dato0.direccion"
+              type="text"
+              label="Direccion Domiciliaria"
+              hint="Ingresar Direccion Domiciliaria"
+              dense
+            />
+             </div>
+             </div>
+            <div>
+              <q-btn label="Crear" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+       <!--          ADICIONAR EMPRESA -->
+   <q-dialog v-model="form_empresa">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6"><q-icon name="add_circle" /> Registrar Nueva Empresa</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onSubmitEmpresa" class="q-gutter-md">
+             <div class="row">
+             <div class="col-6">
+            <q-input
+              outlined
+              v-model="dato01.nit"
+              type="text"
+              dense
+              label="N.I.T."
+              hint="Ingresar su NIT"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+             <q-select
+             outlined
+            v-model="dato01.departamento"
+            :options="departamentos"
+            label="Departamento"
+            type="text"
+            dense
+            option-dense
+            hint="Seleccionar Departamento"
+           />
+            <q-input
+              outlined
+              v-model="dato01.nombreEmpresa"
+              type="text"
+              dense
+              label="Nombre de la Empresa"
+              hint="Ingresa el nombre de la Empresa"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+
+             <q-input
+              outlined
+              v-model="dato01.nombreLegal"
+              type="text"
+              dense
+              label="Nombre del Representante Legal"
+              hint="Ingresar Nombre del Representante Legal"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+             </div>
+             <div class="col-6">
+            <q-input
+              outlined
+              v-model="dato01.fono1"
+              type="number"
+              label="Celular o Telefono 1"
+              hint="Ingresar Numero de Telefono"
+              dense
+            />
+            <q-input
+              outlined
+              v-model="dato01.fono2"
+              type="number"
+              label="Celular o Telefono 2"
+              hint="Ingresar Numero de Telefono"
+              dense
+            />
+              <q-input
+              outlined
+              v-model="dato01.email"
+              type="email"
+              label="Correo Electronico"
+              hint="Ingresar Correo Electronico"
+              dense
+            />
+             <q-input
+              outlined
+              v-model="dato01.direccion"
+              type="text"
+              label="Direccion Domiciliaria"
+              hint="Ingresar Direccion Domiciliaria"
+              dense
+            />
+             </div>
+             </div>
+            <div>
+              <q-btn label="Crear" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+       <!--          ADICIONAR REGISTRO -->
+   <q-dialog v-model="form_sociedad">
+      <q-card style="max-width: 80%; width: 80%">
+        <q-card-section class="bg-green-14 text-white">
+          <div class="text-h6"><q-icon name="add_circle" /> Nueva Asociacion Accidental</div>
+        </q-card-section>
+        <q-card-section class="q-pt-xs">
+          <q-form @submit="onSubmitSociedad" class="q-gutter-md">
+             <div class="row">
+             <div class="col-6">
+                <q-input
+              outlined
+              v-model="dato02.codigo"
+              type="number"
+              label="Codigo"
+              dense
+              disable
+              hint="Ingresar codigo Identificativo"
+               lazy-rules
+              :rules="[v => !!v || 'Telefono requerido']"
+            />
+              <q-input
+              outlined
+              v-model="dato02.nombreEmpresa"
+              type="text"
+              dense
+              label="Nombre de la Asociacion Accidental"
+              hint="Ingresa el nombre de la Sociedad Accidental"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+             <q-select
+             outlined
+            v-model="dato02.departamento"
+            :options="departamentos"
+            label="Departamento"
+            type="text"
+            dense
+            options-dense
+            hint="Seleccionar Departamento"
+           />
+          <q-input
+              outlined
+              v-model="dato02.nombreLegal"
+              type="text"
+              dense
+              label="Nombre del Representante Legal"
+              hint="Ingresar Nombre del Representante Legal"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+             </div>
+             <div class="col-6">
+            <q-input
+              outlined
+              v-model="dato02.fono1"
+              type="number"
+              dense
+              label="Celular o Telefono 1"
+              hint="Ingresar Numero de Telefono"
+
+            />
+            <q-input
+              outlined
+              v-model="dato02.fono2"
+              type="number"
+              dense
+              label="Celular o Telefono 2"
+              hint="Ingresar Numero de Telefono"
+            />
+              <q-input
+              outlined
+              v-model="dato02.email"
+              type="email"
+              dense
+              label="Correo Electronico"
+              hint="Ingresar Correo Electronico"
+            />
+             <q-input
+              outlined
+              v-model="dato02.direccion"
+              type="text"
+              dense
+              label="Direccion Domiciliaria"
+              hint="Ingresar Direccion Domiciliaria"
+            />
+             </div>
+             </div>
+            <div>
+              <q-btn label="Crear" type="submit" color="positive" icon="add_circle" />
+              <q-btn label="Cancelar" icon="delete" color="negative" v-close-popup />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+
 
   </div>
 </template>
@@ -1091,6 +1445,7 @@ import moment, { now } from 'moment';
     }
     return ans
 }
+
   const reverseFecha=(fecha)=>{
          let fecha1=fecha.split("-")
          let ans=""
@@ -1159,6 +1514,9 @@ export default {
     data: {},
     dato: {},
     dato2:{},
+    dato0:{},
+    dato01:{},
+    dato02:{},
     rows:[],
     programa: "",
     departamento: "",
@@ -1171,6 +1529,10 @@ export default {
     dialog_add_sociedad:false,
     form_add_contrato:false,
     form_add_adjudicado:false,
+    form_consultor:false,
+    form_empresa:false,
+    form_sociedad:false,
+
     data_lotes:[],
     loteElegido:{},
 
@@ -1199,13 +1561,21 @@ export default {
       },
     ],
     subcol1: [
+    {name: "nit",label: "NIT",align: "left",field: "nit",sortable: true,},
     {name: "ci",required: true,label: "C.I.",align: "center",field: "ci",sortable: true,},
     {name: "nombres",label: "Nombres",align: "left",field: "nombres",sortable: true,},
     {name: "paterno",label: "Apellido Paterno",align: "left",field: "paterno",sortable: true,},
     {name: "materno",label: "Apellido Materno",align: "left",field: "materno",sortable: true,},
     {name: "fechanac",label: "Fecha de Nacimiento",align: "center",field: "fechanac",sortable: true,},
-    {name: "nit",label: "NIT",align: "left",field: "nit",sortable: true,},
     {name: "opcion",label: "opcion",align: "left",field: "opcion",sortable: true,},
+    ],
+      subcol1a: [
+    {name: "datosp",label: "Nombre Completo",align: "left",field: "datosp",sortable: true,},
+    {name: "nit",label: "NIT",align: "left",field: "nit",sortable: true,},
+    {name: "rl",label: "Representante Legal",align: "rl",field: "paterno",sortable: true,},
+    {name: "ci",required: true,label: "C.I.",align: "center",field: "ci",sortable: true,},
+    {name: "oferta",label: "Oferta",align: "left",field: "oferta",sortable: true,},
+    {name: "fechanac",label: "Fecha de Nacimiento",align: "center",field: "fechanac",sortable: true,},
     ],
     subcol2: [
   {name: "nit", required: true,label: "N.I.T.", align: "left",field: "nit", sortable: true,},
@@ -1230,16 +1600,16 @@ export default {
   { name: "opcion",label: "opcion",align: "left",field: "opcion",sortable: true,},
     ],
     subcol2a: [
-  {name: "nit", required: true,label: "N.I.T.", align: "left",field: "nit", sortable: true,},
   { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
+  {name: "nit", required: true,label: "N.I.T.", align: "left",field: "nit", sortable: true,},
   { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
   { name: 'monto', align:"center",label: 'Oferta', field: 'monto', sortable: true },
     ],
   subcol3a: [
   {name: "codigo",required: true,label: "codigo",align: "left",field: "codigo",sortable: true,},
   { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
-  { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
   { name: "asociados",label: "asociados",align: "left",field: "asociados",sortable: true,},
+  { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
   { name: 'monto', align:"center",label: 'Oferta', field: 'monto', sortable: true },
     ],
 
@@ -1264,7 +1634,33 @@ export default {
   { name: 'dependientes',align:"left", label: 'Dependientes', field: 'dependientes', sortable: true },
  // { name: 'observacion',align:"left", label: 'Observacion', field: 'observacion', sortable: true },
   { name: 'opcion', label: 'Opcion', field: 'opcion', sortable: false }
-   ]
+   ],
+   generos:[
+      'HOMBRE',
+      'MUJER'
+  ],
+   grados: [
+        'LIC.',
+        'ING.',
+        'ARQ.',
+        'ABG.',
+        'DIPL.',
+        'PHD.',
+        'MSC.',
+        'MED.',
+        'ENF.',
+      ],
+       departamentos: [
+        'CHUQUISACA',
+        'LA PAZ',
+        'ORURO',
+        'COCHABAMBA',
+        'SANTA CRUZ',
+        'PANDO',
+        'BENI',
+        'POTOSI',
+        'TARIJA',
+      ],
 
   }),
   created() {},
@@ -1275,6 +1671,13 @@ export default {
     this.misdatos();
   },
   methods: {
+    reverseFecha1(fecha){
+         if(fecha){
+           let fecha1=fecha.split("-")
+           return Number(fecha1[2])+"/"+Number(fecha1[1])+"/"+fecha1[0]
+         }
+         return "Sin Registro"
+   },
     misdatos() {
       this.$q.loading.show();
       this.rows=[]
@@ -1284,8 +1687,9 @@ export default {
 
          console.log(res.data)
            this.rows.push({titulo:"Departamento : ", descripcion: res.data[0].departamento.nombre})
-           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
            this.rows.push({titulo:"Cuce : ", descripcion: res.data[0].cuce})
+           this.rows.push({titulo:"Obra/Consultoria : ", descripcion: res.data[0].tipo_id==1 ? 'Obras':'Consultoria'})
+           this.rows.push({titulo:"Nombre del Proyecto : ", descripcion: res.data[0].nombre})
            this.rows.push({titulo:"Programa : ", descripcion: res.data[0].programa.nombre})
            this.rows.push({titulo:"Monto toal [Bs] : ", descripcion: res.data[0].precio})
            this.rows.push({titulo:"Plazo [Dias]: ", descripcion: res.data[0].plazo})
@@ -1304,9 +1708,13 @@ export default {
               })
                 this.lote=this.lotes[0]
               this.rows.push({titulo:"Nº de lotes ", descripcion: res.data[0].lotes.length})
+
+
             }else{
               this.rows.push({titulo:"Nº de lotes ", descripcion: "PROCESO SIN LOTES"})
             }
+
+
           this.departamento = res.data[0].departamento.nombre;
           this.programa = res.data[0].programa.nombre;
           // console.log(res.data[0]);
@@ -1391,6 +1799,7 @@ export default {
       }else{
         this.dialog_add_empresa = true;
         this.codigo=item.row
+        this.codigo.monto=this.dato.precio
       }
     },
     agregarSociedad(item){
@@ -1401,6 +1810,7 @@ export default {
       }else{
         this.dialog_add_sociedad = true;
         this.codigo=item.row
+        this.codigo.monto=this.dato.precio
       }
     },
     onAdd_empresa(){
@@ -1477,7 +1887,7 @@ export default {
                          });
 
                this.dialog_add2=false;
-               console.log('aqui');
+             //  console.log('aqui');
               }else{
                 this.$q.notify({color: "red-4",textColor: "white",icon: "cloud_done",message: "debe Seleccionar un Consultor",});
               }
@@ -1568,7 +1978,7 @@ export default {
                                               monto=it.monto
                                            }
                                         })
-                                        console.log(monto);
+                                      //  console.log(monto);
                                     this.$api.put(process.env.API+"/personalotes/"+this.codigo.lote.value, {id:this.codigo.id,monto:monto}).then((res) => {
                                       console.log(res.data);
                                             this.$q.notify({
@@ -1669,7 +2079,7 @@ export default {
      addRow_detail(item) {
       this.dato2 = item.row;
       this.codigo={}
-      console.log(this.dato2);
+    //  console.log(this.dato2);
        if(this.dato.lotes.length>0){
             this.dato.lotes.forEach(it =>{
                          if(it.nombre===this.dato2.nombre){
@@ -1720,6 +2130,107 @@ export default {
        }
 
     },
+    onSubmitConsultor(){
+      if(this.dato0.nombres){
+              this.dato0.datosp=(this.dato0.nombres).trim()+" "
+       }
+       if(this.dato0.paterno){
+              this.dato.datosp=this.dato0.datosp+(this.dato0.paterno).trim()+" "
+       }
+       if(this.dato.materno){
+              this.dato0.datosp=this.dato0.datosp+(this.dato0.materno).trim()
+       }
+
+       this.dato0.datosp =((this.dato0.datosp).toUpperCase()).trim();
+       //this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
+      // this.dato.datosp =(this.dato.nombres).trim().toUpperCase()+" "+(this.dato.paterno).trim().toUpperCase()+" "+(this.dato.materno).trim().toUpperCase();
+      this.$q.loading.show();
+      this.$api.post(process.env.API+"/consultor/", this.dato0).then((res) => {
+            this.$q.notify({
+            color: "green-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Creado Correctamente",
+          });
+         this.form_consultor= false;
+         this.cargarConsultores();
+         this.$q.loading.hide();
+        }).catch((e)=>{
+          console.log(e)
+           this.$q.notify({
+            color: "red-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Error al crear Consultor",
+          });
+          this.$q.loading.hide();
+        });
+
+    },
+    nuevaAsociacion(){
+
+      let  maxi=-99;
+      this.dato02.codigo=1
+
+      this.sociedades1.forEach(it=>{
+     //  console.log(it.num)
+          if(Number(it.codigo) > maxi){
+            this.dato02.codigo=Number(it.codigo)+1
+            maxi=Number(it.codigo)
+          }
+      })
+      if(maxi<0){
+        this.dato02.codigo=1
+      }
+         this.form_sociedad=true
+    },
+      onSubmitEmpresa(){
+      this.$q.loading.show();
+      this.$api.post(process.env.API+"/empresa/", this.dato01).then((res) => {
+            this.$q.notify({
+            color: "green-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Empresa Creado Correctamente",
+          });
+         this.form_empresa= false;
+         this.cargarEmpresas();
+         this.$q.loading.hide();
+        }).catch((e)=>{
+           this.$q.notify({
+            color: "red-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Error al crear la Empresa",
+          });
+          console.log(e)
+          this.$q.loading.hide();
+        });
+      },
+        onSubmitSociedad(){
+      this.$q.loading.show();
+      this.$api.post(process.env.API+"/sociedad/", this.dato02).then((res) => {
+            this.$q.notify({
+            color: "green-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Creado Correctamente",
+          })
+         this.$q.loading.hide();
+         this.form_sociedad= false;
+          this.cargarSociedades();
+        }).catch((e)=>{
+            this.$q.notify({
+            color: "red-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Errot al crear la Asociacion Accidental",
+          })
+          console.log(e)
+          this.$q.loading.hide();
+        });
+
+        }
 
   },
 };
