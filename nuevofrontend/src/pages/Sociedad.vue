@@ -548,7 +548,7 @@
 
           <q-card-section v-if="group==='op2'" class="q-pt-xs">
                 <q-table
-                    :rows="dato3.contratos"
+                    :rows="dato4.contratos"
                     :columns="subcol2"
 
                     >
@@ -556,7 +556,7 @@
           <q-tr :props="props">
 
             <q-td key="departamento" :props="props">
-            {{ props.row.departamento.nombre}}
+            {{ props.row.proyecto.departamento.nombre}}
           </q-td>
           <q-td key="nombre" :props="props">
             {{ props.row.nombre }}
@@ -698,7 +698,7 @@ export default {
      verRow1(item) {
       this.dato4 = item.row;
       this.dialog_list1 = true;
-      console.log(item)
+    //  console.log(item)
       console.log(item.row)
     },
      onReset() {

@@ -17,7 +17,7 @@ class EmpresaController extends Controller
     public function index(Request $request)
     {
         try{
-            $empresa= Empresa::with(['proyectos','proyectos.departamento','sociedads','contratos'])->orderByDesc('id')->get();
+            $empresa= Empresa::with(['proyectos','proyectos.departamento','sociedads','contratos','contratos.proyecto','contratos.proyecto.departamento'])->orderByDesc('id')->get();
            // $empresa = Empresa::where('nit','like',"%{$request->txtBuscar}%")
            //return $personas;//->whereCi($request->txtBuscar)
           //                  ->orWhere('nombreEmpresa', 'like', "%{$request->txtBuscar}%")

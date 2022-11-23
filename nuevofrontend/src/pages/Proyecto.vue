@@ -301,6 +301,7 @@
                         @click="addRow1(props)"
                         icon="playlist_add"
                       ></q-btn>
+                    -->
                         <q-btn
                         dense
                         round
@@ -309,7 +310,6 @@
                         @click="verRow1(props)"
                         icon="list"
                       ></q-btn>
-                    -->
                        <q-btn
                         dense
                         round

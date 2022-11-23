@@ -409,7 +409,7 @@
           <q-tr :props="props">
 
             <q-td key="departamento" :props="props">
-            {{ props.row.departamento.nombre}}
+            {{ props.row.proyecto.departamento.nombre}}
           </q-td>
           <q-td key="nombre" :props="props">
             {{ props.row.nombre }}
@@ -480,11 +480,11 @@ export default {
    consultores:[],
    props:[],
       departamentos: [
+        'CHUQUISACA',
         'LA PAZ',
         'ORURO',
         'COCHABAMBA',
         'SANTA CRUZ',
-        'CHUQUISACA',
         'PANDO',
         'BENI',
         'POTOSI',
@@ -497,14 +497,14 @@ export default {
    dato3:{},
     columns,
        subcol: [
-         { name: "departamento",required: true, label: "Departamento", align: "left",field:  row => row.departamento,sortable: true,},
+         { name: "departamento",required: true, label: "Departamento", align: "left",field :"departamento",sortable: true,},
          { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },
          { name: "fecha",align: "left",label: "fecha de la Presentacion",field: "fecha",sortable: true},
          { name: "cuce",align: "left",label: "CUCE del proyecto",field: "cuce",sortable: true},
       ],
      subcol1: [
-         { name: "departamento",required: true, label: "Departamento", align: "left",field:  row => row.departamento,sortable: true,},
-         { name: "nombre",align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },
+         { name: "departamento", label: "Departamento", align: "left",field:"departamento",sortable: true,},
+         { name: "nombre",required: true,align: "left",label: "Nombre proyecto",field: "nombre", sortable: true },
          { name: "fecha",align: "left",label: "fecha de la Presentacion",field: "fecha",sortable: true},
          { name: "fecha1",align: "left",label: "Fecha de Culminacion",field: "fecha1",sortable: true},
           { name: "status",align: "left",label: "Estado",field: "status",sortable: true},
