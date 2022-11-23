@@ -155,8 +155,24 @@
               <q-td key="nit" :props="props">
                 {{ props.row.nit }}
               </q-td>
+              <q-td key="matricula" :props="props">
+                <div v-if="props.row.matricula" >
+                {{ props.row.matricula }}
+                </div>
+                <div v-else   style="color:red">
+                {{ props.row.nit }}
+                </div>
+              </q-td>
               <q-td key="nombreLegal" :props="props">
                 {{ props.row.nombreLegal }}
+              </q-td>
+              <q-td key="ci" :props="props">
+                <div v-if="props.row.ci" >
+                {{ props.row.ci }}
+                </div>
+                <div v-else   style="color:red">
+                {{ convertirEnCi(props.row.nit) }}
+                </div>
               </q-td>
               <q-td key="monto" :props="props">
                 {{ props.row.pivot.monto }}
@@ -191,6 +207,23 @@
                           </span>
                   </ul>
               </q-td>
+              <q-td key="matricula" :props="props">
+                               <ul>
+                          <span v-for="(empresas,index) in props.row.empresas" :key="index">
+                              <li >
+                               <div v-if="empresas.matricula" >
+                                 ({{empresas.pivot.participacion}}%)  {{empresas.matricula}}
+                             </div>
+                               <div   v-else style="color:red">
+                                    ({{empresas.pivot.participacion}}%)  {{empresas.nit}}
+                              </div>
+
+
+                            </li>
+                          </span>
+                  </ul>
+
+              </q-td>
               <q-td key="asociados" :props="props">
                    <ul>
                           <span v-for="(empresas,index) in props.row.empresas" :key="index">
@@ -208,7 +241,14 @@
               <q-td key="nombreLegal" :props="props">
                 {{ props.row.nombreLegal }}
               </q-td>
-
+              <q-td key="ci" :props="props">
+                 <div v-if="props.row.ci" >
+                {{ props.row.ci }}
+                </div>
+                <div v-else   style="color:red">
+                      NO Registro
+                </div>
+              </q-td>
               <q-td key="monto" :props="props">
                 {{ props.row.pivot.monto }}
               </q-td>
@@ -251,8 +291,24 @@
               <q-td key="nit" :props="props">
                 {{ props.row.nit }}
               </q-td>
+              <q-td key="matricula" :props="props">
+               <div v-if="props.row.matricula" >
+                {{ props.row.matricula }}
+                </div>
+                <div v-else   style="color:red">
+                {{ props.row.nit }}
+                </div>
+              </q-td>
               <q-td key="nombreLegal" :props="props">
                 {{ props.row.nombreLegal }}
+              </q-td>
+              <q-td key="ci" :props="props">
+               <div v-if="props.row.ci" >
+                {{ props.row.ci }}
+                </div>
+                <div v-else   style="color:red">
+                {{ convertirEnCi(props.row.nit) }}
+                </div>
               </q-td>
               <q-td key="monto" :props="props">
                 {{ props.row.pivot.monto }}
@@ -289,6 +345,9 @@
                   </ul>
               </q-td>
 
+              <q-td key="matricula" :props="props">
+                {{ props.row.matricula }}
+              </q-td>
               <q-td key="asociados" :props="props">
                    <ul>
                           <span v-for="(empresas,index) in props.row.empresas" :key="index">
@@ -306,7 +365,9 @@
               <q-td key="nombreLegal" :props="props">
                 {{ props.row.nombreLegal }}
               </q-td>
-
+              <q-td key="ci" :props="props">
+                {{ props.row.ci }}
+              </q-td>
               <q-td key="monto" :props="props">
                 {{ props.row.pivot.monto }}
               </q-td>
@@ -1244,16 +1305,15 @@
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
             />
-             <q-select
-             outlined
-            v-model="dato01.departamento"
-            :options="departamentos"
-            label="Departamento"
-            type="text"
-            dense
-            option-dense
-            hint="Seleccionar Departamento"
-           />
+            <q-input
+              outlined
+              v-model="dato01.matricula"
+              type="text"
+              dense
+              label="Matricula"
+              hint="Ingresar Matricula"
+            />
+
             <q-input
               outlined
               v-model="dato01.nombreEmpresa"
@@ -1263,6 +1323,14 @@
               hint="Ingresa el nombre de la Empresa"
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
+            />
+              <q-input
+              outlined
+              v-model="dato01.ci"
+              type="text"
+              dense
+              label="C.I."
+              hint="Ingresar C.I. del Representante Legal"
             />
 
              <q-input
@@ -1277,6 +1345,16 @@
             />
              </div>
              <div class="col-6">
+               <q-select
+             outlined
+            v-model="dato01.departamento"
+            :options="departamentos"
+            label="Departamento"
+            type="text"
+            dense
+            option-dense
+            hint="Seleccionar Departamento"
+           />
             <q-input
               outlined
               v-model="dato01.fono1"
@@ -1341,6 +1419,14 @@
                lazy-rules
               :rules="[v => !!v || 'Telefono requerido']"
             />
+                <q-input
+              outlined
+              v-model="dato02.matricula"
+              type="text"
+              label="Matricula"
+              dense
+              hint="Ingresar Matricula"
+            />
               <q-input
               outlined
               v-model="dato02.nombreEmpresa"
@@ -1351,16 +1437,15 @@
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
             />
-             <q-select
-             outlined
-            v-model="dato02.departamento"
-            :options="departamentos"
-            label="Departamento"
-            type="text"
-            dense
-            options-dense
-            hint="Seleccionar Departamento"
-           />
+             <q-input
+              outlined
+              v-model="dato02.ci"
+              type="text"
+              label="C.I."
+              dense
+              hint="Ingresar C.I."
+            />
+
           <q-input
               outlined
               v-model="dato02.nombreLegal"
@@ -1373,6 +1458,16 @@
             />
              </div>
              <div class="col-6">
+            <q-select
+            outlined
+            v-model="dato02.departamento"
+            :options="departamentos"
+            label="Departamento"
+            type="text"
+            dense
+            options-dense
+            hint="Seleccionar Departamento"
+           />
             <q-input
               outlined
               v-model="dato02.fono1"
@@ -1602,14 +1697,18 @@ export default {
     subcol2a: [
   { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
   {name: "nit", required: true,label: "N.I.T.", align: "left",field: "nit", sortable: true,},
+  {name: "matricula", required: true,label: "Matricula", align: "left",field: "matricula", sortable: true,},
   { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
+  { name: 'ci', align:"left",label: 'C.I.', field: 'ci', sortable: true },
   { name: 'monto', align:"center",label: 'Oferta', field: 'monto', sortable: true },
     ],
   subcol3a: [
-  {name: "codigo",required: true,label: "codigo",align: "left",field: "codigo",sortable: true,},
+    {name: "codigo",required: true,label: "codigo",align: "left",field: "codigo",sortable: true,},
   { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
+    {name: "matricula", required: true,label: "Matricula", align: "left",field: "matricula", sortable: true,},
   { name: "asociados",label: "asociados",align: "left",field: "asociados",sortable: true,},
   { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
+  { name: 'ci', align:"left",label: 'C.I.', field: 'ci', sortable: true },
   { name: 'monto', align:"center",label: 'Oferta', field: 'monto', sortable: true },
     ],
 
@@ -2135,9 +2234,9 @@ export default {
               this.dato0.datosp=(this.dato0.nombres).trim()+" "
        }
        if(this.dato0.paterno){
-              this.dato.datosp=this.dato0.datosp+(this.dato0.paterno).trim()+" "
+              this.dato0.datosp=this.dato0.datosp+(this.dato0.paterno).trim()+" "
        }
-       if(this.dato.materno){
+       if(this.dato0.materno){
               this.dato0.datosp=this.dato0.datosp+(this.dato0.materno).trim()
        }
 
@@ -2230,6 +2329,14 @@ export default {
           this.$q.loading.hide();
         });
 
+        },
+        convertirEnCi(texto){
+            const arr=texto.split("")
+            let ans=""
+            for(let i=0;i<arr.length-3;i++){
+                 ans+=arr[i]
+            }
+            return ans
         }
 
   },

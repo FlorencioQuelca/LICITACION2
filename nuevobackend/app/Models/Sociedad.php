@@ -19,6 +19,8 @@ class Sociedad extends Model
         "email",
         "observacion",
         "departamento",
+        "ci",
+        "matricula",
     ];
 
     protected $hidden =['created_at','updated_at'];

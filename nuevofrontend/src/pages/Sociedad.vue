@@ -5,7 +5,7 @@
       label="Nueva Sociedad/Asociacion Accidental"
       color="blue"
       icon="add_circle"
-      @click="alert = true"
+      @click="nuevaAsociacion"
       class="q-mb-xs"
     />
      <q-btn
@@ -30,7 +30,7 @@
           <div class="text-h6"><q-icon name="add_circle" /> Nuevo Sociedad/Asociacion</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
-          <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+          <q-form @submit="onSubmit"  class="q-gutter-md">
              <div class="row">
              <div class="col-6">
                 <q-input
@@ -42,6 +42,13 @@
                lazy-rules
               :rules="[v => !!v || 'Telefono requerido']"
             />
+             <q-input
+              outlined
+              v-model="dato.matricula"
+              type="text"
+              label="Matricula"
+              hint="Ingresar Matricula"
+            />
               <q-input
               outlined
               v-model="dato.nombreEmpresa"
@@ -51,14 +58,13 @@
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
             />
-             <q-select
-             outlined
-            v-model="dato.departamento"
-            :options="departamentos"
-            label="Departamento"
-            type="text"
-            hint="Seleccionar Departamento"
-           />
+              <q-input
+              outlined
+              v-model="dato.ci"
+              type="text"
+              label="C.I."
+              hint="Ingresar ci"
+            />
           <q-input
               outlined
               v-model="dato.nombreLegal"
@@ -70,6 +76,14 @@
             />
              </div>
              <div class="col-6">
+             <q-select
+             outlined
+            v-model="dato.departamento"
+            :options="departamentos"
+            label="Departamento"
+            type="text"
+            hint="Seleccionar Departamento"
+           />
             <q-input
               outlined
               v-model="dato.fono1"
@@ -188,6 +202,12 @@
                         icon="list"
                       ></q-btn>
           </q-td>
+          <q-td key="matricula" :props="props">
+            {{props.row.matricula}}
+          </q-td>
+          <q-td key="ci" :props="props">
+            {{props.row.ci}}
+          </q-td>
           <q-td key="nombreLegal" :props="props">
             {{props.row.nombreLegal}}
           </q-td>
@@ -261,6 +281,13 @@
                lazy-rules
               :rules="[v => !!v || 'Telefono requerido']"
             />
+               <q-input
+              outlined
+              v-model="dato2.matricula"
+              type="text"
+              label="Matricula"
+              hint="Ingresar Matricula"
+            />
            <q-input
               outlined
               v-model="dato2.nombreEmpresa"
@@ -270,14 +297,14 @@
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
             />
-             <q-select
-             outlined
-            v-model="dato2.departamento"
-            :options="departamentos"
-            label="Departamento"
-            type="text"
-            hint="Seleccionar Departamento"
-           />
+
+             <q-input
+              outlined
+              v-model="dato2.ci"
+              type="text"
+              label="C.I."
+              hint="Ingresar C.I."
+            />
 
 
              <q-input
@@ -291,7 +318,14 @@
             />
              </div>
              <div class="col-6">
-
+ <q-select
+             outlined
+            v-model="dato2.departamento"
+            :options="departamentos"
+            label="Departamento"
+            type="text"
+            hint="Seleccionar Departamento"
+           />
 
             <q-input
               outlined
@@ -569,6 +603,8 @@ const  columns= [
   { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
   { name: 'empresas',align:"left", label: 'Asociados', field: 'empresas', sortable: true },
    { name: 'opcion',align:"center",label: 'Accion', field: 'opcion', sortable: false },
+  { name: 'matricula',align:"left", label: 'matricula', field: 'matricula',sortable: true },
+  { name: 'ci', align:"left",label: 'C.I.', field: 'ci', sortable: true },
   { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
   { name: 'fono1', align:"center",label: 'Celular', field: 'fono1', sortable: true },
   { name: 'fono2', align:"center",label: 'Telefono', field: 'fono2', sortable: true },
@@ -662,6 +698,8 @@ export default {
      verRow1(item) {
       this.dato4 = item.row;
       this.dialog_list1 = true;
+      console.log(item)
+      console.log(item.row)
     },
      onReset() {
       this.dato.nombreLegal = null;
@@ -711,6 +749,23 @@ export default {
       this.dato4 = item.row;
       this.dialog_delsub = true;
     },
+    nuevaAsociacion(){
+
+      let  maxi=-99;
+      this.dato.codigo=1
+
+      this.data.forEach(it=>{
+     //  console.log(it.num)
+          if(Number(it.codigo) > maxi){
+            this.dato.codigo=Number(it.codigo)+1
+            maxi=Number(it.codigo)
+          }
+      })
+      if(maxi<0){
+        this.dato.codigo=1
+      }
+         this.alert=true
+    },
 
        onDelsub() {
       this.$q.loading.show();
@@ -743,7 +798,7 @@ export default {
     },
      onSubmit() {
        this.errores =null;
-       this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
+     //  this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
       this.$q.loading.show();
       this.$api.post(process.env.API+"/sociedad/", this.dato).then((res) => {
 
@@ -762,7 +817,6 @@ export default {
           }
          this.alert= false;
           this.misdatos();
-        this.onReset();
         }).catch((e)=>{
           this.$q.loading.hide();
           this.errores = e.response.data.errors;

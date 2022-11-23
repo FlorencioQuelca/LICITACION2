@@ -30,7 +30,7 @@
           <div class="text-h6"><q-icon name="add_circle" /> Nuevo Empresa</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
-          <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
+          <q-form @submit="onSubmit"  class="q-gutter-md">
              <div class="row">
              <div class="col-6">
             <q-input
@@ -42,14 +42,14 @@
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
             />
-             <q-select
-             outlined
-            v-model="dato.departamento"
-            :options="departamentos"
-            label="Departamento"
-            type="text"
-            hint="Seleccionar Departamento"
-           />
+             <q-input
+              outlined
+              v-model="dato.matricula"
+              type="text"
+              label="Matricula de Comercio"
+              hint="Ingresa la matricula "
+
+            />
             <q-input
               outlined
               v-model="dato.nombreEmpresa"
@@ -69,9 +69,25 @@
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
             />
+            <q-input
+              outlined
+              v-model="dato.ci"
+              type="text"
+              label="C.I."
+              hint="Ingresar su CI"
+
+            />
              </div>
              <div class="col-6">
 
+             <q-select
+             outlined
+            v-model="dato.departamento"
+            :options="departamentos"
+            label="Departamento"
+            type="text"
+            hint="Seleccionar Departamento"
+           />
 
             <q-input
               outlined
@@ -161,11 +177,17 @@
               icon="list"
           />
           </q-td>
+           <q-td key="matricula" :props="props">
+            {{props.row.matricula}}
+          </q-td>
           <q-td key="nombreEmpresa" :props="props">
             {{props.row.nombreEmpresa}}
           </q-td>
           <q-td key="nombreLegal" :props="props">
             {{props.row.nombreLegal}}
+          </q-td>
+          <q-td key="ci" :props="props">
+            {{props.row.ci}}
           </q-td>
             <q-td key="fono1" :props="props">
             {{props.row.fono1}}
@@ -244,15 +266,13 @@
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
             />
-
-             <q-select
-             outlined
-            v-model="dato2.departamento"
-            :options="departamentos"
-            label="Departamento"
-            type="text"
-            hint="Seleccionar Departamento"
-           />
+            <q-input
+              outlined
+              v-model="dato2.matricula"
+              type="text"
+              label="Matricula"
+              hint="Ingresar Matricula"
+            />
             <q-input
               outlined
               v-model="dato2.nombreEmpresa"
@@ -262,7 +282,13 @@
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
             />
-
+             <q-input
+              outlined
+              v-model="dato2.ci"
+              type="text"
+              label="C.I."
+              hint="Ingresar C.I."
+            />
              <q-input
               outlined
               v-model="dato2.nombreLegal"
@@ -275,7 +301,14 @@
              </div>
              <div class="col-6">
 
-
+             <q-select
+             outlined
+            v-model="dato2.departamento"
+            :options="departamentos"
+            label="Departamento"
+            type="text"
+            hint="Seleccionar Departamento"
+           />
             <q-input
               outlined
               v-model="dato2.fono1"
@@ -419,8 +452,10 @@ const  columns= [
   { name: 'departamento', align:"left",label: 'Departamento', field: 'departamento', sortable: true },
   { name: 'nit', required: true,align:"left", label:'N.I.T.',field: "nit", sortable: true},
   { name: 'detalle', label: 'Detalle', field: 'detalle', sortable: false },
+  { name: 'matricula',align:"left", label:'Matricula',field: "matricula", sortable: true},
   { name: 'nombreEmpresa',align:"left", label: 'Nombre Empresa', field: 'nombreEmpresa',sortable: true },
   { name: 'nombreLegal', align:"left",label: 'Representante Legal.', field: 'nombreLegal', sortable: true },
+  { name: 'ci',align:"left", label:'C.I.',field: "ci", sortable: true},
   { name: 'fono1', align:"center",label: 'Celular', field: 'fono1', sortable: true },
   { name: 'fono2', align:"center",label: 'Telefono', field: 'fono2', sortable: true },
   { name: 'email',align:"left", label: 'Correo', field: 'email', sortable: true },
@@ -495,6 +530,7 @@ export default {
     verRow(item) {
       this.dato3 = item.row;
       this.dialog_list = true;
+      console.log(item.row)
     },
      onReset() {
       this.dato.nombreLegal = null;
@@ -539,7 +575,7 @@ export default {
     },
      onSubmit() {
        this.errores =null;
-       this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
+     //  this.dato.datosp =this.dato.nombres+" "+this.dato.paterno+" "+this.dato.materno;
       this.$q.loading.show();
       this.$api.post(process.env.API+"/empresa/", this.dato).then((res) => {
 
@@ -558,7 +594,7 @@ export default {
           }
          this.alert= false;
           this.misdatos();
-        this.onReset();
+       // this.onReset();
         }).catch((e)=>{
           this.$q.loading.hide();
           this.errores = e.response.data.errors;

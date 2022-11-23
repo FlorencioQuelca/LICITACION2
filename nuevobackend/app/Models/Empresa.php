@@ -20,6 +20,8 @@ class Empresa extends Model
         "email",
         "departamento",
         "observacion",
+        "ci",
+        "matricula"
     ];
     // ocultar
     protected $hidden =['created_at','updated_at'];
