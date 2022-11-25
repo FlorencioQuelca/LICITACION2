@@ -17,7 +17,7 @@ class AdjudicadoController extends Controller
      */
     public function index()
     {
-        return Adjudicado::with(['proyecto','proyecto.codigos','proyecto.empresas', 'proyecto.sociedads','proyecto.sociedads.empresas','proyecto.personas','empresas','personas','sociedads','sociedads.empresas','archivos','dependientes'])->orderByDesc('id')->get();
+        return Adjudicado::with(['proyecto','proyecto.codigos','proyecto.empresas', 'proyecto.sociedads','proyecto.sociedads.empresas','proyecto.personas','empresas','personas','sociedads','sociedads.empresas'])->orderByDesc('id')->get();
     }
 
     /**

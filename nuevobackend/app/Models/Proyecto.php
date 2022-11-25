@@ -61,5 +61,7 @@ class Proyecto extends Model
     public function lotes(){
         return $this->hasMany('\App\Models\Lote');
     }
-
+    public function adjudicados(){
+        return $this->hasMany('\App\Models\Adjudicado');
+    }
 }

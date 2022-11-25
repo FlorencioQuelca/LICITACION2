@@ -32,6 +32,7 @@ class Adjudicado extends Model
             "positivo",
             "status",
             "observaciones",
+            "proyecto_id",
     ];
 
     protected $hidden =['created_at','updated_at'];

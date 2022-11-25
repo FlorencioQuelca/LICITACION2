@@ -167,7 +167,7 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
   Route::put('sociedadadjudicados/{adjudicado}',[\App\Http\Controllers\AdjudicadoController::class,'sociedadadjudicados'])->name('sociedadadjudicados');  //CRUD de SociedadAccidental;
   Route::put('sociedadadjudicadosdetach/{adjudicado}',[\App\Http\Controllers\AdjudicadoController::class,'sociedadadjudicadosdetach'])->name('sociedadadjudicadosdetach');  //CRUD de SociedadAccidental;
 
-  Route::apiResource('adjudicado',\App\Http\Controllers\AdjudicadoController::class);
+  Route::apiResource('adjudicados',\App\Http\Controllers\AdjudicadoController::class);
 
 });
 

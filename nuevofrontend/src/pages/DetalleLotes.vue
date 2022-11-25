@@ -457,6 +457,107 @@
       </q-card>
        </div>
 
+    <!-- LISTA DE ADJUDICADOS DEL PROYECTO -->
+    <q-table
+      title="LISTA  DE ADJUDICADOS"
+      :rows="dato.adjudicados"
+      :columns="columnas_adj_cont"
+      row-key="nombre"
+      :rows-per-page-options="[0]"
+      separator="cell"
+      hide-bottom
+   >
+     <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td key="numero" :props="props">
+            {{props.row.numero}}
+          </q-td>
+           <q-td key="detalle" :props="props">
+                <div>
+                      {{props.row.nombre}}
+                </div>
+                <div>
+                    {{props.row.seguimiento}}
+                </div>
+                <div>
+                      {{props.row.fecha1}}
+                </div>
+                <div>
+                   <ul>
+                          <span v-for="(it,index) in props.row.personas" :key="index">
+                              <li >
+                                {{it.ci}}   {{it.datosp}} ({{it.pivot.oficial}}) Bs {{it.pivot.categoria}}
+                            </li>
+                          </span>
+                        </ul>
+                </div>
+                <div>
+                        <ul>
+                          <span v-for="(it,index) in props.row.empresas" :key="index">
+                              <li >
+                                {{it.nit}}   {{it.nombreEmpresa}} ({{it.pivot.oficial}}) Bs {{it.pivot.categoria}}
+                            </li>
+                          </span>
+                        </ul>
+                </div>
+                <div>
+                         <ul>
+                          <span v-for="(it,index) in props.row.sociedads" :key="index">
+                              <li >
+                                {{it.codigo}}   {{it.nombreEmpresa}} ({{it.pivot.oficial}}) Bs {{it.pivot.categoria}}
+                            </li>
+                          </span>
+                        </ul>
+                </div>
+          </q-td>
+          <q-td key="opcion" :props="props">
+                                  <q-btn
+                                    dense
+                                    round
+                                    flat
+                                    color="green"
+                                    @click="addRow(props)"
+                                    icon="playlist_add"
+                                  ></q-btn>
+                                  <q-btn
+                                    dense
+                                    round
+                                    flat
+                                    color="green"
+                                    @click="verRow(props)"
+                                    icon="list"
+                                  ></q-btn>
+                                   <q-btn
+                                    dense
+                                    round
+                                    flat
+                                    color="red"
+                                    @click="addRow_detail(props)"
+                                    icon="playlist_add"
+                                  ></q-btn>
+                                 <q-btn
+                                  dense
+                                  round
+                                  flat
+                                  color="red"
+                                  @click="verRow1(props)"
+                                  icon="list"
+                                ></q-btn>
+                                  <q-btn
+                                  dense
+                                  round
+                                  flat
+                                  color="yellow"
+                                  @click="editRow(props)"
+                                  icon="edit"
+                              />
+
+            </q-td>
+       </q-tr>
+      </template>
+    </q-table>
+
+   <!-- Lista de contratos -->
     <q-table v-if="this.$store.state.login.user.tipo==='admin'"
       title="LISTA DE CONTRATOS FIRMADOS"
       :rows="dato.contratos"
@@ -1097,14 +1198,14 @@
     </q-dialog>
 
 
-    <!--          ADICIONAR contrato -->
+    <!--          ADICIONAR ADJUDICADO -->
    <q-dialog v-model="form_add_adjudicado">
       <q-card style="max-width: 80%; width: 80%">
         <q-card-section class="bg-green-14 text-white">
           <div class="text-h6"><q-icon name="add_circle" /> Nueva Adjudicacion: {{dato.nombre}}</div>
         </q-card-section>
         <q-card-section class="q-pt-xs">
-          <q-form @submit="onCreateContrato"  class="q-gutter-md">
+          <q-form @submit="onCreateAdjudicacion"  class="q-gutter-md">
             <q-select  v-if="dato.lotes.length>0"
                outlined
               :options="data_lotes"
@@ -1133,7 +1234,7 @@
               v-model="dato2.seguimiento"
               type="text"
               label="Nombre del seguimiento ejemplo FPS/02/2022"
-              hint="Ingresar EL Nro SEGUIMIENTO"
+              hint="Ingresar EL Nro SEGUIMIENTO1"
                 lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Favor ingresa datos']"
 
@@ -1734,6 +1835,11 @@ export default {
  // { name: 'observacion',align:"left", label: 'Observacion', field: 'observacion', sortable: true },
   { name: 'opcion', label: 'Opcion', field: 'opcion', sortable: false }
    ],
+   columnas_adj_cont: [
+  { name: 'numero', align:"center",label: 'Nro', field: 'numero', sortable: true },
+  { name: 'detalle',required: true, align:"left",label: 'DETALLE', field: 'detalle', sortable: true },
+  { name: 'opcion', align:"center",label: 'Opciones', field: 'opcion', sortable: false }
+   ],
    generos:[
       'HOMBRE',
       'MUJER'
@@ -2119,10 +2225,8 @@ export default {
           this.data_lotes.push({label:it.nombre ,value:it.id})
          })
          this.loteElegido=this.data_lotes[0];
-         this.form_add_adjudicado=true
-       }else{
-         this.form_add_adjudicado=true
        }
+      this.form_add_adjudicado=true
     },
     asignar_contrato(){
       this.dato2.fechaini=moment().format('YYYY-MM-DD');
@@ -2169,6 +2273,37 @@ export default {
            this.form_add_contrato=false
           this.misdatos();
         }).catch((e)=>{
+          this.$q.loading.hide();
+          console.log(e)
+        });
+    },
+    onCreateAdjudicacion(){
+       if(this.dato.lotes.length>0){
+        this.dato2.nombre=this.loteElegido.label
+        this.dato2.codigos=this.loteElegido.id
+       }else{
+         this.dato2.nombre=this.dato.nombre
+         this.dato2.codigos=this.dato.id
+       }
+      this.dato2.proyecto_id =this.dato.id
+      this.$q.loading.show();
+      this.$api.post(process.env.API+"/adjudicados/", this.dato2).then((res) => {
+            this.$q.notify({
+            color: "green-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Proceso de Adjudicacion Creado Correctamente",
+          });
+            this.$q.loading.hide();
+           this.form_add_adjudicado=false
+            this.misdatos();
+        }).catch((e)=>{
+            this.$q.notify({
+            color: "red-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: "Error al Crear Adjudicacion",
+          });
           this.$q.loading.hide();
           console.log(e)
         });

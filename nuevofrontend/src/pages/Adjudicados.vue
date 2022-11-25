@@ -5,7 +5,7 @@
       label="Nuevo Adjudicacion"
       color="red"
       icon="add_circle"
-      @click="onalert()"
+      @click="onalert"
       class="q-mb-xs"
      />
     </div>
@@ -1562,10 +1562,10 @@ export default {
     },
     misdatos(){
     this.$q.loading.show();
-       this.$api.get(process.env.API+"/contratos").then((res)=>{
-        console.log(res.data);
+         this.$api.get(process.env.API+"/adjudicados").then((res)=>{
+         console.log(res.data);
          this.data =res.data;
-    this.$q.loading.hide();
+         this.$q.loading.hide();
        });
     },
        onAdd() {
