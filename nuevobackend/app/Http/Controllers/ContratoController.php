@@ -215,6 +215,7 @@ class ContratoController extends Controller
         return $base64;
 
     }
+
     public function personacontratos(Request $request,Contrato $contrato){
         $persona= Persona::find($request->id);
         $contrato->personas()->attach($persona,['oficial'=>$request->monto]);

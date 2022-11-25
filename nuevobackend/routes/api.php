@@ -157,6 +157,18 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
 
   Route::apiResource('lote',\App\Http\Controllers\LoteController::class);
 
+  //adjudicados
+  Route::put('personaadjudicados/{adjudicado}',[\App\Http\Controllers\AdjudicadoController::class,'personaadjudicados'])->name('personaadjudicados');
+  Route::put('personaadjudicadosdetach/{adjudicado}',[\App\Http\Controllers\AdjudicadoController::class,'personaadjudicadosdetach'])->name('personaadjudicadosdetach');
+
+  Route::put('empresaadjudicados/{adjudicado}',[\App\Http\Controllers\AdjudicadoController::class,'empresaadjudicados'])->name('empresaadjudicados');
+  Route::put('empresaadjudicadosdetach/{adjudicado}',[\App\Http\Controllers\AdjudicadoController::class,'empresaadjudicadosdetach'])->name('empresaadjudicadosdetach');
+
+  Route::put('sociedadadjudicados/{adjudicado}',[\App\Http\Controllers\AdjudicadoController::class,'sociedadadjudicados'])->name('sociedadadjudicados');  //CRUD de SociedadAccidental;
+  Route::put('sociedadadjudicadosdetach/{adjudicado}',[\App\Http\Controllers\AdjudicadoController::class,'sociedadadjudicadosdetach'])->name('sociedadadjudicadosdetach');  //CRUD de SociedadAccidental;
+
+  Route::apiResource('adjudicado',\App\Http\Controllers\AdjudicadoController::class);
+
 });
 
 

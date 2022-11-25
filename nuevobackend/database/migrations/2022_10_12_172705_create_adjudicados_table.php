@@ -19,7 +19,6 @@ class CreateAdjudicadosTable extends Migration
             $table->string('codigos')->nullable();
             $table->string('cite')->nullable();
             $table->string('seguimiento')->nullable();
-            $table->string('programa')->nullable();
             $table->string('numero')->nullable();
             $table->string('literal')->nullable();
             $table->string('rpc')->nullable();
@@ -30,12 +29,13 @@ class CreateAdjudicadosTable extends Migration
             $table->string('adjudicado')->nullable();
             $table->date('fecha1')->nullable();
             $table->date('fecha2')->nullable();
-            $table->integer('nro')->nullable();
+            $table->integer('nro1')->nullable();
+            $table->integer('nro2')->nullable();
             $table->integer('gestion')->nullable();
             $table->decimal('montobs',10,2)->nullable();
             $table->decimal('montosus',10,2)->nullable();
-
-            $table->string("status")->default("activo");
+            $table->string('positivo')->nullable();
+            $table->string("status")->default("ACTIVO");
             $table->string("observacion")->nullable();
             $table->unsignedBigInteger('proyecto_id')->nullable();
             $table->foreign('proyecto_id')
