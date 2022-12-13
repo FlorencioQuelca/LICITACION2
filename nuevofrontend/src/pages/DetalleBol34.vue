@@ -348,7 +348,7 @@
                   <q-checkbox keep-color v-model="enladrillado" label="RETIRO DE ENLADRILLADO" color="teal" />
                   <q-checkbox keep-color v-model="empedrado" label="RETIRO DE EMPEDRADO" color="orange" />
                   <q-checkbox keep-color v-model="enlosetado" label="RETIRO DE ENLOSETADO" color="red" />
-                  <q-checkbox keep-color v-model="otro" label="OTRO" color="cyan" />
+                  <q-checkbox keep-color v-model="otro"  disable label="OTRO" color="cyan" />
                   <q-input  v-if="otro==true"
                   outlined
                   type="text"
