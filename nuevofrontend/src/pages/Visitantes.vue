@@ -592,7 +592,7 @@ export default {
     },
     misdatos(){
     this.$q.loading.show();
-       this.$api.get(process.env.API+"/consultores").then((res)=>{
+       this.$api.get(process.env.API+"/visitantes").then((res)=>{
        console.log(res.data)
          this.data =res.data;
        this.$q.loading.hide();

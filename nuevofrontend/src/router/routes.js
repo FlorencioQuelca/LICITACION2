@@ -32,7 +32,7 @@ const routes = [
 
       { path: 'Login', component: Login, meta: { requiresAuth: false} },
       { path: 'Empresa', component: Empresa, meta: { requiresAuth: true}},
-      { path: '/Persona', component: Consultor,meta: { requiresAuth: false}},
+      { path: '/Persona', component: Consultor,meta: { requiresAuth: true}},
       { path: 'Sociedad', component: Sociedad,meta: { requiresAuth: true}},
       { path: 'Proyecto', component: Proyecto,meta: { requiresAuth: true} },
       { path: 'Licitaciones', name:'Licitaciones',component: Licitaciones,meta: { requiresAuth: true }},
