@@ -71,7 +71,7 @@
         </q-item>
 
         <q-item  v-if="$store.state.login.personas"
-        clickable  active-class="my-menu-link" to="/Consultor" exact>
+        clickable  active-class="my-menu-link" to="/Persona" exact>
           <q-item-section avatar>
             <q-icon color="teal" name="person" />
           </q-item-section>
