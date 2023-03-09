@@ -54,7 +54,7 @@ class Persona extends Model
         return $this->morphToMany('App\Models\Lote','detallelote');
     }
     public function adjudicados(){
-        return $this->morphToMany('App\Models\Adjudicado','Adjudicado');
+        return $this->morphToMany('App\Models\Adjudicado','adjudicado');
     }
 
 

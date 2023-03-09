@@ -596,7 +596,7 @@ export default {
        console.log(res.data)
          this.data =res.data;
        this.$q.loading.hide();
-       });
+       }).catch(e=>console.log(e));
     },
     editRow(item) {
       this.dato2 = item.row
