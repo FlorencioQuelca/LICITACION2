@@ -143,8 +143,10 @@ class PersonaController extends Controller
      }
      public function consultores(){
         try{
-            $personas= Persona::with(['proyectos','proyectos.departamento','proyects','contratos','visitas','visitas.departamento','visitas.user'])->orderByDesc('id')->get();
-              return \response()->json($personas,200);
+            $personas= Persona::with(['proyectos','proyectos.departamento','contratos','visitas','visitas.departamento','visitas.user'])->orderByDesc('id')->get();
+           // $empresa= Empresa::with(['proyectos','proyectos.departamento','sociedads','contratos','contratos.proyecto','contratos.proyecto.departamento'])->orderByDesc('id')->get();
+
+            return \response()->json($personas,200);
            }
            catch(\Exception $e){
             return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);

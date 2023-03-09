@@ -1927,7 +1927,7 @@ export default {
         });
     },
       cargarConsultores() {
-      this.$api.get(process.env.API + "/consultor").then((res) => {
+      this.$api.get(process.env.API + "/visitantes").then((res) => {
         this.consultores1 = res.data;
         // console.log(this.personas);
         this.$q.loading.hide();
