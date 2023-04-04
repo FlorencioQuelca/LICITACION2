@@ -145,7 +145,7 @@
       //console.log(e)
       let arr=e.tooltip.split(':')
 			this.title = ` ${e.title}`
-			this.fecha = e.startDate.getDay()+' de '+this.mesesLiteral(Number(e.startDate.getMonth()+1))+' de '+e.startDate.getFullYear()+' Horas: '+e.startDate.getHours()+':'+e.startDate.getMinutes()
+			this.fecha = e.startDate.getDate()+' de '+this.mesesLiteral(Number(e.startDate.getMonth()+1))+' de '+e.startDate.getFullYear()+' Horas: '+e.startDate.getHours()+':'+e.startDate.getMinutes()
 			this.cuce =arr[1]
 			this.url =e.url
       this.departamento=arr[0]
