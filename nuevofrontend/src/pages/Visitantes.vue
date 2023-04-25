@@ -592,7 +592,7 @@ export default {
     },
     misdatos(){
     this.$q.loading.show();
-       this.$api.get(process.env.API+"/visitantes").then((res)=>{
+       this.$api.get("/consultor").then((res)=>{
        console.log(res.data)
          this.data =res.data;
        this.$q.loading.hide();
@@ -608,7 +608,7 @@ export default {
     },
      onDel() {
       this.$q.loading.show();
-      this.$api.delete( process.env.API+"/consultor/" + this.dato2.id).then((res) => {
+      this.$api.delete("/consultor/" + this.dato2.id).then((res) => {
         this.$q.notify({
          color: "green-4",
          textColor: "white",
