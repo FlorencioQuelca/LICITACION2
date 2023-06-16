@@ -95,9 +95,17 @@ class PersonaController extends Controller
     {
         // update Persona set nombre = $request ... where id =$id
        // $imput = $request->all();
+       try{
         $persona = Persona::find($id);
         $persona->update($request->all());
         return \response()->json(['res'=> true, 'message'=>'modificado  correctamente'],200);
+       }
+       catch(\Exception $e){
+        return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
+       }
+
+
+
     }
 
     /**

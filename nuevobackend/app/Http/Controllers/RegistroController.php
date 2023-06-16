@@ -17,14 +17,26 @@ class RegistroController extends Controller
      */
     public function index()
     {
-        return Registro::with(['departamento','users','evaluacions','ficha'])->orderByDesc('nro')->get();
+        try{
+            $registro= Registro::with(['departamento','users'])->orderByDesc('nro')->get();
+            return \response()->json($registro,200);
+        }
+        catch(\Exception $e){
+            return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
+           }
+
       //  return Registro::all();
 
     }
     public function registroid(Registro $registro){
-        $registro =Registro::with(['departamento','users','evaluacions','ficha'])
-                            ->orWhere('id', '=', $registro->id)->get();
-        return \response()->json($registro,200);
+        try{
+            $registro =Registro::with(['departamento','users','evaluacions','ficha'])
+                                ->orWhere('id', '=', $registro->id)->get();
+            return \response()->json($registro,200);
+        }
+        catch(\Exception $e){
+            return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
+           }
     }
     public function registrodepa(Registro $registro){
         $registro =Registro::with(['departamento','users','evaluacions','ficha'])
@@ -40,7 +52,14 @@ class RegistroController extends Controller
     }
     public function registrados()
     {
-        return Registro::with(['departamento','users','evaluacions','ficha'])->orderBy('nro')->get();
+          try{
+              $registro =Registro::with(['departamento','users','evaluacions','ficha'])->orderBy('nro')->get();
+              return \response()->json($registro,200);
+          }
+          catch(\Exception $e){
+            return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
+           }
+
       //  return Registro::all();
 
     }

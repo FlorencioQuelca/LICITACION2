@@ -22,7 +22,7 @@
     Reuniones en Curso: {{salidas}}
 
     </q-btn>
-    fehca y dia: {{timenow}}
+    fecha y dia: {{timenow}}
 
 
     <!--          tabla  PRINCIPAL -->
@@ -471,9 +471,9 @@
                   :filter="filter1"
                   title="Lista de personas registradas"
                   :rows="personas"
-                  :columns="subcol1"
+                  :columns="subcol2"
                   row-key="ci"
-                  :rows-per-page-options="[5, 10, 20, 0]"
+                  :rows-per-page-options="[10, 20, 40, 0]"
                   separator="cell"
                   dense
                 >
@@ -482,8 +482,14 @@
                       <q-td key="ci" :props="props">
                         {{ props.row.ci }}
                       </q-td>
-                      <q-td key="nombre" :props="props">
-                        {{ props.row.datosp }}
+                      <q-td key="paterno" :props="props">
+                        {{ props.row.paterno }}
+                      </q-td>
+                      <q-td key="materno" :props="props">
+                        {{ props.row.materno }}
+                      </q-td>
+                      <q-td key="nombres" :props="props">
+                        {{ props.row.nombres }}
                       </q-td>
                       <q-td key="opcion" :props="props">
                         <q-btn
@@ -537,7 +543,7 @@
         <q-card-section class="q-pt-xs">
            <q-form @submit="onAdd2" class="q-gutter-md">
             <q-table
-                  :filter="filter2"
+                  :filter="filter3"
                   title="Lista de funcionarios"
                   :rows="funcionarios"
                   :columns="subcol2"
@@ -551,8 +557,14 @@
                       <q-td key="ci" :props="props">
                         {{ props.row.ci }}
                       </q-td>
-                      <q-td key="nombre" :props="props">
-                        {{ props.row.datosp }}
+                      <q-td key="paterno" :props="props">
+                        {{ props.row.paterno }}
+                      </q-td>
+                      <q-td key="materno" :props="props">
+                        {{ props.row.materno }}
+                      </q-td>
+                      <q-td key="nombres" :props="props">
+                        {{ props.row.nombres }}
                       </q-td>
                       <q-td key="opcion" :props="props">
                         <q-btn
@@ -572,7 +584,7 @@
                       borderless
                       dense
                       debounce="300"
-                      v-model="filter2"
+                      v-model="filter3"
                       placeholder="Buscar funcionario"
                     >
                       <template v-slot:append>
@@ -828,52 +840,7 @@ const columns = [
     sortable: false,
   },
 ];
-const subcol1 = [
-  {
-    name: "ci",
-    required: true,
-    label: "C.I.",
-    align: "left",
-    field: "ci",
-    sortable: true,
-  },
-  {
-    name: "nombre",
-    label: "Nombre completo",
-    align: "left",
-    field: "nombre",
-    sortable: true,
-  },
-  {
-    name: "opcion",
-    label: "opcion",
-    align: "center",
-    field: "opcion",
-  },
-];
-const subcol2 = [
-  {
-    name: "ci",
-    required: true,
-    label: "C.I.",
-    align: "left",
-    field: "ci",
-    sortable: true,
-  },
-  {
-    name: "nombre",
-    label: "Nombre completo",
-    align: "left",
-    field: "nombre",
-    sortable: true,
-  },
-  {
-    name: "opcion",
-    label: "opcion",
-    align: "center",
-    field: "opcion",
-  },
-];
+
 import moment from 'moment';
 export default {
   name:"Visitas",
@@ -899,13 +866,13 @@ export default {
       filter: "",
       filter1: "",
       filter2: "",
+      filter3: "",
       columns,
       personas: [],
       personasSelectos: [],
       funcionarios: [],
       funcionariosSelectos: [],
-      subcol1,
-      subcol2,
+
       motivos: ["CONSULTA", "PERSONAL","VISITA", "SEGUIMIENTO","SEGUIMIENTO DE TRAMITE","PLANILLADO","REUNION", "COORDINACION","APERTURA DE SOBRES", "FIRMA DE CONTRATO", "PROTOCOLIZACION DE CONTRATO","CONTRAPARTE","PLANILLAS DE PAGO"],
       instituciones: ["EMPRESA ","SUPERVISION","COMUNIDAD", "MINISTERIO","CONSULTOR","PROVINCIA","FPS CENTRAL","PERSONAL"],
        generos:[
@@ -925,6 +892,19 @@ export default {
         'DIP.'
       ],
       salidas:0,
+      subcol1 : [
+  { name: "ci",required: true,label: "C.I.",align: "left",field: "ci",sortable: true, },
+  { name: "nombre", label: "Nombre completo", align: "left",  field: "nombre", sortable: true,  },
+  { name: "opcion",    label: "opcion",    align: "center",field: "opcion" },
+],
+subcol2 : [
+  {    name: "ci",         label: "C.I.",    align: "left",    field: "ci",    sortable: true,  },
+  {    name: "paterno",  required: true,   label: "Pombre",    align: "left",    field: "paterno",    sortable: true,  },
+  {    name: "materno",  required: true,   label: "Materno",    align: "left",    field: "materno",    sortable: true,  },
+  {    name: "nombres",  required: true,   label: "Nombres",    align: "left",    field: "nombres",    sortable: true,  },
+  {    name: "opcion",    label: "opcion",    align: "center",    field: "opcion" },
+],
+
     }),
  computed:{
 
@@ -1128,7 +1108,7 @@ export default {
     addRow2(item) {
       this.dato2 = item.row;
       this.funcionariosSelectos=[]
-      this.filter2= ""
+      this.filter3= ""
          this.dialog_add2 = true;
     },
     onAdd1() {
