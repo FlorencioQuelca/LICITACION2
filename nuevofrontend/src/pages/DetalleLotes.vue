@@ -392,24 +392,30 @@
             :rows-per-page-options="[0]"
           >
             <template v-slot:body="props">
-              <q-tr :props="props">
-                <q-td key="datosp" :props="props">
-                  {{ props.row.datosp }}
-                </q-td>
-                <q-td key="nit" :props="props">
-                  {{ props.row.nit }}
-                </q-td>
-                <q-td key="rl" :props="props">
-                  {{ props.row.datosp }}
-                </q-td>
+                   <q-tr :props="props">
                 <q-td key="ci" :props="props">
                   {{ props.row.ci }}
+                </q-td>
+                <q-td key="paterno" :props="props">
+                  {{ props.row.paterno }}
+                </q-td>
+                <q-td key="materno" :props="props">
+                  {{ props.row.materno }}
+                </q-td>
+                <q-td key="nombres" :props="props">
+                  {{ props.row.nombres }}
+                </q-td>
+                 <q-td key="cargo" :props="props">
+                            SUPERVISOR
                 </q-td>
                 <q-td key="oferta" :props="props">
                   {{ props.row.pivot.monto }}
                 </q-td>
                 <q-td key="fechanac" :props="props">
                   {{ reverseFecha1(props.row.fechaNacimiento) }}
+                </q-td>
+                 <q-td key="rl" :props="props">
+                  {{ props.row.datosp }}
                 </q-td>
               </q-tr>
             </template>
@@ -432,23 +438,29 @@
           >
             <template v-slot:body="props">
               <q-tr :props="props">
-                <q-td key="datosp" :props="props">
-                  {{ props.row.datosp }}
-                </q-td>
-                <q-td key="nit" :props="props">
-                  {{ props.row.nit }}
-                </q-td>
-                <q-td key="rl" :props="props">
-                  {{ props.row.datosp }}
-                </q-td>
                 <q-td key="ci" :props="props">
                   {{ props.row.ci }}
+                </q-td>
+                <q-td key="paterno" :props="props">
+                  {{ props.row.paterno }}
+                </q-td>
+                <q-td key="materno" :props="props">
+                  {{ props.row.materno }}
+                </q-td>
+                <q-td key="nombres" :props="props">
+                  {{ props.row.nombres }}
+                </q-td>
+                 <q-td key="cargo" :props="props">
+                            SUPERVISOR
                 </q-td>
                 <q-td key="oferta" :props="props">
                   {{ props.row.pivot.monto }}
                 </q-td>
                 <q-td key="fechanac" :props="props">
                   {{ reverseFecha1(props.row.fechaNacimiento) }}
+                </q-td>
+                 <q-td key="rl" :props="props">
+                  {{ props.row.datosp }}
                 </q-td>
               </q-tr>
             </template>
@@ -1766,12 +1778,14 @@ export default {
     {name: "opcion",label: "opcion",align: "left",field: "opcion",sortable: true,},
     ],
       subcol1a: [
-    {name: "datosp",label: "Nombre Completo",align: "left",field: "datosp",sortable: true,},
-    {name: "nit",label: "NIT",align: "left",field: "nit",sortable: true,},
-    {name: "rl",label: "Representante Legal",align: "rl",field: "paterno",sortable: true,},
     {name: "ci",required: true,label: "C.I.",align: "center",field: "ci",sortable: true,},
-    {name: "oferta",label: "Oferta",align: "left",field: "oferta",sortable: true,},
+    {name: "paterno",label: "Paterno",align: "left",field: "paterno",sortable: true,},
+    {name: "materno",label: "Materno",align: "left",field: "materno",sortable: true,},
+    {name: "nombres",label: "Nombres",align: "left",field: "nombres",sortable: true,},
+    {name: "cargo",label: "Cargo Postulacion",align: "center",field: "cargo",sortable: true,},
+    {name: "oferta",label: "Oferta",align: "center",field: "oferta",sortable: true,},
     {name: "fechanac",label: "Fecha de Nacimiento",align: "center",field: "fechanac",sortable: true,},
+    {name: "rl",label: "Representante Legal",align: "rl",field: "rl",sortable: true,},
     ],
     subcol2: [
   {name: "nit", required: true,label: "N.I.T.", align: "left",field: "nit", sortable: true,},

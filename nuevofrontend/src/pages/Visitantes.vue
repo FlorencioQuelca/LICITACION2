@@ -592,11 +592,16 @@ export default {
     },
     misdatos(){
     this.$q.loading.show();
-       this.$api.get("/consultor").then((res)=>{
+       this.$api.get("/todos").then((res)=>{
        console.log(res.data)
          this.data =res.data;
        this.$q.loading.hide();
-       }).catch(e=>console.log(e));
+       }).catch(e=>{
+         console.log(e)
+         this.$q.loading.hide();
+
+       });
+
     },
     editRow(item) {
       this.dato2 = item.row

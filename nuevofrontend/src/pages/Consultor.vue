@@ -599,7 +599,7 @@ export default {
     },
     misdatos(){
     this.$q.loading.show();
-       this.$api.get("/consultores").then((res)=>{
+       this.$api.get("/consultor").then((res)=>{
        console.log(res.data)
          this.data =res.data;
          this.$q.loading.hide();

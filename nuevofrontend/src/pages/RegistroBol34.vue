@@ -623,7 +623,7 @@ export default {
          this.$q.loading.show();
            this.data=[]
            this.$api.get(process.env.API+"/registros").then((res)=>{
-           //  console.log(res.data)
+              console.log(res.data)
               res.data.forEach(it=>{
                        if(this.$store.state.login.user.status===it.departamento.nombre){
                                         //  this.data.push(it)
@@ -655,6 +655,9 @@ export default {
           // this.data=res.data
          // console.log(this.data)
           this.$q.loading.hide();
+       }).catch(e=>{
+         console.log(e)
+         this.$q.loading.hide();
        });
        },
         misdatosDepa(){

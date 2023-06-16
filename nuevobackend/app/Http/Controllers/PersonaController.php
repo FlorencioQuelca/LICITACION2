@@ -152,5 +152,17 @@ class PersonaController extends Controller
             return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
            }
 
+
     }
+    public function todos(){
+        try{
+       // return Persona::get();
+         $personas= Persona::all();
+          return \response()->json($personas,200);
+        }
+        catch(\Exception $e){
+         return \response()->json(['res'=> false, 'message'=>$e->getMessage()],200);
+        }
+
+     }
 }

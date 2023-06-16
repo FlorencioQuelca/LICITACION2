@@ -119,6 +119,7 @@ Route::group(['middleware'=>"auth:sanctum"],function (){
    Route::get('/funcionarios',[\App\Http\Controllers\PersonaController::class,'funcionarios'])->name('funcionarios');
    Route::get('/visitantes',[\App\Http\Controllers\PersonaController::class,'visitantes'])->name('visitantes');
    Route::get('/consultores',[\App\Http\Controllers\PersonaController::class,'consultores'])->name('consultores');
+   Route::get('todos',[\App\Http\Controllers\PersonaController::class,'todos'])->name('todos');
    Route::put('personavisitas/{visita}',[\App\Http\Controllers\VisitaController::class,'personavisitas']);
    Route::put('personavisitadetach/{visita}',[\App\Http\Controllers\VisitaController::class,'personavisitadetach']);
   // BOL34

@@ -232,7 +232,7 @@ export default {
      //   this.$q.loading.hide();
         this.data=[]
        this.$api.get(process.env.API+"/registrados").then((res)=>{
-    // console.log(res.data);
+     console.log(res.data);
             let puntaje=0
             this.evaluaciones=res.data.evaluacions;
         res.data.forEach(it=>{
@@ -281,6 +281,10 @@ export default {
               })
 
           this.$q.loading.hide();
+       }).catch(e=>{
+         console.log(e)
+         this.$q.loading.hide();
+
        });
        },
           exportTable () {
