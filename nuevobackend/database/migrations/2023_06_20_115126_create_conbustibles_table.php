@@ -27,7 +27,6 @@ class CreateConbustiblesTable extends Migration
             $table->string('codigo')->nullable(); //numero de ticket
             $table->string('monto')->nullable();
             $table->string('litro')->nullable();
-            $table->string('litro')->nullable();
             $table->string('estado')->nullable();
             $table->string('observacion')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
